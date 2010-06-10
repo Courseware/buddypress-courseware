@@ -13,18 +13,18 @@ Author URI: http://stas.nerd.ro/
 
 define( 'BPSP_VERSION', '0.1' );
 define( 'BPSP_PLUGIN_DIR', dirname( __FILE__ ) );
-define( 'BPSP_TD', 'bpsp' );
 
 /**
  * i18n
  */
 function bpsp_textdomain() {
-    load_plugin_textdomain( BPSP_TD, false, BPSP_DIR . '/i18n' );
+    load_plugin_textdomain( 'bpsp', false, BPSP_DIR . '/i18n' );
 }
 add_action( 'init', 'bpsp_textdomain' );
 
 /* Load the components */
 require_once( BPSP_PLUGIN_DIR . '/roles/bpsp_roles.class.php' );
+require_once( BPSP_PLUGIN_DIR . '/roles/bpsp_courses.class.php' );
 
 /* Initiate the componenets */
 function bpsp_init() {
@@ -35,13 +35,12 @@ add_action( 'bp_init', 'bpsp_init' );
 /* Activate the components */
 function bpsp_activation() {
     BPSP_Roles::register_profile_fields();
+    //BPSP_Courses::register_post_types();
 }
 register_activation_hook( 'scholarpress/scholarpress.php', 'bpsp_activation' );
 
 /** TEMPORARY HELPERS **/
-function _dd($stuff) {
-    echo '<pre>';
-        var_dump($stuff);
-    echo '</pre>';
+function _d($stuff) {
+    wp_die( '<pre>' . var_dump( $stuff ) . '</pre>');
 }
 ?>
