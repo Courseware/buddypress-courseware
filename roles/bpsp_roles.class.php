@@ -2,7 +2,7 @@
 /**
  * BPSP Class for student/teacher roles management
  */
-class BPSP_Roles {  
+class BPSP_Roles {    
     /**
      * BPSP_Roles()
      * 
@@ -11,16 +11,15 @@ class BPSP_Roles {
     function BPSP_Roles() {
         add_filter( 'bp_xprofile_field_get_children', array( &$this, 'profile_screen_admin' ) );
         add_filter( 'bp_xprofile_field_get_children', array( &$this, 'profile_screen_hide_roles' ) );
-        add_action( 'xprofile_profile_field_data_updated', array( &$this, 'profile_screen_update' ), 10, 2 );
+        add_action( 'xprofile_profile_field_data_updated', array( &$this, 'profile_screen_new_request' ), 10, 2 );
     }
     
     /**
-     * profile_screen_update()
+     * profile_screen_new_request()
      * 
      * Action to notify site_admin that a new request has been sent
      */
-    function profile_screen_update( $field_id, $field_value ) {
-        
+    function profile_screen_new_request( $field_id, $field_value ) {
         //required to search for superadmins
         require_once( ABSPATH . 'wp-admin/includes/user.php');
         
@@ -41,6 +40,14 @@ class BPSP_Roles {
         }
         if( $field_value == __( 'Teacher', 'bpsp' ) && !is_super_admin() )
             wp_die( __( 'BuddyPress ScholarPress error, you are not allowed to assign Teachers.' ) );
+        
+        // Add an action every time a new teacher is added
+        if( $field_value == __( 'Teacher', 'bpsp' ) && is_super_admin() )
+            do_action( 'scholarpress_new_teacher_added', $bp->displayed_user->id );
+        
+        // Add an action every time a teacher is removed
+        if( $field_value != __( 'Teacher', 'bpsp' ) )
+            do_action( 'scholarpress_new_teacher_removed', $bp->displayed_user->id );
     }
     
     /**
@@ -113,7 +120,7 @@ class BPSP_Roles {
         global $bp;
         (array)$bp->profile->field_types[] = 'option';
         
-        if( $this->field_group_id_from_name( __( 'ScholarPress LMS', 'bpsp' ) ) )
+        if( BPSP_Roles::field_group_id_from_name( __( 'ScholarPress LMS', 'bpsp' ) ) )
             return false;
         
         $bpsp_group_id = xprofile_insert_field_group(
