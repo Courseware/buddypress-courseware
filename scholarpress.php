@@ -12,7 +12,7 @@ Author URI: http://stas.nerd.ro/
 */
 
 define( 'BPSP_VERSION', '0.1' );
-define( 'BPSP_DIR', dirname( __FILE__ ) );
+define( 'BPSP_PLUGIN_DIR', dirname( __FILE__ ) );
 define( 'BPSP_TD', 'bpsp' );
 
 /**
@@ -24,7 +24,7 @@ function bpsp_textdomain() {
 add_action( 'init', 'bpsp_textdomain' );
 
 /* Load the components */
-require_once( BPSP_DIR . '/roles/bpsp_roles.class.php' );
+require_once( BPSP_PLUGIN_DIR . '/roles/bpsp_roles.class.php' );
 
 /* Initiate the componenets */
 function bpsp_init() {
