@@ -9,14 +9,38 @@ class BPSP_Roles {
      * Loads all the filters and actions
      */
     function BPSP_Roles() {
-        add_action( 'bp_before_profile_field_content', array( &$this, 'profile_screen_edit' ));
+        add_filter( 'bp_get_the_profile_field_options_radio', array( &$this, 'profile_screen_admin' ) );
+        add_action( 'xprofile_profile_field_data_updated', array( &$this, 'profile_screen_update' ), 10, 2 );
     }
     
     /**
-     *
+     * profile_screen_update()
+     * Trigger to notify site_admin that a new request has been sent
      */
-    function profile_screen_edit() {
-        //TODO
+    function profile_screen_update( $field_id, $field_value ) {
+        if( $field_value == __( 'Apply for Teacher' ) ) {
+            //TODO: Get the list of site_admins and send them a message!
+            /*
+            messages_new_message(
+                array(
+                    
+                )
+            );
+            */
+            wp_die( _dd($field_value) );
+        }
+    }
+    
+    /**
+     * profile_screen_admin()
+     * Filters option for 'Teacher', only admins are allowed to access it.
+     */
+    function profile_screen_admin( $content ) {
+        if( !is_super_admin() ) {
+            if( stristr( $content, __( 'Teacher' ) ) )
+                $content = '';
+        }
+        return $content;
     }
     
     /**
@@ -93,7 +117,7 @@ class BPSP_Roles {
             array (
                 field_group_id  => $bpsp_group_id,
                 parent_id       => $bpsp_field_id,
-                name            => __( 'Pending' ),
+                name            => __( 'Apply for Teacher' ),
                 can_delete      => false,
                 is_required     => false,
                 type            => 'option'
@@ -102,7 +126,7 @@ class BPSP_Roles {
         
         if( !xprofile_get_field_id_from_name( __( 'Teacher' ) ) ||
             !xprofile_get_field_id_from_name( __( 'Student' ) ) ||
-            !xprofile_get_field_id_from_name( __( 'Pending' ) )
+            !xprofile_get_field_id_from_name( __( 'Apply for Teacher' ) )
         )
             wp_die( __( 'BuddyPress ScholarPress error when saving xProfile field options.' ) );
         else
