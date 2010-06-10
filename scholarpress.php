@@ -32,7 +32,7 @@ add_action( 'init', 'bpsp_registration' );
 
 /* Load the components */
 require_once( BPSP_PLUGIN_DIR . '/roles/bpsp_roles.class.php' );
-require_once( BPSP_PLUGIN_DIR . '/roles/bpsp_courses.class.php' );
+require_once( BPSP_PLUGIN_DIR . '/courses/bpsp_courses.class.php' );
 
 /* Initiate the componenets */
 function bpsp_init() {
