@@ -104,39 +104,58 @@ class BPSP_Courses {
      */
     function courses_screen_handler( $action_vars ) {
         if( $action_vars[0] == 'new_course' )
-            add_action( 'bp_template_content', array( &$this, 'courses_new_screen' ) );
+            add_filter( 'scholarpress_group_template', array( &$this, 'courses_new_screen' ) );
+        elseif ( $action_vars[0] == 'all' )
+            add_filter( 'scholarpress_group_template', array( &$this, 'courses_list_screen' ) );
         else
-            add_action( 'bp_template_content', array( &$this, 'courses_list_screen' ) );
+            add_filter( 'scholarpress_group_template', array( &$this, 'courses_home_screen' ) );
     }
     
     /**
      * courses_add_nav_options()
      *
      * Adds courses specific navigations options
+     *
+     * @param Array $options A set of current nav options
+     * @return Array containing new nav options
      */
     function courses_add_nav_options( $options ) {
         $options[__( 'New Course' )] = $options[__( 'Home' )] . '/new_course';
+        $options[__( 'Courses' )] = $options[__( 'Home' )] . '/all';
         return $options;
     }
     
     /**
-     * courses_add_screen()
+     * courses_add_screen( $vars )
      *
      * Hooks into courses_screen_handler
      * Adds a UI to add new courses.
      */
-    function courses_new_screen() {
-        echo "TODO: Get a UI";
+    function courses_new_screen( $vars ) {
+        $vars['name'] = 'new';
+        return $vars;
     }
     
     /**
-     * courses_add_screen()
+     * courses_add_screen( $vars )
+     *
+     * Hooks into courses_screen_handler
+     * Adds a dashboard UI
+     */
+    function courses_home_screen( $vars ) {
+        $vars['name'] = 'home';
+        return $vars;
+    }
+    
+    /**
+     * courses_list_screen()
      *
      * Hooks into courses_screen_handler
      * Adds a UI to list courses.
      */
-    function courses_list_screen() {
-        echo "TODO: List all courses";
+    function courses_list_screen( $vars ) {
+        $vars['name'] = 'list';
+        return $vars;
     }
 }
 ?>

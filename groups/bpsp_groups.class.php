@@ -86,6 +86,7 @@ class BPSP_Groups {
      */
     function screen_handler() {
         global $bp;
+	
         if ( $bp->current_component == $bp->groups->slug && $bp->current_action == $bp->scholarpress->slug ) {
 	    $this->current_nav_option =  $this->nav_options[__( 'Home' )];
 	    
@@ -94,6 +95,7 @@ class BPSP_Groups {
 	    
             add_action( 'bp_before_group_body', array( &$this, 'nav_options' ) );
             do_action( 'scholarpress_group_screen_handler', $bp->action_variables );
+	    add_action( 'bp_template_content', array( &$this, 'load_template' ) );
         }
         bp_core_load_template( apply_filters( 'bp_core_template_plugin' , 'groups/single/plugins' ) );
     }
@@ -105,17 +107,39 @@ class BPSP_Groups {
      */
     function nav_options() {
         apply_filters( 'scholarpress_group_nav_options', &$this->nav_options );
-	echo $this->load_template( 'nav' );
+	$this->load_template( array(
+	    'name' => 'nav',
+	    'nav_options' => $this->nav_options,
+	    'current_option' => $this->current_nav_option
+	));
     }
     
-    function load_template( $name ) {
+    /**
+     * load_template( $vars )
+     *
+     * Loads a template for displaying group screens
+     *
+     * @param Array $vars of options
+     */
+    function load_template( $vars = '' ) {	
+	if( empty( $vars ) )
+	    $vars = array(
+	    'name' => '',
+	    'nav_options' => $this->nav_options,
+	    'current_option' => $this->current_nav_option
+	    );
+	    
 	$templates_path = BPSP_PLUGIN_DIR . '/groups/templates/';
-	if( file_exists( $templates_path . $name . '.php' ) ) {
+	
+	//Exclude internal templates like navigation
+	if( !$vars['name'] == 'nav' )
+	    apply_filters( 'scholarpress_group_template', &$vars );
+	
+	if( file_exists( $templates_path . $vars['name']. '.php' ) ) {
 	    ob_start();
-	    $nav_options = $this->nav_options;
-	    $current_option = $this->current_nav_option;
+	    extract( $vars );
 	    include_once( $templates_path . $name . '.php' );
-	    return ob_get_clean();
+	    echo ob_get_clean();
 	}
     }
 }
