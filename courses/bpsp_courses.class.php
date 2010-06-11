@@ -20,11 +20,11 @@ class BPSP_Courses {
      * Constructor. Loads the hooks and actions.
      */
     function BPSP_Courses() {
-        add_action( 'wp', array( &$this, 'setup_nav' ), 2 );
         add_action( 'scholarpress_new_teacher_added', array( &$this, 'add_course_caps' ) );
         add_action( 'scholarpress_new_teacher_removed', array( &$this, 'remove_course_caps' ) );
-        add_action( 'scholarpress_render_courses_screen', array( &$this, 'courses_screen_render' ) );
-    }
+        add_action( 'scholarpress_group_screen_handler', array( &$this, 'courses_screen_handler' ) );
+        add_action( 'scholarpress_group_nav_options', array( &$this, 'courses_add_nav_options' ) );
+   }
     
     /**
      * register_post_types()
@@ -97,77 +97,44 @@ class BPSP_Courses {
     }
     
     /**
-     * activate_component()
+     * courses_screen_handler( $action_vars )
      *
-     * Activates courses as a BuddyPress component
+     * Courses screens handler.
+     * Handles uris like groups/ID/courses/action
      */
-    function activate_component() {
-        global $bp;
-        $bp->courses->id = 'courses';
-        $bp->courses->slug = 'courses';
-        $bp->active_components[$bp->courses->slug] = $bp->courses->id;
-    }
-    
-    /**
-     * setup_nav()
-     *
-     * Sets up the componenet navigation
-     */
-    function setup_nav() {
-        global $bp;
-        
-	if ( $group_id = BP_Groups_Group::group_exists($bp->current_action) ) {
-		$bp->is_single_item = true;
-		$bp->groups->current_group = &new BP_Groups_Group( $group_id );
-	}
-        
-        $groups_link = $bp->root_domain . '/' . $bp->groups->slug . '/' . $bp->groups->current_group->slug . '/';        
-        
-        if ( $bp->is_single_item )
-            bp_core_new_subnav_item( array( 
-		'name' => __( 'ScholarPress', 'bpsp' ),
-		'slug' => $bp->courses->slug,
-		'parent_url' => $groups_link, 
-		'parent_slug' => $bp->groups->slug, 
-		'screen_function' => array( &$this, 'courses_screen' ),
-		'position' => 35, 
-		'user_has_access' => $bp->groups->current_group->user_has_access,
-		'item_css_id' => 'scholarpress-courses'
-            ) );
-        
-        do_action('scholarpress_courses_nav_setup');
-    }
-    
-    /**
-     * courses_screen()
-     *
-     * Renders the courses screen on group page
-     */
-    function courses_screen() {
-        global $bp;
-        if ( $bp->current_component == $bp->groups->slug && $bp->current_action == $bp->courses->slug ) {
-            add_action( 'bp_before_group_body', array( &$this, 'courses_nav_options' ) );
-            do_action( 'scholarpress_render_courses_screen', $bp->action_variables );
-        }
-        bp_core_load_template( apply_filters( 'bp_core_template_plugin' , 'groups/single/plugins' ) );
-    }
-    
-    function courses_nav_options() {
-        echo "<ul><li>TODO: Get a some secondary nav</li></ul>";
-    }
-    
-    function courses_screen_render( $action_vars ) {
-        if( $action_vars[0] == 'new' )
-            add_action( 'bp_template_content', array( &$this, 'courses_add_new' ) );
+    function courses_screen_handler( $action_vars ) {
+        if( $action_vars[0] == 'new_course' )
+            add_action( 'bp_template_content', array( &$this, 'courses_add_screen' ) );
         else
-            add_action( 'bp_template_content', array( &$this, 'courses_list' ) );
+            add_action( 'bp_template_content', array( &$this, 'courses_list_screen' ) );
     }
     
-    function courses_add_new() {
+    /**
+     * courses_add_nav_options()
+     *
+     * Adds courses specific navigations options
+     */
+    function courses_add_nav_options() {
+        echo "TODO: Get some nav options";
+    }
+    
+    /**
+     * courses_add_screen()
+     *
+     * Hooks into courses_screen_handler
+     * Adds a UI to add new courses.
+     */
+    function courses_new_screen() {
         echo "TODO: Get a UI";
     }
     
-    function courses_list() {
+    /**
+     * courses_add_screen()
+     *
+     * Hooks into courses_screen_handler
+     * Adds a UI to list courses.
+     */
+    function courses_list_screen() {
         echo "TODO: List all courses";
     }
 }

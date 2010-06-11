@@ -17,7 +17,7 @@ define( 'BPSP_PLUGIN_DIR', dirname( __FILE__ ) );
 /* Load the components */
 require_once( BPSP_PLUGIN_DIR . '/roles/bpsp_roles.class.php' );
 require_once( BPSP_PLUGIN_DIR . '/courses/bpsp_courses.class.php' );
-require_once( BPSP_PLUGIN_DIR . '/dashboard/bpsp_dashboard.class.php' );
+require_once( BPSP_PLUGIN_DIR . '/groups/bpsp_groups.class.php' );
 
 /**
  * i18n
@@ -39,7 +39,7 @@ add_action( 'init', 'bpsp_registration' );
  * On plugins load
  */
 function bpsp_on_plugins_load() {
-    BPSP_Courses::activate_component();
+    BPSP_Groups::activate_component();
 }
 add_action( 'plugins_loaded', 'bpsp_on_plugins_load', 5 );
 
@@ -47,6 +47,7 @@ add_action( 'plugins_loaded', 'bpsp_on_plugins_load', 5 );
 function bpsp_init() {
     new BPSP_Roles();
     new BPSP_Courses();
+    new BPSP_Groups();
 }
 add_action( 'bp_init', 'bpsp_init' );
 
