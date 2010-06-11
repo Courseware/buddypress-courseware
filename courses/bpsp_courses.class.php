@@ -20,10 +20,10 @@ class BPSP_Courses {
      * Constructor. Loads the hooks and actions.
      */
     function BPSP_Courses() {
-        add_action( 'scholarpress_new_teacher_added', array( &$this, 'add_course_caps' ) );
-        add_action( 'scholarpress_new_teacher_removed', array( &$this, 'remove_course_caps' ) );
-        add_action( 'scholarpress_group_screen_handler', array( &$this, 'courses_screen_handler' ) );
-        add_filter( 'scholarpress_group_nav_options', array( &$this, 'courses_add_nav_options' ) );
+        add_action( 'courseware_new_teacher_added', array( &$this, 'add_course_caps' ) );
+        add_action( 'courseware_new_teacher_removed', array( &$this, 'remove_course_caps' ) );
+        add_action( 'courseware_group_screen_handler', array( &$this, 'courses_screen_handler' ) );
+        add_filter( 'courseware_group_nav_options', array( &$this, 'courses_add_nav_options' ) );
    }
     
     /**
@@ -35,7 +35,7 @@ class BPSP_Courses {
         $course_post_def = array(
             'label'                 => __( 'Courses', 'bpsp' ),
             'singular_label'        => __( 'Course', 'bpsp' ),
-            'description'           => __( 'BuddyPress ScholarPress LMS Courses', 'bpsp' ),
+            'description'           => __( 'BuddyPress ScholarPress Courseware Courses', 'bpsp' ),
             'public'                => true, //TODO: set to false when stable
             'publicly_queryable'    => false,
             'exclude_from_search'   => false,
@@ -47,7 +47,7 @@ class BPSP_Courses {
             'supports'              => array( 'title', 'editor', 'author', 'custom-fields' )
         );
         if( !register_post_type( 'course', $course_post_def ) )
-            wp_die( __( 'BuddyPress ScholarPress error while registering courses post type.', 'bpsp' ) );
+            wp_die( __( 'BuddyPress Courseware error while registering courses post type.', 'bpsp' ) );
         
         $course_rel_def = array(
             'public'        => true, //TODO: set to false when stable
@@ -65,7 +65,7 @@ class BPSP_Courses {
         );
         register_taxonomy( 'group_id', 'course', $course_rel_def );
         if( !get_taxonomy( 'group_id' ) )
-            wp_die( __( 'BuddyPress ScholarPress error while registering courses taxonomies.', 'bpsp' ) );
+            wp_die( __( 'BuddyPress Courseware error while registering courses taxonomies.', 'bpsp' ) );
     }
     
     /**
@@ -104,11 +104,11 @@ class BPSP_Courses {
      */
     function courses_screen_handler( $action_vars ) {
         if( $action_vars[0] == 'new_course' )
-            add_filter( 'scholarpress_group_template', array( &$this, 'courses_new_screen' ) );
+            add_filter( 'courseware_group_template', array( &$this, 'courses_new_screen' ) );
         elseif ( $action_vars[0] == 'all' )
-            add_filter( 'scholarpress_group_template', array( &$this, 'courses_list_screen' ) );
+            add_filter( 'courseware_group_template', array( &$this, 'courses_list_screen' ) );
         else
-            add_filter( 'scholarpress_group_template', array( &$this, 'courses_home_screen' ) );
+            add_filter( 'courseware_group_template', array( &$this, 'courses_home_screen' ) );
     }
     
     /**

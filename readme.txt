@@ -1,4 +1,4 @@
-=== BuddyPress ScholarPress LMS ===
+=== BuddyPress ScholarPress Courseware ===
 Contributors: Stas Sușcov
 Tags: buddypress
 Requires at least: WordPress 3.0, BuddyPress 1.2.4.1

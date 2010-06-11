@@ -39,15 +39,15 @@ class BPSP_Roles {
                 );
         }
         if( $field_value == __( 'Teacher', 'bpsp' ) && !is_super_admin() )
-            wp_die( __( 'BuddyPress ScholarPress error, you are not allowed to assign Teachers.' ) );
+            wp_die( __( 'BuddyPress Courseware error, you are not allowed to assign Teachers.' ) );
         
         // Add an action every time a new teacher is added
         if( $field_value == __( 'Teacher', 'bpsp' ) && is_super_admin() )
-            do_action( 'scholarpress_new_teacher_added', $bp->displayed_user->id );
+            do_action( 'courseware_new_teacher_added', $bp->displayed_user->id );
         
         // Add an action every time a teacher is removed
         if( $field_value != __( 'Teacher', 'bpsp' ) )
-            do_action( 'scholarpress_new_teacher_removed', $bp->displayed_user->id );
+            do_action( 'courseware_new_teacher_removed', $bp->displayed_user->id );
     }
     
     /**
@@ -66,7 +66,7 @@ class BPSP_Roles {
         if( $subject )
             $content = $userdata->user_nicename . __( ' applied to become a teacher. Please review.', 'bpsp' );
         if( $body ) {
-            $fields_group_id = $this->field_group_id_from_name( __( 'ScholarPress LMS', 'bpsp' ) );
+            $fields_group_id = $this->field_group_id_from_name( __( 'BuddyPress Courseware', 'bpsp' ) );
             $admin_url = $userdata->user_url . 'profile/edit/group/' . $fields_group_id;
             $content = $userdata->user_nicename;
             $content.= __( ' applied to become a teacher. To review this profile, please follow the link below.', 'bpsp' );
@@ -120,18 +120,18 @@ class BPSP_Roles {
         global $bp;
         (array)$bp->profile->field_types[] = 'option';
         
-        if( BPSP_Roles::field_group_id_from_name( __( 'ScholarPress LMS', 'bpsp' ) ) )
+        if( BPSP_Roles::field_group_id_from_name( __( 'Courseware', 'bpsp' ) ) )
             return false;
         
         $bpsp_group_id = xprofile_insert_field_group(
             array(
-                name        => __( 'ScholarPress LMS', 'bpsp' ),
-                description => __( 'Students and Teachers fields. Do not delete as long as you use BuddyPress ScholarPress!', 'bpsp' ),
+                name        => __( 'Courseware', 'bpsp' ),
+                description => __( 'Students and Teachers fields. Do not delete as long as you use BuddyPress ScholarPress Courseware!', 'bpsp' ),
                 can_delete  => false
             )
         );
         if( !$bpsp_group_id )
-            wp_die( __( 'BuddyPress ScholarPress error when saving xProfile group.', 'bpsp' ) );
+            wp_die( __( 'BuddyPress Courseware error when saving xProfile group.', 'bpsp' ) );
         
         /* Create the radio buttons */
         xprofile_insert_field(
@@ -139,14 +139,14 @@ class BPSP_Roles {
                 field_group_id  => $bpsp_group_id,
                 name            => __( 'Role', 'bpsp' ),
                 can_delete      => false,
-                description     => __( 'You role when using ScholarPress. Every request requires moderation. Please be patient untill an administrator reviews it.', 'bpsp' ),
+                description     => __( 'You role when using Courseware. Every request requires moderation. Please be patient untill an administrator reviews it.', 'bpsp' ),
                 is_required     => false,
                 type            => 'radio'
             )
         );
         $bpsp_field_id = xprofile_get_field_id_from_name( __( 'Role', 'bpsp' ) );
         if( !$bpsp_field_id )
-            wp_die( __( 'BuddyPress ScholarPress error when saving xProfile field.', 'bpsp' ) );
+            wp_die( __( 'BuddyPress Courseware error when saving xProfile field.', 'bpsp' ) );
             
         /* Create the radio options */
         xprofile_insert_field(
@@ -187,7 +187,7 @@ class BPSP_Roles {
             !xprofile_get_field_id_from_name( __( 'Student' ) ) ||
             !xprofile_get_field_id_from_name( __( 'Apply for Teacher', 'bpsp' ) )
         )
-            wp_die( __( 'BuddyPress ScholarPress error when saving xProfile field options.', 'bpsp' ) );
+            wp_die( __( 'BuddyPress Courseware error when saving xProfile field options.', 'bpsp' ) );
             
         return true;
     }

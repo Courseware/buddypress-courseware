@@ -1,6 +1,6 @@
 <?php
 /*
-Plugin Name: BuddyPress ScholarPress LMS
+Plugin Name: BuddyPress ScholarPress Courseware
 Plugin URI: http://scholarpress.net/
 Description: A LMS for BuddyPress.
 Author: Stas Sușcov
@@ -32,6 +32,7 @@ add_action( 'init', 'bpsp_textdomain' );
  */
 function bpsp_registration() {
     BPSP_Courses::register_post_types();
+    
 }
 add_action( 'init', 'bpsp_registration' );
 
@@ -55,7 +56,7 @@ add_action( 'bp_init', 'bpsp_init' );
 function bpsp_activation() {
     BPSP_Roles::register_profile_fields();
 }
-register_activation_hook( 'scholarpress/scholarpress.php', 'bpsp_activation' );
+register_activation_hook( 'courseware/courseware.php', 'bpsp_activation' );
 
 /** TEMPORARY HELPERS **/
 function _d($stuff) {
