@@ -23,7 +23,7 @@ class BPSP_Courses {
         add_action( 'scholarpress_new_teacher_added', array( &$this, 'add_course_caps' ) );
         add_action( 'scholarpress_new_teacher_removed', array( &$this, 'remove_course_caps' ) );
         add_action( 'scholarpress_group_screen_handler', array( &$this, 'courses_screen_handler' ) );
-        add_action( 'scholarpress_group_nav_options', array( &$this, 'courses_add_nav_options' ) );
+        add_filter( 'scholarpress_group_nav_options', array( &$this, 'courses_add_nav_options' ) );
    }
     
     /**
@@ -104,7 +104,7 @@ class BPSP_Courses {
      */
     function courses_screen_handler( $action_vars ) {
         if( $action_vars[0] == 'new_course' )
-            add_action( 'bp_template_content', array( &$this, 'courses_add_screen' ) );
+            add_action( 'bp_template_content', array( &$this, 'courses_new_screen' ) );
         else
             add_action( 'bp_template_content', array( &$this, 'courses_list_screen' ) );
     }
@@ -114,8 +114,9 @@ class BPSP_Courses {
      *
      * Adds courses specific navigations options
      */
-    function courses_add_nav_options() {
-        echo "TODO: Get some nav options";
+    function courses_add_nav_options( $options ) {
+        $options[__( 'New Course' )] = $options[__( 'Home' )] . '/new_course';
+        return $options;
     }
     
     /**
