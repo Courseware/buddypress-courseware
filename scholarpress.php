@@ -14,6 +14,11 @@ Author URI: http://stas.nerd.ro/
 define( 'BPSP_VERSION', '0.1' );
 define( 'BPSP_PLUGIN_DIR', dirname( __FILE__ ) );
 
+/* Load the components */
+require_once( BPSP_PLUGIN_DIR . '/roles/bpsp_roles.class.php' );
+require_once( BPSP_PLUGIN_DIR . '/courses/bpsp_courses.class.php' );
+require_once( BPSP_PLUGIN_DIR . '/dashboard/bpsp_dashboard.class.php' );
+
 /**
  * i18n
  */
@@ -30,9 +35,13 @@ function bpsp_registration() {
 }
 add_action( 'init', 'bpsp_registration' );
 
-/* Load the components */
-require_once( BPSP_PLUGIN_DIR . '/roles/bpsp_roles.class.php' );
-require_once( BPSP_PLUGIN_DIR . '/courses/bpsp_courses.class.php' );
+/**
+ * On plugins load
+ */
+function bpsp_on_plugins_load() {
+    BPSP_Courses::activate_component();
+}
+add_action( 'plugins_loaded', 'bpsp_on_plugins_load', 5 );
 
 /* Initiate the componenets */
 function bpsp_init() {
