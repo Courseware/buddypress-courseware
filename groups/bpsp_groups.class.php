@@ -57,9 +57,6 @@ class BPSP_Groups {
 		$bp->is_single_item = true;
 		$bp->groups->current_group = &new BP_Groups_Group( $group_id );
 	}
-	
-	if ( !$bp->groups->current_group->user_has_access )
-	    return;
         
         $groups_link = $bp->root_domain . '/' . $bp->groups->slug . '/' . $bp->groups->current_group->slug . '/';        
         
@@ -76,7 +73,7 @@ class BPSP_Groups {
             ) );
 	    $this->nav_options[__( 'Home' )] = $groups_link . $bp->courseware->slug;
 	}
-        do_action('courseware_group_set_nav');
+        do_action( 'courseware_group_set_nav' );
     }
     
     /**

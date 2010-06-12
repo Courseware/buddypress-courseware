@@ -57,6 +57,7 @@ class BPSP_Courses {
             'query_var'     => false,
             'rewrite'       => false,
             'capabilities'  => array(
+                'publish_terms' => 'publish_courses',
                 'manage_terms'  => 'manage_courses',
                 'edit_terms'    => 'edit_courses',
                 'delete_terms'  => 'delete_courses',
@@ -97,14 +98,36 @@ class BPSP_Courses {
     }
     
     /**
+     * has_course_caps( $user_id )
+     *
+     * Checks if $user_id has course management capabilities
+     *
+     * @param Int $user_id ID of the user capabilities to be checked
+     * @return True if $user_id is eligible and False if not.
+     */
+    function has_course_caps( $user_id ) {
+        $is_ok = true;
+        
+        $user = new WP_User( $user_id );
+        foreach( $this->caps as $c )
+            if ( !$user->has_cap( $c ) )
+                $is_ok = false;
+        
+        return $is_ok;
+    }
+    
+    /**
      * courses_screen_handler( $action_vars )
      *
      * Courses screens handler.
      * Handles uris like groups/ID/courses/action
      */
     function courses_screen_handler( $action_vars ) {
-        if( $action_vars[0] == 'new_course' )
+        if( $action_vars[0] == 'new_course' ) {
+            //Load editor
+            add_action( 'bp_head', array( &$this, 'load_editor' ) );
             add_filter( 'courseware_group_template', array( &$this, 'courses_new_screen' ) );
+        }
         elseif ( $action_vars[0] == 'all' )
             add_filter( 'courseware_group_template', array( &$this, 'courses_list_screen' ) );
         else
@@ -120,7 +143,11 @@ class BPSP_Courses {
      * @return Array containing new nav options
      */
     function courses_add_nav_options( $options ) {
-        $options[__( 'New Course' )] = $options[__( 'Home' )] . '/new_course';
+        global $bp;
+        
+        if( $this->has_course_caps( $bp->loggedin_user->id ) )
+            $options[__( 'New Course' )] = $options[__( 'Home' )] . '/new_course';
+        
         $options[__( 'Courses' )] = $options[__( 'Home' )] . '/all';
         return $options;
     }
@@ -132,7 +159,18 @@ class BPSP_Courses {
      * Adds a UI to add new courses.
      */
     function courses_new_screen( $vars ) {
-        $vars['name'] = 'new';
+        global $bp;
+        
+        if( !$this->has_course_caps( $bp->loggedin_user->id ) )
+            wp_die( __( 'BuddyPress Courseware Error while forbidden user tried to add a new course.' ) );
+        
+        //TODO: Add logic
+        
+        $vars['name'] = 'new_course';
+        $vars['group_id'] = $bp->groups->current_group->id;
+        $vars['user_id'] = $bp->loggedin_user->id;
+        $vars['form_title'] = __( 'Add a new course' );
+        $vars['submit_title'] = __( 'Add a new course' );
         return $vars;
     }
     
@@ -156,6 +194,15 @@ class BPSP_Courses {
     function courses_list_screen( $vars ) {
         $vars['name'] = 'list';
         return $vars;
+    }
+    
+    function load_editor() {
+        wp_enqueue_script('post');
+        wp_enqueue_script( 'editor' );
+        wp_enqueue_script( 'utils' );
+        add_thickbox();
+        $media_upload_js = '/wp-admin/js/media-upload.js';
+        wp_enqueue_script('media-upload', get_bloginfo('wpurl') . $media_upload_js, array( 'thickbox' ), filemtime( ABSPATH . $media_upload_js) );
     }
 }
 ?>
