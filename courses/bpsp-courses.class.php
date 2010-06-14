@@ -20,6 +20,11 @@ class BPSP_Courses {
     );
     
     /**
+     * Current course id
+     */
+    var $current_course = null;
+    
+    /**
      * BPSP_Courses()
      *
      * Constructor. Loads the hooks and actions.
@@ -146,10 +151,50 @@ class BPSP_Courses {
             add_action( 'bp_head', array( &$this, 'load_editor' ) );
             add_filter( 'courseware_group_template', array( &$this, 'new_course_screen' ) );
         }
-        elseif ( $action_vars[0] == 'all' )
+        elseif ( $action_vars[0] == 'course' ) {
+            if( isset ( $action_vars[1] ) && $this->is_course( $action_vars[1] ) )
+                $this->current_course = $action_vars[1];
+            else {
+                wp_redirect( wp_redirect( get_option( 'siteurl' ) ) );
+            }
+            
+            if( isset ( $action_vars[2] ) && 'edit' == $action_vars[2] )
+                add_filter( 'courseware_group_template', array( &$this, 'edit_course_screen' ) );
+            else
+                add_filter( 'courseware_group_template', array( &$this, 'single_course_screen' ) );
+        }
+        elseif ( $action_vars[0] == 'courses' )
             add_filter( 'courseware_group_template', array( &$this, 'list_courses_screen' ) );
+    }
+    
+    /**
+     * is_course( $course_identifier )
+     *
+     * Checks if a course with $course_identifier exists
+     *
+     * @param $course_identifier ID or Name of the course to be checked
+     * @return Bool True if course exists and False is not.
+     */
+    function is_course( $course_identifier ) {
+        global $bp;
+        $course_query = array(
+            'post_type' => 'course',
+            'group_id' => $bp->groups->current_group->id,
+        );
+        
+        if( is_numeric( $course_identifier ) )
+            $course_query['p'] = $course_identifier;
         else
-            add_filter( 'courseware_group_template', array( &$this, 'courses_home_screen' ) );
+            $course_query['name'] = $course_identifier;
+        
+        $course = get_posts( $course_query );
+        
+        if( isset( $course[0] ) )
+            return true;
+        else
+            return false;
+        
+        return true;
     }
     
     /**
@@ -166,15 +211,18 @@ class BPSP_Courses {
         if( $this->has_course_caps( $bp->loggedin_user->id ) || is_super_admin() )
             $options[__( 'New Course' )] = $options[__( 'Home' )] . '/new_course';
         
-        $options[__( 'Courses' )] = $options[__( 'Home' )] . '/all';
+        $options[__( 'Courses' )] = $options[__( 'Home' )] . '/courses';
         return $options;
     }
     
     /**
-     * courses_add_screen( $vars )
+     * new_course_screen( $vars )
      *
      * Hooks into courses_screen_handler
      * Adds a UI to add new courses.
+     *
+     * @param Array $vars a set of variables received for this screen template
+     * @return Array $vars a set of variable passed to this screen template
      */
     function new_course_screen( $vars ) {
         global $bp;
@@ -196,7 +244,7 @@ class BPSP_Courses {
                 ));
                 if( $new_course_id ) {
                     wp_set_post_terms( $new_course_id, $new_course['group_id'], 'group_id' );
-                    $vars['redirect'] = $vars['nav_options'][ __('Home') ];
+                    $vars['message'] = __( 'New course was added.' );
                 }
             }
         }
@@ -210,25 +258,77 @@ class BPSP_Courses {
     }
     
     /**
-     * courses_add_screen( $vars )
+     * list_courses_screen( $vars )
      *
      * Hooks into courses_screen_handler
-     * Adds a dashboard UI
+     * Adds a UI to list courses.
+     *
+     * @param Array $vars a set of variables received for this screen template
+     * @return Array $vars a set of variable passed to this screen template
      */
-    function courses_home_screen( $vars ) {
-        $vars['name'] = 'home';
+    function list_courses_screen( $vars ) {
+        $courses = get_posts( array(
+            'post_type' => 'course',
+            'tag' => $bp->groups->current_group->id,
+            'numberposts' => get_option( 'posts_per_page', '10' ),
+        ));
+        
+        $vars['name'] = 'list_courses';
+        $vars['courses_hanlder_uri'] = $vars['current_uri'] . '/course/';
+        $vars['courses'] = $courses;
         return $vars;
     }
     
     /**
-     * courses_list_screen()
+     * single_course_screen( $vars )
      *
      * Hooks into courses_screen_handler
-     * Adds a UI to list courses.
+     * Displays a single course screen
+     *
+     * @param Array $vars a set of variables received for this screen template
+     * @return Array $vars a set of variable passed to this screen template
      */
-    function list_courses_screen( $vars ) {
-        $vars['name'] = 'list';
+    function single_course_screen( $vars ) {
+        $course_query = array(
+            'post_type' => 'course',
+            'tag' => $bp->groups->current_group->id,
+        );
+        if( is_numeric( $this->current_course ))
+            $course_query['p'] = $this->current_course;
+        else
+            $course_query['name'] = $this->current_course;
+        
+        $course = get_posts( $course_query );
+        
+        $vars['name'] = 'single_course';
+        $vars['course_uri'] = $vars['current_uri'] . '/course/';
+        if( isset( $course[0] ))
+            $vars['course'] = $course[0];
+        else
+            $vars['course'] = null;
         return $vars;
+    }
+    
+    /**
+     * edit_course_screen( $vars )
+     *
+     * Hooks into courses_screen_handler
+     * Displays a single course screen
+     *
+     * @param Array $vars a set of variables received for this screen template
+     * @return Array $vars a set of variable passed to this screen template
+     */
+    function edit_course_screen( $vars ) {
+        $course_query = array(
+            'post_type' => 'course',
+            'tag' => $bp->groups->current_group->id,
+        );
+        if( is_numeric( $this->current_course ))
+            $course_query['p'] = $this->current_course;
+        else
+            $course_query['name'] = $this->current_course;
+        
+        $course = get_posts( $course_query );
     }
     
     /**
@@ -237,7 +337,7 @@ class BPSP_Courses {
      * Loads editor scripts and styles
      */
     function load_editor() {
-        wp_enqueue_script('post');
+        wp_enqueue_script( 'post' );
         wp_enqueue_script( 'editor' );
         wp_enqueue_script( 'utils' );
         add_thickbox();

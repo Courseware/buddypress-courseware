@@ -1,7 +1,3 @@
-<?php
-if( $course == null )
-    wp_redirect( $current_uri );
-?>
 <div id="courseware-course">
     <div class="course-content">
         <h4 id="course-title"><?php echo $course->post_title; ?></h4>

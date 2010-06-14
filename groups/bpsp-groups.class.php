@@ -121,14 +121,12 @@ class BPSP_Groups {
     function load_template( $vars = '' ) {	
 	if( empty( $vars ) )
 	    $vars = array(
-	    'name' => '',
-	    'nav_options' => $this->nav_options,
-	    'current_option' => $this->current_nav_option,
-	    'redirect' => null,
+		'name' => 'home',
+		'nav_options' => $this->nav_options,
+		'current_uri' => $this->nav_options[__('Home')],
+		'current_option' => $this->current_nav_option,
+		'message' => '',
 	    );
-	
-	if( isset( $vars['redirect'] ) && $vars['redirect'] != null )
-	    wp_redirect( $vars['redirect'] );
 	
 	$templates_path = BPSP_PLUGIN_DIR . '/groups/templates/';
 	
