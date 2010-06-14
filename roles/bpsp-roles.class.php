@@ -21,7 +21,7 @@ class BPSP_Roles {
      */
     function profile_screen_new_request( $field_id, $field_value ) {
         //required to search for superadmins
-        require_once( ABSPATH . 'wp-admin/includes/user.php');
+        require_once ABSPATH . 'wp-admin/includes/user.php';
         
         global $bp;
         if( $field_value == __( 'Apply for Teacher', 'bpsp' ) ) {

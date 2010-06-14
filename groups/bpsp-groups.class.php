@@ -129,13 +129,13 @@ class BPSP_Groups {
 	$templates_path = BPSP_PLUGIN_DIR . '/groups/templates/';
 	
 	//Exclude internal templates like navigation
-	if( !$vars['name'] == 'nav' )
+	if(  !in_array( $vars['name'], array( 'nav' ) ) )
 	    apply_filters( 'courseware_group_template', &$vars );
 	
 	if( file_exists( $templates_path . $vars['name']. '.php' ) ) {
 	    ob_start();
 	    extract( $vars );
-	    include_once( $templates_path . $name . '.php' );
+	    include( $templates_path . $name . '.php' );
 	    echo ob_get_clean();
 	}
     }

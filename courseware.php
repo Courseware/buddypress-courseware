@@ -15,9 +15,9 @@ define( 'BPSP_VERSION', '0.1' );
 define( 'BPSP_PLUGIN_DIR', dirname( __FILE__ ) );
 
 /* Load the components */
-require_once( BPSP_PLUGIN_DIR . '/roles/bpsp_roles.class.php' );
-require_once( BPSP_PLUGIN_DIR . '/courses/bpsp_courses.class.php' );
-require_once( BPSP_PLUGIN_DIR . '/groups/bpsp_groups.class.php' );
+require_once BPSP_PLUGIN_DIR . '/roles/bpsp-roles.class.php';
+require_once BPSP_PLUGIN_DIR . '/courses/bpsp-courses.class.php';
+require_once BPSP_PLUGIN_DIR . '/groups/bpsp-groups.class.php';
 
 /**
  * i18n
