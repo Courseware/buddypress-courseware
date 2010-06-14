@@ -3,6 +3,11 @@ include_once ABSPATH . '/wp-admin/includes/media.php' ;
 require_once ABSPATH . '/wp-admin/includes/post.php' ;
 require_once BPSP_PLUGIN_DIR . '/groups/templates/helpers/new_course_helpers.php' ;
 ?>
+<?php if( $message ): ?>
+<div id="courseware-message" class="updated">
+    <?php echo $message; ?>
+</div>
+<?php endif; ?>
 <form action="<?php echo $current_option; ?>" method="post" id="new-course-form" name="new-course-form">
     <h5><?php echo $form_title; ?></h5>
     <div id="new-course-content">
