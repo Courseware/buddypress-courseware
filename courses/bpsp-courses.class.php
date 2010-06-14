@@ -58,12 +58,10 @@ class BPSP_Courses {
             'query_var'     => false,
             'rewrite'       => false,
             'capabilities'  => array(
-                'view_terms'    => 'view_courses',
-                'publish_terms' => 'publish_courses',
-                'manage_terms'  => 'manage_courses',
-                'edit_terms'    => 'edit_courses',
-                'delete_terms'  => 'delete_courses',
-                'assign_terms'  => 'assign_courses'
+                'manage_terms'  => 'manage_group_id',
+                'edit_terms'    => 'manage_group_id',
+                'delete_terms'  => 'manage_group_id',
+                'assign_terms'  => 'edit_courses'
                 )
         );
         register_taxonomy( 'group_id', 'course', $course_rel_def );
