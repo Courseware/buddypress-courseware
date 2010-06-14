@@ -152,14 +152,19 @@ class BPSP_Courses {
             add_filter( 'courseware_group_template', array( &$this, 'new_course_screen' ) );
         }
         elseif ( $action_vars[0] == 'course' ) {
-            if( isset ( $action_vars[1] ) && $this->is_course( $action_vars[1] ) )
+            if( isset ( $action_vars[1] ) && null != $this->is_course( $action_vars[1] ) )
                 $this->current_course = $action_vars[1];
             else {
                 wp_redirect( wp_redirect( get_option( 'siteurl' ) ) );
             }
             
-            if( isset ( $action_vars[2] ) && 'edit' == $action_vars[2] )
+            if( isset ( $action_vars[2] ) && 'edit' == $action_vars[2] ) {
+                add_action( 'bp_head', array( &$this, 'load_editor' ) );
                 add_filter( 'courseware_group_template', array( &$this, 'edit_course_screen' ) );
+            }
+            elseif( isset ( $action_vars[2] ) && 'delete' == $action_vars[2] ) {
+                add_filter( 'courseware_group_template', array( &$this, 'delete_course_screen' ) );
+            }
             else
                 add_filter( 'courseware_group_template', array( &$this, 'single_course_screen' ) );
         }
@@ -173,10 +178,14 @@ class BPSP_Courses {
      * Checks if a course with $course_identifier exists
      *
      * @param $course_identifier ID or Name of the course to be checked
-     * @return Bool True if course exists and False is not.
+     * @return Course object if course exists and null if not.
      */
-    function is_course( $course_identifier ) {
+    function is_course( $course_identifier = null ) {
         global $bp;
+        
+        if( !$course_identifier )
+            $this->current_course;
+        
         $course_query = array(
             'post_type' => 'course',
             'group_id' => $bp->groups->current_group->id,
@@ -190,9 +199,9 @@ class BPSP_Courses {
         $course = get_posts( $course_query );
         
         if( isset( $course[0] ) )
-            return true;
+            return $course[0];
         else
-            return false;
+            return null;
         
         return true;
     }
@@ -245,7 +254,9 @@ class BPSP_Courses {
                 if( $new_course_id ) {
                     wp_set_post_terms( $new_course_id, $new_course['group_id'], 'group_id' );
                     $vars['message'] = __( 'New course was added.' );
-                }
+                    return $this->list_courses_screen( $vars );
+                } else
+                    $vars['message'] = __( 'New course could not be added.' );
             }
         }
         
@@ -289,46 +300,97 @@ class BPSP_Courses {
      * @return Array $vars a set of variable passed to this screen template
      */
     function single_course_screen( $vars ) {
-        $course_query = array(
-            'post_type' => 'course',
-            'tag' => $bp->groups->current_group->id,
-        );
-        if( is_numeric( $this->current_course ))
-            $course_query['p'] = $this->current_course;
-        else
-            $course_query['name'] = $this->current_course;
+        global $bp;
+        $course = $this->is_course( $this->current_course );
         
-        $course = get_posts( $course_query );
+        if(  $course->post_author == $bp->loggedin_user->id || is_super_admin() )
+            $vars['show_edit'] = __( 'Edit Course' );
+        else
+            $vars['show_edit'] = null;
         
         $vars['name'] = 'single_course';
-        $vars['course_uri'] = $vars['current_uri'] . '/course/';
-        if( isset( $course[0] ))
-            $vars['course'] = $course[0];
-        else
-            $vars['course'] = null;
+        $vars['course_permalink'] = $vars['current_uri'] . '/course/' . $this->current_course;
+        $vars['course_edit_uri'] = $vars['current_uri'] . '/course/' . $this->current_course . '/edit';
+        $vars['course'] = $course;
         return $vars;
+    }
+    
+    /**
+     * delete_course_screen( $vars )
+     *
+     * Hooks into courses_screen_handler
+     * Delete course screen
+     *
+     * @param Array $vars a set of variables received for this screen template
+     * @return Array $vars a set of variable passed to this screen template
+     */
+    function delete_course_screen( $vars ) {
+        global $bp;
+        $course = $this->is_course( $this->current_course );
+        
+        if(  $course->post_author == $bp->loggedin_user->id || is_super_admin() ) {
+            wp_delete_post( $course->ID );
+        } else
+            wp_die( __( 'BuddyPress Courseware Error while forbidden user tried to delete a course.' ) );
+        
+        $vars['message'] = __( 'Course deleted successfully.' );
+        return $this->list_courses_screen( $vars );
     }
     
     /**
      * edit_course_screen( $vars )
      *
      * Hooks into courses_screen_handler
-     * Displays a single course screen
+     * Edit course screen
      *
      * @param Array $vars a set of variables received for this screen template
      * @return Array $vars a set of variable passed to this screen template
      */
     function edit_course_screen( $vars ) {
-        $course_query = array(
-            'post_type' => 'course',
-            'tag' => $bp->groups->current_group->id,
-        );
-        if( is_numeric( $this->current_course ))
-            $course_query['p'] = $this->current_course;
-        else
-            $course_query['name'] = $this->current_course;
+        global $bp;
         
-        $course = get_posts( $course_query );
+        $old_course = $this->is_course( $this->current_course );
+        $old_course->terms = wp_get_object_terms($old_course->ID, 'group_id' );
+        
+        if( !$this->has_course_caps( $bp->loggedin_user->id ) &&
+            $bp->loggedin_user->id != $old_course->post_author &&
+            $bp->groups->current_group->id != $old_course->terms[0]->name &&
+            !is_super_admin()
+        )
+            wp_die( __( 'BuddyPress Courseware Error while forbidden user tried to update the course.' ) );
+        
+        // Update course
+        if( isset( $_POST['course'] ) && $_POST['course']['object'] == 'group' ) {
+            $updated_course = $_POST['course'];
+            if( isset( $updated_course['title'] ) &&
+                isset( $updated_course['content'] ) &&
+                isset( $updated_course['group_id'] )
+            ) {
+                $updated_course['title'] = strip_tags( $updated_course['title'] );
+                $updated_course_id =  wp_update_post( array(
+                    'ID'            => $old_course->ID,
+                    'post_title'    => $updated_course['title'],
+                    'post_content'  => $updated_course['content'],
+                ));
+                
+                if( $updated_course_id )
+                    $vars['message'] = __( 'New course was updated.' );
+                else
+                    $vars['message'] = __( 'New course could not be updated.' );
+            }
+        }
+        
+        $vars['name'] = 'edit_course';
+        $vars['group_id'] = $bp->groups->current_group->id;
+        $vars['user_id'] = $bp->loggedin_user->id;
+        $vars['form_title'] = __( 'Edit course' );
+        $vars['submit_title'] = __( 'Update course' );
+        $vars['course'] = $this->is_course( $updated_course_id );
+        $vars['course_edit_uri'] = $vars['current_uri'] . '/course/' . $this->current_course . '/edit';
+        $vars['course_delete_uri'] = $vars['current_uri'] . '/course/' . $this->current_course . '/delete';
+        $vars['course_delete_title'] = __( 'Delete Course' );
+        $vars['course_permalink'] = $vars['current_uri'] . '/course/' . $this->current_course;
+        return $vars;
     }
     
     /**

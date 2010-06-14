@@ -8,7 +8,7 @@ require_once BPSP_PLUGIN_DIR . '/groups/templates/helpers/new_course_helpers.php
     <?php echo $message; ?>
 </div>
 <?php endif; ?>
-<form action="<?php echo $current_option; ?>" method="post" id="new-course-form" name="new-course-form">
+<form action="<?php echo $current_option; ?>" method="post" id="new-course-form">
     <h5><?php echo $form_title; ?></h5>
     <div id="new-course-content">
         <div id="new-course-content-title">

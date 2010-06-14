@@ -6,6 +6,7 @@
         </div>
     </div>
     <div class="course-meta">
+        <span class="meta">
         <?php
             printf(
                 __( 'Added on %1$s by %2$s.' ),
@@ -13,5 +14,11 @@
                 bp_core_get_userlink( $course->post_author )
             );
         ?>
+        </span>
+        <?php if( $show_edit ): ?>
+            <span class="edit-link">
+                <a href="<?php echo $course_edit_uri; ?>"><?php echo $show_edit ?></a>
+            </span>
+        <?php endif; ?>
     </div>
 </div>
