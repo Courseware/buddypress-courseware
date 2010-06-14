@@ -11,8 +11,13 @@ class BPSP_Courses {
         'publish_courses',
         'manage_courses',
         'edit_courses',
+        'edit_published_courses',
         'delete_courses',
-        'assign_courses'
+        'delete_published_courses',
+        'assign_courses',
+        'manage_group_id',
+        'upload_files',
+        'edit_files',
     );
     
     /**
@@ -64,7 +69,7 @@ class BPSP_Courses {
                 'assign_terms'  => 'edit_courses'
                 )
         );
-        register_taxonomy( 'group_id', 'course', $course_rel_def );
+        register_taxonomy( 'group_id', array( 'course' ), $course_rel_def );
         if( !get_taxonomy( 'group_id' ) )
             wp_die( __( 'BuddyPress Courseware error while registering courses taxonomies.', 'bpsp' ) );
     }

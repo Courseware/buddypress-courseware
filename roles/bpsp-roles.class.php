@@ -66,7 +66,7 @@ class BPSP_Roles {
         if( $subject )
             $content = $userdata->user_nicename . __( ' applied to become a teacher. Please review.', 'bpsp' );
         if( $body ) {
-            $fields_group_id = $this->field_group_id_from_name( __( 'BuddyPress Courseware', 'bpsp' ) );
+            $fields_group_id = $this->field_group_id_from_name( __( 'Courseware', 'bpsp' ) );
             $admin_url = $userdata->user_url . 'profile/edit/group/' . $fields_group_id;
             $content = $userdata->user_nicename;
             $content.= __( ' applied to become a teacher. To review this profile, please follow the link below.', 'bpsp' );
