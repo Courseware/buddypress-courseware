@@ -123,9 +123,13 @@ class BPSP_Groups {
 	    $vars = array(
 	    'name' => '',
 	    'nav_options' => $this->nav_options,
-	    'current_option' => $this->current_nav_option
+	    'current_option' => $this->current_nav_option,
+	    'redirect' => null,
 	    );
-	    
+	
+	if( isset( $vars['redirect'] ) && $vars['redirect'] != null )
+	    wp_redirect( $vars['redirect'] );
+	
 	$templates_path = BPSP_PLUGIN_DIR . '/groups/templates/';
 	
 	//Exclude internal templates like navigation

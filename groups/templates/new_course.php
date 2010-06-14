@@ -7,20 +7,20 @@ require_once BPSP_PLUGIN_DIR . '/groups/templates/helpers/new_course_helpers.php
     <h5><?php echo $form_title; ?></h5>
     <div id="new-course-content">
         <div id="new-course-content-title">
-             <input type="text" id="course-title" name="course-title"/>
+             <input type="text" id="course-title" name="course[title]"/>
         <div id="new-course-content-textarea">
             <div id="editor-toolbar">
                 <?php
                     echo bpsp_media_buttons();
-                    the_editor( '', 'course-content', 'title', false );
+                    the_editor( '', 'course[content]', 'course[title]', false );
                 ?>
             </div>
         </div>
         <div id="new-course-content-options">
-            <input type="hidden" id="new-course-post-object" name="new-course-post-object" value="groups"/>
-            <input type="hidden" id="new-course-post-in" name="new-course-post-in" value="<?php echo $group_id; ?>">
+            <input type="hidden" id="new-course-post-object" name="course[object]" value="group"/>
+            <input type="hidden" id="new-course-post-in" name="course[group_id]" value="<?php echo $group_id; ?>">
             <div id="new-course-content-submit">
-                <input type="submit" name="new-course-submit" id="new-course-submit" value="<?php echo $submit_title; ?>">
+                <input type="submit" name="course[submit]" id="new-course-submit" value="<?php echo $submit_title; ?>">
             </div>
         </div>
     </div>

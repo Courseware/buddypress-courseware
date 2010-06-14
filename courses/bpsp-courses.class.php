@@ -7,6 +7,7 @@ class BPSP_Courses {
      * Courses capabilities
      */
     var $caps = array(
+        'view_courses',
         'publish_courses',
         'manage_courses',
         'edit_courses',
@@ -57,6 +58,7 @@ class BPSP_Courses {
             'query_var'     => false,
             'rewrite'       => false,
             'capabilities'  => array(
+                'view_terms'    => 'view_courses',
                 'publish_terms' => 'publish_courses',
                 'manage_terms'  => 'manage_courses',
                 'edit_terms'    => 'edit_courses',
@@ -81,6 +83,11 @@ class BPSP_Courses {
         foreach( $this->caps as $c )
             if ( !$user->has_cap( $c ) )
                 $user->add_cap( $c );
+        
+        //Treat super admins
+        if( is_super_admin( $user_id ) )
+            if ( !$user->has_cap( 'edit_others_courses' ) )
+                $user->add_cap( 'edit_others_courses' );
     }
     
     /**
@@ -91,6 +98,10 @@ class BPSP_Courses {
      * @param Int $user_id ID of the user capabilities to be removed from
      */
     function remove_course_caps( $user_id ) {
+        //Treat super admins
+        if( is_super_admin( $user_id) )
+            return;
+        
         $user = new WP_User( $user_id );
         foreach( $this->caps as $c )
             if ( $user->has_cap( $c ) )
@@ -107,6 +118,11 @@ class BPSP_Courses {
      */
     function has_course_caps( $user_id ) {
         $is_ok = true;
+        
+        //Treat super admins
+        if( is_super_admin( $user_id ) ) {
+            $this->add_course_caps( $user_id );
+        }
         
         $user = new WP_User( $user_id );
         foreach( $this->caps as $c )
@@ -126,10 +142,10 @@ class BPSP_Courses {
         if( $action_vars[0] == 'new_course' ) {
             //Load editor
             add_action( 'bp_head', array( &$this, 'load_editor' ) );
-            add_filter( 'courseware_group_template', array( &$this, 'courses_new_screen' ) );
+            add_filter( 'courseware_group_template', array( &$this, 'new_course_screen' ) );
         }
         elseif ( $action_vars[0] == 'all' )
-            add_filter( 'courseware_group_template', array( &$this, 'courses_list_screen' ) );
+            add_filter( 'courseware_group_template', array( &$this, 'list_courses_screen' ) );
         else
             add_filter( 'courseware_group_template', array( &$this, 'courses_home_screen' ) );
     }
@@ -145,7 +161,7 @@ class BPSP_Courses {
     function courses_add_nav_options( $options ) {
         global $bp;
         
-        if( $this->has_course_caps( $bp->loggedin_user->id ) )
+        if( $this->has_course_caps( $bp->loggedin_user->id ) || is_super_admin() )
             $options[__( 'New Course' )] = $options[__( 'Home' )] . '/new_course';
         
         $options[__( 'Courses' )] = $options[__( 'Home' )] . '/all';
@@ -158,13 +174,30 @@ class BPSP_Courses {
      * Hooks into courses_screen_handler
      * Adds a UI to add new courses.
      */
-    function courses_new_screen( $vars ) {
+    function new_course_screen( $vars ) {
         global $bp;
         
-        if( !$this->has_course_caps( $bp->loggedin_user->id ) )
+        if( !$this->has_course_caps( $bp->loggedin_user->id ) && !is_super_admin() )
             wp_die( __( 'BuddyPress Courseware Error while forbidden user tried to add a new course.' ) );
         
-        //TODO: Add logic
+        // Save new course
+        if( isset( $_POST['course'] ) && $_POST['course']['object'] == 'group' ) {
+            $new_course = $_POST['course'];
+            if( isset( $new_course['title'] ) && isset( $new_course['content'] ) && isset( $new_course['group_id'] ) ) {
+                $new_course['title'] = strip_tags( $new_course['title'] );
+                $new_course_id =  wp_insert_post( array(
+                    'post_author'   => $bp->loggedin_user->id,
+                    'post_title'    => $new_course['title'],
+                    'post_content'  => $new_course['content'],
+                    'post_status'   => 'publish',
+                    'post_type'     => 'course',
+                ));
+                if( $new_course_id ) {
+                    wp_set_post_terms( $new_course_id, $new_course['group_id'], 'group_id' );
+                    $vars['redirect'] = $vars['nav_options'][ __('Home') ];
+                }
+            }
+        }
         
         $vars['name'] = 'new_course';
         $vars['group_id'] = $bp->groups->current_group->id;
@@ -191,11 +224,16 @@ class BPSP_Courses {
      * Hooks into courses_screen_handler
      * Adds a UI to list courses.
      */
-    function courses_list_screen( $vars ) {
+    function list_courses_screen( $vars ) {
         $vars['name'] = 'list';
         return $vars;
     }
     
+    /**
+     * load_editor()
+     *
+     * Loads editor scripts and styles
+     */
     function load_editor() {
         wp_enqueue_script('post');
         wp_enqueue_script( 'editor' );
