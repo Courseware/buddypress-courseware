@@ -64,7 +64,7 @@ class BPSP_Courses {
             'show_ui'       => true, //TODO: set to false when stable
             'hierarchical'  => false,
             'label'         => __( 'Group ID', 'bpsp'),
-            'query_var'     => false,
+            'query_var'     => true,
             'rewrite'       => false,
             'capabilities'  => array(
                 'manage_terms'  => 'manage_group_id',
@@ -198,7 +198,7 @@ class BPSP_Courses {
         
         $course = get_posts( $course_query );
         
-        if( isset( $course[0] ) )
+        if( !empty( $course[0] ) )
             return $course[0];
         else
             return null;
@@ -278,13 +278,16 @@ class BPSP_Courses {
      * @return Array $vars a set of variable passed to this screen template
      */
     function list_courses_screen( $vars ) {
+        global $bp;
         $courses = get_posts( array(
             'post_type' => 'course',
-            'tag' => $bp->groups->current_group->id,
+            'group_id' => $bp->groups->current_group->id,
             'numberposts' => get_option( 'posts_per_page', '10' ),
         ));
         
         $vars['name'] = 'list_courses';
+        $vars['no_courses_title'] = __( 'No courses were added.' );
+        $vars['courses_meta_title'] = __( 'added on %1$s by %2$s.' );
         $vars['courses_hanlder_uri'] = $vars['current_uri'] . '/course/';
         $vars['courses'] = $courses;
         return $vars;
