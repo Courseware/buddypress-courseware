@@ -24,9 +24,10 @@ require_once BPSP_PLUGIN_DIR . '/groups/templates/helpers/new_course_helpers.php
         <div id="update-course-content-options">
             <input type="hidden" id="update-course-post-object" name="course[object]" value="group"/>
             <input type="hidden" id="update-course-post-in" name="course[group_id]" value="<?php echo $group_id; ?>">
+            <?php echo $nonce ? $nonce: ''; ?>
             <div id="update-course-submit">
                 <input type="submit" name="course[submit]" id="update-course-submit" value="<?php echo $submit_title; ?>">
-                <a href="<?php echo $course_delete_uri; ?>"><?php echo $course_delete_title; ?></a>
+                <a href="<?php echo $delete_nonce; ?>"><?php echo $course_delete_title; ?></a>
             </div>
         </div>
     </div>

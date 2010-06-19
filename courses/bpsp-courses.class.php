@@ -235,29 +235,34 @@ class BPSP_Courses {
      */
     function new_course_screen( $vars ) {
         global $bp;
+        $nonce_name = 'new_course';
         
         if( !$this->has_course_caps( $bp->loggedin_user->id ) && !is_super_admin() )
             wp_die( __( 'BuddyPress Courseware Error while forbidden user tried to add a new course.' ) );
         
         // Save new course
-        if( isset( $_POST['course'] ) && $_POST['course']['object'] == 'group' ) {
+        if( isset( $_POST['course'] ) && $_POST['course']['object'] == 'group' && isset( $_POST['_wpnonce'] ) ) {
             $new_course = $_POST['course'];
-            if( isset( $new_course['title'] ) && isset( $new_course['content'] ) && isset( $new_course['group_id'] ) ) {
-                $new_course['title'] = strip_tags( $new_course['title'] );
-                $new_course_id =  wp_insert_post( array(
-                    'post_author'   => $bp->loggedin_user->id,
-                    'post_title'    => $new_course['title'],
-                    'post_content'  => $new_course['content'],
-                    'post_status'   => 'publish',
-                    'post_type'     => 'course',
-                ));
-                if( $new_course_id ) {
-                    wp_set_post_terms( $new_course_id, $new_course['group_id'], 'group_id' );
-                    $vars['message'] = __( 'New course was added.' );
-                    return $this->list_courses_screen( $vars );
-                } else
-                    $vars['message'] = __( 'New course could not be added.' );
-            }
+            $is_nonce = wp_verify_nonce( $_POST['_wpnonce'], $nonce_name );
+            if( true != $is_nonce ) 
+                $vars['message'] = __( 'Nonce Error while adding a course.' );
+            else
+                if( isset( $new_course['title'] ) && isset( $new_course['content'] ) && isset( $new_course['group_id'] ) && $is_nonce ) {
+                    $new_course['title'] = strip_tags( $new_course['title'] );
+                    $new_course_id =  wp_insert_post( array(
+                        'post_author'   => $bp->loggedin_user->id,
+                        'post_title'    => $new_course['title'],
+                        'post_content'  => $new_course['content'],
+                        'post_status'   => 'publish',
+                        'post_type'     => 'course',
+                    ));
+                    if( $new_course_id ) {
+                        wp_set_post_terms( $new_course_id, $new_course['group_id'], 'group_id' );
+                        $vars['message'] = __( 'New course was added.' );
+                        return $this->list_courses_screen( $vars );
+                    } else
+                        $vars['message'] = __( 'New course could not be added.' );
+                }
         }
         
         $vars['name'] = 'new_course';
@@ -265,6 +270,7 @@ class BPSP_Courses {
         $vars['user_id'] = $bp->loggedin_user->id;
         $vars['form_title'] = __( 'Add a new course' );
         $vars['submit_title'] = __( 'Add a new course' );
+        $vars['nonce'] = wp_nonce_field( $nonce_name, '_wpnonce', true, false );
         return $vars;
     }
     
@@ -330,8 +336,18 @@ class BPSP_Courses {
     function delete_course_screen( $vars ) {
         global $bp;
         $course = $this->is_course( $this->current_course );
+        $nonce_name = 'delete_course';
+        $is_nonce = false;
         
-        if(  $course->post_author == $bp->loggedin_user->id || is_super_admin() ) {
+        if( isset( $_GET['_wpnonce'] ) )
+            $is_nonce = wp_verify_nonce( $_GET['_wpnonce'], $nonce_name );
+        
+        if( true != $is_nonce ) {
+            $vars['message'] = __( 'Nonce Error while deleting a course.' );
+            return $this->list_courses_screen( $vars );
+        }
+        
+        if(  ( $course->post_author == $bp->loggedin_user->id ) || is_super_admin() ) {
             wp_delete_post( $course->ID );
         } else
             wp_die( __( 'BuddyPress Courseware Error while forbidden user tried to delete a course.' ) );
@@ -351,6 +367,7 @@ class BPSP_Courses {
      */
     function edit_course_screen( $vars ) {
         global $bp;
+        $nonce_name = 'edit_course';
         
         $old_course = $this->is_course( $this->current_course );
         $old_course->terms = wp_get_object_terms($old_course->ID, 'group_id' );
@@ -363,24 +380,28 @@ class BPSP_Courses {
             wp_die( __( 'BuddyPress Courseware Error while forbidden user tried to update the course.' ) );
         
         // Update course
-        if( isset( $_POST['course'] ) && $_POST['course']['object'] == 'group' ) {
+        if( isset( $_POST['course'] ) && $_POST['course']['object'] == 'group' && isset( $_POST['_wpnonce'] ) ) {
             $updated_course = $_POST['course'];
-            if( isset( $updated_course['title'] ) &&
-                isset( $updated_course['content'] ) &&
-                isset( $updated_course['group_id'] )
-            ) {
-                $updated_course['title'] = strip_tags( $updated_course['title'] );
-                $updated_course_id =  wp_update_post( array(
-                    'ID'            => $old_course->ID,
-                    'post_title'    => $updated_course['title'],
-                    'post_content'  => $updated_course['content'],
-                ));
-                
-                if( $updated_course_id )
-                    $vars['message'] = __( 'New course was updated.' );
-                else
-                    $vars['message'] = __( 'New course could not be updated.' );
-            }
+            $is_nonce = wp_verify_nonce( $_POST['_wpnonce'], $nonce_name );
+            if( true != $is_nonce )
+                $vars['message'] = __( 'Nonce Error while editing a course.' );
+            else 
+                if( isset( $updated_course['title'] ) &&
+                    isset( $updated_course['content'] ) &&
+                    isset( $updated_course['group_id'] )
+                ) {
+                    $updated_course['title'] = strip_tags( $updated_course['title'] );
+                    $updated_course_id =  wp_update_post( array(
+                        'ID'            => $old_course->ID,
+                        'post_title'    => $updated_course['title'],
+                        'post_content'  => $updated_course['content'],
+                    ));
+                    
+                    if( $updated_course_id )
+                        $vars['message'] = __( 'New course was updated.' );
+                    else
+                        $vars['message'] = __( 'New course could not be updated.' );
+                }
         }
         
         $vars['name'] = 'edit_course';
@@ -393,6 +414,8 @@ class BPSP_Courses {
         $vars['course_delete_uri'] = $vars['current_uri'] . '/course/' . $this->current_course . '/delete';
         $vars['course_delete_title'] = __( 'Delete Course' );
         $vars['course_permalink'] = $vars['current_uri'] . '/course/' . $this->current_course;
+        $vars['nonce'] = wp_nonce_field( $nonce_name, '_wpnonce', true, false );
+        $vars['delete_nonce'] = add_query_arg( '_wpnonce', wp_create_nonce( 'delete_course' ), $vars['course_delete_uri'] );
         return $vars;
     }
     
