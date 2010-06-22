@@ -15,8 +15,11 @@ define( 'BPSP_VERSION', '0.1' );
 define( 'BPSP_PLUGIN_DIR', dirname( __FILE__ ) );
 
 /* Load the components */
+require_once BPSP_PLUGIN_DIR . '/wordpress/bpsp-wordpress.class.php';
 require_once BPSP_PLUGIN_DIR . '/roles/bpsp-roles.class.php';
 require_once BPSP_PLUGIN_DIR . '/courses/bpsp-courses.class.php';
+//require_once BPSP_PLUGIN_DIR . '/schedules/bpsp-schedules.class.php';
+//require_once BPSP_PLUGIN_DIR . '/assignments/bpsp-assignments.class.php';
 require_once BPSP_PLUGIN_DIR . '/groups/bpsp-groups.class.php';
 
 /**
@@ -32,6 +35,7 @@ add_action( 'init', 'bpsp_textdomain' );
  */
 function bpsp_registration() {
     BPSP_Courses::register_post_types();
+    BPSP_Assignments::register_post_types();
 }
 add_action( 'init', 'bpsp_registration' );
 
@@ -45,8 +49,11 @@ add_action( 'plugins_loaded', 'bpsp_on_plugins_load', 5 );
 
 /* Initiate the componenets */
 function bpsp_init() {
+    new BPSP_WordPress();
     new BPSP_Roles();
     new BPSP_Courses();
+    //new BPSP_Schedules();
+    //new BPSP_Assignments();
     new BPSP_Groups();
 }
 add_action( 'bp_init', 'bpsp_init' );

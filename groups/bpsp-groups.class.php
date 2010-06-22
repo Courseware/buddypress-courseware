@@ -71,7 +71,7 @@ class BPSP_Groups {
 		'user_has_access' => $bp->groups->current_group->user_has_access,
 		'item_css_id' => 'courseware-group'
             ) );
-	    $this->nav_options[__( 'Home' )] = $groups_link . $bp->courseware->slug;
+	    $this->nav_options[__( 'Home', 'bpsp' )] = $groups_link . $bp->courseware->slug;
 	}
         do_action( 'courseware_group_set_nav' );
     }
@@ -85,7 +85,7 @@ class BPSP_Groups {
         global $bp;
 	
         if ( $bp->current_component == $bp->groups->slug && $bp->current_action == $bp->courseware->slug ) {
-	    $this->current_nav_option =  $this->nav_options[__( 'Home' )];
+	    $this->current_nav_option =  $this->nav_options[__( 'Home', 'bpsp' )];
 	    
 	    if( $bp->action_variables[0] )
 		$this->current_nav_option .= '/' . $bp->action_variables[0];
@@ -123,7 +123,7 @@ class BPSP_Groups {
 	    $vars = array(
 		'name' => 'home',
 		'nav_options' => $this->nav_options,
-		'current_uri' => $this->nav_options[__('Home')],
+		'current_uri' => $this->nav_options[__( 'Home', 'bpsp' )],
 		'current_option' => $this->current_nav_option,
 		'message' => '',
 	    );
