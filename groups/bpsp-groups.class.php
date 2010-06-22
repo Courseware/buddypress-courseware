@@ -105,7 +105,7 @@ class BPSP_Groups {
     function nav_options() {
         apply_filters( 'courseware_group_nav_options', &$this->nav_options );
 	$this->load_template( array(
-	    'name' => 'nav',
+	    'name' => '_nav',
 	    'nav_options' => $this->nav_options,
 	    'current_option' => $this->current_nav_option
 	));
@@ -117,8 +117,10 @@ class BPSP_Groups {
      * Loads a template for displaying group screens
      *
      * @param Array $vars of options
+     * @return template $content if $vars['echo'] == false
      */
-    function load_template( $vars = '' ) {	
+    function load_template( $vars = '' ) {
+	$content = '';
 	if( empty( $vars ) )
 	    $vars = array(
 		'name' => 'home',
@@ -126,20 +128,29 @@ class BPSP_Groups {
 		'current_uri' => $this->nav_options[__( 'Home', 'bpsp' )],
 		'current_option' => $this->current_nav_option,
 		'message' => '',
+		'echo' => true,
 	    );
+	
+	if( !isset( $vars['echo'] ) )
+	    $vars['echo'] = true;
 	
 	$templates_path = BPSP_PLUGIN_DIR . '/groups/templates/';
 	
-	//Exclude internal templates like navigation
-	if(  !in_array( $vars['name'], array( 'nav' ) ) )
+	//Exclude internal templates like navigation, starts with an underscore
+	if(  substr( $vars['name'], 0, 1) != '_' )
 	    apply_filters( 'courseware_group_template', &$vars );
 	
 	if( file_exists( $templates_path . $vars['name']. '.php' ) ) {
 	    ob_start();
 	    extract( $vars );
 	    include( $templates_path . $name . '.php' );
-	    echo ob_get_clean();
+	    $content = ob_get_clean();
 	}
+	
+	if( $vars['echo'] )
+	    echo $content;
+	else
+	    return $content;
     }
 }
 ?>

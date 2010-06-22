@@ -27,7 +27,9 @@ require_once BPSP_PLUGIN_DIR . '/groups/templates/helpers/new_course_helpers.php
             <?php echo $nonce ? $nonce: ''; ?>
             <div id="update-course-submit">
                 <input type="submit" name="course[submit]" id="update-course-submit" value="<?php echo $submit_title; ?>">
-                <a href="<?php echo $delete_nonce; ?>"><?php echo $course_delete_title; ?></a>
+                <?php if( $delete_nonce ): ?>
+                    <a href="<?php echo $delete_nonce; ?>"><?php echo $course_delete_title; ?></a>
+                <?php endif; ?>
             </div>
         </div>
     </div>

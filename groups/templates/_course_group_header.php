@@ -1,16 +1,15 @@
 <?php setup_postdata( $course ); ?>
-<div id="courseware-course">
+<div id="courseware-course-header">
     <div class="course-content">
-        <h4 id="course-title"><?php echo $course->post_title; ?></h4>
         <div id="course-body">
-            <?php the_content(); ?>
+            <?php the_excerpt(); ?>
         </div>
     </div>
     <div class="course-meta">
         <span class="meta">
-        <?php
+        <?php 
             printf(
-                __( 'Added on %1$s by %2$s.' ),
+                __( '%1$s by %2$s.' ),
                 mysql2date( get_option('date_format'), $course->post_date ),
                 bp_core_get_userlink( $course->post_author )
             );

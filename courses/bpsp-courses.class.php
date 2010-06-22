@@ -201,7 +201,33 @@ class BPSP_Courses {
         if( !empty( $course[0] ) )
             return $course[0];
         else
-            return null;   
+            return null;
+    }
+    
+    /**
+     * has_courses()
+     *
+     * Checks if a group has courses
+     * @param Int $group_id the ID of the group, default $bp->groups->current_group->id
+     * @return null if no groups and Course object if has courses.
+     */
+    function has_courses( $group_id = null ) {
+        global $bp;
+        
+        if( !$group_id )
+            $group_id = $bp->groups->current_group->id;
+        
+        $course_query = array(
+            'post_type' => 'course',
+            'group_id' => $group_id,
+        );
+        
+        $course = get_posts( $course_query );
+        
+        if( !empty( $course ) )
+            return $course;
+        else
+            return null;
     }
     
     /**
