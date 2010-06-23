@@ -10,7 +10,7 @@
         <span class="meta">
         <?php
             printf(
-                __( 'Added on %1$s by %2$s.' ),
+                $course_meta_title,
                 mysql2date( get_option('date_format'), $course->post_date ),
                 bp_core_get_userlink( $course->post_author )
             );

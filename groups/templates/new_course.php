@@ -1,7 +1,7 @@
 <?php
 include_once ABSPATH . '/wp-admin/includes/media.php' ;
 require_once ABSPATH . '/wp-admin/includes/post.php' ;
-require_once BPSP_PLUGIN_DIR . '/groups/templates/helpers/new_course_helpers.php' ;
+require_once BPSP_PLUGIN_DIR . '/groups/templates/helpers/editor_helpers.php' ;
 ?>
 <?php if( $message ): ?>
 <div id="courseware-message" class="updated">
@@ -12,7 +12,11 @@ require_once BPSP_PLUGIN_DIR . '/groups/templates/helpers/new_course_helpers.php
     <h5><?php echo $form_title; ?></h5>
     <div id="new-course-content">
         <div id="new-course-content-title">
-             <input type="text" id="course-title" name="course[title]"/>
+            <label for="content[title]">
+                <?php echo $label_title; ?>
+                <input type="text" id="course-title" name="course[title]"/>
+            </label>
+        </div>
         <div id="new-course-content-textarea">
             <div id="editor-toolbar">
                 <?php

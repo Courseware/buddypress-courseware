@@ -1,7 +1,7 @@
 <?php
 include_once ABSPATH . '/wp-admin/includes/media.php' ;
 require_once ABSPATH . '/wp-admin/includes/post.php' ;
-require_once BPSP_PLUGIN_DIR . '/groups/templates/helpers/new_course_helpers.php' ;
+require_once BPSP_PLUGIN_DIR . '/groups/templates/helpers/editor_helpers.php' ;
 ?>
 <?php if( $message ): ?>
 <div id="courseware-message" class="updated">
@@ -9,10 +9,14 @@ require_once BPSP_PLUGIN_DIR . '/groups/templates/helpers/new_course_helpers.php
 </div>
 <?php endif; ?>
 <form action="<?php echo $course_edit_uri; ?>" method="post" id="update-course-form">
-    <h5><?php echo $form_title; ?> &mdash; <a href="<?php echo $course_permalink ?>"><?php _e( 'Preview' ); ?></a></h5>
+    <h5><?php echo $form_title; ?> &mdash; <a href="<?php echo $course_permalink ?>"><?php echo $label_preview ?></a></h5>
     <div id="update-course-content">
         <div id="update-course-content-title">
-             <input type="text" id="course-title" name="course[title]" value="<?php echo $course->post_title; ?>"/>
+            <label for="course[title]">
+                <?php echo $label_title; ?>
+                <input type="text" id="course-title" name="course[title]" value="<?php echo $course->post_title; ?>"/>
+            </label>
+        </div>
         <div id="update-course-content-textarea">
             <div id="editor-toolbar">
                 <?php
