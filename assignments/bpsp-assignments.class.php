@@ -291,12 +291,6 @@ class BPSP_Assignments {
         $vars['name'] = 'new_assignment';
         $vars['group_id'] = $bp->groups->current_group->id;
         $vars['user_id'] = $bp->loggedin_user->id;
-        $vars['label_title'] = __( 'Title', 'bpsp' );
-        $vars['label_course'] = __( 'Course', 'bpsp' );
-        $vars['label_due_date'] = __( 'Due date', 'bpsp' );
-        $vars['dtpicker_months'] = __( "'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'", 'bpsp' );
-        $vars['form_title'] = __( 'Add a new assignment', 'bpsp' );
-        $vars['submit_title'] = __( 'Add a new assignment', 'bpsp' );
         $vars['nonce'] = wp_nonce_field( $nonce_name, '_wpnonce', true, false );
         return $vars;
     }
@@ -319,8 +313,6 @@ class BPSP_Assignments {
         ));
         
         $vars['name'] = 'list_assignments';
-        $vars['no_assignments_title'] = __( 'No assignments were added.', 'bpsp' );
-        $vars['assignments_meta_title'] = __( 'added on %1$s by %2$s.', 'bpsp' );
         $vars['assignments_hanlder_uri'] = $vars['current_uri'] . '/assignment/';
         $vars['assignments'] = $assignments;
         return $vars;
@@ -340,18 +332,16 @@ class BPSP_Assignments {
         $assignment = $this->is_assignment( $this->current_assignment );
         
         if(  $assignment->post_author == $bp->loggedin_user->id || is_super_admin() )
-            $vars['show_edit'] = __( 'Edit Assignment', 'bpsp' );
+            $vars['show_edit'] = true;
         else
             $vars['show_edit'] = null;
         
         $vars['name'] = 'single_assignment';
-        $vars['due_date_label'] = __( 'Due date' ); 
-        $vars['assignment_meta_title'] = __( 'added on %1$s by %2$s for %3$s.', 'bpsp' );
         $vars['assignment_permalink'] = $vars['current_uri'] . '/assignment/' . $this->current_assignment;
         $vars['assignment_edit_uri'] = $vars['current_uri'] . '/assignment/' . $this->current_assignment . '/edit';
         $vars['course_permalink'] = $vars['current_uri'] . '/course/' . $assignment->course->ID;
         $vars['assignment'] = $assignment;
-        return $vars;
+        return apply_filters( 'courseware_assignment', $vars );
     }
     
     /**
@@ -446,18 +436,10 @@ class BPSP_Assignments {
         $vars['name'] = 'edit_assignment';
         $vars['group_id'] = $bp->groups->current_group->id;
         $vars['user_id'] = $bp->loggedin_user->id;
-        $vars['label_preview'] = __( 'Preview', 'bpsp' );
-        $vars['label_title'] = __( 'Title', 'bpsp' );
-        $vars['label_course'] = __( 'Course', 'bpsp' );
-        $vars['label_due_date'] = __( 'Due date', 'bpsp' );
-        $vars['dtpicker_months'] = __( "'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'", 'bpsp' );
-        $vars['form_title'] = __( 'Edit course', 'bpsp' );
-        $vars['submit_title'] = __( 'Update course', 'bpsp' );
         $vars['courses'] = BPSP_Courses::has_courses( $bp->groups->current_group->id );
         $vars['assignment'] = $this->is_assignment( $updated_assignment_id );
         $vars['assignment_edit_uri'] = $vars['current_uri'] . '/assignment/' . $this->current_assignment . '/edit';
         $vars['assignment_delete_uri'] = $vars['current_uri'] . '/assignment/' . $this->current_assignment . '/delete';
-        $vars['assignment_delete_title'] = __( 'Delete Assignment', 'bpsp' );
         $vars['assignment_permalink'] = $vars['current_uri'] . '/assignment/' . $this->current_assignment;
         $vars['nonce'] = wp_nonce_field( $nonce_name, '_wpnonce', true, false );
         $vars['delete_nonce'] = add_query_arg( '_wpnonce', wp_create_nonce( 'delete_assignment' ), $vars['assignment_delete_uri'] );

@@ -9,11 +9,11 @@ require_once BPSP_PLUGIN_DIR . '/groups/templates/helpers/editor_helpers.php' ;
 </div>
 <?php endif; ?>
 <form action="<?php echo $current_option; ?>" method="post" id="new-course-form">
-    <h5><?php echo $form_title; ?></h5>
+    <h5><?php _e( 'Add a new course', 'bpsp' ); ?></h5>
     <div id="new-course-content">
         <div id="new-course-content-title">
             <label for="content[title]">
-                <?php echo $label_title; ?>
+                <?php _e( 'Title', 'bpsp' ); ?>
                 <input type="text" id="course-title" name="course[title]"/>
             </label>
         </div>
@@ -30,7 +30,7 @@ require_once BPSP_PLUGIN_DIR . '/groups/templates/helpers/editor_helpers.php' ;
             <input type="hidden" id="new-course-post-in" name="course[group_id]" value="<?php echo $group_id; ?>">
             <?php echo $nonce ? $nonce: ''; ?>
             <div id="new-course-content-submit">
-                <input type="submit" name="course[submit]" id="new-course-submit" value="<?php echo $submit_title; ?>">
+                <input type="submit" name="course[submit]" id="new-course-submit" value="<?php _e( 'Add a new course', 'bpsp' ); ?>">
             </div>
         </div>
     </div>

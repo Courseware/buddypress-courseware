@@ -9,17 +9,17 @@ require_once BPSP_PLUGIN_DIR . '/groups/templates/helpers/editor_helpers.php' ;
 </div>
 <?php endif; ?>
 <form action="<?php echo $current_option; ?>" method="post" id="new-assignment-form">
-    <h5><?php echo $form_title; ?></h5>
+    <h5><?php _e( 'Add a new assignment', 'bpsp' ); ?></h5>
     <div id="new-assignment-content">
         <div id="new-assignment-content-title">
             <label for="assignment[title]">
-                <?php echo $label_title; ?>
+                <?php _e( 'Title', 'bpsp' ); ?>
                 <input type="text" id="assignment-title" name="assignment[title]"/>
             </label>
         </div>
         <div id="new-assignment-course">
             <label for="assignment[course_id]">
-                <?php echo $label_course; ?>
+                <?php _e( 'Course', 'bpsp' ); ?>
                 <select name="assignment[course_id]">
                     <?php foreach( $courses as $c ): ?>
                         <option value="<?php echo $c->ID; ?>"><?php echo $c->post_title; ?></option>
@@ -29,10 +29,10 @@ require_once BPSP_PLUGIN_DIR . '/groups/templates/helpers/editor_helpers.php' ;
         </div>
         <div id="new-assignment-due-date">
             <script type="text/javascript">
-                var dtpicker_months = { months: [<?php echo $dtpicker_months; ?>] };
+                var dtpicker_months = { months: [<?php _e( "'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'", 'bpsp' ); ?>] };
             </script>
             <label for="assignment[due_date]">
-                <?php echo $label_due_date; ?>
+                <?php _e( 'Due date', 'bpsp' ); ?>
                 <input type="datetime-local" min="<?php echo date('c'); ?>" name="assignment[due_date]" />
             </label>
         </div>
@@ -49,7 +49,7 @@ require_once BPSP_PLUGIN_DIR . '/groups/templates/helpers/editor_helpers.php' ;
             <input type="hidden" id="new-assignment-post-in" name="assignment[group_id]" value="<?php echo $group_id; ?>">
             <?php echo $nonce ? $nonce: ''; ?>
             <div id="new-assignment-content-submit">
-                <input type="submit" name="assignment[submit]" id="new-assignment-submit" value="<?php echo $submit_title; ?>">
+                <input type="submit" name="assignment[submit]" id="new-assignment-submit" value="<?php _e( 'Add a new assignment', 'bpsp' ); ?>">
             </div>
         </div>
     </div>

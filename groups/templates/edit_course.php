@@ -9,11 +9,11 @@ require_once BPSP_PLUGIN_DIR . '/groups/templates/helpers/editor_helpers.php' ;
 </div>
 <?php endif; ?>
 <form action="<?php echo $course_edit_uri; ?>" method="post" id="update-course-form">
-    <h5><?php echo $form_title; ?> &mdash; <a href="<?php echo $course_permalink ?>"><?php echo $label_preview ?></a></h5>
+    <h5><?php _e( 'Edit course', 'bpsp' ); ?> &mdash; <a href="<?php echo $course_permalink ?>"><?php _e( 'Preview', 'bpsp' ); ?></a></h5>
     <div id="update-course-content">
         <div id="update-course-content-title">
             <label for="course[title]">
-                <?php echo $label_title; ?>
+                <?php _e( 'Title', 'bpsp' ); ?>
                 <input type="text" id="course-title" name="course[title]" value="<?php echo $course->post_title; ?>"/>
             </label>
         </div>
@@ -30,7 +30,7 @@ require_once BPSP_PLUGIN_DIR . '/groups/templates/helpers/editor_helpers.php' ;
             <input type="hidden" id="update-course-post-in" name="course[group_id]" value="<?php echo $group_id; ?>">
             <?php echo $nonce ? $nonce: ''; ?>
             <div id="update-course-submit">
-                <input type="submit" name="course[submit]" id="update-course-submit" value="<?php echo $submit_title; ?>">
+                <input type="submit" name="course[submit]" id="update-course-submit" value="<?php _e( 'Update course', 'bpsp' ); ?>">
                 <?php if( $delete_nonce ): ?>
                     <a href="<?php echo $delete_nonce; ?>"><?php echo $course_delete_title; ?></a>
                 <?php endif; ?>

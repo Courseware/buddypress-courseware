@@ -92,12 +92,11 @@ class BPSP_USCourses extends BPSP_Courses {
         $course = $this->is_course( $this->current_course );
         
         if(  $course->post_author == $bp->loggedin_user->id || is_super_admin() )
-            $vars['show_edit'] = __( 'Edit Course', 'bpsp' );
+            $vars['show_edit'] = true;
         else
             $vars['show_edit'] = null;
         
         $vars['name'] = 'single_course';
-        $vars['course_meta_title'] = __( 'added on %1$s by %2$s.', 'bpsp' );
         $vars['course_permalink'] = $vars['current_uri'] . '/course/';
         $vars['course_edit_uri'] = $vars['current_uri'] . '/course/edit';
         $vars['course'] = $course;
@@ -179,10 +178,6 @@ class BPSP_USCourses extends BPSP_Courses {
         $vars['name'] = 'edit_course';
         $vars['group_id'] = $bp->groups->current_group->id;
         $vars['user_id'] = $bp->loggedin_user->id;
-        $vars['label_preview'] = __( 'Preview', 'bpsp' );
-        $vars['label_title'] = __( 'Title', 'bpsp' );
-        $vars['form_title'] = __( 'Edit course', 'bpsp' );
-        $vars['submit_title'] = __( 'Update course', 'bpsp' );
         $vars['course'] = $this->is_course( $updated_course_id );
         $vars['course_edit_uri'] = $vars['current_uri'] . '/course/edit';
         $vars['course_permalink'] = $vars['current_uri'] . '/course';

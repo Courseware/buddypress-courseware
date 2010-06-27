@@ -8,7 +8,7 @@
     <?php
     if( empty( $assignments ) ):
     ?>
-        <li><?php echo $no_assignments_title; ?></li>
+        <li><?php _e( 'No assignments were added.', 'bpsp' ); ?></li>
     <?php
     else:
         foreach ( $assignments as $assignment ):
@@ -17,7 +17,7 @@
             <a href="<?php echo $assignments_hanlder_uri . $assignment->post_name; ?>"><?php echo $assignment->post_title; ?></a>
             <?php
                 printf(
-                    $assignments_meta_title,
+                    __( 'added on %1$s by %2$s.', 'bpsp' ),
                     mysql2date( get_option('date_format'), $assignment->post_date ),
                     bp_core_get_userlink( $assignment->post_author )
                 );

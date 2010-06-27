@@ -22,6 +22,7 @@ require_once BPSP_PLUGIN_DIR . '/roles/bpsp-roles.class.php';
 require_once BPSP_PLUGIN_DIR . '/courses/bpsp-courses.class.php';
 require_once BPSP_PLUGIN_DIR . '/courses/bpsp-courses.us.class.php';
 require_once BPSP_PLUGIN_DIR . '/assignments/bpsp-assignments.class.php';
+require_once BPSP_PLUGIN_DIR . '/bibliographies/bpsp-bibliographies.class.php';
 //require_once BPSP_PLUGIN_DIR . '/schedules/bpsp-schedules.class.php';
 require_once BPSP_PLUGIN_DIR . '/groups/bpsp-groups.class.php';
 require_once BPSP_PLUGIN_DIR . '/static/bpsp-static.class.php';
@@ -62,6 +63,7 @@ function bpsp_init() {
         new BPSP_Courses();
 
     new BPSP_Assignments();
+    new BPSP_Bibliographies();
     //new BPSP_Schedules();
     new BPSP_Groups();
     new BPSP_Static();
@@ -76,6 +78,6 @@ register_activation_hook( 'courseware/courseware.php', 'bpsp_activation' );
 
 /** TEMPORARY HELPERS **/
 function _d($stuff) {
-    wp_die( '<pre>' . var_dump( $stuff ) . '</pre>');
+    echo( '<pre>' . var_dump( $stuff ) . '</pre>');
 }
 ?>
