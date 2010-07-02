@@ -1,6 +1,11 @@
 <style>
     label{display: block}
 </style>
+<?php if( $message ): ?>
+<div id="courseware-message" class="updated">
+    <?php echo $message; ?>
+</div>
+<?php endif; ?>
 <div id="courseware-new-bibliography" >
     <h4><a href="<?php echo $import_uri ?>"><?php _e( 'Import Bibliographies', 'bpsp' ); ?></a></h4>
     <form action="" method="post" >
@@ -19,10 +24,10 @@
         </div>
         <h4><?php _e( 'Author(s)', 'bpsp' ); ?></h4>
         <div class="courseware-form-section">
-            <label for="bib[author_lname1]"><?php _e( 'Author Last Name', 'bpsp' ); ?></label>
-                <input name="bib[author_lname1]" />
-            <label for="bib[author_fname1]"><?php _e( 'Author First Name', 'bpsp' ); ?></label>
-                <input name="bib[author_fname1]" />
+            <label for="bib[author_lname]"><?php _e( 'Author Last Name', 'bpsp' ); ?></label>
+                <input name="bib[author_lname]" />
+            <label for="bib[author_fname]"><?php _e( 'Author First Name', 'bpsp' ); ?></label>
+                <input name="bib[author_fname]" />
             <label for="bib[author_lname2]"><?php _e( 'Author Two Last Name', 'bpsp' ); ?></label>
                 <input name="bib[author_lname2]" />
             <label for="bib[author_fname2]"><?php _e( 'Author Two First Name', 'bpsp' ); ?></label>

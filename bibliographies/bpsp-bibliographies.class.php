@@ -167,19 +167,38 @@ class BPSP_Bibliographies {
     }
     
     /**
-     * load_bibs()
+     * load_bibs( $formated = true )
      *
      * Loads all bibliography database
+     * @param Bool $formated if you want formated data in html or plain
      * @return Mixed Array of get_post_meta results, or null else
      */
-    function load_bibs() {
+    function load_bibs( $formated = true ) {
         $bibdb_def = array(
             'post_title'    => 'BIBSDB',
             'post_status'   => 'draft',
             'post_type'     => 'bib',
         );
-        $bibdb = get_posts( $bibdb_def );
-        return get_post_meta( $bibdb[0]->ID, $this->bid );
+        $bibdb_post = get_posts( $bibdb_def );
+        $bibdb = get_post_meta( $bibdb_post[0]->ID, $this->bid );
+        $bibs = array();
+        foreach( $bibdb as $b ) {
+            //hash our bib for easier identification
+            $bibs[ md5( $b ) ] = $formated ? $this->format( $b ) : $b;
+        }
+        return $bibs;
+    }
+    
+    /**
+     * get_bib( $hash )
+     *
+     * Get bibliography by hash
+     * @param String $hash md5 hash of the entry
+     * @return String bib entry, or null else
+     */
+    function get_bib( $hash ) {
+        $bibs = $this->load_bibs();
+        return isset( $bibs[$hash] ) ? $bibs[$hash] : null;
     }
     
     /**
@@ -224,8 +243,34 @@ class BPSP_Bibliographies {
             $post_id = $bibdb[0]->ID;
         }
         
-        $entry = $this->gen_bib_shortcode( $data );
-        add_post_meta( $post_id, $this->bid, $entry );
+        if( count( $data ) > 1 )
+            $entry = $this->gen_bib_shortcode( $data );
+        else
+            $post_id = null; // force add_post_meta to fail
+        return add_post_meta( $post_id, $this->bid, $entry );
+    }
+    
+    /**
+     * format( $bib )
+     *
+     * Formats a bibliography entry using its type;
+     * @param String $bib shortcode
+     * @return String formated paragraph
+     */
+    function format( $bib ) {
+        $bib = shortcode_parse_atts( $bib );
+        $content = null;
+        
+        if( isset( $bib[type] ) ) {
+            if( $bib[type] == 'www' || $bib[type] == 'wiki' ) {
+                $content['html'] = '<a href="' . $bib['url'] . '">' . $bib['title'] . '</a>';
+                $content['plain'] = $bib['title'] . ' &mdash; ' . $bib['url'];
+            } else {
+                $content['html'] = $bib['author_lname'] . ' ' . $bib['author_fname'] . ' &mdash; ' . $bib['title'];
+                $content['plain'] = $content['html'];
+            }
+        }
+        return $content;
     }
     
     /**
@@ -283,8 +328,11 @@ class BPSP_Bibliographies {
      */
     function new_bib_screen( $vars ) {
         global $bp;
-        if( isset( $_POST['bib'] ) )
-            $this->add_bib( $_POST['bib'] );
+        if( isset( $_POST['bib'] ) && $_POST['bib']['type'] ) {
+            $data = array_filter( $_POST['bib'] );
+            if( $this->add_bib( $data ) )
+                $vars['message'] = __( 'Entry added.', 'bpsp' );
+        }
         $vars['name'] = 'new_bibliography';
         $vars['import_uri'] = $this->home_uri . '/import_bibliographies';
         return $vars;
@@ -304,7 +352,52 @@ class BPSP_Bibliographies {
         if( isset( $_POST['bib'] ) )
             $to_parse = $_POST['bib']['source'];
         
-        $parser = new BibTeX_Parser( null, $to_parse );
+        $parsed = new BibTeX_Parser( null, $to_parse );
+        
+        for( $i = 0; $i <= $parsed->count; $i++ ) {
+            preg_match( '/@(.*?){/', $parsed->items['raw'][$i], $entry_type );
+            if( isset( $entry_type[1] ) )
+                $entry_type = $entry_type[1];
+            
+            if($entry_type == 'book') {
+                $type = 'monograph';
+            }
+            elseif($entry_type == 'phdthesis' || $entry_type == 'mastersthesis') {
+                $type = 'unpublished';
+            }
+            elseif($entry_type == 'inbook' || $entry_type == 'incollection') {
+                $type = 'volumechapter';
+            }
+            else {
+                $type = $entry_type;
+            }
+            
+            $author = explode( ' ', $parsed->items['author'][$i], 2 );
+            if ($author[1]) {
+                $author_last = $author[1];
+                $author_first = $author[0];
+            } else {
+                $author_last = $author[0];
+                $author_first = "";
+            }
+            
+            $new_bib = array(
+                'author_lname'  => $author_last,
+                'author_fname'  => $author_first,
+                'title'         => $parsed->items['title'][$i],
+                'jtitle'        => $parsed->items['journal'][$i],
+                'vol'           => $parsed->items['volume'][$i],
+                'pub'           => $parsed->items['publisher'][$i],
+                'pubdate'       => $parsed->items['year'][$i],
+                'url'           => $parsed->items['url'][$i],
+                'pages'         => $parsed->items['pages'][$i],
+                'desc'          => $parsed->items['abstract'][$i],
+                'type'          => $type
+            );
+            
+            if( $this->add_bib( $new_bib ) )
+                $vars['message'] = $parsed->count + 1 . ' ' . __( 'entries were imported.', 'bpsp' );
+        }
         
         $vars['name'] = 'import_bibliographies';
         return $vars;

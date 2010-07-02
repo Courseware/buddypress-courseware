@@ -1,3 +1,8 @@
+<?php if( $message ): ?>
+<div id="courseware-message" class="updated">
+    <?php echo $message; ?>
+</div>
+<?php endif; ?>
 <div id="courseware-import-bibliographies" >
     <form action="" method="post" >
         <h4><?php _e( 'Import Bibliographic Sources', 'bpsp' );  ?></h4>

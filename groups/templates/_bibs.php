@@ -1,56 +1,44 @@
 <div id="courseware-bibs">
     <div id="courseware-bibs-form">
         <form action="" method="post" >
-            <div class="book">
+            <div class="existing">
                 <h4><?php _e( 'Add an existing bibliography', 'bpsp'); ?></h4>
                 <select name="bib[existing]">
                     <?php
                     if( is_array( $bibdb ) )
-                        foreach( $bibdb as $b ):
-                            $b_hash = md5( $b );
+                        foreach( $bibdb as $b_hash => $b ):
                     ?>
-                    <option value="<?php echo $b_hash; ?>"><?php echo $b; ?></option>
+                    <option value="<?php echo $b_hash; ?>"><?php echo $b['plain']; ?></option>
                     <?php
                         endforeach;
                     ?>
                 </select>
+                <input type="submit" name="bib[submit]" value="<?php _e( 'Add entry', 'bpsp' ); ?>" />
+            </div>
+            <div class="book">
                 <h4><?php _e( 'Add a book', 'bpsp'); ?></h4>
-                <label for="bib[book][title]">
-                    <?php _e( 'Entry title', 'bpsp'); ?>
+                <label for="bib[book][title]"><?php _e( 'Entry title', 'bpsp'); ?></label>
                     <input type="text" name="bib[book][title]" />
-                </label>
-                <label for="bib[book][isbn]">
-                    <?php _e( 'Book ISBN', 'bpsp'); ?>
+                <label for="bib[book][isbn]"><?php _e( 'Book ISBN', 'bpsp'); ?></label>
                     <input type="text" name="bib[book][isbn]" />
-                </label>
-                <label for="bib[book][page]">
-                    <?php _e( 'Recommended book page to check', 'bpsp'); ?>
+                <label for="bib[book][page]"><?php _e( 'Recommended book page to check', 'bpsp'); ?></label>
                     <input type="text" name="bib[book][page]" />
-                </label>
                 <input type="submit" name="bib[submit]" value="<?php _e( 'Add book', 'bpsp' ); ?>" />
             </div>
             <div class="www">
                 <h4><?php _e( 'Add a webpage', 'bpsp'); ?></h4>
-                <label for="bib[www][title]">
-                    <?php _e( 'Entry title', 'bpsp'); ?>
+                <label for="bib[www][title]"><?php _e( 'Entry title', 'bpsp'); ?></label>
                     <input type="text" name="bib[www][title]" />
-                </label>
-                <label for="bib[www][uri]">
-                    <?php _e( 'Webpage address', 'bpsp'); ?>
-                    <input type="text" name="bib[www][uri]" />
-                </label>
+                <label for="bib[www][uri]"><?php _e( 'Webpage address', 'bpsp'); ?></label>
+                    <input type="text" name="bib[www][url]" />
                 <input type="submit" name="bib[submit]" value="<?php _e( 'Add entry', 'bpsp' ); ?>" />
             </div>
             <div class="wiki">
                 <h4><?php _e( 'Add a Wikipedia link', 'bpsp'); ?></h4>
-                <label for="bib[wiki][title]">
-                    <?php _e( 'Entry title', 'bpsp'); ?>
+                <label for="bib[wiki][title]"><?php _e( 'Entry title', 'bpsp'); ?></label>
                     <input type="text" name="bib[wiki][title]" />
-                </label>
-                <label for="bib[wiki][uri]">
-                    <?php _e( 'Wikipedia address', 'bpsp'); ?>
+                <label for="bib[wiki][uri]"><?php _e( 'Wikipedia address', 'bpsp'); ?></label>
                     <input type="text" name="bib[wiki][uri]" />
-                </label>
                 <input type="submit" name="bib[submit]" value="<?php _e( 'Add entry', 'bpsp' ); ?>" />
             </div>
             <?php echo $bibs_nonce; ?>
