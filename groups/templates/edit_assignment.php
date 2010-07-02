@@ -12,29 +12,23 @@ require_once BPSP_PLUGIN_DIR . '/groups/templates/helpers/editor_helpers.php' ;
     <h5><?php _e( 'Edit assignment', 'bpsp' ); ?> &mdash; <a href="<?php echo $assignment_permalink ?>"><?php _e( 'Preview', 'bpsp' ); ?></a></h5>
     <div id="new-assignment-content">
         <div id="new-assignment-content-title">
-            <label for="assignment[title]">
-                <?php _e( 'Title', 'bpsp' ); ?>
+            <label for="assignment[title]"><?php _e( 'Title', 'bpsp' ); ?></label>
                 <input type="text" id="assignment-title" name="assignment[title]" value="<?php echo $assignment->post_title; ?>" />
-            </label>
         </div>
         <div id="new-assignment-course">
-            <label for="assignment[course_id]">
-                <?php _e( 'Course', 'bpsp' ); ?>
+            <label for="assignment[course_id]"><?php _e( 'Course', 'bpsp' ); ?></label>
                 <select name="assignment[course_id]">
                     <?php foreach( $courses as $c ): ?>
                         <option value="<?php echo $c->ID; ?>" <?php if ( $c->ID == $assignment->course->ID ) echo 'selected="selected"'; ?>><?php echo $c->post_title; ?></option>
                     <?php endforeach; ?>
                 </select>
-            </label>
         </div>
         <div id="new-assignment-due-date">
             <script type="text/javascript">
                 var dtpicker_months = { months: [<?php _e( "'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'", 'bpsp' ); ?>] };
             </script>
-            <label for="assignment[due_date]">
-                <?php _e( 'Due date', 'bpsp' ); ?>
+            <label for="assignment[due_date]"><?php _e( 'Due date', 'bpsp' ); ?></label>
                 <input type="datetime-local" min="<?php echo date('c'); ?>" name="assignment[due_date]" value="<?php echo $assignment->due_date; ?>" />
-            </label>
         </div>
         <div id="new-assignment-content-textarea">
             <div id="editor-toolbar">

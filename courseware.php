@@ -41,6 +41,7 @@ add_action( 'init', 'bpsp_textdomain' );
 function bpsp_registration() {
     BPSP_Courses::register_post_types();
     BPSP_Assignments::register_post_types();
+    BPSP_Bibliographies::register_post_types();
 }
 add_action( 'init', 'bpsp_registration' );
 

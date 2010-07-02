@@ -2,6 +2,18 @@
     <div id="courseware-bibs-form">
         <form action="" method="post" >
             <div class="book">
+                <h4><?php _e( 'Add an existing bibliography', 'bpsp'); ?></h4>
+                <select name="bib[existing]">
+                    <?php
+                    if( is_array( $bibdb ) )
+                        foreach( $bibdb as $b ):
+                            $b_hash = md5( $b );
+                    ?>
+                    <option value="<?php echo $b_hash; ?>"><?php echo $b; ?></option>
+                    <?php
+                        endforeach;
+                    ?>
+                </select>
                 <h4><?php _e( 'Add a book', 'bpsp'); ?></h4>
                 <label for="bib[book][title]">
                     <?php _e( 'Entry title', 'bpsp'); ?>
@@ -41,12 +53,6 @@
                 </label>
                 <input type="submit" name="bib[submit]" value="<?php _e( 'Add entry', 'bpsp' ); ?>" />
             </div>
-            <!--div class="zotero">
-                <h4><?php _e( 'Add a Wikipedia link', 'bpsp'); ?></h4>
-                <input type="text" name="bib[zotero][title]" />
-                <input type="text" name="bib[zotero][uri]" />
-                <input type="submit" name="bib[zotero][submit]" value="<?php _e( 'Add entry', 'bpsp' ); ?>" />
-            </div-->
             <?php echo $bibs_nonce; ?>
         </form>
     </div>

@@ -12,10 +12,8 @@ require_once BPSP_PLUGIN_DIR . '/groups/templates/helpers/editor_helpers.php' ;
     <h5><?php _e( 'Edit course', 'bpsp' ); ?> &mdash; <a href="<?php echo $course_permalink ?>"><?php _e( 'Preview', 'bpsp' ); ?></a></h5>
     <div id="update-course-content">
         <div id="update-course-content-title">
-            <label for="course[title]">
-                <?php _e( 'Title', 'bpsp' ); ?>
+            <label for="course[title]"><?php _e( 'Title', 'bpsp' ); ?></label>
                 <input type="text" id="course-title" name="course[title]" value="<?php echo $course->post_title; ?>"/>
-            </label>
         </div>
         <div id="update-course-content-textarea">
             <div id="editor-toolbar">
