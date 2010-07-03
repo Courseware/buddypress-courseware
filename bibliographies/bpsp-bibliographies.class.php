@@ -163,17 +163,21 @@ class BPSP_Bibliographies {
         if( $post_id == null )
             $post_id = $this->current_parent;
         
-        return get_post_meta( $post_id, $this->bid );
+        $bibs = get_post_meta( $post_id, $this->bid );
+        foreach( $bibs as &$b ) {
+            $b = $this->format( $b );
+        }
+        return $bibs;
     }
     
     /**
-     * load_bibs( $formated = true )
+     * load_bibs( $formated = false )
      *
      * Loads all bibliography database
      * @param Bool $formated if you want formated data in html or plain
      * @return Mixed Array of get_post_meta results, or null else
      */
-    function load_bibs( $formated = true ) {
+    function load_bibs( $formated = false ) {
         $bibdb_def = array(
             'post_title'    => 'BIBSDB',
             'post_status'   => 'draft',
@@ -182,10 +186,9 @@ class BPSP_Bibliographies {
         $bibdb_post = get_posts( $bibdb_def );
         $bibdb = get_post_meta( $bibdb_post[0]->ID, $this->bid );
         $bibs = array();
-        foreach( $bibdb as $b ) {
+        foreach( $bibdb as $b )
             //hash our bib for easier identification
             $bibs[ md5( $b ) ] = $formated ? $this->format( $b ) : $b;
-        }
         return $bibs;
     }
     
@@ -225,14 +228,12 @@ class BPSP_Bibliographies {
      *
      * Stores a bibliography entry to db or post_id if set
      * @param Mixed $data
+     * @param Bool $shortcode if you want data to be shortcoded, default true
+     * @param Int $post_id the id of the post to store
      * @return Bool true on success and false on failure
      */
-    function add_bib( $data ) {
-        $post_id = null;
-        if( isset( $data['post_id'] ) ) {
-            $post_id = $data['post_id'];
-            unset( $data['post_id'] );
-        } else {
+    function add_bib( $data, $shortcode = true, $post_id = null ) {
+        if( !$post_id ) {
             // Get bibdb post_id
             $bibdb_def = array(
                 'post_title'    => 'BIBSDB',
@@ -243,24 +244,26 @@ class BPSP_Bibliographies {
             $post_id = $bibdb[0]->ID;
         }
         
-        if( count( $data ) > 1 )
+        if( count( $data ) > 1 && $shortcode )
             $entry = $this->gen_bib_shortcode( $data );
-        else
+        elseif( count( $data ) < 1 )
             $post_id = null; // force add_post_meta to fail
+        else
+            $entry = $data; // shortcode if false
         return add_post_meta( $post_id, $this->bid, $entry );
     }
     
     /**
-     * format( $bib )
+     * format( $raw_bib )
      *
      * Formats a bibliography entry using its type;
-     * @param String $bib shortcode
+     * @param String $raw_bib shortcode
      * @return String formated paragraph
      */
-    function format( $bib ) {
-        $bib = shortcode_parse_atts( $bib );
-        $content = null;
-        
+    function format( $raw_bib ) {
+        $bib = array_filter( shortcode_parse_atts( $raw_bib ) );
+        $content['raw'] = $raw_bib;
+        $content['hash'] = md5( $raw_bib );
         if( isset( $bib[type] ) ) {
             if( $bib[type] == 'www' || $bib[type] == 'wiki' ) {
                 $content['html'] = '<a href="' . $bib['url'] . '">' . $bib['title'] . '</a>';
@@ -412,15 +415,33 @@ class BPSP_Bibliographies {
         global $bp;
         $nonce_name = 'bibs';
         
-        $is_nonce = wp_verify_nonce( $_POST['_wpnonce'], $nonce_name );
+        // Are we dealing with courses or assignments?
+        if( isset( $vars['assignment'] ) )
+            $post_id = $vars['assignment']->ID;
+        elseif( isset( $vars['course'] ) )
+            $post_id = $vars['course']->ID;
+        else
+            $post_id = null;
+            
+        if( $post_id )
+            $this->current_parent = $post_id;
         
+        $is_nonce = wp_verify_nonce( $_POST['_wpnonce'], $nonce_name );
         if( $is_nonce && isset( $_POST['bib'] ) ) {
             
             if( !$this->has_bib_caps( $bp->loggedin_user->id ) )
                 wp_die( __( 'BuddyPress Courseware Error while forbidden user tried to add bibliography entries.', 'bpsp' ) );
                 
+            // Add an existing bib
+            if( isset( $_POST['bib']['existing'] ) ) {
+                $data = $this->get_bib( $_POST['bib']['existing'] );
+                if( $this->add_bib( $data, false, $post_id ) )
+                    $vars['message'] = __( 'Bibliography added', 'bpsp' );
+                else
+                    $vars['message'] = __( 'Bibliography could not be added', 'bpsp' );
+            }
             //Add a new book
-            if( isset( $_POST['bib']['book'] ) )
+            elseif( isset( $_POST['bib']['book'] ) )
                 if( $this->add_book( $_POST['bib']['book'] ) )
                     $vars['message'] = __( 'Book added', 'bpsp' );
                 else
@@ -448,8 +469,9 @@ class BPSP_Bibliographies {
             $this->current_parent = $vars['assignment']->ID;
         
         $vars['has_bibs'] = true;
+        $vars['has_bib_caps'] = $this->has_bib_caps( $bp->loggedin_user->id );
         $vars['bibs'] = $this->has_bibs( $this->current_parent );
-        $vars['bibdb'] = $this->load_bibs();
+        $vars['bibdb'] = $this->load_bibs( true );
         $vars['bibs_nonce'] = wp_nonce_field( $nonce_name, '_wpnonce', true, false );
         return $vars;
     }

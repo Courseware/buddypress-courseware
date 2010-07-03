@@ -1,4 +1,5 @@
 <div id="courseware-bibs">
+    <?php if( $has_bib_caps ): ?>
     <div id="courseware-bibs-form">
         <form action="" method="post" >
             <div class="existing">
@@ -44,7 +45,15 @@
             <?php echo $bibs_nonce; ?>
         </form>
     </div>
+    <?php endif; ?>
     <div id="courseware-bibs-list">
-        <?php var_dump( $bibs ); ?>
+        <h4><?php _e( 'Bibliography listing', 'bpsp'); ?></h4>
+        <?php if( count( $bibs ) > 0 ): ?>
+            <ul>
+                <?php foreach( $bibs as $b): ?>
+                    <li><?php echo $b['html']; ?></li>
+                <?php endforeach; ?>
+            </ul>
+        <?php endif; ?>
     </div>
 </div>
