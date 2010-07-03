@@ -31,6 +31,5 @@
     </div>
 </div>
 <?php
-if( isset( $has_bibs ) )
     require_once BPSP_PLUGIN_DIR . '/groups/templates/_bibs.php';
 ?>

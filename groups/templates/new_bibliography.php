@@ -9,9 +9,9 @@
 <div id="courseware-new-bibliography" >
     <h4><a href="<?php echo $import_uri ?>"><?php _e( 'Import Bibliographies', 'bpsp' ); ?></a></h4>
     <form action="" method="post" >
-        <h4><?php _e( 'Type of source', 'bpsp' ); ?></h4>
         <div class="courseware-form-section">
             <select name="bib[type]">
+                <option value=""><?php _e( 'Select a type of source...', 'bpsp' ); ?></option>
                 <option value="book"><?php _e( 'Book', 'bpsp' ); ?></option>
                 <option value="article"><?php _e( 'Article', 'bpsp' ); ?></option>
                 <option value="chapter"><?php _e( 'Volume Chapter', 'bpsp' ); ?></option>
@@ -70,5 +70,10 @@
                 <textarea name="bib[desc]" cols="60" rows="6"></textarea>
         </div>
         <input type="submit" value="<?php _e( 'Add', 'bpsp' ); ?>" />
+        <?php echo $bibs_nonce; ?>
     </form>
 </div>
+<?php
+if( isset( $has_bibs ) )
+    require_once BPSP_PLUGIN_DIR . '/groups/templates/_bibs.php';
+?>

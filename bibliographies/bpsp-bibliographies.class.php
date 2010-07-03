@@ -193,15 +193,26 @@ class BPSP_Bibliographies {
     }
     
     /**
-     * get_bib( $hash )
+     * get_bib( $hash, $post_id = null )
      *
      * Get bibliography by hash
      * @param String $hash md5 hash of the entry
+     * @param Int $post_id the id of the entry, if null, load from all bibs
      * @return String bib entry, or null else
      */
-    function get_bib( $hash ) {
-        $bibs = $this->load_bibs();
-        return isset( $bibs[$hash] ) ? $bibs[$hash] : null;
+    function get_bib( $hash, $post_id = null ) {
+        if( $post_id ) {
+            $bibs = $this->has_bibs( $post_id );
+            foreach( $bibs as $b )
+                if( $b['hash'] == $hash )
+                    return $b['raw'];
+            
+            return null;
+        }
+        else {
+            $bibs = $this->load_bibs();
+            return isset( $bibs[$hash] ) ? $bibs[$hash] : null;
+        }
     }
     
     /**
@@ -245,12 +256,17 @@ class BPSP_Bibliographies {
         }
         
         if( count( $data ) > 1 && $shortcode )
-            $entry = $this->gen_bib_shortcode( $data );
+            $entry = $this->gen_bib_shortcode( array_filter( $data ) );
         elseif( count( $data ) < 1 )
             $post_id = null; // force add_post_meta to fail
         else
             $entry = $data; // shortcode if false
-        return add_post_meta( $post_id, $this->bid, $entry );
+        
+        // Check if entry doesn't exist yet
+        if( $this->get_bib( md5( $entry ), $post_id ) )
+            return false;
+        else
+            return add_post_meta( $post_id, $this->bid, $entry );
     }
     
     /**
@@ -265,12 +281,18 @@ class BPSP_Bibliographies {
         $content['raw'] = $raw_bib;
         $content['hash'] = md5( $raw_bib );
         if( isset( $bib[type] ) ) {
-            if( $bib[type] == 'www' || $bib[type] == 'wiki' ) {
+            if( $bib[type] == 'www' || $bib[type] == 'misc' ) {
                 $content['html'] = '<a href="' . $bib['url'] . '">' . $bib['title'] . '</a>';
                 $content['plain'] = $bib['title'] . ' &mdash; ' . $bib['url'];
             } else {
-                $content['html'] = $bib['author_lname'] . ' ' . $bib['author_fname'] . ' &mdash; ' . $bib['title'];
-                $content['plain'] = $content['html'];
+                $authors = $bib['author_lname'] . ' ' . $bib['author_fname'];
+                if( '' != trim( $authors ) )
+                    $authors = ' &mdash; ' . $authors;
+                $content['plain'] = $bib['title'] . $authors;
+                if( isset( $bib['url'] ) )
+                    $content['html'] = '<a href="' . $bib['url'] . '">' . $content['plain'] . '</a>';
+                else
+                    $content['html'] = $content['plain'];
             }
         }
         return $content;
@@ -298,7 +320,7 @@ class BPSP_Bibliographies {
                 wp_redirect( wp_redirect( get_option( 'siteurl' ) ) );
             }
         }
-        elseif( isset ( $action_vars[2] ) && 'delete_bibliography' == $action_vars[2] )
+        elseif( isset ( $action_vars[0] ) && 'delete_bibliography' == $action_vars[0] )
             add_filter( 'courseware_group_template', array( &$this, 'delete_bib_screen' ) );
     }
 
@@ -323,21 +345,101 @@ class BPSP_Bibliographies {
     }
     
     /**
+     * delete_bib_screen( $vars )
+     *
+     * Handles the screen for deleting bibliographies
+     * @param Array $vars, an array of variables
+     * @return Array $vars modified
+     */
+    function delete_bib_screen( $vars ) {
+        $nonce_name = 'delete_bib';
+        
+        $is_nonce = wp_verify_nonce( $_GET['_wpnonce'], $nonce_name );
+        if( !$is_nonce && isset( $_GET['bhash'] ) )
+            return;
+        
+        $data = explode( ',', $_GET['bhash'] );
+        $bhash = $data[0];
+        $post_id = null;
+        if( isset( $data[1] ) && !empty( $data[1] ) )
+            $post_id = $data[1];
+        else {
+            $bibdb_def = array(
+                'post_title'    => 'BIBSDB',
+                'post_status'   => 'draft',
+                'post_type'     => 'bib',
+            );
+            $bibdb_post = get_posts( $bibdb_def );
+            $post_id = $bibdb_post[0]->ID;
+        }
+        
+        if( $post_id ) {
+            $bib = $this->get_bib( $bhash, $post_id );
+            if( $bib != null ) {
+                if( delete_post_meta( $post_id, $this->bid, $bib ) )
+                    $vars['message'] = _e( 'Entry deleted.', 'bpsp' );
+                else
+                    $vars['message'] = _e( 'Entry could not be deleted.', 'bpsp' );
+            } else
+                $vars['message'] = _e( 'Entry could not be found.', 'bpsp' );
+        }
+        else
+            $vars['message'] = _e( 'No Bibliography database was created.', 'bpsp' );
+        
+        return $this->new_bib_screen( $vars );
+    }
+    
+    /**
      * new_bib_screen( $vars )
      *
      * Handles the screen for adding new bibliographies
      * @param Array $vars, an array of variables
-     * @return Array $vars of modified variables
+     * @return Array $vars modified
      */
     function new_bib_screen( $vars ) {
         global $bp;
+        $nonce_name = 'bibs';
+        $nonce_delete_name = 'delete_bib';
+        $nonce_edit_name = 'edit_bib';
+        
+        $is_nonce = wp_verify_nonce( $_POST['_wpnonce'], $nonce_name );
+        if( !$is_nonce && isset( $_POST['bib'] ) )
+            return;
+        
         if( isset( $_POST['bib'] ) && $_POST['bib']['type'] ) {
             $data = array_filter( $_POST['bib'] );
+            if( count( $data ) < 2 )
+                $data = null; // force failure
             if( $this->add_bib( $data ) )
                 $vars['message'] = __( 'Entry added.', 'bpsp' );
+            else
+                $vars['message'] = __( 'Entry could not be added', 'bpsp' );
         }
+        //Add a new book
+        elseif( isset( $_POST['bib']['book'] ) )
+            if( $this->add_book( $_POST['bib']['book'] ) )
+                $vars['message'] = __( 'Book added', 'bpsp' );
+            else
+                $vars['message'] = __( 'Book could not be added', 'bpsp' );
+        // Add a new www entry
+        elseif ( isset( $_POST['bib']['www'] ) )
+            if( !$this->add_www( $_POST['bib']['www'] ) )
+                $vars['message'] = __( 'Entry added', 'bpsp' );
+            else
+                $vars['message'] = __( 'Entry could not be added', 'bpsp' );
+        
         $vars['name'] = 'new_bibliography';
         $vars['import_uri'] = $this->home_uri . '/import_bibliographies';
+        $vars['has_bibs'] = true;
+        $vars['hide_existing'] = true;
+        $vars['post_id'] = null;
+        $vars['has_bib_caps'] = $this->has_bib_caps( $bp->loggedin_user->id );
+        $vars['bibs'] = $this->load_bibs( true );
+        $vars['bibs_delete_permalink'] = $vars['current_uri'] . '/delete_bibliography';
+        $vars['bibs_edit_permalink'] = $vars['current_uri'] . '/edit_bibliography';
+        $vars['bibs_delete_uri'] = add_query_arg( '_wpnonce', wp_create_nonce( $nonce_delete_name ), $vars['bibs_delete_permalink'] );
+        $vars['bibs_edit_uri'] = add_query_arg( '_wpnonce', wp_create_nonce( $nonce_edit_name ), $vars['bibs_edit_permalink'] );
+        $vars['bibs_nonce'] = wp_nonce_field( $nonce_name, '_wpnonce', true, false );
         return $vars;
     }
     
@@ -384,6 +486,8 @@ class BPSP_Bibliographies {
                 $author_first = "";
             }
             
+            $url = str_replace( '\url', '', $parsed->items['url'][$i] );
+            
             $new_bib = array(
                 'author_lname'  => $author_last,
                 'author_fname'  => $author_first,
@@ -392,14 +496,18 @@ class BPSP_Bibliographies {
                 'vol'           => $parsed->items['volume'][$i],
                 'pub'           => $parsed->items['publisher'][$i],
                 'pubdate'       => $parsed->items['year'][$i],
-                'url'           => $parsed->items['url'][$i],
+                'url'           => $url,
                 'pages'         => $parsed->items['pages'][$i],
                 'desc'          => $parsed->items['abstract'][$i],
                 'type'          => $type
             );
             
             if( $this->add_bib( $new_bib ) )
-                $vars['message'] = $parsed->count + 1 . ' ' . __( 'entries were imported.', 'bpsp' );
+                $vars['message'] = $parsed->count + 1 . ' ' .
+                    __( 'entries were imported.', 'bpsp' );
+            else
+                $vars['message'] = $parsed->count + 1 . ' ' .
+                    __( 'entries were not imported (caused by duplication or misformat).', 'bpsp' );
         }
         
         $vars['name'] = 'import_bibliographies';
@@ -414,6 +522,8 @@ class BPSP_Bibliographies {
     function bibs_screen( $vars ) {
         global $bp;
         $nonce_name = 'bibs';
+        $nonce_delete_name = 'delete_bib';
+        $nonce_edit_name = 'edit_bib';
         
         // Are we dealing with courses or assignments?
         if( isset( $vars['assignment'] ) )
@@ -452,12 +562,6 @@ class BPSP_Bibliographies {
                     $vars['message'] = __( 'Entry added', 'bpsp' );
                 else
                     $vars['message'] = __( 'Entry could not be added', 'bpsp' );
-            /// Add a new wiki entry
-            elseif ( isset( $_POST['bib']['wiki'] ) )
-                if( $this->add_wiki( $_POST['bib']['wiki'] ) )
-                    $vars['message'] = __( 'Entry added', 'bpsp' );
-                else
-                    $vars['message'] = __( 'Entry could not be added', 'bpsp' );
             else
                 $vars['message'] = __( 'No bibliography entry could be added.', 'bpsp' );
         }
@@ -469,10 +573,15 @@ class BPSP_Bibliographies {
             $this->current_parent = $vars['assignment']->ID;
         
         $vars['has_bibs'] = true;
+        $vars['post_id'] = $this->current_parent;
         $vars['has_bib_caps'] = $this->has_bib_caps( $bp->loggedin_user->id );
         $vars['bibs'] = $this->has_bibs( $this->current_parent );
         $vars['bibdb'] = $this->load_bibs( true );
         $vars['bibs_nonce'] = wp_nonce_field( $nonce_name, '_wpnonce', true, false );
+        $vars['bibs_delete_permalink'] = $vars['current_uri'] . '/delete_bibliography';
+        $vars['bibs_edit_permalink'] = $vars['current_uri'] . '/edit_bibliography';
+        $vars['bibs_delete_uri'] = add_query_arg( '_wpnonce', wp_create_nonce( $nonce_delete_name ), $vars['bibs_delete_permalink'] );
+        $vars['bibs_edit_uri'] = add_query_arg( '_wpnonce', wp_create_nonce( $nonce_edit_name ), $vars['bibs_edit_permalink'] );
         return $vars;
     }
     
@@ -498,19 +607,6 @@ class BPSP_Bibliographies {
      * @return True if added and false if failed
      */
     function add_www( $entry ) {
-        _d( $entry );
-        return true;
-    }
-    
-    /**
-     * add_wiki()
-     *
-     * Adds a book to $this->current_parent
-     *
-     * @param Mixed $entry that contains information about current entry
-     * @return True if added and false if failed
-     */
-    function add_wiki( $entry ) {
         _d( $entry );
         return true;
     }
