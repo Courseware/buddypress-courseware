@@ -23,6 +23,7 @@ require_once BPSP_PLUGIN_DIR . '/courses/bpsp-courses.class.php';
 require_once BPSP_PLUGIN_DIR . '/courses/bpsp-courses.us.class.php';
 require_once BPSP_PLUGIN_DIR . '/assignments/bpsp-assignments.class.php';
 require_once BPSP_PLUGIN_DIR . '/bibliographies/bpsp-bibliographies.class.php';
+require_once BPSP_PLUGIN_DIR . '/bibliographies/bpsp-bibliography-webapis.class.php';
 //require_once BPSP_PLUGIN_DIR . '/schedules/bpsp-schedules.class.php';
 require_once BPSP_PLUGIN_DIR . '/groups/bpsp-groups.class.php';
 require_once BPSP_PLUGIN_DIR . '/static/bpsp-static.class.php';

@@ -1,4 +1,10 @@
-<?php if($flash) { ?><div id="message" class="updated fade"><p><strong><?=$flash?></strong></p></div><?php } ?>
+<?php if( !empty( $flash ) ) : ?>
+    <div id="message" class="updated fade">
+        <?php foreach( $flash as $f ): ?>
+            <p><strong><?php echo $f; ?></strong></p>
+        <?php endforeach; ?>
+    </div>
+<?php endif; ?>
 <div id="icon-tools" class="icon32"><br /></div>
 <div class="wrap">
     <h2><?php _e('BuddyPress Courseware','bpsp')?></h2>
@@ -47,6 +53,44 @@
                     </p>
                     <p>
                         <input type="submit" class="button" value="<?=__('Save Changes','bpsp')?>" />
+                        <?php echo $nonce; ?>
+                    </p>
+                </form>
+            </div>
+        </div>
+        <div class="postbox">
+            <h3 class="hndle" ><?php _e('Webservices API Integration','bpsp')?></h3>
+            <div class="inside">
+                 <p>
+                    <?php _e('This will allow you to use webservices to query
+                    books and articles easily.','bpsp'); ?>
+                </p>
+                <form action="" method="post" >
+                    <p>
+                        <label for="wordcat_key">
+                            <strong><?php _e( 'WorldCat Webservices Key','bpsp' ); ?></strong> &mdash;
+                            <a href="http://www.worldcat.org/wcpa/content/affiliate/default.jsp">
+                                <?php _e( 'Free registration for Basic API','bpsp' ); ?>
+                            </a>
+                        </label>
+                    </p>
+                    <p>
+                        <input type="text" name="worldcat_key" style="width: 50%;" value="<?php echo $worldcat_key ? $worldcat_key : ''; ?>" />
+                    </p>
+                    <p>
+                        <label for="isbndb_key">
+                            <strong><?php _e( 'ISBNdb Webservices Key', 'bpsp' ); ?></strong> &mdash;
+                            <a href="https://isbndb.com/account/create.html?">
+                                <?php _e( 'Free Registration' , 'bpsp' ); ?>
+                            </a>
+                        </label>
+                    </p>
+                    <p>
+                        <input type="text" name="isbndb_key" style="width: 50%;" value="<?php echo $isbndb_key ? $isbndb_key : ''; ?>" />
+                    </p>
+                    <p>
+                        <input type="submit" class="button" value="<?php _e( 'Save Changes','bpsp' ); ?>" />
+                        <?php echo $nonce; ?>
                     </p>
                 </form>
             </div>

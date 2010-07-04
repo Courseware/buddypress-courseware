@@ -6,6 +6,7 @@
             <div class="existing">
                 <h4><?php _e( 'Add an existing bibliography', 'bpsp'); ?></h4>
                 <select name="bib[existing]">
+                    <option value=""><?php _e( 'Select an entry...', 'bpsp' ); ?></option>
                     <?php
                     if( is_array( $bibdb ) )
                         foreach( $bibdb as $b_hash => $b ):
@@ -24,8 +25,8 @@
                     <input type="text" name="bib[book][title]" />
                 <label for="bib[book][isbn]"><?php _e( 'Book ISBN', 'bpsp'); ?></label>
                     <input type="text" name="bib[book][isbn]" />
-                <label for="bib[book][page]"><?php _e( 'Recommended book page to check', 'bpsp'); ?></label>
-                    <input type="text" name="bib[book][page]" />
+                <label for="bib[book][page]"><?php _e( 'Instructions/Description', 'bpsp'); ?></label>
+                    <input type="text" name="bib[book][desc]" />
                 <input type="submit" name="bib[submit]" value="<?php _e( 'Add book', 'bpsp' ); ?>" />
             </div>
             <div class="www">
@@ -46,7 +47,9 @@
             <ul>
                 <?php foreach( $bibs as $b): ?>
                     <li>
-                        <?php echo $b['html']; ?>
+                        <?php if( isset( $b['cover'] ) ): ?>
+                            <img src="<?php echo $b['cover']; ?>" alt="<?php echo $b['plain']; ?>" />
+                        <?php endif; echo $b['html']; ?>
                         <span style="float: right">
                             <a href="<?php echo add_query_arg( 'bhash', $b['hash'] . ',' . $post_id, $bibs_edit_uri ); ?>">
                                 <?php _e( 'Edit Entry', 'bpsp' ); ?>

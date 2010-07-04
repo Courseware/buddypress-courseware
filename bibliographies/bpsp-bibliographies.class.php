@@ -49,6 +49,9 @@ class BPSP_Bibliographies {
         add_filter( 'courseware_assignment', array( &$this, 'bibs_screen' ) );
         add_action( 'courseware_group_screen_handler', array( &$this, 'screen_handler' ) );
         add_filter( 'courseware_group_nav_options', array( &$this, 'add_nav_options' ) );
+        // Load api keys
+        $this->worldcat_key = get_option( 'bpsp_worldcat_key' );
+        $this->isbndb_key = get_option( 'bpsp_isbndb_key' );
     }
     
 /**
@@ -280,8 +283,9 @@ class BPSP_Bibliographies {
         $bib = array_filter( shortcode_parse_atts( $raw_bib ) );
         $content['raw'] = $raw_bib;
         $content['hash'] = md5( $raw_bib );
-        if( isset( $bib[type] ) ) {
-            if( $bib[type] == 'www' || $bib[type] == 'misc' ) {
+        
+        if( isset( $bib['type'] ) ) {
+            if( $bib['type'] == 'www' || $bib['type'] == 'misc' ) {
                 $content['html'] = '<a href="' . $bib['url'] . '">' . $bib['title'] . '</a>';
                 $content['plain'] = $bib['title'] . ' &mdash; ' . $bib['url'];
             } else {
@@ -289,10 +293,19 @@ class BPSP_Bibliographies {
                 if( '' != trim( $authors ) )
                     $authors = ' &mdash; ' . $authors;
                 $content['plain'] = $bib['title'] . $authors;
+                
                 if( isset( $bib['url'] ) )
-                    $content['html'] = '<a href="' . $bib['url'] . '">' . $content['plain'] . '</a>';
+                    if( isset( $bib['citation'] ) )
+                        $content['html'] = '<a href="' . $bib['url'] . '">' . $bib['citation'] . '</a>';
+                    else
+                        $content['html'] = '<a href="' . $bib['url'] . '">' . $content['plain'] . '</a>';
                 else
-                    $content['html'] = $content['plain'];
+                    if( isset( $bib['citation'] ) )
+                        $content['html'] = $bib['citation'];
+                    else
+                        $content['html'] = $content['plain'];
+                if( isset( $bib['isbn'] ) )
+                    $content['cover'] = BPSP_Bibliographies_WebApis::get_book_cover( $bib['isbn'] );
             }
         }
         return $content;
@@ -543,25 +556,25 @@ class BPSP_Bibliographies {
                 wp_die( __( 'BuddyPress Courseware Error while forbidden user tried to add bibliography entries.', 'bpsp' ) );
                 
             // Add an existing bib
-            if( isset( $_POST['bib']['existing'] ) ) {
+            if( isset( $_POST['bib']['existing'] ) && !empty( $_POST['bib']['existing'] ) ) {
                 $data = $this->get_bib( $_POST['bib']['existing'] );
                 if( $this->add_bib( $data, false, $post_id ) )
                     $vars['message'] = __( 'Bibliography added', 'bpsp' );
                 else
                     $vars['message'] = __( 'Bibliography could not be added', 'bpsp' );
             }
-            //Add a new book
-            elseif( isset( $_POST['bib']['book'] ) )
-                if( $this->add_book( $_POST['bib']['book'] ) )
-                    $vars['message'] = __( 'Book added', 'bpsp' );
-                else
-                    $vars['message'] = __( 'Book could not be added', 'bpsp' );
             // Add a new www entry
-            elseif ( isset( $_POST['bib']['www'] ) )
-                if( !$this->add_www( $_POST['bib']['www'] ) )
+            elseif ( !empty( $_POST['bib']['www']['title'] ) && !empty( $_POST['bib']['www']['url'] ) )
+                if( $this->add_www( $_POST['bib']['www'], $post_id ) )
                     $vars['message'] = __( 'Entry added', 'bpsp' );
                 else
                     $vars['message'] = __( 'Entry could not be added', 'bpsp' );
+            //Add a new book
+            elseif( isset( $_POST['bib']['book'] ) && !empty( $_POST['bib']['book'] ) )
+                if( $this->add_book( $_POST['bib']['book'], $post_id ) )
+                    $vars['message'] = __( 'Book added', 'bpsp' );
+                else
+                    $vars['message'] = __( 'Book could not be added', 'bpsp' );
             else
                 $vars['message'] = __( 'No bibliography entry could be added.', 'bpsp' );
         }
@@ -576,7 +589,7 @@ class BPSP_Bibliographies {
         $vars['post_id'] = $this->current_parent;
         $vars['has_bib_caps'] = $this->has_bib_caps( $bp->loggedin_user->id );
         $vars['bibs'] = $this->has_bibs( $this->current_parent );
-        $vars['bibdb'] = $this->load_bibs( true );
+        //$vars['bibdb'] = $this->load_bibs( true );
         $vars['bibs_nonce'] = wp_nonce_field( $nonce_name, '_wpnonce', true, false );
         $vars['bibs_delete_permalink'] = $vars['current_uri'] . '/delete_bibliography';
         $vars['bibs_edit_permalink'] = $vars['current_uri'] . '/edit_bibliography';
@@ -591,24 +604,62 @@ class BPSP_Bibliographies {
      * Adds a book to $this->current_parent
      *
      * @param Mixed $entry that contains information about current entry
+     * @param Int $post_id the id of the post to assign to
      * @return True if added and false if failed
      */
-    function add_book( $entry ) {
-        _d( $entry );
-        return true;
+    function add_book( $entry, $post_id ) {
+        if( isset( $entry['title'] ) && $entry['title'] != '' ) {
+            $api = new BPSP_Bibliographies_WebApis( array( 'worldcat' => $this->worldcat_key ) );
+            $item = $api->worldcat_opensearch( $entry['title'] );
+            if( !empty( $item ) )  {
+                $item[0]['type'] = 'book';
+                if( isset( $entry['desc'] ) )
+                    $item[0]['desc'] = $entry['desc'];
+                if( $this->add_bib( $item[0], true, $post_id ) ) { // add to post_id
+                    $this->add_bib( $item[0] ); // also try to add it to global database
+                    return true;
+                }
+            }
+        } elseif ( isset( $entry['isbn'] ) && $entry['isbn'] != '' ) {
+            $api = new BPSP_Bibliographies_WebApis( array( 'isbndb' => $this->isbndb_key ) );
+            $item = $api->isbndb_query( $entry['isbn'] );
+            if( !empty( $item ) )  {
+                $item[0]['type'] = 'book';
+                if( isset( $entry['desc'] ) )
+                    $item[0]['desc'] = $entry['desc'];
+                if( $this->add_bib( $item[0], true, $post_id ) ) { // add to post_id
+                    $this->add_bib( $item[0] ); // also try to add it to global database
+                    return true;
+                }
+            }
+        }
+        return false;
     }
     
     /**
-     * add_www()
+     * add_www( $entry, $post_id )
      *
      * Adds a web entry to $this->current_parent
      *
      * @param Mixed $entry that contains information about current entry
+     * @param Int $post_id the id of the post to assign to
      * @return True if added and false if failed
      */
-    function add_www( $entry ) {
-        _d( $entry );
-        return true;
+    function add_www( $entry, $post_id ) {
+        if( isset( $entry['title'] ) &&
+            isset( $entry['url'] ) &&
+            $entry['title'] != '' &&
+            $entry['url'] != ''
+        ) {
+            $item['type'] = 'misc';
+            $item['title'] = $entry['title'];
+            $item['url'] = $entry['url'];
+            if( $this->add_bib( $item, true, $post_id ) ) { // add to post_id
+                    $this->add_bib( $item ); // also try to add it to global database
+                    return true;
+            }
+        }
+        return false;
     }
 }
 ?>
