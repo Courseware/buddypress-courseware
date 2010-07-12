@@ -6,7 +6,7 @@
             <div class="existing">
                 <h4><?php _e( 'Add an existing bibliography', 'bpsp'); ?></h4>
                 <select name="bib[existing]">
-                    <option value=""><?php _e( 'Select an entry...', 'bpsp' ); ?></option>
+                    <option value=""><?php _e( 'Type something to search...', 'bpsp' ); ?></option>
                     <?php
                     if( is_array( $bibdb ) )
                         foreach( $bibdb as $b_hash => $b ):
@@ -49,7 +49,11 @@
                     <li>
                         <?php if( isset( $b['cover'] ) ): ?>
                             <img src="<?php echo $b['cover']; ?>" alt="<?php echo $b['plain']; ?>" />
-                        <?php endif; echo $b['html']; ?>
+                        <?php
+                            endif;
+                            echo $b['html'];
+                            if( $has_bib_caps ):
+                        ?>
                         <span style="float: right">
                             <a href="<?php echo add_query_arg( 'bhash', $b['hash'] . ',' . $post_id, $bibs_edit_uri ); ?>">
                                 <?php _e( 'Edit Entry', 'bpsp' ); ?>
@@ -59,6 +63,7 @@
                                 <?php _e( 'Delete Entry', 'bpsp' ); ?>
                             </a>
                         </span>
+                        <?php endif; ?>
                     </li>
                 <?php endforeach; ?>
             </ul>

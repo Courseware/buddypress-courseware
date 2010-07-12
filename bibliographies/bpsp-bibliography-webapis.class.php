@@ -83,7 +83,8 @@ class BPSP_Bibliographies_WebApis {
 	$url .= "&wskey=".$key;
 	
 	$response = fetch_feed( $url );
-        $results = $response->get_items();
+        if( empty( $response->errors ) )
+            $results = $response->get_items();
 	
 	if ( !empty( $results ) ) {
             foreach ($results as $item) {
@@ -151,10 +152,14 @@ class BPSP_Bibliographies_WebApis {
 	$url .= "&access_key=".$key;
 	
         // load xml
-        $xml = file_get_contents( $url );
-        $parser = xml_parser_create();
-        xml_parse_into_struct( $parser, $xml, $tags );
-        xml_parser_free( $parser );
+        $xml = @file_get_contents( $url );
+        if( $xml != null ) {
+            $parser = xml_parser_create();
+            xml_parse_into_struct( $parser, $xml, $tags );
+            xml_parser_free( $parser );
+        } else {
+            return null;
+        }
         
         foreach( $tags as $t ) {
             if( strtolower( $t['tag'] ) == 'titlelong' )

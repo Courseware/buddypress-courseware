@@ -238,15 +238,56 @@ class BPSP_Bibliographies {
     }
     
     /**
-     * add_bib( $data )
+     * add_bib( $data, $shortcode = true. $post_id = null )
      *
      * Stores a bibliography entry to db or post_id if set
      * @param Mixed $data
      * @param Bool $shortcode if you want data to be shortcoded, default true
-     * @param Int $post_id the id of the post to store
+     * @param Int $post_id the id of the post to store, if null use post_id of the database
      * @return Bool true on success and false on failure
      */
     function add_bib( $data, $shortcode = true, $post_id = null ) {
+        if( !$post_id ) {
+            // Get bibdb post_id
+            $bibdb_def = array(
+                'post_title'    => 'BIBSDB',
+                'post_status'   => 'draft',
+                'post_type'     => 'bib'
+            );
+            $bibdb = get_posts( $bibdb_def );
+            $post_id = $bibdb[0]->ID;
+        }
+        
+        if( !isset( $data['type'] ) )
+            $data['type'] = 'misc';
+        else
+            $data['type'] = strtolower( $data['type'] );
+        
+        if( count( $data ) > 1 && $shortcode )
+            $entry = $this->gen_bib_shortcode( array_filter( $data ) );
+        elseif( count( $data ) < 1 )
+            $post_id = null; // force add_post_meta to fail
+        else
+            $entry = $data; // shortcode if false
+        
+        // Check if entry doesn't exist yet
+        if( $this->get_bib( md5( $entry ), $post_id ) )
+            return false;
+        else
+            return add_post_meta( $post_id, $this->bid, $entry );
+    }
+    
+/**
+     * update_bib( $data, $shortcode = true, $post_id =null , $old_shcode )
+     *
+     * Stores a bibliography entry to db or post_id if set
+     * @param Mixed $data
+     * @param Bool $shortcode if you want data to be shortcoded, default true
+     * @param Int $post_id the id of the post to store, if null use post_id of the database
+     * @param String $old_shcode shortcode of the old entry
+     * @return Bool true on success and false on failure
+     */
+    function update_bib( $data, $shortcode = true, $post_id = null, $old_shcode ) {
         if( !$post_id ) {
             // Get bibdb post_id
             $bibdb_def = array(
@@ -269,7 +310,8 @@ class BPSP_Bibliographies {
         if( $this->get_bib( md5( $entry ), $post_id ) )
             return false;
         else
-            return add_post_meta( $post_id, $this->bid, $entry );
+            if( update_post_meta( $post_id, $this->bid, $entry, $old_shcode ) )
+                return md5( $entry );
     }
     
     /**
@@ -318,20 +360,16 @@ class BPSP_Bibliographies {
      * Handles uris like groups/ID/courseware/new_bibliography
      */
     function screen_handler( $action_vars ) {
-        if( $action_vars[0] == 'new_bibliography' ) {
+        add_action( 'bp_head', array( BPSP_Static, 'bibs_enqueues' ) );
+        
+        if( isset ( $action_vars[0] ) && 'new_bibliography' == $action_vars[0] ) {
             add_filter( 'courseware_group_template', array( &$this, 'new_bib_screen' ) );
         }
-        elseif( $action_vars[0] == 'import_bibliographies' ) {
+        elseif( isset ( $action_vars[0] ) && 'import_bibliographies' == $action_vars[0] ) {
             add_filter( 'courseware_group_template', array( &$this, 'import_bibs_screen' ) );
         }
-        elseif ( $action_vars[0] == 'edit_bibliography' ) {   
-            if( isset ( $action_vars[1] ) && null != $this->is_bib( $action_vars[1] ) ) {
-                $this->current_parent = $action_vars[1];
+        elseif ( isset ( $action_vars[0] ) && 'edit_bibliography' == $action_vars[0] ) {   
                 add_filter( 'courseware_group_template', array( &$this, 'edit_bib_screen' ) );
-            }
-            else {
-                wp_redirect( wp_redirect( get_option( 'siteurl' ) ) );
-            }
         }
         elseif( isset ( $action_vars[0] ) && 'delete_bibliography' == $action_vars[0] )
             add_filter( 'courseware_group_template', array( &$this, 'delete_bib_screen' ) );
@@ -367,11 +405,14 @@ class BPSP_Bibliographies {
     function delete_bib_screen( $vars ) {
         $nonce_name = 'delete_bib';
         
+        if( !$this->has_bib_caps( $bp->loggedin_user->id ) && !is_super_admin() )
+           wp_die( __( 'BuddyPress Courseware Error while forbidden user tried to delete bibliography.' ) );
+        
         $is_nonce = wp_verify_nonce( $_GET['_wpnonce'], $nonce_name );
         if( !$is_nonce && isset( $_GET['bhash'] ) )
             return;
         
-        $data = explode( ',', $_GET['bhash'] );
+        $data = explode( ',', sanitize_text_field( $_GET['bhash'] ) );
         $bhash = $data[0];
         $post_id = null;
         if( isset( $data[1] ) && !empty( $data[1] ) )
@@ -401,6 +442,73 @@ class BPSP_Bibliographies {
         
         return $this->new_bib_screen( $vars );
     }
+        
+    /**
+     * edit_bib_screen( $vars )
+     *
+     * Handles screen for editing the bibliographies
+     * @param Array $vars, an array of variables
+     * @return Array $vars modified
+     */
+    function edit_bib_screen( $vars ) {
+        $nonce_name = 'edit_bib';
+        $nonce_delete_name = 'delete_bib';
+        $nonce_edit_name = $nonce_name;
+        
+        if( !$this->has_bib_caps( $bp->loggedin_user->id ) && !is_super_admin() )
+           wp_die( __( 'BuddyPress Courseware Error while forbidden user tried to edit bibliography.' ) );
+        
+        $is_nonce = wp_verify_nonce( $_GET['_wpnonce'], $nonce_name );
+        if( !$is_nonce && isset( $_GET['bhash'] ) )
+            return;
+        
+        $data = explode( ',', sanitize_text_field( $_GET['bhash'] ) );
+        $bhash = $data[0];
+        $new_bhash = null;
+        $post_id = null;
+        if( isset( $data[1] ) && !empty( $data[1] ) )
+            $post_id = $data[1];
+        else {
+            $bibdb_def = array(
+                'post_title'    => 'BIBSDB',
+                'post_status'   => 'draft',
+                'post_type'     => 'bib',
+            );
+            $bibdb_post = get_posts( $bibdb_def );
+            $post_id = $bibdb_post[0]->ID;
+        }
+        
+        if( $post_id ) {
+            $old_bib = $this->get_bib( $bhash, $post_id );
+            if( $old_bib != null && isset( $_POST['bib'] ) ) {
+                $new_bhash = $this->update_bib( $_POST['bib'], true, $post_id, $old_bib );
+                if( null != $new_bhash ) {
+                    $bhash = $new_bhash; // Update for the next query
+                    $vars['message'] = _e( 'Entry updated.', 'bpsp' );
+                }
+                else {
+                    $vars['message'] = _e( 'Entry could not be updated.', 'bpsp' );
+                }
+            } elseif( !$old_bib && isset( $_POST['bib'] ) )
+                $vars['message'] = _e( 'Entry could not be found.', 'bpsp' );
+        }
+        else
+            $vars['message'] = _e( 'No Bibliography database was created.', 'bpsp' );
+        
+        $vars['name'] = 'edit_bibliography';
+        $vars['bib'] = shortcode_parse_atts( $this->get_bib( $bhash, $post_id ) );
+        $vars['has_bibs'] = true;
+        $vars['hide_existing'] = true;
+        $vars['post_id'] = null;
+        $vars['has_bib_caps'] = $this->has_bib_caps( $bp->loggedin_user->id );
+        $vars['bibs'] = $this->load_bibs( true );
+        $vars['bibs_delete_permalink'] = $vars['current_uri'] . '/delete_bibliography';
+        $vars['bibs_edit_permalink'] = $vars['current_uri'] . '/edit_bibliography';
+        $vars['bibs_delete_uri'] = add_query_arg( '_wpnonce', wp_create_nonce( $nonce_delete_name ), $vars['bibs_delete_permalink'] );
+        $vars['bibs_edit_uri'] = add_query_arg( '_wpnonce', wp_create_nonce( $nonce_edit_name ), $vars['bibs_edit_permalink'] );
+        $vars['bibs_nonce'] = wp_nonce_field( $nonce_name, '_wpnonce', true, false );
+        return $vars;
+    }
     
     /**
      * new_bib_screen( $vars )
@@ -414,6 +522,9 @@ class BPSP_Bibliographies {
         $nonce_name = 'bibs';
         $nonce_delete_name = 'delete_bib';
         $nonce_edit_name = 'edit_bib';
+        
+        if( !$this->has_bib_caps( $bp->loggedin_user->id ) && !is_super_admin() )
+            wp_die( __( 'BuddyPress Courseware Error while forbidden user tried to add a new bibliography.' ) );
         
         $is_nonce = wp_verify_nonce( $_POST['_wpnonce'], $nonce_name );
         if( !$is_nonce && isset( $_POST['bib'] ) )
@@ -466,6 +577,9 @@ class BPSP_Bibliographies {
     function import_bibs_screen( $vars ) {
         if( !class_exists( 'BibTeX_Parser') )
             include_once 'bibtex-parser.class.php';
+        
+        if( !$this->has_bib_caps( $bp->loggedin_user->id ) && !is_super_admin() )
+            wp_die( __( 'BuddyPress Courseware Error while forbidden user tried to add a new bibliography.' ) );
         
         if( isset( $_POST['bib'] ) )
             $to_parse = $_POST['bib']['source'];
@@ -552,7 +666,7 @@ class BPSP_Bibliographies {
         $is_nonce = wp_verify_nonce( $_POST['_wpnonce'], $nonce_name );
         if( $is_nonce && isset( $_POST['bib'] ) ) {
             
-            if( !$this->has_bib_caps( $bp->loggedin_user->id ) )
+            if( !$this->has_bib_caps( $bp->loggedin_user->id ) && !is_super_admin() )
                 wp_die( __( 'BuddyPress Courseware Error while forbidden user tried to add bibliography entries.', 'bpsp' ) );
                 
             // Add an existing bib
@@ -589,7 +703,7 @@ class BPSP_Bibliographies {
         $vars['post_id'] = $this->current_parent;
         $vars['has_bib_caps'] = $this->has_bib_caps( $bp->loggedin_user->id );
         $vars['bibs'] = $this->has_bibs( $this->current_parent );
-        //$vars['bibdb'] = $this->load_bibs( true );
+        $vars['bibdb'] = $this->load_bibs( true );
         $vars['bibs_nonce'] = wp_nonce_field( $nonce_name, '_wpnonce', true, false );
         $vars['bibs_delete_permalink'] = $vars['current_uri'] . '/delete_bibliography';
         $vars['bibs_edit_permalink'] = $vars['current_uri'] . '/edit_bibliography';

@@ -1,6 +1,6 @@
 <?php if( $message ): ?>
-<div id="courseware-message" class="updated">
-    <?php echo $message; ?>
+<div id="message" class="updated">
+    <p><?php echo $message; ?></p>
 </div>
 <?php endif; ?>
 <div id="courseware-import-bibliographies" >

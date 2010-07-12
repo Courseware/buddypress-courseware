@@ -33,8 +33,8 @@ class BPSP_Assignments {
     function BPSP_Assignments() {
         add_action( 'courseware_new_teacher_added', array( &$this, 'add_assignment_caps' ) );
         add_action( 'courseware_new_teacher_removed', array( &$this, 'remove_assignment_caps' ) );
-        add_action( 'courseware_group_screen_handler', array( &$this, 'assignments_screen_handler' ) );
-        add_filter( 'courseware_group_nav_options', array( &$this, 'assignments_add_nav_options' ) );
+        add_action( 'courseware_group_screen_handler', array( &$this, 'screen_handler' ) );
+        add_filter( 'courseware_group_nav_options', array( &$this, 'add_nav_options' ) );
    }
     
     /**
@@ -144,12 +144,12 @@ class BPSP_Assignments {
     }
     
     /**
-     * assignments_screen_handler( $action_vars )
+     * screen_handler( $action_vars )
      *
      * Assignment screens handler.
      * Handles uris like groups/ID/courseware/assignments/args
      */
-    function assignments_screen_handler( $action_vars ) {
+    function screen_handler( $action_vars ) {
         if( $action_vars[0] == 'new_assignment' ) {
             //Load editor
             add_action( 'bp_head', array( &$this, 'load_editor' ) );
@@ -214,14 +214,14 @@ class BPSP_Assignments {
     }
     
     /**
-     * assignments_add_nav_options()
+     * add_nav_options()
      *
      * Adds assignment specific navigations options
      *
      * @param Array $options A set of current nav options
      * @return Array containing new nav options
      */
-    function assignments_add_nav_options( $options ) {
+    function add_nav_options( $options ) {
         global $bp;
         
         if( $this->has_assignment_caps( $bp->loggedin_user->id ) || is_super_admin() ) {
@@ -268,7 +268,6 @@ class BPSP_Assignments {
                     is_numeric( $new_assignment['course_id'] )
                 ) {
                     $new_assignment['title'] = strip_tags( $new_assignment['title'] );
-                    $new_assignment['due_date'] = str_replace( 'T', ' ', $new_assignment['due_date']);
                     $new_assignment_id =  wp_insert_post( array(
                         'post_author'   => $bp->loggedin_user->id,
                         'post_title'    => $new_assignment['title'],
@@ -416,7 +415,6 @@ class BPSP_Assignments {
                     is_numeric( $updated_assignment['group_id'] )
                 ) {
                     $updated_assignment['title'] = strip_tags( $updated_assignment['title'] );
-                    $updated_assignment['due_date'] = str_replace( 'T', ' ', $updated_assignment['due_date']);
                     $updated_assignment_id =  wp_update_post( array(
                         'ID'            => $old_assignment->ID,
                         'post_title'    => $updated_assignment['title'],
@@ -453,7 +451,7 @@ class BPSP_Assignments {
      */
     function load_editor() {
         wp_enqueue_script( 'assignments' );
-        wp_enqueue_style( 'dtpicker' );
+        wp_enqueue_style( 'datetimepicker' );
         wp_enqueue_script( 'post' );
         wp_enqueue_script( 'editor' );
         wp_enqueue_script( 'utils' );

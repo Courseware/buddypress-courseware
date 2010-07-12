@@ -1,7 +1,9 @@
 <?php setup_postdata( $assignment ); ?>
-<div id="courseware-message" class="updated">
-    <?php echo $message; ?>
+<?php if( $message ): ?>
+<div id="message" class="updated">
+    <p><?php echo $message; ?></p>
 </div>
+<?php endif; ?>
 <div id="courseware-assignment">
     <div class="assignment-content">
         <h4 id="assignment-title"><?php echo $assignment->post_title; ?></h4>

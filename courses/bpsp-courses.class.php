@@ -32,8 +32,8 @@ class BPSP_Courses {
     function BPSP_Courses() {
         add_action( 'courseware_new_teacher_added', array( &$this, 'add_course_caps' ) );
         add_action( 'courseware_new_teacher_removed', array( &$this, 'remove_course_caps' ) );
-        add_action( 'courseware_group_screen_handler', array( &$this, 'courses_screen_handler' ) );
-        add_filter( 'courseware_group_nav_options', array( &$this, 'courses_add_nav_options' ) );
+        add_action( 'courseware_group_screen_handler', array( &$this, 'screen_handler' ) );
+        add_filter( 'courseware_group_nav_options', array( &$this, 'add_nav_options' ) );
    }
     
     /**
@@ -140,12 +140,12 @@ class BPSP_Courses {
     }
     
     /**
-     * courses_screen_handler( $action_vars )
+     * screen_handler( $action_vars )
      *
      * Courses screens handler.
      * Handles uris like groups/ID/courseware/action/args
      */
-    function courses_screen_handler( $action_vars ) {
+    function screen_handler( $action_vars ) {
         if( $action_vars[0] == 'new_course' ) {
             //Load editor
             add_action( 'bp_head', array( &$this, 'load_editor' ) );
@@ -231,14 +231,14 @@ class BPSP_Courses {
     }
     
     /**
-     * courses_add_nav_options()
+     * add_nav_options()
      *
      * Adds courses specific navigations options
      *
      * @param Array $options A set of current nav options
      * @return Array containing new nav options
      */
-    function courses_add_nav_options( $options ) {
+    function add_nav_options( $options ) {
         global $bp;
         
         if( $this->has_course_caps( $bp->loggedin_user->id ) || is_super_admin() )

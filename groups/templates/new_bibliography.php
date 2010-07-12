@@ -2,12 +2,15 @@
     label{display: block}
 </style>
 <?php if( $message ): ?>
-<div id="courseware-message" class="updated">
-    <?php echo $message; ?>
+<div id="message" class="updated">
+    <p><?php echo $message; ?></p>
 </div>
 <?php endif; ?>
 <div id="courseware-new-bibliography" >
-    <h4><a href="<?php echo $import_uri ?>"><?php _e( 'Import Bibliographies', 'bpsp' ); ?></a></h4>
+    <h4>
+        <?php _e( 'Add a new bibliography', 'bpsp' ); ?> |
+        <a href="<?php echo $import_uri ?>"><?php _e( 'Import Bibliographies', 'bpsp' ); ?></a>
+    </h4>
     <form action="" method="post" >
         <div class="courseware-form-section">
             <select name="bib[type]">
@@ -36,7 +39,7 @@
         <h4><?php _e( 'Publish Information', 'bpsp' ); ?></h4>
         <div class="courseware-form-section">
             <label for="bib[title]"><?php _e( 'Title', 'bpsp' ); ?></label>
-                <input name="bib[stitle]" />
+                <input name="bib[title]" />
             <label for="bib[stitle]"><?php _e( 'Short Title', 'bpsp' ); ?></label>
                 <input name="bib[stitle]" />
             <label for="bib[jtitle]"><?php _e( 'Journal Title', 'bpsp' ); ?></label>
