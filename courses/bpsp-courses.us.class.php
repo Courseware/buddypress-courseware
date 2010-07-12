@@ -100,7 +100,7 @@ class BPSP_USCourses extends BPSP_Courses {
         $vars['course_permalink'] = $vars['current_uri'] . '/course/';
         $vars['course_edit_uri'] = $vars['current_uri'] . '/course/edit';
         $vars['course'] = $course;
-        return $vars;
+        return apply_filters( 'courseware_course', &$vars );
     }
     
     /**

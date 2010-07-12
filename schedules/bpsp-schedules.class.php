@@ -252,7 +252,7 @@ class BPSP_Schedules {
             for( $i = 1; $i <= $repetition['count']; $i++ )
                 $periods[] = array(
                     'start_date' => date( $date_format, strtotime( "+$i $interval", $starttime_t )),
-                    'end_date' => date( $date_format, strtotime( "+$i $interval", $starttime_t )),
+                    'end_date' => date( $date_format, strtotime( "+$i $interval", $endtime_t )),
                 );
         }
         

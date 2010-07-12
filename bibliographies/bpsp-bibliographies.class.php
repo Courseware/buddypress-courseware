@@ -539,18 +539,18 @@ class BPSP_Bibliographies {
             else
                 $vars['message'] = __( 'Entry could not be added', 'bpsp' );
         }
-        //Add a new book
-        elseif( isset( $_POST['bib']['book'] ) )
-            if( $this->add_book( $_POST['bib']['book'] ) )
-                $vars['message'] = __( 'Book added', 'bpsp' );
-            else
-                $vars['message'] = __( 'Book could not be added', 'bpsp' );
         // Add a new www entry
-        elseif ( isset( $_POST['bib']['www'] ) )
-            if( !$this->add_www( $_POST['bib']['www'] ) )
+        elseif ( !empty( $_POST['bib']['www']['title'] ) && !empty( $_POST['bib']['www']['url'] ) )
+            if( $this->add_www( $_POST['bib']['www'], $post_id ) )
                 $vars['message'] = __( 'Entry added', 'bpsp' );
             else
                 $vars['message'] = __( 'Entry could not be added', 'bpsp' );
+        //Add a new book
+        elseif( !empty( $_POST['bib']['book'] ) )
+            if( $this->add_book( $_POST['bib']['book'], $post_id ) )
+                $vars['message'] = __( 'Book added', 'bpsp' );
+            else
+                $vars['message'] = __( 'Book could not be added', 'bpsp' );
         
         $vars['name'] = 'new_bibliography';
         $vars['import_uri'] = $this->home_uri . '/import_bibliographies';
@@ -684,7 +684,7 @@ class BPSP_Bibliographies {
                 else
                     $vars['message'] = __( 'Entry could not be added', 'bpsp' );
             //Add a new book
-            elseif( isset( $_POST['bib']['book'] ) && !empty( $_POST['bib']['book'] ) )
+            elseif( !empty( $_POST['bib']['book'] ) )
                 if( $this->add_book( $_POST['bib']['book'], $post_id ) )
                     $vars['message'] = __( 'Book added', 'bpsp' );
                 else
@@ -713,23 +713,27 @@ class BPSP_Bibliographies {
     }
     
     /**
-     * add_book()
+     * add_book( $entry, $post_id = null )
      *
      * Adds a book to $this->current_parent
      *
      * @param Mixed $entry that contains information about current entry
-     * @param Int $post_id the id of the post to assign to
+     * @param Int $post_id the id of the post to assign to, default null which defaults to bibdb post_id
      * @return True if added and false if failed
      */
-    function add_book( $entry, $post_id ) {
+    function add_book( $entry, $post_id = null ) {
         if( isset( $entry['title'] ) && $entry['title'] != '' ) {
             $api = new BPSP_Bibliographies_WebApis( array( 'worldcat' => $this->worldcat_key ) );
             $item = $api->worldcat_opensearch( $entry['title'] );
             if( !empty( $item ) )  {
                 $item[0]['type'] = 'book';
-                if( isset( $entry['desc'] ) )
+                if( !empty( $entry['desc'] ) )
                     $item[0]['desc'] = $entry['desc'];
-                if( $this->add_bib( $item[0], true, $post_id ) ) { // add to post_id
+                
+                // add to global database
+                if( $post_id == null )
+                    return $this->add_bib( $item[0] );
+                elseif( $this->add_bib( $item[0], true, $post_id ) ) { // add to post_id
                     $this->add_bib( $item[0] ); // also try to add it to global database
                     return true;
                 }
@@ -739,9 +743,13 @@ class BPSP_Bibliographies {
             $item = $api->isbndb_query( $entry['isbn'] );
             if( !empty( $item ) )  {
                 $item[0]['type'] = 'book';
-                if( isset( $entry['desc'] ) )
+                if( !empty( $entry['desc'] ) )
                     $item[0]['desc'] = $entry['desc'];
-                if( $this->add_bib( $item[0], true, $post_id ) ) { // add to post_id
+                
+                // add to global database
+                if( $post_id == null )
+                    return $this->add_bib( $item[0] );
+                elseif( $this->add_bib( $item[0], true, $post_id ) ) { // add to post_id
                     $this->add_bib( $item[0] ); // also try to add it to global database
                     return true;
                 }
@@ -751,26 +759,28 @@ class BPSP_Bibliographies {
     }
     
     /**
-     * add_www( $entry, $post_id )
+     * add_www( $entry, $post_id = null )
      *
      * Adds a web entry to $this->current_parent
      *
      * @param Mixed $entry that contains information about current entry
-     * @param Int $post_id the id of the post to assign to
+     * @param Int $post_id the id of the post to assign to, default null which defaults to bibdb post_id
      * @return True if added and false if failed
      */
-    function add_www( $entry, $post_id ) {
-        if( isset( $entry['title'] ) &&
-            isset( $entry['url'] ) &&
-            $entry['title'] != '' &&
-            $entry['url'] != ''
+    function add_www( $entry, $post_id = null ) {
+        if( !empty( $entry['title'] ) &&
+            !empty( $entry['url'] )
         ) {
             $item['type'] = 'misc';
             $item['title'] = $entry['title'];
             $item['url'] = $entry['url'];
-            if( $this->add_bib( $item, true, $post_id ) ) { // add to post_id
-                    $this->add_bib( $item ); // also try to add it to global database
-                    return true;
+            
+            // add to global database
+            if( $post_id == null )
+                return $this->add_bib( $item );
+            elseif( $this->add_bib( $item, true, $post_id ) ) { // add to post_id
+                $this->add_bib( $item ); // also try to add it to global database
+                return true;
             }
         }
         return false;
