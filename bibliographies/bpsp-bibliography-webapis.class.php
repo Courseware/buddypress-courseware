@@ -2,7 +2,7 @@
 /**
  * Class for handling third party Webservices API integration
  */
-class BPSP_Bibliographies_WebApis {
+class BPSP_Bibliography_WebApis {
     /**
      * WordCat Api Key
      */
@@ -36,7 +36,7 @@ class BPSP_Bibliographies_WebApis {
      *  - 'isbndb' => 'for isbndb'
      *  ...
      */
-    function BPSP_Bibliographies_WebApis( $keys ) {
+    function BPSP_Bibliography_WebApis( $keys ) {
         if( isset( $keys['worldcat'] ) )
             $this->worldcat_key = $keys['worldcat'];
         

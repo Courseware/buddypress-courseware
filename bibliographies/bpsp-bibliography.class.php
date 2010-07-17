@@ -6,7 +6,7 @@
  *  - courseware_below_courses
  *  - courseware_below_assignments
  */
-class BPSP_Bibliographies {
+class BPSP_Bibliography {
     /**
      * Capabilities required to edit/add bibliographies
      */
@@ -38,11 +38,11 @@ class BPSP_Bibliographies {
     var $bid = 'bibliography';
     
     /**
-     * BPSP_Bibliographies()
+     * BPSP_Bibliography()
      *
      * Constructor. Loads all the hooks.
      */
-    function BPSP_Bibliographies() {
+    function BPSP_Bibliography() {
         add_action( 'courseware_new_teacher_added', array( &$this, 'add_bib_caps' ) );
         add_action( 'courseware_new_teacher_removed', array( &$this, 'remove_bib_caps' ) );
         add_filter( 'courseware_course', array( &$this, 'bibs_screen' ) );
@@ -149,6 +149,10 @@ class BPSP_Bibliographies {
         $user = new WP_User( $user_id );
         foreach( $this->caps as $c )
             if ( !$user->has_cap( $c ) )
+                $is_ok = false;
+        
+        if( get_option( 'bpsp_allow_only_admins' ) )
+            if( !bp_group_is_admin() )
                 $is_ok = false;
         
         return $is_ok;
@@ -347,7 +351,7 @@ class BPSP_Bibliographies {
                     else
                         $content['html'] = $content['plain'];
                 if( isset( $bib['isbn'] ) )
-                    $content['cover'] = BPSP_Bibliographies_WebApis::get_book_cover( $bib['isbn'] );
+                    $content['cover'] = BPSP_Bibliography_WebApis::get_book_cover( $bib['isbn'] );
             }
         }
         return $content;
@@ -723,7 +727,7 @@ class BPSP_Bibliographies {
      */
     function add_book( $entry, $post_id = null ) {
         if( isset( $entry['title'] ) && $entry['title'] != '' ) {
-            $api = new BPSP_Bibliographies_WebApis( array( 'worldcat' => $this->worldcat_key ) );
+            $api = new BPSP_Bibliography_WebApis( array( 'worldcat' => $this->worldcat_key ) );
             $item = $api->worldcat_opensearch( $entry['title'] );
             if( !empty( $item ) )  {
                 $item[0]['type'] = 'book';
@@ -739,7 +743,7 @@ class BPSP_Bibliographies {
                 }
             }
         } elseif ( isset( $entry['isbn'] ) && $entry['isbn'] != '' ) {
-            $api = new BPSP_Bibliographies_WebApis( array( 'isbndb' => $this->isbndb_key ) );
+            $api = new BPSP_Bibliography_WebApis( array( 'isbndb' => $this->isbndb_key ) );
             $item = $api->isbndb_query( $entry['isbn'] );
             if( !empty( $item ) )  {
                 $item[0]['type'] = 'book';

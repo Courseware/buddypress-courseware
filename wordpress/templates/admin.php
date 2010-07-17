@@ -10,7 +10,7 @@
     <h2><?php _e('BuddyPress Courseware','bpsp')?></h2>
     <div id="poststuff" class="metabox-holder">
         <div class="postbox">
-            <h3 class="hndle" ><?php _e('About','bpsp')?></h3>
+            <h3 class="hndle" ><?php _e('Default behaviour for Courseware','bpsp')?></h3>
             <div class="inside">
                 <p>
                     <?php _e('In short, this feature was added due to differences
@@ -34,25 +34,47 @@
                     that teachers will be able to manage one course
                     per BuddyPress group and users will subscrie to each group.', 'bpsp' ); ?>
                 </p>
-            </div>
-        </div>
-        <div class="postbox">
-            <h3 class="hndle" ><?php _e('Select the default behaviour of Courseware:','bpsp')?></h3>
-            <div class="inside">
                 <form action="" method="post" >
-                    <p>
-                        <input type="radio" name="bpsp_curriculum" value="eu" <?php echo $eu? 'checked' : ''; ?> />
-                        <strong><?php _e( 'European style', 'bpsp' ); ?></strong> &mdash;
-                        <?php _e( 'Use this setting if a single roster of students
-                        is shared between multiple courses.', 'bpsp' ); ?>
-                    </p>
-                    <p>
-                        <input type="radio" name="bpsp_curriculum" value="us" <?php echo $us? 'checked' : ''; ?> />
-                        <strong><?php _e( 'US style', 'bpsp' ); ?></strong> &mdash;
-                        <?php _e( 'Use this setting if each course will have its own roster.', 'bpsp' ); ?>
-                    </p>
+                    <label>
+                        <p>
+                            <input type="radio" name="bpsp_curriculum" value="eu" <?php echo $eu? 'checked' : ''; ?> />
+                            <strong><?php _e( 'European style', 'bpsp' ); ?></strong> &mdash;
+                            <?php _e( 'Use this setting if a single roster of students
+                            is shared between multiple courses.', 'bpsp' ); ?>
+                        </p>
+                    </label>
+                    <label>
+                        <p>
+                            <input type="radio" name="bpsp_curriculum" value="us" <?php echo $us? 'checked' : ''; ?> />
+                            <strong><?php _e( 'US style', 'bpsp' ); ?></strong> &mdash;
+                            <?php _e( 'Use this setting if each course will have its own roster.', 'bpsp' ); ?>
+                        </p>
+                    </label>
                     <p>
                         <input type="submit" class="button" value="<?=__('Save Changes','bpsp')?>" />
+                        <?php echo $nonce; ?>
+                    </p>
+                </form>
+            </div>
+        </div>
+         <div class="postbox">
+            <h3 class="hndle" ><?php _e('Collaboration settings','bpsp')?></h3>
+            <div class="inside">
+                <p>
+                    <?php _e('Enabling this, will allow any teacher to contribute to
+                    group Courseware by editing/adding new courses, schedules and
+                    assignments. By default only group admins can manage Courseware.','bpsp')?>
+                </p>
+                <form action="" method="post" >
+                    <p>
+                        <label>
+                            <input type="checkbox" name="bpsp_allow_only_admins" <?php echo $bpsp_allow_only_admins ? 'checked=""' : ''; ?> />
+                            <strong><?php _e( 'Allow any teacher to contribute to class Courseware content','bpsp' ); ?></strong>
+                        </label>
+                    </p>
+                    <p>
+                        <input type="submit" class="button" value="<?php _e( 'Save Changes','bpsp' ); ?>" />
+                        <input type="hidden" name="bpsp_allow_only_admins_check" value="true" />
                         <?php echo $nonce; ?>
                     </p>
                 </form>

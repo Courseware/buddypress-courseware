@@ -10,6 +10,18 @@
         <h5 id="assignment-due-date">
             <?php _e( 'Due date' ); ?>: <?php echo mysql2date( get_option('date_format'), $assignment->due_date ); ?>
         </h5>
+        <?php if( isset( $user_grade ) ): ?>
+            <div id="assignment-grade">
+                <em><?php _e( 'Your grade for this assignment was:' ); ?></em>
+                <strong>
+                    <?php if( !empty( $user_grade['format'] ) && 'percentage' == $user_grade['format'] ): ?>
+                    <?php echo $user_grade['value']; ?>%
+                    <?php else: ?>
+                    <?php echo $user_grade['value']; ?>
+                    <?php endif; ?>
+                </strong>
+            </div>
+        <?php endif; ?>
         <div id="assignment-body">
             <?php the_content(); ?>
         </div>
@@ -30,6 +42,11 @@
                 <a href="<?php echo $assignment_edit_uri; ?>"><?php _e( 'Edit Assignment', 'bpsp' ); ?></a>
             </span>
         <?php endif; ?>
+        <span class="gradebook-link">
+            <?php if( isset( $has_gradebook_caps ) && $has_gradebook_caps ): ?>
+                <a href="<?php echo $assignment_permalink . '/gradebook'; ?>"><?php _e( 'Gradebook', 'bpsp' ); ?></a>
+            <?php endif; ?>
+        </span>
     </div>
 </div>
 <?php

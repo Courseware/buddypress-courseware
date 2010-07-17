@@ -140,6 +140,10 @@ class BPSP_Assignments {
             if ( !$user->has_cap( $c ) )
                 $is_ok = false;
         
+        if( get_option( 'bpsp_allow_only_admins' ) )
+            if( !bp_group_is_admin() )
+                $is_ok = false;
+        
         return $is_ok;
     }
     
@@ -237,7 +241,7 @@ class BPSP_Assignments {
     /**
      * new_assignment_screen( $vars )
      *
-     * Hooks into courses_screen_handler
+     * Hooks into screen_handler
      * Adds a UI to add new assignments.
      *
      * @param Array $vars a set of variables received for this screen template

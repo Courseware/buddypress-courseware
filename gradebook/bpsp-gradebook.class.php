@@ -1,0 +1,412 @@
+<?php
+/**
+ * BPSP Class for gradebook management
+ */
+class BPSP_Gradebook {
+    /**
+     * Gradebook capabilities
+     */
+    var $caps = array(
+        'view_gradebooks',
+        'publish_gradebooks',
+        'manage_gradebooks',
+        'edit_gradebook',
+        'edit_gradebooks',
+        'delete_gradebook',
+        'assign_gradebooks',
+        'manage_group_id',
+        'manage_assignment_id',
+    );
+    
+    /**
+     * Current assignment id
+     */
+    var $current_assignment = null;
+    
+    /**
+     * BPSP_Gradebook()
+     *
+     * Constructor. Loads the hooks and actions.
+     */
+    function BPSP_Gradebook() {
+        add_action( 'courseware_new_teacher_added', array( &$this, 'add_grade_caps' ) );
+        add_action( 'courseware_new_teacher_removed', array( &$this, 'remove_grade_caps' ) );
+        add_action( 'courseware_group_screen_handler', array( &$this, 'screen_handler' ) );
+        add_action( 'courseware_assignment', array( &$this, 'student_screen' ) );
+   }
+    
+    /**
+     * register_post_types()
+     *
+     * Static function to register the assignments post types, taxonomies and capabilities.
+     */
+    function register_post_types() {
+        $grade_post_def = array(
+            'label'                 => __( 'Gradebooks', 'bpsp' ),
+            'singular_label'        => __( 'Gradebook', 'bpsp' ),
+            'description'           => __( 'BuddyPress ScholarPress Courseware Gradebook', 'bpsp' ),
+            'public'                => true, //TODO: set to false when stable
+            'publicly_queryable'    => false,
+            'exclude_from_search'   => false,
+            'show_ui'               => true, //TODO: set to false when stable
+            'capability_type'       => 'gradebook',
+            'hierarchical'          => false,
+            'rewrite'               => false,
+            'query_var'             => false,
+            'supports'              => array( 'author', 'custom-fields' )
+        );
+        if( !register_post_type( 'gradebook', $grade_post_def ) )
+            wp_die( __( 'BuddyPress Courseware error while registering grade post type.', 'bpsp' ) );
+        
+        $grade_rel_def = array(
+            'public'        => true, //TODO: set to false when stable
+            'show_ui'       => true, //TODO: set to false when stable
+            'hierarchical'  => false,
+            'label'         => __( 'Assignment ID', 'bpsp'),
+            'query_var'     => true,
+            'rewrite'       => false,
+            'capabilities'  => array(
+                'manage_terms'  => 'manage_assignment_id',
+                'edit_terms'    => 'manage_assignment_id',
+                'delete_terms'  => 'manage_assignment_id',
+                'assign_terms'  => 'edit_grades'
+                )
+        );
+        
+        register_taxonomy( 'assignment_id', array( 'gradebook' ), $grade_rel_def );
+        register_taxonomy_for_object_type( 'group_id', 'gradebook' ); //append already registered group_id term
+        
+        if( !get_taxonomy( 'group_id' ) || !get_taxonomy( 'assignment_id' ) )
+            wp_die( __( 'BuddyPress Courseware error while registering grade taxonomies.', 'bpsp' ) );
+    }
+    
+    /**
+     * add_grade_caps( $user_id )
+     *
+     * Adds grade capabilities to new $user_id
+     *
+     * @param Int $user_id ID of the user capabilities to be removed from
+     */
+    function add_grade_caps( $user_id ) {
+        $user = new WP_User( $user_id );
+        foreach( $this->caps as $c )
+            if ( !$user->has_cap( $c ) )
+                $user->add_cap( $c );
+        
+        //Treat super admins
+        if( is_super_admin( $user_id ) )
+            if ( !$user->has_cap( 'edit_others_assignments' ) )
+                $user->add_cap( 'edit_others_assignments' );
+    }
+    
+    /**
+     * remove_grade_caps( $user_id )
+     *
+     * Adds grade capabilities to new $user_id
+     *
+     * @param Int $user_id ID of the user capabilities to be removed from
+     */
+    function remove_grade_caps( $user_id ) {
+        //Treat super admins
+        if( is_super_admin( $user_id) )
+            return;
+        
+        $user = new WP_User( $user_id );
+        foreach( $this->caps as $c )
+            if ( $user->has_cap( $c ) )
+                $user->remove_cap( $c );
+    }
+    
+    /**
+     * has_grade_caps( $user_id )
+     *
+     * Checks if $user_id has grade management capabilities
+     *
+     * @param Int $user_id ID of the user capabilities to be checked
+     * @return True if $user_id is eligible and False if not.
+     */
+    function has_gradebook_caps( $user_id ) {
+        $is_ok = true;
+        
+        //Treat super admins
+        if( is_super_admin( $user_id ) ) {
+            $this->add_grade_caps( $user_id );
+        }
+        
+        $user = new WP_User( $user_id );
+        foreach( $this->caps as $c )
+            if ( !$user->has_cap( $c ) )
+                $is_ok = false;
+        
+        if( get_option( 'bpsp_allow_only_admins' ) )
+            if( !bp_group_is_admin() )
+                $is_ok = false;
+        
+        return $is_ok;
+    }
+    
+    /**
+     * screen_handler( $action_vars )
+     *
+     * Gradebook screens handler.
+     * Handles uris like groups/ID/courseware/assignment/args/gradebook
+     */
+    function screen_handler( $action_vars ) {
+        if ( $action_vars[0] == 'assignment' ) {
+            if( isset ( $action_vars[1] ) && null != BPSP_Assignments::is_assignment( $action_vars[1] ) )
+                $this->current_assignment = $action_vars[1];
+            else {
+                wp_redirect( wp_redirect( get_option( 'siteurl' ) ) );
+            }
+            
+            if( isset ( $action_vars[2] ) && 'gradebook' == $action_vars[2] )
+                add_filter( 'courseware_group_template', array( &$this, 'gradebook_screen' ) );
+            elseif( isset ( $action_vars[2] ) && 'clear_gradebook' == $action_vars[2] )
+                add_filter( 'courseware_group_template', array( &$this, 'clear_gradebook_screen' ) );
+        }
+    }
+    
+    /**
+     * has_gradebook( $assignment_id = null )
+     *
+     * Checks if $assignment_id has a gradebook
+     * 
+     * @param String $assignment_id, is assignment identifier
+     * default is null which defaults to $this->current_assignment as $assignment_id
+     * @return Int the ID of the gradebook
+     */
+    function has_gradebook( $assignment_id = null ) {
+        global $bp;
+        $gradebook_id = null;
+        
+        if( !$assignment_id )
+            $assignment_id = $this->current_assignment;
+        
+        $assignment = BPSP_Assignments::is_assignment( $assignment_id );
+        if( $assignment ) {
+            $gradebook_def = array(
+                'group_id' => $bp->groups->current_group->id,
+                'assignment_id' => $assignment->ID,
+                'post_type'     => 'gradebook'
+            );
+            $gradebook = get_posts( $gradebook_def );
+            $gradebook_id = $gradebook[0]->ID;
+        } else
+            return null;
+        
+        if( !$gradebook_id ) {
+            $gradebook_id = wp_insert_post( array(
+                    'post_type' => 'gradebook',
+                    'post_status' => 'publish'
+            ) );
+            if( $gradebook_id ) {
+                wp_set_post_terms( $gradebook_id, $bp->groups->current_group->id, 'group_id' );
+                wp_set_post_terms( $gradebook_id, $assignment->ID, 'assignment_id' );
+            }
+        }
+        
+        return $gradebook_id;
+    }
+    
+    /**
+     * gen_grade_shortcode( $data )
+     *
+     * Generates a gradebook entry
+     * 
+     * @param Mixed Array $data
+     * @return String generated shortcode
+     */
+    function gen_grade_shortcode( $data ) {
+        $entry = '[grade ';
+        // Build shortcode
+        foreach ( $data as $n => $v ) {
+            $n = sanitize_key( $n );
+            $v = sanitize_text_field( $v );
+            $entry .= $n . '="' . $v . '" ';
+        }
+        $entry .= ']';
+        return $entry;
+    }
+    
+    /**
+     * load_grades( $gradebook_id )
+     *
+     * Loads all the grades for a given gradebook
+     *
+     * @param Int $gradebook_id the ID of the gradebook to load
+     * @param Bool $parse, if the results should be parsed using shortcode_parse_atts()
+     * @return Mixed, a set of $grades
+     */
+    function load_grades( $gradebook_id, $parse = false ) {
+        if( empty( $gradebook_id ) )
+            return false;
+        
+        $grades = get_post_meta( $gradebook_id, 'grade' );
+        
+        if( !$parse )
+            return $grades;
+        else {
+            $parsed_grades = array();
+            foreach( $grades as $g ) {
+                $grade = shortcode_parse_atts( $g );
+                $parsed_grades[ $grade['uid'] ] = $grade;
+            }
+            return $parsed_grades;
+        }
+    }
+    
+    /**
+     * load_grades( $gradebook_id )
+     *
+     * Loads all the grades for a given gradebook
+     *
+     * @param Int $gradebook_id the ID of the gradebook to load
+     * @param Bool $parse, if the results should be parsed using shortcode_parse_atts()
+     * @return Mixed, $user_id grade or null on failure
+     */
+    function load_grade_by_user_id( $assignment = null, $user_id = null ) {
+        $user_grade = null;
+        
+        if( empty( $assignment ) )
+            $assignment = $this->current_assignment;
+        
+        if( empty( $user_id ) ) {
+            global $bp;
+            $user_id = $bp->loggedin_user->id;
+        }
+        
+        $gradebook_id = $this->has_gradebook( $assignment );
+        if( !$gradebook_id )
+            return;
+        
+        $grades = get_post_meta( $gradebook_id, 'grade' );
+        if( empty( $grades ) )
+            return;
+        
+        foreach( $grades as $g ) {
+            $grade = shortcode_parse_atts( $g );
+            if( $grade['uid'] == $user_id )
+                $user_grade = $grade;
+        }
+        
+        return $user_grade;
+    }
+    
+    /**
+     * save_grade( $gradebook_id, $grade )
+     *
+     * Adds a new gradebook entry to gradebook
+     *
+     * @param Int $gradebook_id, the ID of the gradebook
+     * @param Mixed $grade, information about grade
+     * @return True on success and false on failure.
+     */
+    function save_grade( $gradebook_id, $grade ) {
+        $grade_saved = false;
+        
+        if( empty( $gradebook_id ) )
+            return false;
+        
+        $grade_shortcode = $this->gen_grade_shortcode( $grade );
+        
+        $grades = $this->load_grades( $gradebook_id );
+        if( empty( $grades ) ) {
+            add_post_meta( $gradebook_id, 'grade', $grade_shortcode );
+            $grade_saved = true;
+        }
+        else {
+            foreach( $grades as $g ) {
+                $g_data = shortcode_parse_atts( $g );
+                // Check if we need to update an existing grade
+                if( $g_data['uid'] == $grade['uid'] ) {
+                    $new_grade = array_merge( $g_data, $grade );
+                    $new_grade = array_unique( $new_grade );
+                    unset( $new_grade[0] ); // start of shortcode
+                    unset( $new_grade[1] ); // end of shortcode
+                    $new_grade_shortcode = $this->gen_grade_shortcode( $new_grade );
+                    update_post_meta( $gradebook_id, 'grade', $new_grade_shortcode, $g );
+                    $grade_saved = true;
+                }
+            }
+            // If no previous entry was found, just add a new one
+            if( !$grade_saved )
+                add_post_meta( $gradebook_id, 'grade', $grade_shortcode );
+        }
+        
+        return $grade_saved;
+    }
+    
+    /**
+     * gradebook_screen( $vars )
+     *
+     * Hooks into screen_handler
+     * Adds a UI to assignments for gradebook management.
+     *
+     * @param Array $vars a set of variables received for this screen template
+     * @return Array $vars a set of variable passed to this screen template
+     */
+    function gradebook_screen( $vars ) {
+        global $bp;
+        $nonce_name = 'gradebook_nonce';
+        
+        if( !$this->has_gradebook_caps( $bp->loggedin_user->id ) && !is_super_admin() )
+            wp_die( __( 'BuddyPress Courseware Error while forbidden user tried to manage gradebook.', 'bpsp' ) );
+        
+        $students = BP_Groups_Member::get_all_for_group( $bp->groups->current_group->id );
+        
+        if( isset( $_POST['_wpnonce'] ) )
+            $is_nonce = wp_verify_nonce( $_POST['_wpnonce'], $nonce_name );
+        
+        if( isset( $_POST['_wpnonce'] ) && true != $is_nonce ) {
+            $vars['name'] = 'gradebook';
+            $vars['message'] = __( 'Nonce Error while updating gradebook.', 'bpsp' );
+            return $vars;
+        }
+        
+        $gradebook_id = $this->has_gradebook( $this->current_assignment );
+        if( !$gradebook_id ) {
+            $vars['name'] = 'gradebook';
+            $vars['message'] =  __( 'Error while creating gradebook.', 'bpsp' );
+            return $vars;
+        }
+        
+        if( !empty( $_POST['grade'] ) ){
+            foreach( $_POST['grade'] as $grade )
+                if( !empty( $grade ) && !empty( $grade['uid'] ) && !empty( $grade['value'] ) )
+                    if( $this->save_grade( $gradebook_id, $grade ) )
+                        $vars['message'] = __( 'Gradebook saved.', 'bpsp' );
+        }
+        
+        $vars['name'] = 'gradebook';
+        $vars['students'] = $students['members'];
+        $vars['grades'] = $this->load_grades( $gradebook_id, true );
+        $vars['assignment'] = BPSP_Assignments::is_assignment( $this->current_assignment );
+        $vars['gradebook_permalink'] = $vars['assignment_permalink'] . '/gradebook';
+        $vars['nonce'] = wp_nonce_field( $nonce_name, '_wpnonce', true, false );
+        return $vars;
+    }
+    
+    /**
+     * gradebook_screen( $vars )
+     *
+     * Hooks into courseware_assignment
+     * If a student is visiting assignment screen, his grade will be shown
+     *
+     * @param Array $vars a set of variables received for this screen template
+     * @return Array $vars a set of variable passed to this screen template
+     */
+    function student_screen( $vars ) {
+        global $bp;
+        $user_id = null;
+        
+        if( bp_group_is_member( $bp->current_group->id ) && !bp_group_is_admin() )
+            $user_id = $bp->loggedin_user->id;
+        
+        if( $user_id )
+            $vars['user_grade'] = $this->load_grade_by_user_id( $this->current_assignment, $user_id );
+        
+        $vars['has_gradebook_caps'] = $this->has_gradebook_caps( $bp->loggedin_user->id );
+        return $vars;
+    }
+}
+?>

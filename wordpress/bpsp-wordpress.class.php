@@ -12,6 +12,7 @@ class BPSP_WordPress {
         add_action('admin_menu', array(&$this, 'menus'));
         //Initialize our options
         add_option( 'bpsp_curriculum' );
+        add_option( 'bpsp_allow_only_admins' );
         add_option( 'bpsp_worldcat_key' );
         add_option( 'bpsp_isbndb_key' );
     }
@@ -49,6 +50,14 @@ class BPSP_WordPress {
         if( isset( $_POST['bpsp_curriculum'] ) )
             if( update_option( 'bpsp_curriculum', strtolower( $_POST['bpsp_curriculum'] ) ) )
                 $vars['flash'][] = __( 'Courseware option was updated.' );
+        
+        if( isset( $_POST['bpsp_allow_only_admins'] ) )
+            if( update_option( 'bpsp_allow_only_admins', strtolower( $_POST['bpsp_allow_only_admins'] ) ) )
+                $vars['flash'][] = __( 'Courseware option was updated.' );
+        if( !isset( $_POST['bpsp_allow_only_admins'] ) && isset( $_POST['bpsp_allow_only_admins_check'] ) )
+            if( update_option( 'bpsp_allow_only_admins', '' ) )
+                $vars['flash'][] = __( 'Courseware option was updated.' );
+        
         if( isset( $_POST['worldcat_key'] ) && !empty( $_POST['worldcat_key'] ) )
             if( update_option( 'bpsp_worldcat_key', $_POST['worldcat_key'] ) )
                 $vars['flash'][] = __( 'WorldCat option was updated.' );
@@ -62,6 +71,7 @@ class BPSP_WordPress {
         elseif ( $current_option == 'eu' )
             $vars['eu'] = $current_option;
         
+        $vars['bpsp_allow_only_admins'] = get_option( 'bpsp_allow_only_admins' );
         $vars['worldcat_key'] = get_option( 'bpsp_worldcat_key' );
         $vars['isbndb_key'] = get_option( 'bpsp_isbndb_key' );
         
