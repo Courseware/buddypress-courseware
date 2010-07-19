@@ -69,7 +69,7 @@ class BPSP_Gradebook {
                 'manage_terms'  => 'manage_assignment_id',
                 'edit_terms'    => 'manage_assignment_id',
                 'delete_terms'  => 'manage_assignment_id',
-                'assign_terms'  => 'edit_grades'
+                'assign_terms'  => 'edit_gradebooks'
                 )
         );
         
@@ -190,12 +190,15 @@ class BPSP_Gradebook {
                 'post_type'     => 'gradebook'
             );
             $gradebook = get_posts( $gradebook_def );
-            $gradebook_id = $gradebook[0]->ID;
+            
+            if( !empty( $gradebook[0] ) )
+                $gradebook_id = $gradebook[0]->ID;
         } else
             return null;
         
         if( !$gradebook_id ) {
             $gradebook_id = wp_insert_post( array(
+                    'post_title' => ' ',
                     'post_type' => 'gradebook',
                     'post_status' => 'publish'
             ) );
