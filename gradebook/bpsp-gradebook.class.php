@@ -184,13 +184,14 @@ class BPSP_Gradebook {
         
         $assignment = BPSP_Assignments::is_assignment( $assignment_id );
         if( $assignment ) {
-            $gradebook_def = array(
+            $gradebook_terms = array(
                 'group_id' => $bp->groups->current_group->id,
                 'assignment_id' => $assignment->ID,
-                'post_type'     => 'gradebook'
             );
-            $gradebook = get_posts( $gradebook_def );
-            
+            $gradebook_post_type = array(
+                'post_type' => 'gradebook',
+            );
+            $gradebook = BPSP_WordPress::get_posts( $gradebook_terms, $gradebook_post_type );
             if( !empty( $gradebook[0] ) )
                 $gradebook_id = $gradebook[0]->ID;
         } else

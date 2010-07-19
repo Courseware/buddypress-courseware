@@ -81,5 +81,47 @@ class BPSP_WordPress {
         include( BPSP_PLUGIN_DIR . '/wordpress/templates/admin.php' );
         echo ob_get_clean();
     }
+    
+    /**
+     * get_posts( $terms, $post_types )
+     *
+     * A hack to query multiple custom terms
+     *
+     * @param Mixed $terms, a set of term slugs as keys and taxonomies as values
+     * @param Mixed $post_types, a set of post types to query
+     * @return Mixed $posts, a set of queried posts
+     */
+    function get_posts( $terms, $post_types = null ){
+        if( !$post_types )
+            $post_types = array( 'post' );
+        $term_ids = array();
+        $post_ids = array();
+        $posts = array();
+        // Get term ids
+        foreach ( $terms as $term => $taxonomy ) {
+            $t = get_term_by( 'slug', $taxonomy, $term );
+            $term_ids[ $t->term_taxonomy_id ] = $term;
+        }
+        // Get term's objects
+        foreach( $term_ids as $term_id => $taxonomy )
+            $post_ids[] = get_objects_in_term( $term_id, $taxonomy );
+        // Get common objects
+        if( !empty( $post_ids ) ) {
+            for( $i = 1; $i < count( $post_ids ); $i++ )
+                $post_ids[0] = array_intersect( $post_ids[0], $post_ids[$i] );
+            // return the final array
+            $post_ids = reset( $post_ids );
+        }
+        // Get object data's of one type
+        if( !empty( $post_ids ) ) {
+            foreach( $post_ids as $pid )
+                if( in_array( get_post_type( $pid ), $post_types ) )
+                   $posts[] = get_post( $pid );
+            }
+        else
+            return null;
+        
+        return $posts;
+    }
 }
 ?>
