@@ -103,6 +103,7 @@ class BPSP_WordPress {
             $term_ids[ $t->term_taxonomy_id ] = $term;
         }
         // Get term's objects
+        if( !empty( $term_ids ) )
         foreach( $term_ids as $term_id => $taxonomy )
             $post_ids[] = get_objects_in_term( $term_id, $taxonomy );
         // Get common objects
@@ -113,15 +114,13 @@ class BPSP_WordPress {
             $post_ids = reset( $post_ids );
         }
         // Get object data's of one type
-        if( !empty( $post_ids ) ) {
-            foreach( $post_ids as $pid )
-                if( in_array( get_post_type( $pid ), $post_types ) )
-                   $posts[] = get_post( $pid );
-            }
+        if( !empty( $post_ids ) )
+            return get_posts( array(
+                'post__in' => $post_ids,
+                'post_type' => $post_types,
+            ) );
         else
             return null;
-        
-        return $posts;
     }
 }
 ?>
