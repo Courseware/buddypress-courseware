@@ -159,10 +159,12 @@ class BPSP_Gradebook {
                 wp_redirect( wp_redirect( get_option( 'siteurl' ) ) );
             }
             
-            if( isset ( $action_vars[2] ) && 'gradebook' == $action_vars[2] )
-                add_filter( 'courseware_group_template', array( &$this, 'gradebook_screen' ) );
-            elseif( isset ( $action_vars[2] ) && 'clear_gradebook' == $action_vars[2] )
+            if( isset ( $action_vars[2] ) && 'gradebook' == $action_vars[2] && 'clear' == $action_vars[3] )
                 add_filter( 'courseware_group_template', array( &$this, 'clear_gradebook_screen' ) );
+            elseif( isset ( $action_vars[2] ) && 'gradebook' == $action_vars[2] && 'import' == $action_vars[3] )
+                add_filter( 'courseware_group_template', array( &$this, 'import_gradebook_screen' ) );
+            elseif( isset ( $action_vars[2] ) && 'gradebook' == $action_vars[2] )
+                add_filter( 'courseware_group_template', array( &$this, 'gradebook_screen' ) );
         }
     }
     
@@ -352,21 +354,29 @@ class BPSP_Gradebook {
     function gradebook_screen( $vars ) {
         global $bp;
         $nonce_name = 'gradebook_nonce';
+        $nonce_import_name = 'gradebook_import_nonce';
+        $nonce_clear_name = 'gradebook_clear_nonce';
         
-        if( !$this->has_gradebook_caps( $bp->loggedin_user->id ) && !is_super_admin() )
+        if( !$this->has_gradebook_caps( $bp->loggedin_user->id ) && !is_super_admin() ) {
             $vars['die'] = __( 'BuddyPress Courseware Error while forbidden user tried to manage gradebook.', 'bpsp' );
+            return $vars;
+        }
         
         $students = BP_Groups_Member::get_all_for_group( $bp->groups->current_group->id );
         
         if( isset( $_POST['_wpnonce'] ) )
             $is_nonce = wp_verify_nonce( $_POST['_wpnonce'], $nonce_name );
         
-        if( isset( $_POST['_wpnonce'] ) && true != $is_nonce )
+        if( isset( $_POST['_wpnonce'] ) && true != $is_nonce ) {
             $vars['die'] = __( 'BuddyPress Courseware Nonce Error while updating gradebook.', 'bpsp' );
+            return $vars;
+        }
         
         $gradebook_id = $this->has_gradebook( $this->current_assignment );
-        if( !$gradebook_id )
+        if( !$gradebook_id ) {
             $vars['die'] =  __( 'BuddyPress Courseware Error while creating gradebook.', 'bpsp' );
+            return $vars;
+        }
         
         if( !empty( $_POST['grade'] ) ){
             foreach( $_POST['grade'] as $grade )
@@ -377,11 +387,77 @@ class BPSP_Gradebook {
         
         $vars['name'] = 'gradebook';
         $vars['students'] = $students['members'];
-        $vars['grades'] = $this->load_grades( $gradebook_id, true );
+        if( empty( $vars['grades'] ) )
+            $vars['grades'] = $this->load_grades( $gradebook_id, true );
         $vars['assignment'] = BPSP_Assignments::is_assignment( $this->current_assignment );
         $vars['gradebook_permalink'] = $vars['assignment_permalink'] . '/gradebook';
+        $vars['clear_gradebook_permalink'] = add_query_arg( '_wpnonce', wp_create_nonce( $nonce_clear_name ), $vars['gradebook_permalink'] . '/clear' );
+        $vars['import_gradebook_nonce'] = wp_nonce_field( $nonce_import_name, '_wpnonce', true, false );
         $vars['nonce'] = wp_nonce_field( $nonce_name, '_wpnonce', true, false );
         return $vars;
+    }
+    
+    /**
+     * clear_gradebook_screen( $vars )
+     *
+     * Hooks into screen_handler
+     * Clears the Gradebook for a certain assignment
+     *
+     * @param Array $vars a set of variables received for this screen template
+     * @return Array $vars a set of variable passed to this screen template
+     */
+    function clear_gradebook_screen( $vars ){
+        $is_nonce = wp_verify_nonce( $_GET['_wpnonce'], 'gradebook_clear_nonce' );
+        if( !$is_nonce ) {
+            $vars['die'] = __( 'BuddyPress Courseware Nonce Error while clearing gradebook.', 'bpsp' );
+            return $vars;
+        }
+        
+        $gradebook_id = $this->has_gradebook( $this->current_assignment );
+        if( $gradebook_id ) {
+            $grades = $this->load_grades( $gradebook_id );
+            foreach ( $grades as $g )
+                delete_post_meta( $gradebook_id, 'grade', $g );
+            $vars['message'] = __( 'Gradebook was cleared', 'bpsp' );
+        }
+        return $this->gradebook_screen( $vars );
+    }
+    
+    /**
+     * import_gradebook_screen( $vars )
+     *
+     * Hooks into screen_handler
+     * Imports a CSV file data into the gradebook_screen(). It doesn't save anything!
+     *
+     * @param Array $vars a set of variables received for this screen template
+     * @return Array $vars a set of variable passed to this screen template
+     */
+    function import_gradebook_screen( $vars ) {
+        $is_nonce = wp_verify_nonce( $_POST['_wpnonce'], 'gradebook_import_nonce' );
+        if( !$is_nonce ) {
+            $vars['die'] = __( 'BuddyPress Courseware Nonce Error while importing gradebook.', 'bpsp' );
+            return $this->gradebook_screen( $vars );
+        }
+        
+        if( isset( $_FILES['csv_filename'] ) && !empty( $_FILES['csv_filename'] )) {
+            require_once 'parseCSV.class.php'; // Load CSV parser
+            $csv = new parseCSV();
+            $csv->auto( $_FILES['csv_filename']['tmp_name'] );
+            foreach ( $csv->data as &$grade ) {
+                $id = bp_core_get_userid_from_nicename( $grade['uid'] );
+                if( $id )
+                    $csv->data[$id] = $grade;
+                unset( $grade );
+            }
+            if( !empty( $csv->data ) ) {
+                $vars['grades'] = $csv->data;
+                $vars['message'] = __( 'Data imported successfully, but it is not saved yet! Save this form changes to keep the data.', 'bpsp' );
+                $vars['assignment_permalink'] = $vars['assignment_permalink'] . '/gradebook';
+            }
+        }
+        
+        unset( $_POST );
+        return $this->gradebook_screen( $vars );
     }
     
     /**

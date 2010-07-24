@@ -280,8 +280,10 @@ class BPSP_Schedules {
         $nonce_name = 'new_schedule';
         $repeats = null;
         
-        if( !$this->has_schedule_caps( $bp->loggedin_user->id ) || !is_super_admin() )
+        if( !$this->has_schedule_caps( $bp->loggedin_user->id ) || !is_super_admin() ) {
             $vars['die'] = __( 'BuddyPress Courseware Error while forbidden user tried to add a new course.' );
+            return $vars;
+        }
         
         // Save new schedule
         if( isset( $_POST['schedule'] ) && $_POST['schedule']['object'] == 'group' && isset( $_POST['_wpnonce'] ) ) {
@@ -434,8 +436,10 @@ class BPSP_Schedules {
         
         if(  ( $schedule->post_author == $bp->loggedin_user->id ) || is_super_admin() ) {
             wp_delete_post( $schedule->ID );
-        } else
+        } else {
             $vars['die'] = __( 'BuddyPress Courseware Error while forbidden user tried to delete a schedule.', 'bpsp' );
+            return $vars;
+        }
         
         $vars['message'] = __( 'Schedule deleted successfully.', 'bpsp' );
         return $this->list_schedules_screen( $vars );
@@ -461,8 +465,10 @@ class BPSP_Schedules {
             $bp->loggedin_user->id != $old_schedule->post_author &&
             $bp->groups->current_group->id != $old_schedule->terms[0]->name &&
             !is_super_admin()
-        )
+        ) {
             $vars['die'] = __( 'BuddyPress Courseware Error while forbidden user tried to update the schedule.', 'bpsp' );
+            return $vars;
+        }
         
         // Update schedule
         if( isset( $_POST['schedule'] ) && $_POST['schedule']['object'] == 'group' && isset( $_POST['_wpnonce'] ) ) {

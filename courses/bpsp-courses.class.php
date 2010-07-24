@@ -266,8 +266,10 @@ class BPSP_Courses {
         global $bp;
         $nonce_name = 'new_course';
         
-        if( !$this->has_course_caps( $bp->loggedin_user->id ) && !is_super_admin() )
+        if( !$this->has_course_caps( $bp->loggedin_user->id ) && !is_super_admin() ) {
             $vars['die'] = __( 'BuddyPress Courseware Error while forbidden user tried to add a new course.', 'bpsp' );
+            return $vars;
+        }
         
         // Save new course
         if( isset( $_POST['course'] ) && $_POST['course']['object'] == 'group' && isset( $_POST['_wpnonce'] ) ) {
@@ -366,13 +368,17 @@ class BPSP_Courses {
         if( isset( $_GET['_wpnonce'] ) )
             $is_nonce = wp_verify_nonce( $_GET['_wpnonce'], $nonce_name );
         
-        if( true != $is_nonce )
-            $vars['die'] = __( 'Nonce Error while deleting the course.', 'bpsp' );
+        if( true != $is_nonce ) {
+            $vars['die'] = __( 'BuddyPress Courseware Nonce Error while deleting the course.', 'bpsp' );
+            return $vars;
+        }
         
         if(  ( $course->post_author == $bp->loggedin_user->id ) || is_super_admin() )
             wp_delete_post( $course->ID );
-        else
+        else {
             $vars['die'] = __( 'BuddyPress Courseware Error while forbidden user tried to delete the course.', 'bpsp' );
+            return $vars;
+        }
         
         $vars['message'] = __( 'Course deleted successfully.', 'bpsp' );
         return $this->list_courses_screen( $vars );
@@ -398,8 +404,10 @@ class BPSP_Courses {
             $bp->loggedin_user->id != $old_course->post_author ||
             $bp->groups->current_group->id != $old_course->terms[0]->name ||
             !is_super_admin()
-        )
+        ) {
             $vars['die'] = __( 'BuddyPress Courseware Error while forbidden user tried to update the course.', 'bpsp' );
+            return $vars;
+        }
         
         // Update course
         if( isset( $_POST['course'] ) && $_POST['course']['object'] == 'group' && isset( $_POST['_wpnonce'] ) ) {

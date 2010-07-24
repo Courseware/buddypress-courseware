@@ -2,7 +2,7 @@
     <div id="message" class="info">
         <p><?php _e( 'There are no students in this class yet.', 'bpsp' ); ?></p>
     </div>
-<?php endif; return; ?>
+<?php endif; ?>
 <div id="courseware-gradebook">
     <h4><?php
         _e( 'Gradebook for: ', 'bpsp' );
@@ -11,6 +11,21 @@
     <?php
     if( !empty( $students ) ):
     ?>
+      <ul class="gradebook-actions">
+            <li class="import-gradebook-form">
+                <h4><?php _e( 'Import Gradebook from CSV file', 'bpsp' ); ?></h4>
+                <form action="<?php echo $gradebook_permalink . '/import'; ?>" method="post" enctype="multipart/form-data">
+                    <input type="file" name="csv_filename" />
+                    <input type="submit" value="Import" />
+                    <?php echo $import_gradebook_nonce; ?>
+                </form>
+            </li>
+            <li class="clear-gradebook-link">
+                <a href="<?php echo $clear_gradebook_permalink; ?>">
+                    <?php _e( 'Clear Gradebook', 'bpsp' ); ?>
+                </a>
+            </li>
+        </ul>
         <form method="post" action="<?php echo $gradebook_permalink; ?>">
         <table>
             <thead>

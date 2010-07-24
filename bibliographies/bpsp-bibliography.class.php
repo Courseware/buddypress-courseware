@@ -409,12 +409,16 @@ class BPSP_Bibliography {
     function delete_bib_screen( $vars ) {
         $nonce_name = 'delete_bib';
         
-        if( !$this->has_bib_caps( $bp->loggedin_user->id ) && !is_super_admin() )
+        if( !$this->has_bib_caps( $bp->loggedin_user->id ) && !is_super_admin() ) {
             $vars['die'] = __( 'BuddyPress Courseware Error while forbidden user tried to delete bibliography.', 'bpsp' );
+            return $vars;
+        }
         
         $is_nonce = wp_verify_nonce( $_GET['_wpnonce'], $nonce_name );
-        if( !$is_nonce && isset( $_GET['bhash'] ) )
+        if( !$is_nonce && isset( $_GET['bhash'] ) ) {
             $vars['die'] = __( 'BuddyPress Courseware Nonce Error while deleting a post.', 'bpsp' );
+            return $vars;
+        }
         
         $data = explode( ',', sanitize_text_field( $_GET['bhash'] ) );
         $bhash = $data[0];
@@ -459,12 +463,16 @@ class BPSP_Bibliography {
         $nonce_delete_name = 'delete_bib';
         $nonce_edit_name = $nonce_name;
         
-        if( !$this->has_bib_caps( $bp->loggedin_user->id ) && !is_super_admin() )
+        if( !$this->has_bib_caps( $bp->loggedin_user->id ) && !is_super_admin() ) {
             $vars['die'] = __( 'BuddyPress Courseware Error while forbidden user tried to edit bibliography.', 'bpsp' );
+            return $vars;
+        }
         
         $is_nonce = wp_verify_nonce( $_GET['_wpnonce'], $nonce_name );
-        if( !$is_nonce && isset( $_GET['bhash'] ) )
+        if( !$is_nonce && isset( $_GET['bhash'] ) ) {
             $vars['die'] = __( 'BuddyPress Courseware Nonce Error while editing bibliography.', 'bpsp' );
+            return $vars;
+        }
         
         $data = explode( ',', sanitize_text_field( $_GET['bhash'] ) );
         $bhash = $data[0];
@@ -527,12 +535,16 @@ class BPSP_Bibliography {
         $nonce_delete_name = 'delete_bib';
         $nonce_edit_name = 'edit_bib';
         
-        if( !$this->has_bib_caps( $bp->loggedin_user->id ) && !is_super_admin() )
+        if( !$this->has_bib_caps( $bp->loggedin_user->id ) && !is_super_admin() ) {
             $vars['die'] = __( 'BuddyPress Courseware Error while forbidden user tried to add a new bibliography.', 'bpsp' );
+            return $vars;
+        }
         
         $is_nonce = wp_verify_nonce( $_POST['_wpnonce'], $nonce_name );
-        if( !$is_nonce && isset( $_POST['bib'] ) )
+        if( !$is_nonce && isset( $_POST['bib'] ) ) {
             $vars['die'] = __( 'BuddyPress Courseware Nonce Error while adding bibliography.', 'bpsp' );
+            return $vars;
+        }
         
         if( isset( $_POST['bib'] ) && $_POST['bib']['type'] ) {
             $data = array_filter( $_POST['bib'] );
@@ -582,8 +594,10 @@ class BPSP_Bibliography {
         if( !class_exists( 'BibTeX_Parser') )
             include_once 'bibtex-parser.class.php';
         
-        if( !$this->has_bib_caps( $bp->loggedin_user->id ) && !is_super_admin() )
+        if( !$this->has_bib_caps( $bp->loggedin_user->id ) && !is_super_admin() ) {
             $vars['die'] = __( 'BuddyPress Courseware Error while forbidden user tried to add a new bibliography.', 'bpsp' );
+            return $vars;
+        }
         
         if( isset( $_POST['bib'] ) )
             $to_parse = $_POST['bib']['source'];
@@ -670,9 +684,11 @@ class BPSP_Bibliography {
         $is_nonce = wp_verify_nonce( $_POST['_wpnonce'], $nonce_name );
         if( $is_nonce && isset( $_POST['bib'] ) ) {
             
-            if( !$this->has_bib_caps( $bp->loggedin_user->id ) && !is_super_admin() )
+            if( !$this->has_bib_caps( $bp->loggedin_user->id ) && !is_super_admin() ) {
                 $vars['die'] = __( 'BuddyPress Courseware Error while forbidden user tried to add bibliography entries.', 'bpsp' );
-                
+                return $vars;
+            }
+            
             // Add an existing bib
             if( isset( $_POST['bib']['existing'] ) && !empty( $_POST['bib']['existing'] ) ) {
                 $data = $this->get_bib( $_POST['bib']['existing'] );

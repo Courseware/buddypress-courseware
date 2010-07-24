@@ -251,8 +251,10 @@ class BPSP_Assignments {
         global $bp;
         $nonce_name = 'new_assignment';
         
-        if( !$this->has_assignment_caps( $bp->loggedin_user->id ) && !is_super_admin() )
+        if( !$this->has_assignment_caps( $bp->loggedin_user->id ) && !is_super_admin() ) {
             $vars['die'] = __( 'BuddyPress Courseware Error while forbidden user tried to add a new assignment.' );
+            return $vars;
+        }
         
         // Save new assignment
         if( isset( $_POST['assignment'] ) &&
@@ -365,13 +367,17 @@ class BPSP_Assignments {
         if( isset( $_GET['_wpnonce'] ) )
             $is_nonce = wp_verify_nonce( $_GET['_wpnonce'], $nonce_name );
         
-        if( true != $is_nonce )
+        if( true != $is_nonce ) {
             $vars['die'] = __( 'Nonce Error while deleting the assignment.', 'bpsp' );
+            return $vars;
+        }
         
         if(  ( $assignment->post_author == $bp->loggedin_user->id ) || is_super_admin() ) {
             wp_delete_post( $assignment->ID );
-        } else
+        } else {
             $vars['die'] = __( 'BuddyPress Courseware Error while forbidden user tried to delete the assignment.', 'bpsp' );
+            return $vars;
+        }
         
         $vars['message'] = __( 'Assignment deleted successfully.', 'bpsp' );
         return $this->list_assignments_screen( $vars );
@@ -396,8 +402,10 @@ class BPSP_Assignments {
             $bp->loggedin_user->id != $old_course->post_author &&
             $bp->groups->current_group->id != $old_course->group[0]->name &&
             !is_super_admin()
-        )
+        ) {
             $vars['die'] = __( 'BuddyPress Courseware Error while forbidden user tried to update the assignment.', 'bpsp' );
+            return $vars;
+        }
         
         // Update course
         if( isset( $_POST['assignment'] ) &&
