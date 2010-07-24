@@ -121,13 +121,12 @@ class BPSP_Groups {
      */
     function load_template( $vars = '' ) {
 	$content = '';
-	if( empty( $vars ) )
+	if( empty( $vars ) || !isset( $vars['name'] ) )
 	    $vars = array(
 		'name' => 'home',
 		'nav_options' => $this->nav_options,
 		'current_uri' => $this->nav_options[__( 'Home', 'bpsp' )],
 		'current_option' => $this->current_nav_option,
-		'message' => '',
 		'echo' => true,
 	    );
 	
@@ -143,7 +142,14 @@ class BPSP_Groups {
 	if( file_exists( $templates_path . $vars['name']. '.php' ) ) {
 	    ob_start();
 	    extract( $vars );
-	    include( $templates_path . $name . '.php' );
+	    if( !empty( $die ) ) {
+		$error = $die;
+		include( $templates_path . '_message.php' ); // Template for errors
+	    }
+	    else {
+		include( $templates_path . '_message.php' ); // Template for messages    
+		include( $templates_path . $name . '.php' );
+	    }
 	    $content = ob_get_clean();
 	}
 	

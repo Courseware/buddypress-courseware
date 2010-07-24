@@ -410,11 +410,11 @@ class BPSP_Bibliography {
         $nonce_name = 'delete_bib';
         
         if( !$this->has_bib_caps( $bp->loggedin_user->id ) && !is_super_admin() )
-           wp_die( __( 'BuddyPress Courseware Error while forbidden user tried to delete bibliography.' ) );
+            $vars['die'] = __( 'BuddyPress Courseware Error while forbidden user tried to delete bibliography.', 'bpsp' );
         
         $is_nonce = wp_verify_nonce( $_GET['_wpnonce'], $nonce_name );
         if( !$is_nonce && isset( $_GET['bhash'] ) )
-            return;
+            $vars['die'] = __( 'BuddyPress Courseware Nonce Error while deleting a post.', 'bpsp' );
         
         $data = explode( ',', sanitize_text_field( $_GET['bhash'] ) );
         $bhash = $data[0];
@@ -435,14 +435,14 @@ class BPSP_Bibliography {
             $bib = $this->get_bib( $bhash, $post_id );
             if( $bib != null ) {
                 if( delete_post_meta( $post_id, $this->bid, $bib ) )
-                    $vars['message'] = _e( 'Entry deleted.', 'bpsp' );
+                    $vars['message'] = __( 'Entry deleted.', 'bpsp' );
                 else
-                    $vars['message'] = _e( 'Entry could not be deleted.', 'bpsp' );
+                    $vars['error'] = __( 'Entry could not be deleted.', 'bpsp' );
             } else
-                $vars['message'] = _e( 'Entry could not be found.', 'bpsp' );
+                $vars['error'] = __( 'Entry could not be found.', 'bpsp' );
         }
         else
-            $vars['message'] = _e( 'No Bibliography database was created.', 'bpsp' );
+            $vars['error'] = __( 'No Bibliography database was created.', 'bpsp' );
         
         return $this->new_bib_screen( $vars );
     }
@@ -460,11 +460,11 @@ class BPSP_Bibliography {
         $nonce_edit_name = $nonce_name;
         
         if( !$this->has_bib_caps( $bp->loggedin_user->id ) && !is_super_admin() )
-           wp_die( __( 'BuddyPress Courseware Error while forbidden user tried to edit bibliography.' ) );
+            $vars['die'] = __( 'BuddyPress Courseware Error while forbidden user tried to edit bibliography.', 'bpsp' );
         
         $is_nonce = wp_verify_nonce( $_GET['_wpnonce'], $nonce_name );
         if( !$is_nonce && isset( $_GET['bhash'] ) )
-            return;
+            $vars['die'] = __( 'BuddyPress Courseware Nonce Error while editing bibliography.', 'bpsp' );
         
         $data = explode( ',', sanitize_text_field( $_GET['bhash'] ) );
         $bhash = $data[0];
@@ -488,16 +488,16 @@ class BPSP_Bibliography {
                 $new_bhash = $this->update_bib( $_POST['bib'], true, $post_id, $old_bib );
                 if( null != $new_bhash ) {
                     $bhash = $new_bhash; // Update for the next query
-                    $vars['message'] = _e( 'Entry updated.', 'bpsp' );
+                    $vars['message'] = __( 'Entry updated.', 'bpsp' );
                 }
                 else {
-                    $vars['message'] = _e( 'Entry could not be updated.', 'bpsp' );
+                    $vars['error'] = __( 'Entry could not be updated.', 'bpsp' );
                 }
             } elseif( !$old_bib && isset( $_POST['bib'] ) )
-                $vars['message'] = _e( 'Entry could not be found.', 'bpsp' );
+                $vars['error'] = __( 'Entry could not be found.', 'bpsp' );
         }
         else
-            $vars['message'] = _e( 'No Bibliography database was created.', 'bpsp' );
+            $vars['error'] = __( 'No Bibliography database was created.', 'bpsp' );
         
         $vars['name'] = 'edit_bibliography';
         $vars['bib'] = shortcode_parse_atts( $this->get_bib( $bhash, $post_id ) );
@@ -528,11 +528,11 @@ class BPSP_Bibliography {
         $nonce_edit_name = 'edit_bib';
         
         if( !$this->has_bib_caps( $bp->loggedin_user->id ) && !is_super_admin() )
-            wp_die( __( 'BuddyPress Courseware Error while forbidden user tried to add a new bibliography.' ) );
+            $vars['die'] = __( 'BuddyPress Courseware Error while forbidden user tried to add a new bibliography.', 'bpsp' );
         
         $is_nonce = wp_verify_nonce( $_POST['_wpnonce'], $nonce_name );
         if( !$is_nonce && isset( $_POST['bib'] ) )
-            return;
+            $vars['die'] = __( 'BuddyPress Courseware Nonce Error while adding bibliography.', 'bpsp' );
         
         if( isset( $_POST['bib'] ) && $_POST['bib']['type'] ) {
             $data = array_filter( $_POST['bib'] );
@@ -541,20 +541,20 @@ class BPSP_Bibliography {
             if( $this->add_bib( $data ) )
                 $vars['message'] = __( 'Entry added.', 'bpsp' );
             else
-                $vars['message'] = __( 'Entry could not be added', 'bpsp' );
+                $vars['error'] = __( 'Entry could not be added', 'bpsp' );
         }
         // Add a new www entry
         elseif ( !empty( $_POST['bib']['www']['title'] ) && !empty( $_POST['bib']['www']['url'] ) )
             if( $this->add_www( $_POST['bib']['www'], $post_id ) )
                 $vars['message'] = __( 'Entry added', 'bpsp' );
             else
-                $vars['message'] = __( 'Entry could not be added', 'bpsp' );
+                $vars['error'] = __( 'Entry could not be added', 'bpsp' );
         //Add a new book
         elseif( !empty( $_POST['bib']['book'] ) )
             if( $this->add_book( $_POST['bib']['book'], $post_id ) )
                 $vars['message'] = __( 'Book added', 'bpsp' );
             else
-                $vars['message'] = __( 'Book could not be added', 'bpsp' );
+                $vars['error'] = __( 'Book could not be added', 'bpsp' );
         
         $vars['name'] = 'new_bibliography';
         $vars['import_uri'] = $this->home_uri . '/import_bibliographies';
@@ -583,7 +583,7 @@ class BPSP_Bibliography {
             include_once 'bibtex-parser.class.php';
         
         if( !$this->has_bib_caps( $bp->loggedin_user->id ) && !is_super_admin() )
-            wp_die( __( 'BuddyPress Courseware Error while forbidden user tried to add a new bibliography.' ) );
+            $vars['die'] = __( 'BuddyPress Courseware Error while forbidden user tried to add a new bibliography.', 'bpsp' );
         
         if( isset( $_POST['bib'] ) )
             $to_parse = $_POST['bib']['source'];
@@ -671,7 +671,7 @@ class BPSP_Bibliography {
         if( $is_nonce && isset( $_POST['bib'] ) ) {
             
             if( !$this->has_bib_caps( $bp->loggedin_user->id ) && !is_super_admin() )
-                wp_die( __( 'BuddyPress Courseware Error while forbidden user tried to add bibliography entries.', 'bpsp' ) );
+                $vars['die'] = __( 'BuddyPress Courseware Error while forbidden user tried to add bibliography entries.', 'bpsp' );
                 
             // Add an existing bib
             if( isset( $_POST['bib']['existing'] ) && !empty( $_POST['bib']['existing'] ) ) {
@@ -679,22 +679,22 @@ class BPSP_Bibliography {
                 if( $this->add_bib( $data, false, $post_id ) )
                     $vars['message'] = __( 'Bibliography added', 'bpsp' );
                 else
-                    $vars['message'] = __( 'Bibliography could not be added', 'bpsp' );
+                    $vars['error'] = __( 'Bibliography could not be added', 'bpsp' );
             }
             // Add a new www entry
             elseif ( !empty( $_POST['bib']['www']['title'] ) && !empty( $_POST['bib']['www']['url'] ) )
                 if( $this->add_www( $_POST['bib']['www'], $post_id ) )
                     $vars['message'] = __( 'Entry added', 'bpsp' );
                 else
-                    $vars['message'] = __( 'Entry could not be added', 'bpsp' );
+                    $vars['error'] = __( 'Entry could not be added', 'bpsp' );
             //Add a new book
             elseif( !empty( $_POST['bib']['book'] ) )
                 if( $this->add_book( $_POST['bib']['book'], $post_id ) )
                     $vars['message'] = __( 'Book added', 'bpsp' );
                 else
-                    $vars['message'] = __( 'Book could not be added', 'bpsp' );
+                    $vars['error'] = __( 'Book could not be added', 'bpsp' );
             else
-                $vars['message'] = __( 'No bibliography entry could be added.', 'bpsp' );
+                $vars['error'] = __( 'No bibliography entry could be added.', 'bpsp' );
         }
         
         if( isset( $vars['course'] ) && $vars['course']->ID )

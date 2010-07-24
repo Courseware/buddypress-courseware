@@ -280,8 +280,8 @@ class BPSP_Schedules {
         $nonce_name = 'new_schedule';
         $repeats = null;
         
-        if( !$this->has_schedule_caps( $bp->loggedin_user->id ) && !is_super_admin() )
-            wp_die( __( 'BuddyPress Courseware Error while forbidden user tried to add a new course.' ) );
+        if( !$this->has_schedule_caps( $bp->loggedin_user->id ) || !is_super_admin() )
+            $vars['die'] = __( 'BuddyPress Courseware Error while forbidden user tried to add a new course.' );
         
         // Save new schedule
         if( isset( $_POST['schedule'] ) && $_POST['schedule']['object'] == 'group' && isset( $_POST['_wpnonce'] ) ) {
@@ -298,7 +298,7 @@ class BPSP_Schedules {
             $valid_dates = $this->datecheck( $new_schedule['start_date'], $new_schedule['end_date'], $repeats );
             $is_nonce = wp_verify_nonce( $_POST['_wpnonce'], $nonce_name );
             if( true != $is_nonce ) 
-                $vars['message'] = __( 'Nonce Error while adding a schedule.', 'bpsp' );
+                $vars['error'] = __( 'Nonce Error while adding a schedule.', 'bpsp' );
             else
                 if( !empty( $new_schedule['desc'] ) &&
                     !empty( $new_schedule['group_id'] ) &&
@@ -350,7 +350,7 @@ class BPSP_Schedules {
                     $vars['message'] = __( 'New schedule was added.', 'bpsp' );
                     return $this->list_schedules_screen( $vars );
                 } else
-                    $vars['message'] = __( 'New schedule could not be added.', 'bpsp' );
+                    $vars['error'] = __( 'New schedule could not be added.', 'bpsp' );
             }
         
         $vars['name'] = 'new_schedule';
@@ -428,14 +428,14 @@ class BPSP_Schedules {
             $is_nonce = wp_verify_nonce( $_GET['_wpnonce'], $nonce_name );
         
         if( true != $is_nonce ) {
-            $vars['message'] = __( 'Nonce Error while deleting a schedule.', 'bpsp' );
+            $vars['error'] = __( 'BuddyPress Courseware Nonce Error while deleting a schedule.', 'bpsp' );
             return $this->list_schedules_screen( $vars );
         }
         
         if(  ( $schedule->post_author == $bp->loggedin_user->id ) || is_super_admin() ) {
             wp_delete_post( $schedule->ID );
         } else
-            wp_die( __( 'BuddyPress Courseware Error while forbidden user tried to delete a schedule.', 'bpsp' ) );
+            $vars['die'] = __( 'BuddyPress Courseware Error while forbidden user tried to delete a schedule.', 'bpsp' );
         
         $vars['message'] = __( 'Schedule deleted successfully.', 'bpsp' );
         return $this->list_schedules_screen( $vars );
@@ -462,14 +462,14 @@ class BPSP_Schedules {
             $bp->groups->current_group->id != $old_schedule->terms[0]->name &&
             !is_super_admin()
         )
-            wp_die( __( 'BuddyPress Courseware Error while forbidden user tried to update the schedule.', 'bpsp' ) );
+            $vars['die'] = __( 'BuddyPress Courseware Error while forbidden user tried to update the schedule.', 'bpsp' );
         
         // Update schedule
         if( isset( $_POST['schedule'] ) && $_POST['schedule']['object'] == 'group' && isset( $_POST['_wpnonce'] ) ) {
             $updated_schedule = $_POST['schedule'];
             $is_nonce = wp_verify_nonce( $_POST['_wpnonce'], $nonce_name );
             if( true != $is_nonce )
-                $vars['message'] = __( 'Nonce Error while editing a schedule.', 'bpsp' );
+                $vars['error'] = __( 'Nonce Error while editing a schedule.', 'bpsp' );
             else 
                 if( !empty( $updated_schedule['desc'] ) &&
                     !empty( $updated_schedule['start_date'] ) &&
@@ -497,7 +497,7 @@ class BPSP_Schedules {
                         $vars['message'] = __( 'Schedule was updated.', 'bpsp' );
                     }
                     else
-                        $vars['message'] = __( 'Schedule could not be updated.', 'bpsp' );
+                        $vars['error'] = __( 'Schedule could not be updated.', 'bpsp' );
                 }
         }
         

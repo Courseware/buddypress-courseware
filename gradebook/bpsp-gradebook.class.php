@@ -354,25 +354,19 @@ class BPSP_Gradebook {
         $nonce_name = 'gradebook_nonce';
         
         if( !$this->has_gradebook_caps( $bp->loggedin_user->id ) && !is_super_admin() )
-            wp_die( __( 'BuddyPress Courseware Error while forbidden user tried to manage gradebook.', 'bpsp' ) );
+            $vars['die'] = __( 'BuddyPress Courseware Error while forbidden user tried to manage gradebook.', 'bpsp' );
         
         $students = BP_Groups_Member::get_all_for_group( $bp->groups->current_group->id );
         
         if( isset( $_POST['_wpnonce'] ) )
             $is_nonce = wp_verify_nonce( $_POST['_wpnonce'], $nonce_name );
         
-        if( isset( $_POST['_wpnonce'] ) && true != $is_nonce ) {
-            $vars['name'] = 'gradebook';
-            $vars['message'] = __( 'Nonce Error while updating gradebook.', 'bpsp' );
-            return $vars;
-        }
+        if( isset( $_POST['_wpnonce'] ) && true != $is_nonce )
+            $vars['die'] = __( 'BuddyPress Courseware Nonce Error while updating gradebook.', 'bpsp' );
         
         $gradebook_id = $this->has_gradebook( $this->current_assignment );
-        if( !$gradebook_id ) {
-            $vars['name'] = 'gradebook';
-            $vars['message'] =  __( 'Error while creating gradebook.', 'bpsp' );
-            return $vars;
-        }
+        if( !$gradebook_id )
+            $vars['die'] =  __( 'BuddyPress Courseware Error while creating gradebook.', 'bpsp' );
         
         if( !empty( $_POST['grade'] ) ){
             foreach( $_POST['grade'] as $grade )

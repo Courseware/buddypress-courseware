@@ -1,12 +1,8 @@
-<?php
-if( isset( $students ) && empty( $students ) )
-    $message = __( 'There are no students in this class yet.', 'bpsp' );
-
-if( $message ): ?>
-<div id="message" class="updated">
-    <p><?php echo $message; ?></p>
-</div>
-<?php endif; ?>
+<?php if( !isset( $students ) || empty( $students ) ) : ?>
+    <div id="message" class="info">
+        <p><?php _e( 'There are no students in this class yet.', 'bpsp' ); ?></p>
+    </div>
+<?php endif; return; ?>
 <div id="courseware-gradebook">
     <h4><?php
         _e( 'Gradebook for: ', 'bpsp' );

@@ -1,11 +1,6 @@
 <style>
     label{display: block}
 </style>
-<?php if( $message ): ?>
-<div id="message" class="updated">
-    <p><?php echo $message; ?></p>
-</div>
-<?php endif; ?>
 <div id="courseware-new-bibliography" >
     <h4><?php _e( 'Update a bibliography entry', 'bpsp' ); ?></h4>
     <form action="" method="post" >

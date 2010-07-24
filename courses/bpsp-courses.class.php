@@ -267,14 +267,14 @@ class BPSP_Courses {
         $nonce_name = 'new_course';
         
         if( !$this->has_course_caps( $bp->loggedin_user->id ) && !is_super_admin() )
-            wp_die( __( 'BuddyPress Courseware Error while forbidden user tried to add a new course.' ) );
+            $vars['die'] = __( 'BuddyPress Courseware Error while forbidden user tried to add a new course.', 'bpsp' );
         
         // Save new course
         if( isset( $_POST['course'] ) && $_POST['course']['object'] == 'group' && isset( $_POST['_wpnonce'] ) ) {
             $new_course = $_POST['course'];
             $is_nonce = wp_verify_nonce( $_POST['_wpnonce'], $nonce_name );
             if( true != $is_nonce ) 
-                $vars['message'] = __( 'Nonce Error while adding a course.', 'bpsp' );
+                $vars['error'] = __( 'Nonce Error while adding a course.', 'bpsp' );
             else
                 if( isset( $new_course['title'] ) && isset( $new_course['content'] ) && isset( $new_course['group_id'] ) && $is_nonce ) {
                     $new_course['title'] = strip_tags( $new_course['title'] );
@@ -290,7 +290,7 @@ class BPSP_Courses {
                         $vars['message'] = __( 'New course was added.', 'bpsp' );
                         return $this->list_courses_screen( $vars );
                     } else
-                        $vars['message'] = __( 'New course could not be added.', 'bpsp' );
+                        $vars['error'] = __( 'New course could not be added.', 'bpsp' );
                 }
         }
         
@@ -315,7 +315,6 @@ class BPSP_Courses {
         $courses = get_posts( array(
             'post_type' => 'course',
             'group_id' => $bp->groups->current_group->id,
-            'numberposts' => get_option( 'posts_per_page', '10' ),
         ));
         
         $vars['name'] = 'list_courses';
@@ -367,15 +366,13 @@ class BPSP_Courses {
         if( isset( $_GET['_wpnonce'] ) )
             $is_nonce = wp_verify_nonce( $_GET['_wpnonce'], $nonce_name );
         
-        if( true != $is_nonce ) {
-            $vars['message'] = __( 'Nonce Error while deleting the course.', 'bpsp' );
-            return $this->list_courses_screen( $vars );
-        }
+        if( true != $is_nonce )
+            $vars['die'] = __( 'Nonce Error while deleting the course.', 'bpsp' );
         
-        if(  ( $course->post_author == $bp->loggedin_user->id ) || is_super_admin() ) {
+        if(  ( $course->post_author == $bp->loggedin_user->id ) || is_super_admin() )
             wp_delete_post( $course->ID );
-        } else
-            wp_die( __( 'BuddyPress Courseware Error while forbidden user tried to delete the course.', 'bpsp' ) );
+        else
+            $vars['die'] = __( 'BuddyPress Courseware Error while forbidden user tried to delete the course.', 'bpsp' );
         
         $vars['message'] = __( 'Course deleted successfully.', 'bpsp' );
         return $this->list_courses_screen( $vars );
@@ -397,12 +394,12 @@ class BPSP_Courses {
         $old_course = $this->is_course( $this->current_course );
         $old_course->terms = wp_get_object_terms($old_course->ID, 'group_id' );
         
-        if( !$this->has_course_caps( $bp->loggedin_user->id ) &&
-            $bp->loggedin_user->id != $old_course->post_author &&
-            $bp->groups->current_group->id != $old_course->terms[0]->name &&
+        if( !$this->has_course_caps( $bp->loggedin_user->id ) ||
+            $bp->loggedin_user->id != $old_course->post_author ||
+            $bp->groups->current_group->id != $old_course->terms[0]->name ||
             !is_super_admin()
         )
-            wp_die( __( 'BuddyPress Courseware Error while forbidden user tried to update the course.', 'bpsp' ) );
+            $vars['die'] = __( 'BuddyPress Courseware Error while forbidden user tried to update the course.', 'bpsp' );
         
         // Update course
         if( isset( $_POST['course'] ) && $_POST['course']['object'] == 'group' && isset( $_POST['_wpnonce'] ) ) {
@@ -425,7 +422,7 @@ class BPSP_Courses {
                     if( $updated_course_id )
                         $vars['message'] = __( 'New course was updated.', 'bpsp' );
                     else
-                        $vars['message'] = __( 'New course could not be updated.', 'bpsp' );
+                        $vars['error'] = __( 'New course could not be updated.', 'bpsp' );
                 }
         }
         

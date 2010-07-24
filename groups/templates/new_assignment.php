@@ -3,11 +3,6 @@ include_once ABSPATH . '/wp-admin/includes/media.php' ;
 require_once ABSPATH . '/wp-admin/includes/post.php' ;
 require_once BPSP_PLUGIN_DIR . '/groups/templates/helpers/editor_helpers.php' ;
 ?>
-<?php if( $message ): ?>
-<div id="message" class="updated">
-    <p><?php echo $message; ?></p>
-</div>
-<?php endif; ?>
 <form action="<?php echo $current_option; ?>" method="post" id="new-assignment-form">
     <h5><?php _e( 'Add a new assignment', 'bpsp' ); ?></h5>
     <div id="new-assignment-content">

@@ -143,12 +143,12 @@ class BPSP_USCourses extends BPSP_Courses {
         $old_course = $this->is_course( $this->current_course );
         $old_course->terms = wp_get_object_terms($old_course->ID, 'group_id' );
         
-        if( !$this->has_course_caps( $bp->loggedin_user->id ) &&
-            $bp->loggedin_user->id != $old_course->post_author &&
-            $bp->groups->current_group->id != $old_course->terms[0]->name &&
+        if( !$this->has_course_caps( $bp->loggedin_user->id ) ||
+            $bp->loggedin_user->id != $old_course->post_author ||
+            $bp->groups->current_group->id != $old_course->terms[0]->name ||
             !is_super_admin()
         )
-            wp_die( __( 'BuddyPress Courseware Error while forbidden user tried to update the course.', 'bpsp' ) );
+            $vars['die'] = __( 'BuddyPress Courseware Error while forbidden user tried to update the course.', 'bpsp' );
         
         // Update course
         if( isset( $_POST['course'] ) && $_POST['course']['object'] == 'group' && isset( $_POST['_wpnonce'] ) ) {
@@ -171,7 +171,7 @@ class BPSP_USCourses extends BPSP_Courses {
                     if( $updated_course_id )
                         $vars['message'] = __( 'New course was updated.', 'bpsp' );
                     else
-                        $vars['message'] = __( 'New course could not be updated.', 'bpsp' );
+                        $vars['error'] = __( 'New course could not be updated.', 'bpsp' );
                 }
         }
         

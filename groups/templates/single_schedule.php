@@ -1,8 +1,3 @@
-<?php if( $message ): ?>
-<div id="message" class="updated">
-    <p><?php echo $message; ?></p>
-</div>
-<?php endif; ?>
 <div id="courseware-schedule">
     <div class="schedule-content">
         <h4 id="schedule-desc"><?php echo $schedule->post_title; ?></h4>

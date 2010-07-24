@@ -58,7 +58,7 @@ class BPSP_Assignments {
             'supports'              => array( 'title', 'editor', 'author', 'custom-fields' )
         );
         if( !register_post_type( 'assignment', $assignment_post_def ) )
-            wp_die( __( 'BuddyPress Courseware error while registering assignment post type.', 'bpsp' ) );
+            $this->error = __( 'BuddyPress Courseware error while registering assignment post type.', 'bpsp' );
         
         $assignment_rel_def = array(
             'public'        => true, //TODO: set to false when stable
@@ -252,7 +252,7 @@ class BPSP_Assignments {
         $nonce_name = 'new_assignment';
         
         if( !$this->has_assignment_caps( $bp->loggedin_user->id ) && !is_super_admin() )
-            wp_die( __( 'BuddyPress Courseware Error while forbidden user tried to add a new assignment.' ) );
+            $vars['die'] = __( 'BuddyPress Courseware Error while forbidden user tried to add a new assignment.' );
         
         // Save new assignment
         if( isset( $_POST['assignment'] ) &&
@@ -263,7 +263,7 @@ class BPSP_Assignments {
             $new_assignment = $_POST['assignment'];
             $is_nonce = wp_verify_nonce( $_POST['_wpnonce'], $nonce_name );
             if( true != $is_nonce ) 
-                $vars['message'] = __( 'Nonce Error while adding an assignment.', 'bpsp' );
+                $vars['error'] = __( 'Nonce Error while adding an assignment.', 'bpsp' );
             else
                 if( isset( $new_assignment['title'] ) &&
                     isset( $new_assignment['content'] ) &&
@@ -286,7 +286,7 @@ class BPSP_Assignments {
                         $vars['message'] = __( 'New assignment was added.', 'bpsp' );
                         return $this->list_assignments_screen( $vars );
                     } else
-                        $vars['message'] = __( 'New assignment could not be added.', 'bpsp' );
+                        $vars['error'] = __( 'New assignment could not be added.', 'bpsp' );
                 }
         }
         
@@ -365,15 +365,13 @@ class BPSP_Assignments {
         if( isset( $_GET['_wpnonce'] ) )
             $is_nonce = wp_verify_nonce( $_GET['_wpnonce'], $nonce_name );
         
-        if( true != $is_nonce ) {
-            $vars['message'] = __( 'Nonce Error while deleting the assignment.', 'bpsp' );
-            return $this->list_assignments_screen( $vars );
-        }
+        if( true != $is_nonce )
+            $vars['die'] = __( 'Nonce Error while deleting the assignment.', 'bpsp' );
         
         if(  ( $assignment->post_author == $bp->loggedin_user->id ) || is_super_admin() ) {
             wp_delete_post( $assignment->ID );
         } else
-            wp_die( __( 'BuddyPress Courseware Error while forbidden user tried to delete the assignment.', 'bpsp' ) );
+            $vars['die'] = __( 'BuddyPress Courseware Error while forbidden user tried to delete the assignment.', 'bpsp' );
         
         $vars['message'] = __( 'Assignment deleted successfully.', 'bpsp' );
         return $this->list_assignments_screen( $vars );
@@ -399,7 +397,7 @@ class BPSP_Assignments {
             $bp->groups->current_group->id != $old_course->group[0]->name &&
             !is_super_admin()
         )
-            wp_die( __( 'BuddyPress Courseware Error while forbidden user tried to update the assignment.', 'bpsp' ) );
+            $vars['die'] = __( 'BuddyPress Courseware Error while forbidden user tried to update the assignment.', 'bpsp' );
         
         // Update course
         if( isset( $_POST['assignment'] ) &&
@@ -410,7 +408,7 @@ class BPSP_Assignments {
             $updated_assignment = $_POST['assignment'];
             $is_nonce = wp_verify_nonce( $_POST['_wpnonce'], $nonce_name );
             if( true != $is_nonce )
-                $vars['message'] = __( 'Nonce Error while editing the assignment.', 'bpsp' );
+                $vars['error'] = __( 'Nonce Error while editing the assignment.', 'bpsp' );
             else 
                 if( isset( $updated_assignment['title'] ) &&
                     isset( $updated_assignment['content'] ) &&
@@ -431,7 +429,7 @@ class BPSP_Assignments {
                         $vars['message'] = __( 'Assignment was updated.', 'bpsp' );
                     }
                     else
-                        $vars['message'] = __( 'Assignment could not be updated.', 'bpsp' );
+                        $vars['error'] = __( 'Assignment could not be updated.', 'bpsp' );
                 }
         }
         

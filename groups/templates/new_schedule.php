@@ -1,8 +1,3 @@
-<?php if( $message ): ?>
-<div id="message" class="updated">
-    <p><?php echo $message; ?></p>
-</div>
-<?php endif; ?>
 <form action="<?php echo $current_option; ?>" method="post" id="new-assignment-form">
     <h5><?php _e( 'Add a new schedule', 'bpsp' ); ?></h5>
     <div id="new-schedule-content">
