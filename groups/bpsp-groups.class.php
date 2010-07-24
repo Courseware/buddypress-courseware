@@ -31,6 +31,7 @@ class BPSP_Groups {
      */
     function BPSP_Groups() {
         add_action( 'wp', array( &$this, 'set_nav' ), 2 );
+	add_filter( 'groups_get_groups', array( &$this, 'extend_search' ), 10, 2 );
     }
     
     /**
@@ -157,6 +158,43 @@ class BPSP_Groups {
 	    echo $content;
 	else
 	    return $content;
+    }
+    
+    /**
+     * extend_search( $groups, $params )
+     *
+     * Hooks into groups_get_groups filter and extends search to include Courseware used post types
+     */
+    function extend_search( $groups, $params ) {
+	// A hack to make WordPress believe the taxonomy is registered
+	if( !taxonomy_exists( 'group_id' ) ) {
+	    global $wp_taxonomies;
+	    $wp_taxonomies['group_id'] = '';
+	}
+	$all_groups = BP_Groups_Group::get_alphabetically();
+	foreach( $all_groups['groups'] as $group ) {
+	    // Search posts from current $group
+	    $results = BPSP_WordPress::get_posts(
+		array(
+		    'group_id' => $group->id
+		),
+		array(
+		    'assignment',
+		    'course',
+		    'schedule',
+		),
+		$params['search_terms']
+	    );
+	    
+	    // Merge posts to $groups if new found
+	    if( !empty( $results ) ) {
+		if( !in_array( $group, $groups['groups'] ) ) {
+		    $groups['groups'][] = $group;
+		    $groups['total']++;
+		}
+	    }
+	}
+	return $groups;
     }
 }
 ?>

@@ -83,24 +83,27 @@ class BPSP_WordPress {
     }
     
     /**
-     * get_posts( $terms, $post_types )
+     * get_posts( $terms, $post_types, $s )
      *
      * A hack to query multiple custom terms
      *
      * @param Mixed $terms, a set of term slugs as keys and taxonomies as values
      * @param Mixed $post_types, a set of post types to query
+     * @param String $s to search for
      * @return Mixed $posts, a set of queried posts
      */
-    function get_posts( $terms, $post_types = null ){
+    function get_posts( $terms, $post_types = null, $s = null ){
         if( !$post_types )
             $post_types = array( 'post' );
         $term_ids = array();
         $post_ids = array();
         $posts = array();
+        
         // Get term ids
         foreach ( $terms as $term => $taxonomy ) {
             $t = get_term_by( 'slug', $taxonomy, $term );
-            $term_ids[ $t->term_taxonomy_id ] = $term;
+            if( !empty( $t ) )
+                $term_ids[ $t->term_taxonomy_id ] = $term;
         }
         // Get term's objects
         if( !empty( $term_ids ) )
@@ -114,10 +117,11 @@ class BPSP_WordPress {
             $post_ids = reset( $post_ids );
         }
         // Get object data's of one type
-        if( !empty( $post_ids ) )
+        if( !empty( $post_ids ) && is_array( $post_ids ) )
             return get_posts( array(
                 'post__in' => $post_ids,
                 'post_type' => $post_types,
+                's' => $s,
             ) );
         else
             return null;
