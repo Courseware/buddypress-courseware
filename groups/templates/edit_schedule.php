@@ -13,7 +13,7 @@
                 <select name="schedule[course_id]">
                     <option value=""><?php _e( 'Select a course', 'bpsp' ) ?></option>
                     <?php foreach( $courses as $c ): ?>
-                        <option value="<?php echo $c->ID; ?>" <?php echo ($c->ID == $schedule->course->ID) ? 'selected' : '';  ?> >
+                        <option value="<?php echo $c->ID; ?>" <?php selected($c->ID, $schedule->course->ID); ?> >
                             <?php echo $c->post_title; ?>
                         </option>
                     <?php endforeach; ?>

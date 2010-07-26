@@ -11,21 +11,14 @@
     <?php
     if( !empty( $students ) ):
     ?>
-      <ul class="gradebook-actions">
-            <li class="import-gradebook-form">
-                <h4><?php _e( 'Import Gradebook from CSV file', 'bpsp' ); ?></h4>
-                <form action="<?php echo $gradebook_permalink . '/import'; ?>" method="post" enctype="multipart/form-data">
-                    <input type="file" name="csv_filename" />
-                    <input type="submit" value="Import" />
-                    <?php echo $import_gradebook_nonce; ?>
-                </form>
-            </li>
-            <li class="clear-gradebook-link">
-                <a href="<?php echo $clear_gradebook_permalink; ?>">
-                    <?php _e( 'Clear Gradebook', 'bpsp' ); ?>
-                </a>
-            </li>
-        </ul>
+        <div class="import-gradebook-form">
+            <h4><?php _e( 'Import Gradebook from CSV file', 'bpsp' ); ?></h4>
+            <form action="<?php echo $gradebook_permalink . '/import'; ?>" method="post" enctype="multipart/form-data">
+                <input type="file" name="csv_filename" />
+                <input type="submit" value="Import" />
+                <?php echo $import_gradebook_nonce; ?>
+            </form>
+        </div>
         <form method="post" action="<?php echo $gradebook_permalink; ?>">
         <table>
             <thead>
@@ -60,13 +53,13 @@
                     </td>
                     <td class="grade_format">
                         <select name="grade[<?php echo $student->user_id ?>][format]">
-                            <option value="numeric" <?php echo ( 'numeric' == $grades[$student->user_id]['format'] ) ? 'selected' : '' ?> >
+                            <option value="numeric" <?php selected( $grades[$student->user_id]['format'], 'numeric' ); ?> >
                                 <?php _e( 'Numeric', 'bpsp' ); ?>
                             </option>
-                            <option value="percentage" <?php echo ( 'percentage' == $grades[$student->user_id]['format'] ) ? 'selected' : '' ?> >
+                            <option value="percentage" <?php selected( $grades[$student->user_id]['format'], 'percentage' ); ?> >
                                 <?php _e( 'Percentage', 'bpsp' ); ?>
                             </option>
-                            <option value="letter" <?php echo ( 'letter' == $grades[$student->user_id]['format'] ) ? 'selected' : '' ?> >
+                            <option value="letter" <?php selected( $grades[$student->user_id]['format'], 'letter' ); ?> >
                                 <?php _e( 'Letter', 'bpsp' ); ?>
                             </option>
                         </select>
@@ -87,7 +80,8 @@
         </table>
         <?php echo $nonce; ?>
         <input type="submit" name="grade[<?php echo $assignment->ID ?>][submit]" value="<?php _e( 'Save grades', 'bpsp' ); ?>" />
-        <a href="<?php echo $assignment_permalink; ?>"><?php _e( 'Go back', 'bpsp' ); ?></a>
+        <a href="<?php echo $assignment_permalink; ?>" class="gradebook-back-link"><?php _e( 'Go back', 'bpsp' ); ?></a>
+        <a href="<?php echo $clear_gradebook_permalink; ?>" class="gradebook-clear-link"><?php _e( 'Clear Gradebook', 'bpsp' ); ?></a>
         </form>
     <?php endif; ?>
 </div>

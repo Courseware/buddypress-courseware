@@ -3,12 +3,11 @@
  */
 
 // Localize DateTimePicker
-dtpLanguage['monthNames'] = dtpLanguage['monthNames'].split( ',' );
-dtpLanguage['dayNamesMin'] = dtpLanguage['dayNamesMin'].split( ',' );
-dtpLanguage['firstDay'] = eval( dtpLanguage['firstDay'] );
-dtpLanguage['isRTL'] = eval( dtpLanguage['isRTL'] );
+dtpLanguage['monthNames']   = dtpLanguage['monthNames'].split( ',' );
+dtpLanguage['dayNamesMin']  = dtpLanguage['dayNamesMin'].split( ',' );
+dtpLanguage['firstDay']     = eval( dtpLanguage['firstDay'] );
+dtpLanguage['isRTL']        = eval( dtpLanguage['isRTL'] );
 dtpLanguage['showMonthAfterYear'] = eval( dtpLanguage['showMonthAfterYear'] );
-console.log( dtpLanguage );
 jQuery.datepicker.setDefaults( dtpLanguage );
 
 jQuery( "input[name$='assignment[due_date]']" ).datetimepicker({

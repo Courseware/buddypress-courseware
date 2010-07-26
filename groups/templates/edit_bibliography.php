@@ -3,34 +3,34 @@
 </style>
 <div id="courseware-new-bibliography" >
     <h4><?php _e( 'Update a bibliography entry', 'bpsp' ); ?></h4>
-    <form action="" method="post" >
+    <form action="<?php echo $bibs_form_uri; ?>" method="post" >
         <div class="courseware-form-section">
             <select name="bib[type]">
                 <option value="">
                     <?php _e( 'Select a type of source...', 'bpsp' ); ?>
                 </option>
-                <option <?php if( 'book' == $bib['type'] ) echo 'selected=""'; ?> value="book">
+                <option <?php selected( 'book', $bib['type'] ); ?> value="book">
                     <?php _e( 'Book', 'bpsp' ); ?>
                 </option>
-                <option <?php if( 'article' == $bib['type'] ) echo 'selected'; ?> value="article">
+                <option <?php selected( 'article', $bib['type'] ); ?> value="article">
                     <?php _e( 'Article', 'bpsp' ); ?>
                 </option>
-                <option <?php if( 'chapter' == $bib['type'] ) echo 'selected'; ?> value="chapter">
+                <option <?php selected( 'chapter', $bib['type'] ); ?> value="chapter">
                     <?php _e( 'Volume Chapter', 'bpsp' ); ?>
                 </option>
-                <option <?php if( 'unpublished' == $bib['type'] ) echo 'selected'; ?> value="unpublished">
+                <option <?php selected( 'unpublished', $bib['type'] ); ?> value="unpublished">
                     <?php _e( 'Unpublished', 'bpsp' ); ?>
                 </option>
-                <option <?php if( 'www' == $bib['type'] ) echo 'selected'; ?> value="www">
+                <option <?php selected( 'www', $bib['type'] ); ?> value="www">
                     <?php _e( 'Website', 'bpsp' ); ?>
                 </option>
-                <option <?php if( 'wwwpage' == $bib['type'] ) echo 'selected'; ?> value="wwwpage">
+                <option <?php selected( 'wwwpage', $bib['type'] ); ?> value="wwwpage">
                     <?php _e( 'Webpage', 'bpsp' ); ?>
                 </option>
-                <option <?php if( 'video' == $bib['type'] ) echo 'selected'; ?> value="video">
+                <option <?php selected( 'video', $bib['type'] ); ?> value="video">
                     <?php _e( 'Video', 'bpsp' ); ?>
                 </option>
-                <option <?php if( 'audio' == $bib['type'] ) echo 'selected'; ?> value="audio">
+                <option <?php selected( 'audio', $bib['type'] ); ?> value="audio">
                     <?php _e( 'Audio', 'bpsp' ); ?>
                 </option>
             </select>
@@ -82,11 +82,10 @@
             <label for="bib[desc]"><?php _e( 'Description', 'bpsp' ); ?></label>
                 <textarea name="bib[desc]" cols="60" rows="6"><?php echo $bib['citation'] ? $bib['citation'] : $bib['desc']; ?></textarea>
         </div>
-        <input type="submit" value="<?php _e( 'Update', 'bpsp' ); ?>" />
         <?php echo $bibs_nonce; ?>
+        <input type="submit" value="<?php _e( 'Update', 'bpsp' ); ?>" />
+        <?php if( isset( $back_uri ) ): ?>
+            <a href="<?php echo $back_uri; ?>"><?php _e( 'Go back', 'bpsp' ); ?></a>
+        <?php endif; ?>
     </form>
 </div>
-<?php
-if( isset( $has_bibs ) )
-    require_once BPSP_PLUGIN_DIR . '/groups/templates/_bibs.php';
-?>

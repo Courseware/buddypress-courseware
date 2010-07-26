@@ -37,7 +37,7 @@
                 <form action="" method="post" >
                     <label>
                         <p>
-                            <input type="radio" name="bpsp_curriculum" value="eu" <?php echo $eu? 'checked' : ''; ?> />
+                            <input type="radio" name="bpsp_curriculum" value="eu" <?php checked( !empty( $eu ) ); ?> />
                             <strong><?php _e( 'European style', 'bpsp' ); ?></strong> &mdash;
                             <?php _e( 'Use this setting if a single roster of students
                             is shared between multiple courses.', 'bpsp' ); ?>
@@ -45,7 +45,7 @@
                     </label>
                     <label>
                         <p>
-                            <input type="radio" name="bpsp_curriculum" value="us" <?php echo $us? 'checked' : ''; ?> />
+                            <input type="radio" name="bpsp_curriculum" value="us" <?php checked( !empty( $us ) ); ?> />
                             <strong><?php _e( 'US style', 'bpsp' ); ?></strong> &mdash;
                             <?php _e( 'Use this setting if each course will have its own roster.', 'bpsp' ); ?>
                         </p>
@@ -68,7 +68,7 @@
                 <form action="" method="post" >
                     <p>
                         <label>
-                            <input type="checkbox" name="bpsp_allow_only_admins" <?php echo $bpsp_allow_only_admins ? 'checked=""' : ''; ?> />
+                            <input type="checkbox" name="bpsp_allow_only_admins" <?php checked( !empty( $bpsp_allow_only_admins ) ); ?> />
                             <strong><?php _e( 'Allow any teacher to contribute to class Courseware content','bpsp' ); ?></strong>
                         </label>
                     </p>

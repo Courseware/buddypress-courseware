@@ -14,7 +14,7 @@ require_once BPSP_PLUGIN_DIR . '/groups/templates/helpers/editor_helpers.php' ;
             <label for="assignment[course_id]"><?php _e( 'Course', 'bpsp' ); ?></label>
                 <select name="assignment[course_id]">
                     <?php foreach( $courses as $c ): ?>
-                        <option value="<?php echo $c->ID; ?>" <?php if ( $c->ID == $assignment->course->ID ) echo 'selected="selected"'; ?>><?php echo $c->post_title; ?></option>
+                        <option value="<?php echo $c->ID; ?>" <?php selected( $c->ID, $assignment->course->ID ); ?>><?php echo $c->post_title; ?></option>
                     <?php endforeach; ?>
                 </select>
         </div>

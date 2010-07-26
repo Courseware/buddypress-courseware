@@ -70,11 +70,14 @@ class BPSP_Static {
      */
     function datatables_l10n() {
         return array(
-            "sLengthMenu" => __( "Display _MENU_ records per page", 'bpsp' ),
-            "sZeroRecords" => __( "Nothing found - sorry", 'bpsp' ),
-            "sInfo" => __( "Showing _START_ to _END_ of _TOTAL_ records", 'bpsp' ),
-            "sInfoEmpty" => __( "Showing 0 to 0 of 0 records", 'bpsp' ),
-            "sInfoFiltered" => __( "(filtered from _MAX_ total records)", 'bpsp' )
+            "sProcessing"       => __( "Processing...", 'bpsp' ),
+            "sLengthMenu"       => __( "Display _MENU_ records per page", 'bpsp' ),
+            "sZeroRecords"      => __( "Nothing found - sorry", 'bpsp' ),
+            "sInfo"             => __( "Showing _START_ to _END_ of _TOTAL_ records", 'bpsp' ),
+            "sInfoEmpty"        => __( "Showing 0 to 0 of 0 records", 'bpsp' ),
+            "sInfoFiltered"     => __( "(filtered from _MAX_ total records)", 'bpsp' ),
+            "sInfoPostFix"      => __( "", 'bpsp' ),
+            "sSearch"           => __( "Search", 'bpsp' ),
         );
     }
     
@@ -85,15 +88,15 @@ class BPSP_Static {
      */
     function datetimepicker_l10n() {
         return array(
-            "closeText" => __( 'Done', 'bpsp' ),
-            "prevText" => __( 'Prev', 'bpsp' ),
-            "nextText" => __( 'Next', 'bpsp' ),
-            "currentText" => __( 'Today', 'bpsp' ),
-            "monthNames" => $this->datetimepicker_months_l10n(),
-            "dayNamesMin" => $this->datetimepicker_days_l10n(),
-            "firstDay" => __( '1', 'bpsp' ),
-            "isRTL" => __( 'false', 'bpsp' ),
-            "showMonthAfterYear" => __( 'false', 'bpsp' ),
+            "closeText"             => __( 'Done', 'bpsp' ),
+            "prevText"              => __( 'Prev', 'bpsp' ),
+            "nextText"              => __( 'Next', 'bpsp' ),
+            "currentText"           => __( 'Today', 'bpsp' ),
+            "monthNames"            => $this->datetimepicker_months_l10n(),
+            "dayNamesMin"           => $this->datetimepicker_days_l10n(),
+            "firstDay"              => __( '1', 'bpsp' ),
+            "isRTL"                 => __( 'false', 'bpsp' ),
+            "showMonthAfterYear"    => __( 'false', 'bpsp' ),
         );
     }
     function datetimepicker_months_l10n() {

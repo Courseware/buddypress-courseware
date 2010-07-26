@@ -468,8 +468,8 @@ class BPSP_Bibliography {
             return $vars;
         }
         
-        $is_nonce = wp_verify_nonce( $_GET['_wpnonce'], $nonce_name );
-        if( !$is_nonce && isset( $_GET['bhash'] ) ) {
+        if( isset( $_POST['_wpnonce'] ) && isset( $_GET['bhash'] ) )
+            if( !wp_verify_nonce( $_POST['_wpnonce'], $nonce_name ) ) {
             $vars['die'] = __( 'BuddyPress Courseware Nonce Error while editing bibliography.', 'bpsp' );
             return $vars;
         }
@@ -478,8 +478,15 @@ class BPSP_Bibliography {
         $bhash = $data[0];
         $new_bhash = null;
         $post_id = null;
-        if( isset( $data[1] ) && !empty( $data[1] ) )
+        if( isset( $data[1] ) && !empty( $data[1] ) ) {
             $post_id = $data[1];
+            // Get the permalink for parent
+            if( BPSP_Assignments::is_assignment( $post_id ) )
+                $vars['back_uri'] = $vars['nav_options'][ __( 'Home', 'bpsp' ) ] . '/assignment/' . $post_id;
+            
+            if( BPSP_Courses::is_course( $post_id ) )
+                $vars['back_uri'] = $vars['nav_options'][ __( 'Home', 'bpsp' ) ] . '/course/' . $post_id;
+        }
         else {
             $bibdb_def = array(
                 'post_title'    => 'BIBSDB',
@@ -510,14 +517,13 @@ class BPSP_Bibliography {
         $vars['name'] = 'edit_bibliography';
         $vars['bib'] = shortcode_parse_atts( $this->get_bib( $bhash, $post_id ) );
         $vars['has_bibs'] = true;
-        $vars['hide_existing'] = true;
         $vars['post_id'] = null;
         $vars['has_bib_caps'] = $this->has_bib_caps( $bp->loggedin_user->id );
         $vars['bibs'] = $this->load_bibs( true );
         $vars['bibs_delete_permalink'] = $vars['current_uri'] . '/delete_bibliography';
-        $vars['bibs_edit_permalink'] = $vars['current_uri'] . '/edit_bibliography';
         $vars['bibs_delete_uri'] = add_query_arg( '_wpnonce', wp_create_nonce( $nonce_delete_name ), $vars['bibs_delete_permalink'] );
-        $vars['bibs_edit_uri'] = add_query_arg( '_wpnonce', wp_create_nonce( $nonce_edit_name ), $vars['bibs_edit_permalink'] );
+        $vars['bibs_edit_uri'] = $vars['current_uri'] . '/edit_bibliography';
+        $vars['bibs_form_uri'] = add_query_arg( 'bhash', $bhash . ',' . $post_id, $vars['bibs_edit_uri'] );
         $vars['bibs_nonce'] = wp_nonce_field( $nonce_name, '_wpnonce', true, false );
         return $vars;
     }
@@ -576,9 +582,8 @@ class BPSP_Bibliography {
         $vars['has_bib_caps'] = $this->has_bib_caps( $bp->loggedin_user->id );
         $vars['bibs'] = $this->load_bibs( true );
         $vars['bibs_delete_permalink'] = $vars['current_uri'] . '/delete_bibliography';
-        $vars['bibs_edit_permalink'] = $vars['current_uri'] . '/edit_bibliography';
         $vars['bibs_delete_uri'] = add_query_arg( '_wpnonce', wp_create_nonce( $nonce_delete_name ), $vars['bibs_delete_permalink'] );
-        $vars['bibs_edit_uri'] = add_query_arg( '_wpnonce', wp_create_nonce( $nonce_edit_name ), $vars['bibs_edit_permalink'] );
+        $vars['bibs_edit_uri'] = $vars['current_uri'] . '/edit_bibliography';
         $vars['bibs_nonce'] = wp_nonce_field( $nonce_name, '_wpnonce', true, false );
         return $vars;
     }
@@ -728,7 +733,7 @@ class BPSP_Bibliography {
         $vars['bibs_delete_permalink'] = $vars['current_uri'] . '/delete_bibliography';
         $vars['bibs_edit_permalink'] = $vars['current_uri'] . '/edit_bibliography';
         $vars['bibs_delete_uri'] = add_query_arg( '_wpnonce', wp_create_nonce( $nonce_delete_name ), $vars['bibs_delete_permalink'] );
-        $vars['bibs_edit_uri'] = add_query_arg( '_wpnonce', wp_create_nonce( $nonce_edit_name ), $vars['bibs_edit_permalink'] );
+        $vars['bibs_edit_uri'] = $vars['current_uri'] . '/edit_bibliography';
         return $vars;
     }
     
