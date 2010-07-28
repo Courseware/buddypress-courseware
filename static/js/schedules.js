@@ -8,7 +8,6 @@ dtpLanguage['dayNamesMin'] = dtpLanguage['dayNamesMin'].split( ',' );
 dtpLanguage['firstDay'] = eval( dtpLanguage['firstDay'] );
 dtpLanguage['isRTL'] = eval( dtpLanguage['isRTL'] );
 dtpLanguage['showMonthAfterYear'] = eval( dtpLanguage['showMonthAfterYear'] );
-console.log( dtpLanguage );
 jQuery.datepicker.setDefaults( dtpLanguage );
 
 // This will enable the calendar for start date field
@@ -16,7 +15,7 @@ jQuery( "input[name$='schedule[start_date]']" ).datetimepicker({
     holdDatepickerOpen: false,
     showButtonPanel: false,
     timeFormat: 'hh:mm:ss',
-    dateFormat: 'yy-mm-dd',
+    dateFormat: 'yy-mm-dd'
 });
 
 // Function will check the start date field and ensure the end date will not be older

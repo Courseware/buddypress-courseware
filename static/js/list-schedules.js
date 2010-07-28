@@ -1,6 +1,20 @@
 /**
  * Javascript calls for schedule screens
  */
+// Parse language strings
+fcLanguage.firstDay = eval( fcLanguage.firstDay );
+fcLanguage.buttonTextKeys = fcLanguage.buttonTextKeys.split( ',' );
+fcLanguage.buttonTextVals = fcLanguage.buttonTextVals.split( ',' );
+fcLanguage.buttonText = new Object;
+jQuery.each( fcLanguage.buttonTextKeys, function( i, v ){
+    fcLanguage.buttonText[v] = fcLanguage.buttonTextVals[i];
+} );
+fcLanguage.monthNames = fcLanguage.monthNames.split( ',' );
+fcLanguage.monthNamesShort = fcLanguage.monthNamesShort.split( ',' );
+fcLanguage.dayNames = fcLanguage.dayNames.split( ',' );
+fcLanguage.dayNamesShort = fcLanguage.dayNamesShort.split( ',' );
+
+// Load the FullCalendar
 jQuery('.courseware-fullcalendar').fullCalendar({
     editable: false,
     events: "?courseware-schedules",
@@ -9,9 +23,13 @@ jQuery('.courseware-fullcalendar').fullCalendar({
         center: 'title',
         right: 'month,agendaWeek,agendaDay'
     },
-    firstDay: 1,
-    //monthNames: fc_months,
-    //dayNamesShort: fc_days,
+    timeFormat: fcLanguage.timeFormat,
+    firstDay: fcLanguage.firstDay,
+    buttonText: fcLanguage.buttonText,
+    monthNames: fcLanguage.monthNames,
+    monthNamesShort: fcLanguage.monthNamesShort,
+    dayNames: fcLanguage.dayNames,
+    dayNamesShort: fcLanguage.dayNamesShort,
     loading: function(bool) {
         if (bool) jQuery('#loading').show();
         else jQuery('#loading').hide();

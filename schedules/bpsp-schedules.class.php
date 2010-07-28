@@ -557,7 +557,6 @@ class BPSP_Schedules {
     }
     
     function toJSON() {
-        $jsoned = null;
         $unjsoned = array();
         
         $schedules = $this->has_schedules();
@@ -575,15 +574,8 @@ class BPSP_Schedules {
             $unjsoned[] = $entry;
         }
         
-        if( !function_exists( 'json_encode' ) ) {
-            require_once( ABSPATH."/wp-includes/js/tinymce/plugins/spellchecker/classes/utils/JSON.php" );
-            $json_obj = new Moxiecode_JSON();
-            $jsoned = $json_obj->encode( $unjsoned );
-        } else
-            $jsoned = json_encode( $unjsoned );
-        
         header("HTTP/1.1 200 OK");
-        return $jsoned;
+        return json_encode( $unjsoned );
     }
 }
 ?>

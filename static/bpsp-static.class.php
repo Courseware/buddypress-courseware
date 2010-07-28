@@ -18,9 +18,7 @@ class BPSP_Static {
         
         // FullCalendar
         wp_register_script( 'fullcalendar', BPSP_WEB_URI . '/static/js/fullcalendar/fullcalendar.min.js', array( 'jquery-ui-courseware-custom' ), '1.4.7' );        
-        // TODO: find a way to call multiple times wp_localize_script()
-        //wp_localize_script( 'fullcalendar', 'fc_months', $this->months_l10n() );
-        //wp_localize_script( 'fullcalendar', 'fc_days', $this->days_l10n() );
+        wp_localize_script( 'fullcalendar', 'fcLanguage', $this->fullcalendar_l10n() );
         
         // jQuery UI Date & Time picker
         wp_register_script( 'datetimepicker', BPSP_WEB_URI . '/static/js/datetimepicker/jquery-ui-timepicker-addon-0.5.min.js', array( 'jquery-ui-courseware-custom' ), '0.5' );
@@ -95,6 +93,31 @@ class BPSP_Static {
     }
     
     /**
+     * fullcalendar_l10n()
+     *
+     * Helpers to get fullcalendar messages localized
+     */
+    function fullcalendar_l10n() {
+        $buttonText = array(
+            "today" => __( 'todaya', 'bpsp' ),
+            "month" => __( 'month', 'bpsp' ),
+            "week"  => __( 'week', 'bpsp' ),
+            "day"   => __( 'day', 'bpsp' )
+        );
+        
+        return array(
+            "timeFormat"        => __( 'H(:mm)', 'bpsp' ), // 'H(:mm)' for 24-hour clock
+            "buttonTextKeys"        => implode( ',' , array_keys( $buttonText ) ),
+            "buttonTextVals"        => implode( ',' , array_values( $buttonText ) ),
+            "monthNames"        => implode( ',', $this->months_l10n() ),
+            "monthNamesShort"   => implode( ',', $this->months_short_l10n() ),
+            "dayNames"          => implode( ',', $this->days_l10n() ),
+            "dayNamesShort"     => implode( ',', $this->days_short_l10n() ),
+            "firstDay"          => __( '1', 'bpsp' ),
+        );
+    }
+    
+    /**
      * datetimepicker_l10n()
      *
      * Helpers to get datetimepicker messages localized
@@ -106,7 +129,7 @@ class BPSP_Static {
             "nextText"              => __( 'Next', 'bpsp' ),
             "currentText"           => __( 'Today', 'bpsp' ),
             "monthNames"            => implode( ',', $this->months_l10n() ),
-            "dayNamesMin"           => implode( ',', $this->days_l10n() ),
+            "dayNamesMin"           => implode( ',', $this->days_shorter_l10n() ),
             "firstDay"              => __( '1', 'bpsp' ),
             "isRTL"                 => __( 'false', 'bpsp' ),
             "showMonthAfterYear"    => __( 'false', 'bpsp' ),
@@ -114,29 +137,67 @@ class BPSP_Static {
     }
     function months_l10n() {
         return array(
-            __( 'January', 'bpsp' ),
-            __( 'February', 'bpsp' ),
-            __( 'March', 'bpsp' ),
-            __( 'April', 'bpsp' ),
-            __( 'May', 'bpsp' ),
-            __( 'June', 'bpsp' ),
-            __( 'Julya', 'bpsp' ),
-            __( 'August', 'bpsp' ),
-            __( 'September', 'bpsp' ),
-            __( 'October', 'bpsp' ),
-            __( 'November', 'bpsp' ),
-            __( 'December', 'bpsp' ),
-            );
+            'January'   => __( 'January', 'bpsp' ),
+            'February'  => __( 'February', 'bpsp' ),
+            'March'     => __( 'March', 'bpsp' ),
+            'April'     => __( 'April', 'bpsp' ),
+            'May'       => __( 'May', 'bpsp' ),
+            'June'      => __( 'June', 'bpsp' ),
+            'July'      => __( 'July', 'bpsp' ),
+            'August'    => __( 'August', 'bpsp' ),
+            'September' => __( 'September', 'bpsp' ),
+            'October'   => __( 'October', 'bpsp' ),
+            'November'  => __( 'November', 'bpsp' ),
+            'December'  => __( 'December', 'bpsp' ),
+        );
+    }
+    function months_short_l10n() {
+        return array(
+            'Jan'  => __( 'Jan', 'bpsp' ),
+            'Feb'  => __( 'Feb', 'bpsp' ),
+            'Mar'  => __( 'Mar', 'bpsp' ),
+            'Apr'  => __( 'Apr', 'bpsp' ),
+            'May'  => __( 'May', 'bpsp' ),
+            'Jun'  => __( 'Jun', 'bpsp' ),
+            'Jul'  => __( 'Jul', 'bpsp' ),
+            'Aug'  => __( 'Aug', 'bpsp' ),
+            'Sep'  => __( 'Sep', 'bpsp' ),
+            'Oct'  => __( 'Oct', 'bpsp' ),
+            'Nov'  => __( 'Nov', 'bpsp' ),
+            'Dec'  => __( 'Dec', 'bpsp' ),
+        );
     }
     function days_l10n() {
         return array(
-            __( 'Su', 'bpsp' ),
-            __( 'Moa', 'bpsp' ),
-            __( 'Tu', 'bpsp' ),
-            __( 'We', 'bpsp' ),
-            __( 'Th', 'bpsp' ),
-            __( 'Fr', 'bpsp' ),
-            __( 'Sa', 'bpsp' ),
+            'Sunday'    => __( 'Sunday', 'bpsp' ),
+            'Monday'    => __( 'Monday', 'bpsp' ),
+            'Tuesday'   => __( 'Tuesday', 'bpsp' ),
+            'Wednesday' => __( 'Wednesday', 'bpsp' ),
+            'Thursday'  => __( 'Thursday', 'bpsp' ),
+            'Friday'    => __( 'Friday', 'bpsp' ),
+            'Saturday'  => __( 'Saturday', 'bpsp' ),
+        );
+    }
+    function days_short_l10n() {
+        return array(
+            'Sun'  => __( 'Sun', 'bpsp' ),
+            'Mon'  => __( 'Mon', 'bpsp' ),
+            'Tue'  => __( 'Tue', 'bpsp' ),
+            'Wed'  => __( 'Wed', 'bpsp' ),
+            'Thu'  => __( 'Thu', 'bpsp' ),
+            'Fri'  => __( 'Fri', 'bpsp' ),
+            'Sat'  => __( 'Sat', 'bpsp' ),
+        );
+    }
+    function days_shorter_l10n() {
+        return array(
+            'Su'  => __( 'Su', 'bpsp' ),
+            'Mo'  => __( 'Mo', 'bpsp' ),
+            'Tu'  => __( 'Tu', 'bpsp' ),
+            'We'  => __( 'We', 'bpsp' ),
+            'Th'  => __( 'Th', 'bpsp' ),
+            'Fr'  => __( 'Fr', 'bpsp' ),
+            'Sa'  => __( 'Sa', 'bpsp' ),
         );
     }
     
@@ -182,7 +243,7 @@ class BPSP_Static {
         
         $link_template =
             '<a href="http://maps.google.com/maps?q=%s">' .
-            self::get_image( 'info_button_16.png', false ) .
+            self::get_image( 'map_go.png', false ) .
             '</a>';
         
         if( $echo )
