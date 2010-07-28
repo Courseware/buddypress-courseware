@@ -1,4 +1,4 @@
-<form action="<?php echo $schedule_edit_uri; ?>" method="post" id="new-assignment-form">
+<form action="<?php echo $schedule_edit_uri; ?>" method="post" class="standard-form" id="new-assignment-form">
     <h5>
         <?php _e( 'Update schedule', 'bpsp' ); ?> |
         <a href="<?php echo $schedule_permalink; ?>"><?php _e( 'Preview schedule', 'bpsp' ); ?></a>

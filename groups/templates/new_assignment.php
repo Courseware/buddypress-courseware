@@ -3,7 +3,7 @@ include_once ABSPATH . '/wp-admin/includes/media.php' ;
 require_once ABSPATH . '/wp-admin/includes/post.php' ;
 require_once BPSP_PLUGIN_DIR . '/groups/templates/helpers/editor_helpers.php' ;
 ?>
-<form action="<?php echo $current_option; ?>" method="post" id="new-assignment-form">
+<form action="<?php echo $current_option; ?>" method="post" class="standard-form" id="new-assignment-form">
     <h5><?php _e( 'Add a new assignment', 'bpsp' ); ?></h5>
     <div id="new-assignment-content">
         <div id="new-assignment-content-title">

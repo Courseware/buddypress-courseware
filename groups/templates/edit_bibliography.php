@@ -3,7 +3,7 @@
 </style>
 <div id="courseware-new-bibliography" >
     <h4><?php _e( 'Update a bibliography entry', 'bpsp' ); ?></h4>
-    <form action="<?php echo $bibs_form_uri; ?>" method="post" >
+    <form action="<?php echo $bibs_form_uri; ?>" method="post" class="standard-form" >
         <div class="courseware-form-section">
             <select name="bib[type]">
                 <option value="">
@@ -38,47 +38,47 @@
         <h4><?php _e( 'Author(s)', 'bpsp' ); ?></h4>
         <div class="courseware-form-section">
             <label for="bib[author_lname]"><?php _e( 'Author Last Name', 'bpsp' ); ?></label>
-                <input name="bib[author_lname]" value="<?php echo $bib['author'] ? $bib['author'] : $bib['author_lname'] ; ?>" />
+                <input type="text" name="bib[author_lname]" value="<?php echo $bib['author'] ? $bib['author'] : $bib['author_lname'] ; ?>" />
             <label for="bib[author_fname]"><?php _e( 'Author First Name', 'bpsp' ); ?></label>
-                <input name="bib[author_fname]" value="<?php echo $bib['author_fname']; ?>" />
+                <input type="text" name="bib[author_fname]" value="<?php echo $bib['author_fname']; ?>" />
             <label for="bib[author_lname2]"><?php _e( 'Author Two Last Name', 'bpsp' ); ?></label>
-                <input name="bib[author_lname2]" value="<?php echo $bib['author_lname2']; ?>" />
+                <input type="text" name="bib[author_lname2]" value="<?php echo $bib['author_lname2']; ?>" />
             <label for="bib[author_fname2]"><?php _e( 'Author Two First Name', 'bpsp' ); ?></label>
-                <input name="bib[author_fname2]" value="<?php echo $bib['author_fname2']; ?>" />
+                <input type="text" name="bib[author_fname2]" value="<?php echo $bib['author_fname2']; ?>" />
         </div>
         <h4><?php _e( 'Publish Information', 'bpsp' ); ?></h4>
         <div class="courseware-form-section">
             <label for="bib[title]"><?php _e( 'Title', 'bpsp' ); ?></label>
-                <input name="bib[title]" value="<?php echo $bib['title']; ?>" />
+                <input type="text" name="bib[title]" value="<?php echo $bib['title']; ?>" />
             <label for="bib[stitle]"><?php _e( 'Short Title', 'bpsp' ); ?></label>
-                <input name="bib[stitle]" value="<?php echo $bib['stitle']; ?>" />
+                <input type="text" name="bib[stitle]" value="<?php echo $bib['stitle']; ?>" />
             <label for="bib[jtitle]"><?php _e( 'Journal Title', 'bpsp' ); ?></label>
-                <input name="bib[jtitle]" value="<?php echo $bib['jtitle']; ?>" />
+                <input type="text" name="bib[jtitle]" value="<?php echo $bib['jtitle']; ?>" />
             <label for="bib[vtitle]"><?php _e( 'Volume Title', 'bpsp' ); ?></label>
-                <input name="bib[vtitle]" value="<?php echo $bib['vtitle']; ?>" />
+                <input type="text" name="bib[vtitle]" value="<?php echo $bib['vtitle']; ?>" />
             <label for="bib[veditors]"><?php _e( 'Volume Editor(s)', 'bpsp' ); ?></label>
-                <input name="bib[veditors]" value="<?php echo $bib['veditors']; ?>" />
+                <input type="text" name="bib[veditors]" value="<?php echo $bib['veditors']; ?>" />
             <label for="bib[pubplace]"><?php _e( 'Publication Place', 'bpsp' ); ?></label>
-                <input name="bib[pubplace]" value="<?php echo $bib['pubplace']; ?>" />
+                <input type="text" name="bib[pubplace]" value="<?php echo $bib['pubplace']; ?>" />
             <label for="bib[pub]"><?php _e( 'Publisher', 'bpsp' ); ?></label>
-                <input name="bib[pub]" value="<?php echo $bib['pub']; ?>" />
+                <input type="text" name="bib[pub]" value="<?php echo $bib['pub']; ?>" />
             <label for="bib[wwwtitle]"><?php _e( 'Website Title', 'bpsp' ); ?></label>
-                <input name="bib[wwwtitle]" value="<?php echo $bib['wwwtitle']; ?>" />
+                <input type="text" name="bib[wwwtitle]" value="<?php echo $bib['wwwtitle']; ?>" />
         </div>
         <h4><?php _e( 'Additional Information', 'bpsp' ); ?></h4>
         <div class="courseware-form-section">
             <label for="bib[pubdate]"><?php _e( 'Date Published', 'bpsp' ); ?></label>
-                <input name="bib[pubdate]" value="<?php echo $bib['pubdate']; ?>" />
+                <input type="text" name="bib[pubdate]" value="<?php echo $bib['pubdate']; ?>" />
             <label for="bib[accdate]"><?php _e( 'Date Accessed', 'bpsp' ); ?></label>
-                <input name="bib[accdate]" value="<?php echo $bib['accdate']; ?>" />
+                <input type="text" name="bib[accdate]" value="<?php echo $bib['accdate']; ?>" />
             <label for="bib[url]"><?php _e( 'URL', 'bpsp' ); ?></label>
-                <input name="bib[url]" value="<?php echo $bib['url']; ?>" />
+                <input type="text" name="bib[url]" value="<?php echo $bib['url']; ?>" />
             <label for="bib[vol]"><?php _e( 'Volume', 'bpsp' ); ?></label>
-                <input name="bib[vol]" value="<?php echo $bib['vol']; ?>" />
+                <input type="text" name="bib[vol]" value="<?php echo $bib['vol']; ?>" />
             <label for="bib[issue]"><?php _e( 'Issue', 'bpsp' ); ?></label>
-                <input name="bib[issue]" value="<?php echo $bib['issue']; ?>" />
+                <input type="text" name="bib[issue]" value="<?php echo $bib['issue']; ?>" />
             <label for="bib[pages]"><?php _e( 'Pages', 'bpsp' ); ?></label>
-                <input name="bib[pages]" value="<?php echo $bib['pages']; ?>" />
+                <input type="text" name="bib[pages]" value="<?php echo $bib['pages']; ?>" />
             <label for="bib[desc]"><?php _e( 'Description', 'bpsp' ); ?></label>
                 <textarea name="bib[desc]" cols="60" rows="6"><?php echo $bib['citation'] ? $bib['citation'] : $bib['desc']; ?></textarea>
         </div>

@@ -1,7 +1,7 @@
 <div id="courseware-bibs">
     <?php if( $has_bib_caps ): ?>
     <div id="courseware-bibs-form">
-        <form action="" method="post" >
+        <form action="" method="post" class="standard-form" >
             <?php if( !$hide_existing ): ?>
             <div class="existing">
                 <h4><?php _e( 'Add an existing bibliography', 'bpsp'); ?></h4>
@@ -19,7 +19,15 @@
                 <input type="submit" name="bib[submit]" value="<?php _e( 'Add entry', 'bpsp' ); ?>" />
             </div>
             <?php endif; ?>
-            <div class="book">
+            <div class="www" style="width: 45%; float: right;" >
+                <h4><?php _e( 'Add a webpage', 'bpsp'); ?></h4>
+                <label for="bib[www][title]"><?php _e( 'Entry title', 'bpsp'); ?></label>
+                    <input type="text" name="bib[www][title]" />
+                <label for="bib[www][uri]"><?php _e( 'Webpage address', 'bpsp'); ?></label>
+                    <input type="text" name="bib[www][url]" />
+                <input type="submit" name="bib[submit]" value="<?php _e( 'Add entry', 'bpsp' ); ?>" />
+            </div>
+            <div class="book" style="width: 45%;" >
                 <h4><?php _e( 'Add a book', 'bpsp'); ?></h4>
                 <label for="bib[book][title]"><?php _e( 'Entry title', 'bpsp'); ?></label>
                     <input type="text" name="bib[book][title]" />
@@ -29,19 +37,11 @@
                     <input type="text" name="bib[book][desc]" />
                 <input type="submit" name="bib[submit]" value="<?php _e( 'Add book', 'bpsp' ); ?>" />
             </div>
-            <div class="www">
-                <h4><?php _e( 'Add a webpage', 'bpsp'); ?></h4>
-                <label for="bib[www][title]"><?php _e( 'Entry title', 'bpsp'); ?></label>
-                    <input type="text" name="bib[www][title]" />
-                <label for="bib[www][uri]"><?php _e( 'Webpage address', 'bpsp'); ?></label>
-                    <input type="text" name="bib[www][url]" />
-                <input type="submit" name="bib[submit]" value="<?php _e( 'Add entry', 'bpsp' ); ?>" />
-            </div>
             <?php echo $bibs_nonce; ?>
         </form>
     </div>
     <?php endif; ?>
-    <div id="courseware-bibs-list">
+    <div id="courseware-bibs-list" style="clear: both;">
         <h4><?php _e( 'Bibliography listing', 'bpsp'); ?></h4>
         <?php if( count( $bibs ) > 0 ): ?>
             <ul>

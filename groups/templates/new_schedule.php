@@ -1,4 +1,4 @@
-<form action="<?php echo $current_option; ?>" method="post" id="new-assignment-form">
+<form action="<?php echo $current_option; ?>" method="post" class="standard-form" id="new-assignment-form">
     <h5><?php _e( 'Add a new schedule', 'bpsp' ); ?></h5>
     <div id="new-schedule-content">
         <div id="new-schedule-content-description">

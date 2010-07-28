@@ -3,7 +3,7 @@ include_once ABSPATH . '/wp-admin/includes/media.php' ;
 require_once ABSPATH . '/wp-admin/includes/post.php' ;
 require_once BPSP_PLUGIN_DIR . '/groups/templates/helpers/editor_helpers.php' ;
 ?>
-<form action="<?php echo $course_edit_uri; ?>" method="post" id="update-course-form">
+<form action="<?php echo $course_edit_uri; ?>" method="post" class="standard-form" id="update-course-form">
     <h5><?php _e( 'Edit course', 'bpsp' ); ?> &mdash; <a href="<?php echo $course_permalink ?>"><?php _e( 'Preview', 'bpsp' ); ?></a></h5>
     <div id="update-course-content">
         <div id="update-course-content-title">

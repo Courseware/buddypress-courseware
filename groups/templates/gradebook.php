@@ -13,13 +13,13 @@
     ?>
         <div class="import-gradebook-form">
             <h4><?php _e( 'Import Gradebook from CSV file', 'bpsp' ); ?></h4>
-            <form action="<?php echo $gradebook_permalink . '/import'; ?>" method="post" enctype="multipart/form-data">
+            <form action="<?php echo $gradebook_permalink . '/import'; ?>" method="post" class="standard-form" enctype="multipart/form-data">
                 <input type="file" name="csv_filename" />
                 <input type="submit" value="Import" />
                 <?php echo $import_gradebook_nonce; ?>
             </form>
         </div>
-        <form method="post" action="<?php echo $gradebook_permalink; ?>">
+        <form method="post" class="standard-form" action="<?php echo $gradebook_permalink; ?>">
         <table>
             <thead>
                 <tr>
@@ -65,12 +65,12 @@
                         </select>
                     </td>
                     <td class="private_comment">
-                        <textarea cols="20" rows="5" name="grade[<?php echo $student->user_id ?>][prv_comment]"><?php
+                        <textarea cols="20" rows="3" name="grade[<?php echo $student->user_id ?>][prv_comment]"><?php
                             echo $grades[$student->user_id]['prv_comment'] ? $grades[$student->user_id]['prv_comment'] : '' ;
                         ?></textarea>
                     </td>
                     <td class="public_comment">
-                        <textarea cols="20" rows="5" name="grade[<?php echo $student->user_id ?>][pub_comment]"><?php
+                        <textarea cols="20" rows="3" name="grade[<?php echo $student->user_id ?>][pub_comment]"><?php
                             echo $grades[$student->user_id]['pub_comment'] ? $grades[$student->user_id]['pub_comment'] : '' ;
                         ?></textarea>
                     </td>
@@ -78,10 +78,12 @@
             <?php endforeach; ?>
             </tbody>
         </table>
-        <?php echo $nonce; ?>
-        <input type="submit" name="grade[<?php echo $assignment->ID ?>][submit]" value="<?php _e( 'Save grades', 'bpsp' ); ?>" />
-        <a href="<?php echo $assignment_permalink; ?>" class="gradebook-back-link"><?php _e( 'Go back', 'bpsp' ); ?></a>
-        <a href="<?php echo $clear_gradebook_permalink; ?>" class="gradebook-clear-link"><?php _e( 'Clear Gradebook', 'bpsp' ); ?></a>
+        <div class="gradebook-actions" style="clear:both">
+            <?php echo $nonce; ?>
+            <input type="submit" name="grade[<?php echo $assignment->ID ?>][submit]" value="<?php _e( 'Save grades', 'bpsp' ); ?>" />
+            <a href="<?php echo $assignment_permalink; ?>" class="gradebook-back-link"><?php _e( 'Go back', 'bpsp' ); ?></a>
+            <a href="<?php echo $clear_gradebook_permalink; ?>" class="gradebook-clear-link"><?php _e( 'Clear Gradebook', 'bpsp' ); ?></a>
+        </div>
         </form>
     <?php endif; ?>
 </div>

@@ -34,10 +34,5 @@
 }
 
 .flexselect_selected {
-	background-color: Highlight;
-	color: HighlightText;
-}
-
-.flexselect_dropdown ul li {
-    font-size: 10px;
+	background-color: #DDD;
 }

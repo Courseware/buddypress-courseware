@@ -33,6 +33,7 @@ class BPSP_Schedules {
         add_action( 'courseware_new_teacher_removed', array( &$this, 'remove_schedule_caps' ) );
         add_action( 'courseware_group_screen_handler', array( &$this, 'screen_handler' ) );
         add_filter( 'courseware_group_nav_options', array( &$this, 'add_nav_options' ) );
+        add_action( 'courseware_list_schedules_screen', array( 'BPSP_Static', 'list_schedules_enqueues' ) );
    }
     
     /**
@@ -159,8 +160,12 @@ class BPSP_Schedules {
             else
                 add_filter( 'courseware_group_template', array( &$this, 'single_schedule_screen' ) );
         }
-        elseif ( $action_vars[0] == 'schedules' )
+        elseif ( $action_vars[0] == 'schedules' ) {
+            if( isset( $_GET['courseware-schedules'] ) )
+                die( $this->toJSON() );
+            do_action( 'courseware_list_schedules_screen' );
             add_filter( 'courseware_group_template', array( &$this, 'list_schedules_screen' ) );
+        }
     }
     
     /**
@@ -197,11 +202,43 @@ class BPSP_Schedules {
         $schedule->start_date = get_post_meta( $schedule->ID, 'start_date', true );
         $schedule->end_date = get_post_meta( $schedule->ID, 'end_date', true );
         $schedule->location = get_post_meta( $schedule->ID, 'location', true );
+        $schedule->permalink = $bp->bp_options_nav['groups']['courseware']['link'] . 'schedule/' . $schedule->post_name;
         $course_id = wp_get_object_terms( $schedule->ID, 'course_id' );
         if( !empty( $course_id ) )
             $schedule->course = BPSP_Courses::is_course( $course_id[0]->name );
         
         return $schedule;
+    }
+    
+    /**
+     * has_schedules( $group_id )
+     *
+     * Checks if a $group_id has schedules
+     *
+     * @param Int $group_id of the group to be checked
+     * @return Mixed Schedule objects if schedules exist and null if not.
+     */
+    function has_schedules( $group_id = null ) {
+        global $bp;
+        $schedule_ids = null;
+        $schedules = array();
+        
+        if( empty( $group_id ) )
+            $group_id = $bp->groups->current_group->id;
+        
+        $term_id = get_term_by( 'slug', $group_id, 'group_id' );
+        if( !empty( $term_id ) )
+            $schedule_ids = get_objects_in_term( $term_id->term_taxonomy_id, 'group_id' );
+        
+        if( !empty( $schedule_ids ) )
+            arsort( $schedule_ids ); // Get latest entries first
+        else
+            return null;
+        
+        foreach ( $schedule_ids as $sid )
+            $schedules[] = $this->is_schedule( $sid );
+        
+        return array_filter( $schedules );
     }
     
     /**
@@ -299,13 +336,14 @@ class BPSP_Schedules {
                 
             $valid_dates = $this->datecheck( $new_schedule['start_date'], $new_schedule['end_date'], $repeats );
             $is_nonce = wp_verify_nonce( $_POST['_wpnonce'], $nonce_name );
-            if( true != $is_nonce ) 
-                $vars['error'] = __( 'Nonce Error while adding a schedule.', 'bpsp' );
+            if( true != $is_nonce ) {
+                $vars['die'] = __( 'Nonce Error while adding a schedule.', 'bpsp' );
+                return $vars;
+            }
             else
-                if( !empty( $new_schedule['desc'] ) &&
-                    !empty( $new_schedule['group_id'] ) &&
-                    $valid_dates &&
-                    $is_nonce
+                if( !empty( $new_schedule['desc'] ) ||
+                    !empty( $new_schedule['group_id'] ) ||
+                    !$valid_dates
                 ) {
                     // create a template
                     $first_schedule = array(
@@ -373,16 +411,13 @@ class BPSP_Schedules {
      * @return Array $vars a set of variable passed to this screen template
      */
     function list_schedules_screen( $vars ) {
-        global $bp;
-        $schedules = get_posts( array(
-            'post_type' => 'schedule',
-            'group_id' => $bp->groups->current_group->id,
-            'numberposts' => get_option( 'posts_per_page', '10' ),
-        ));
+        $vars['schedules'] = $this->has_schedules();
+        
+        if( empty( $vars['schedules'] ) )
+            $vars['message'] = __( 'No schedules exist.', 'bpsp' );
         
         $vars['name'] = 'list_schedules';
         $vars['schedules_hanlder_uri'] = $vars['current_uri'] . '/schedule/';
-        $vars['schedules'] = $schedules;
         return $vars;
     }
     
@@ -519,6 +554,36 @@ class BPSP_Schedules {
         $vars['nonce'] = wp_nonce_field( $nonce_name, '_wpnonce', true, false );
         $vars['delete_nonce'] = add_query_arg( '_wpnonce', wp_create_nonce( 'delete_schedule' ), $vars['schedule_delete_uri'] );
         return $vars;
+    }
+    
+    function toJSON() {
+        $jsoned = null;
+        $unjsoned = array();
+        
+        $schedules = $this->has_schedules();
+        foreach ( $schedules as $s ) {
+            $entry = array(
+                "id" => $s->ID,
+                "title" => $s->post_title,
+                "start" => date( 'c', strtotime( $s->start_date ) ),
+                "end" => date( 'c', strtotime( $s->end_date ) ),
+                "url" => $s->permalink,
+            );
+            if( !empty( $entry['end'] ) )
+                $entry['allDay'] = false;
+            
+            $unjsoned[] = $entry;
+        }
+        
+        if( !function_exists( 'json_encode' ) ) {
+            require_once( ABSPATH."/wp-includes/js/tinymce/plugins/spellchecker/classes/utils/JSON.php" );
+            $json_obj = new Moxiecode_JSON();
+            $jsoned = $json_obj->encode( $unjsoned );
+        } else
+            $jsoned = json_encode( $unjsoned );
+        
+        header("HTTP/1.1 200 OK");
+        return $jsoned;
     }
 }
 ?>
