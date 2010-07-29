@@ -365,6 +365,7 @@ class BPSP_Bibliography {
      */
     function screen_handler( $action_vars ) {
         if( isset ( $action_vars[0] ) && 'new_bibliography' == $action_vars[0] ) {
+            do_action( 'courseware_bibliography_screen' );
             add_filter( 'courseware_group_template', array( &$this, 'new_bib_screen' ) );
         }
         elseif( isset ( $action_vars[0] ) && 'import_bibliographies' == $action_vars[0] ) {

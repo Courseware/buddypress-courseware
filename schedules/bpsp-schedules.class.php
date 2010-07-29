@@ -33,7 +33,6 @@ class BPSP_Schedules {
         add_action( 'courseware_new_teacher_removed', array( &$this, 'remove_schedule_caps' ) );
         add_action( 'courseware_group_screen_handler', array( &$this, 'screen_handler' ) );
         add_filter( 'courseware_group_nav_options', array( &$this, 'add_nav_options' ) );
-        add_action( 'courseware_list_schedules_screen', array( 'BPSP_Static', 'list_schedules_enqueues' ) );
    }
     
     /**
@@ -139,7 +138,7 @@ class BPSP_Schedules {
      */
     function screen_handler( $action_vars ) {
         if( $action_vars[0] == 'new_schedule' ) {
-            add_action( 'bp_head', array( BPSP_Static, schedules_enqueues ));
+            do_action( 'courseware_new_schedule_screen' );
             add_filter( 'courseware_group_template', array( &$this, 'new_schedule_screen' ) );
         }
         
@@ -151,7 +150,7 @@ class BPSP_Schedules {
             }
             
             if( isset ( $action_vars[2] ) && 'edit' == $action_vars[2] ) {
-                add_action( 'bp_head', array( BPSP_Static, schedules_enqueues ));
+                do_action( 'courseware_edit_schedule_screen' );
                 add_filter( 'courseware_group_template', array( &$this, 'edit_schedule_screen' ) );
             }
             elseif( isset ( $action_vars[2] ) && 'delete' == $action_vars[2] ) {

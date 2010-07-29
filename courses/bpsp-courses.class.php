@@ -171,12 +171,12 @@ class BPSP_Courses {
                 add_filter( 'courseware_group_template', array( &$this, 'delete_course_screen' ) );
             }
             else {
-                add_action( 'bp_head', array( BPSP_Static, 'bibs_enqueues' ) );
+                do_action( 'courseware_bibliography_screen' );
                 add_filter( 'courseware_group_template', array( &$this, 'single_course_screen' ) );
             }
         }
         elseif ( $action_vars[0] == 'courses' ) {
-            add_action( 'bp_head', array( 'BPSP_Static', 'list_courses_enqueues' ) );
+            do_action( 'courseware_list_courses_screen' );
             add_filter( 'courseware_group_template', array( &$this, 'list_courses_screen' ) );
         }
     }

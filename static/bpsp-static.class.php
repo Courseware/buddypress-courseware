@@ -48,6 +48,15 @@ class BPSP_Static {
         wp_register_style( 'datatables', BPSP_WEB_URI . '/static/css/datatables/jquery.datatables.css', null, '1.6.2' );
         wp_register_style( 'datetimepicker', BPSP_WEB_URI . '/static/css/datetimepicker/jquery.timepicker.css', array( 'jquery-ui-courseware-custom' ), '0.5' );
         wp_register_style( 'flexselect', BPSP_WEB_URI . '/static/css/flexselect/jquery.flexselect.css', null, '0.2' );
+    
+        // Hooks
+        add_action( 'courseware_list_schedules_screen', array( &$this, 'list_schedules_enqueues' ) );
+        add_action( 'courseware_list_assignments_screen', array( &$this, 'list_assignments_enqueues' ) );
+        add_action( 'courseware_bibliography_screen', array( &$this, 'bibs_enqueues' ) );
+        add_action( 'courseware_list_courses_screen', array( &$this, 'list_courses_enqueues' ) );
+        add_action( 'courseware_new_schedule_screen', array( &$this, 'schedules_enqueues' ) );
+        add_action( 'courseware_edit_schedule_screen', array( &$this, 'schedules_enqueues' ));
+        add_action( 'courseware_gradebook_screen', array( &$this, 'gradebook_enqueues' ) );
     }
     
     function bibs_enqueues() {

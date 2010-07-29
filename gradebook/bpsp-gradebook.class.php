@@ -33,8 +33,6 @@ class BPSP_Gradebook {
         add_action( 'courseware_new_teacher_removed', array( &$this, 'remove_grade_caps' ) );
         add_action( 'courseware_group_screen_handler', array( &$this, 'screen_handler' ) );
         add_action( 'courseware_assignment', array( &$this, 'student_screen' ) );
-        add_action( 'courseware_gradebook_screen', array( 'BPSP_Static', 'bibs_enqueues_deregister' ) );
-        add_action( 'courseware_gradebook_screen', array( 'BPSP_Static', 'gradebook_enqueues' ) );
    }
     
     /**

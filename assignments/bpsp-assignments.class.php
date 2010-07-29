@@ -174,12 +174,12 @@ class BPSP_Assignments {
                 add_filter( 'courseware_group_template', array( &$this, 'delete_assignment_screen' ) );
             }
             else {
-                add_action( 'bp_head', array( BPSP_Static, 'bibs_enqueues' ) );
+                do_action( 'courseware_bibliography_screen' );
                 add_filter( 'courseware_group_template', array( &$this, 'single_assignment_screen' ) );
             }
         }
         elseif ( $action_vars[0] == 'assignments' ) {
-            add_action( 'bp_head', array( 'BPSP_Static', 'list_assignments_enqueues' ) );
+            do_action( 'courseware_list_assignments_screen' );
             add_filter( 'courseware_group_template', array( &$this, 'list_assignments_screen' ) );
         }
     }
