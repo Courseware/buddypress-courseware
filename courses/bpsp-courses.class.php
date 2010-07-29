@@ -153,6 +153,7 @@ class BPSP_Courses {
     function screen_handler( $action_vars ) {
         if( $action_vars[0] == 'new_course' ) {
             //Load editor
+            add_action( 'bp_head', array( 'BPSP_Static', 'bibs_enqueues_deregister' ) );
             add_action( 'bp_head', array( &$this, 'load_editor' ) );
             add_filter( 'courseware_group_template', array( &$this, 'new_course_screen' ) );
         }
@@ -165,6 +166,7 @@ class BPSP_Courses {
             
             if( isset ( $action_vars[2] ) && 'edit' == $action_vars[2] ) {
                 add_action( 'bp_head', array( &$this, 'load_editor' ) );
+                add_action( 'bp_head', array( 'BPSP_Static', 'bibs_enqueues_deregister' ) );
                 add_filter( 'courseware_group_template', array( &$this, 'edit_course_screen' ) );
             }
             elseif( isset ( $action_vars[2] ) && 'delete' == $action_vars[2] ) {
@@ -173,8 +175,11 @@ class BPSP_Courses {
             else
                 add_filter( 'courseware_group_template', array( &$this, 'single_course_screen' ) );
         }
-        elseif ( $action_vars[0] == 'courses' )
+        elseif ( $action_vars[0] == 'courses' ) {
+            add_action( 'bp_head', array( 'BPSP_Static', 'bibs_enqueues_deregister' ) );
+            add_action( 'bp_head', array( 'BPSP_Static', 'list_courses_enqueues' ) );
             add_filter( 'courseware_group_template', array( &$this, 'list_courses_screen' ) );
+        }
     }
     
     /**

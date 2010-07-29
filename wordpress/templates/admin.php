@@ -10,13 +10,13 @@
     <h2><?php _e('BuddyPress Courseware','bpsp')?></h2>
     <div id="poststuff" class="metabox-holder">
         <div class="postbox">
-            <h3 class="hndle" ><?php _e('Default behaviour for Courseware','bpsp')?></h3>
+            <h3 class="hndle" ><?php _e( 'Default behaviour for Courseware', 'bpsp' )?></h3>
             <div class="inside">
                 <p>
-                    <?php _e('In short, this feature was added due to differences
+                    <?php _e( 'In short, this feature was added due to differences
                     between how (for example) European and US academic institutions
                     are managing curriculum and student participation along
-                    educational process.','bpsp'); ?>
+                    educational process.', 'bpsp' ); ?>
                 </p>
                 <p>
                     <?php _e( 'In Europe, is more common the concept of classes,
@@ -51,25 +51,25 @@
                         </p>
                     </label>
                     <p>
-                        <input type="submit" class="button" value="<?=__('Save Changes','bpsp')?>" />
+                        <input type="submit" class="button" value="<?=__( 'Save Changes', 'bpsp' )?>" />
                         <?php echo $nonce; ?>
                     </p>
                 </form>
             </div>
         </div>
-         <div class="postbox">
-            <h3 class="hndle" ><?php _e('Collaboration settings','bpsp')?></h3>
+        <div class="postbox">
+            <h3 class="hndle" ><?php _e( 'Collaboration settings', 'bpsp' )?></h3>
             <div class="inside">
                 <p>
-                    <?php _e('Enabling this, will allow any teacher to contribute to
+                    <?php _e( 'Enabling this, will allow any teacher to contribute to
                     group Courseware by editing/adding new courses, schedules and
-                    assignments. By default only group admins can manage Courseware.','bpsp')?>
+                    assignments. By default only group admins can manage Courseware.', 'bpsp' )?>
                 </p>
                 <form action="" method="post" >
                     <p>
                         <label>
                             <input type="checkbox" name="bpsp_allow_only_admins" <?php checked( !empty( $bpsp_allow_only_admins ) ); ?> />
-                            <strong><?php _e( 'Allow any teacher to contribute to class Courseware content','bpsp' ); ?></strong>
+                            <strong><?php _e( 'Allow any teacher to contribute to class Courseware content', 'bpsp' ); ?></strong>
                         </label>
                     </p>
                     <p>
@@ -81,11 +81,38 @@
             </div>
         </div>
         <div class="postbox">
-            <h3 class="hndle" ><?php _e('Webservices API Integration','bpsp')?></h3>
+            <h3 class="hndle" ><?php _e( 'Gradebook default grade format', 'bpsp' )?></h3>
+            <div class="inside">
+                <p>
+                    <?php _e( 'Courseware gradebook has support
+                    for most common grading formats, setting a default one
+                    will save some time when grading students.', 'bpsp' )?>
+                </p>
+                <form action="" method="post" >
+                    <p>
+                        <label for="bpsp_gradebook_format">
+                            <strong><?php _e( 'Current gradebook format', 'bpsp' )?></strong>
+                        </label>
+                        <select name="bpsp_gradebook_format">
+                            <option value="numeric" <?php selected( $bpsp_gradebook_format, 'numeric' ); ?> ><?php _e( 'Numeric', 'bpsp' )?></option>
+                            <option value="letter" <?php selected( $bpsp_gradebook_format, 'letter' ); ?> ><?php _e( 'Letter', 'bpsp' )?></option>
+                            <option value="percentage" <?php selected( $bpsp_gradebook_format, 'percentage' ); ?> ><?php _e( 'Percentage', 'bpsp' )?></option>
+                        </select>
+                    </p>
+                    <p>
+                        <input type="submit" class="button" value="<?php _e( 'Save Changes','bpsp' ); ?>" />
+                        <input type="hidden" name="bpsp_gradebook_format_check" value="true" />
+                        <?php echo $nonce; ?>
+                    </p>
+                </form>
+            </div>
+        </div>
+        <div class="postbox">
+            <h3 class="hndle" ><?php _e( 'Webservices API Integration', 'bpsp' )?></h3>
             <div class="inside">
                  <p>
-                    <?php _e('This will allow you to use webservices to query
-                    books and articles easily.','bpsp'); ?>
+                    <?php _e( 'This will allow you to use webservices to query
+                    books and articles easily.', 'bpsp' ); ?>
                 </p>
                 <form action="" method="post" >
                     <p>

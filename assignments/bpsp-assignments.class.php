@@ -157,6 +157,7 @@ class BPSP_Assignments {
         if( $action_vars[0] == 'new_assignment' ) {
             //Load editor
             add_action( 'bp_head', array( &$this, 'load_editor' ) );
+            add_action( 'bp_head', array( 'BPSP_Static', 'bibs_enqueues_deregister' ) );
             add_filter( 'courseware_group_template', array( &$this, 'new_assignment_screen' ) );
         }
         elseif ( $action_vars[0] == 'assignment' ) {
@@ -168,6 +169,7 @@ class BPSP_Assignments {
             
             if( isset ( $action_vars[2] ) && 'edit' == $action_vars[2] ) {
                 add_action( 'bp_head', array( &$this, 'load_editor' ) );
+                add_action( 'bp_head', array( 'BPSP_Static', 'bibs_enqueues_deregister' ) );
                 add_filter( 'courseware_group_template', array( &$this, 'edit_assignment_screen' ) );
             }
             elseif( isset ( $action_vars[2] ) && 'delete' == $action_vars[2] ) {
@@ -176,8 +178,11 @@ class BPSP_Assignments {
             else
                 add_filter( 'courseware_group_template', array( &$this, 'single_assignment_screen' ) );
         }
-        elseif ( $action_vars[0] == 'assignments' )
+        elseif ( $action_vars[0] == 'assignments' ) {
+            add_action( 'bp_head', array( 'BPSP_Static', 'bibs_enqueues_deregister' ) );
+            add_action( 'bp_head', array( 'BPSP_Static', 'list_assignments_enqueues' ) );
             add_filter( 'courseware_group_template', array( &$this, 'list_assignments_screen' ) );
+        }
     }
     
     /**

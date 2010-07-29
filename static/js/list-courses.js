@@ -1,5 +1,5 @@
 /**
- * Javascript calls for gradebook screens
+ * Javascript calls for list-courses screens
  */
 
 // Didn't find another way to 'localize' this
@@ -10,15 +10,8 @@ oLanguage.oPaginate.sNext       = '&rsaquo;';
 oLanguage.oPaginate.sLast       = '&raquo;';
 
 // Load DataTables
-jQuery("#courseware-gradebook table").dataTable( {
+jQuery("table.datatables").dataTable( {
     "oLanguage": oLanguage,
-    "aoColumns": [
-        { "bSortable": true },
-        { "bSortable": false },
-        { "bSortable": false },
-        { "bSortable": false },
-        { "bSortable": false },
-    ],
-    "aaSorting": [[ 0, "desc" ]],
+    "aaSorting": [[ 1, "desc" ]],
     "sPaginationType": "full_numbers"
 } );

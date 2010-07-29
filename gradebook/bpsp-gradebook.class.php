@@ -393,6 +393,7 @@ class BPSP_Gradebook {
         $vars['students'] = $students['members'];
         if( empty( $vars['grades'] ) )
             $vars['grades'] = $this->load_grades( $gradebook_id, true );
+        $vars['bpsp_gradebook_format'] = get_option( 'bpsp_gradebook_format' );
         $vars['assignment'] = BPSP_Assignments::is_assignment( $this->current_assignment );
         $vars['gradebook_permalink'] = $vars['assignment_permalink'] . '/gradebook';
         $vars['clear_gradebook_permalink'] = add_query_arg( '_wpnonce', wp_create_nonce( $nonce_clear_name ), $vars['gradebook_permalink'] . '/clear' );

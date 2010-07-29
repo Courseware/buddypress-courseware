@@ -34,11 +34,13 @@ class BPSP_Static {
         wp_localize_script( 'datatables', 'oLanguage', $this->datatables_l10n() );
         
         // Loaders
+        wp_register_script( 'list-courses', BPSP_WEB_URI . '/static/js/list-courses.js', array( 'datatables' ), BPSP_VERSION, true );
+        wp_register_script( 'list-assignments', BPSP_WEB_URI . '/static/js/list-assignments.js', array( 'datatables' ), BPSP_VERSION, true );
         wp_register_script( 'assignments', BPSP_WEB_URI . '/static/js/assignments.js', array( 'datetimepicker' ), BPSP_VERSION, true );
-        wp_register_script( 'bibliographies', BPSP_WEB_URI . '/static/js/bibliographies.js', array( 'flexselect' ), BPSP_VERSION, true );
+        wp_register_script( 'bibliographies', BPSP_WEB_URI . '/static/js/bibliographies.js', array( 'flexselect', 'datatables' ), BPSP_VERSION, true );
         wp_register_script( 'gradebook', BPSP_WEB_URI . '/static/js/gradebook.js', array( 'datatables' ), BPSP_VERSION, true );
         wp_register_script( 'schedules', BPSP_WEB_URI . '/static/js/schedules.js', array( 'datetimepicker' ), BPSP_VERSION, true );
-        wp_register_script( 'list-schedules', BPSP_WEB_URI . '/static/js/list-schedules.js', array( 'fullcalendar' ), BPSP_VERSION, true );
+        wp_register_script( 'list-schedules', BPSP_WEB_URI . '/static/js/list-schedules.js', array( 'fullcalendar', 'datatables' ), BPSP_VERSION, true );
         
         // Styles
         wp_register_style( 'jquery-ui-courseware-custom', BPSP_WEB_URI . '/static/css/jquery-ui-custom/theme/smoothness/jquery-ui-1.8.2.custom.css', '1.8.2' );
@@ -69,8 +71,19 @@ class BPSP_Static {
         wp_enqueue_script( 'schedules' );
     }
     
+    function list_assignments_enqueues() {
+        wp_enqueue_script( 'list-assignments' );
+        wp_enqueue_style( 'datatables' );
+    }
+    
+    function list_courses_enqueues() {
+        wp_enqueue_script( 'list-courses' );
+        wp_enqueue_style( 'datatables' );
+    }
+    
     function list_schedules_enqueues() {
         wp_enqueue_style( 'fullcalendar' );
+        wp_enqueue_style( 'datatables' );
         wp_enqueue_script( 'list-schedules' );
     }
     
@@ -99,7 +112,7 @@ class BPSP_Static {
      */
     function fullcalendar_l10n() {
         $buttonText = array(
-            "today" => __( 'todaya', 'bpsp' ),
+            "today" => __( 'today', 'bpsp' ),
             "month" => __( 'month', 'bpsp' ),
             "week"  => __( 'week', 'bpsp' ),
             "day"   => __( 'day', 'bpsp' )

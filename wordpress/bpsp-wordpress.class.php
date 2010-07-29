@@ -13,6 +13,7 @@ class BPSP_WordPress {
         //Initialize our options
         add_option( 'bpsp_curriculum' );
         add_option( 'bpsp_allow_only_admins' );
+        add_option( 'bpsp_gradebook_format' );
         add_option( 'bpsp_worldcat_key' );
         add_option( 'bpsp_isbndb_key' );
     }
@@ -58,6 +59,10 @@ class BPSP_WordPress {
             if( update_option( 'bpsp_allow_only_admins', '' ) )
                 $vars['flash'][] = __( 'Courseware option was updated.' );
         
+        if( isset( $_POST['bpsp_gradebook_format_check'] ) && isset( $_POST['bpsp_gradebook_format'] ) )
+            if( update_option( 'bpsp_gradebook_format', strtolower( $_POST['bpsp_gradebook_format'] ) ) )
+                $vars['flash'][] = __( 'Courseware gradebook format option was updated.' );
+        
         if( isset( $_POST['worldcat_key'] ) && !empty( $_POST['worldcat_key'] ) )
             if( update_option( 'bpsp_worldcat_key', $_POST['worldcat_key'] ) )
                 $vars['flash'][] = __( 'WorldCat option was updated.' );
@@ -71,6 +76,7 @@ class BPSP_WordPress {
         elseif ( $current_option == 'eu' )
             $vars['eu'] = $current_option;
         
+        $vars['bpsp_gradebook_format'] = get_option( 'bpsp_gradebook_format' );
         $vars['bpsp_allow_only_admins'] = get_option( 'bpsp_allow_only_admins' );
         $vars['worldcat_key'] = get_option( 'bpsp_worldcat_key' );
         $vars['isbndb_key'] = get_option( 'bpsp_isbndb_key' );

@@ -25,7 +25,9 @@
                     <input type="text" name="bib[www][title]" />
                 <label for="bib[www][uri]"><?php _e( 'Webpage address', 'bpsp'); ?></label>
                     <input type="text" name="bib[www][url]" />
-                <input type="submit" name="bib[submit]" value="<?php _e( 'Add entry', 'bpsp' ); ?>" />
+                <p>
+                    <input type="submit" name="bib[submit]" value="<?php _e( 'Add entry', 'bpsp' ); ?>" />
+                </p>
             </div>
             <div class="book" style="width: 45%;" >
                 <h4><?php _e( 'Add a book', 'bpsp'); ?></h4>
@@ -35,38 +37,55 @@
                     <input type="text" name="bib[book][isbn]" />
                 <label for="bib[book][page]"><?php _e( 'Instructions/Description', 'bpsp'); ?></label>
                     <input type="text" name="bib[book][desc]" />
-                <input type="submit" name="bib[submit]" value="<?php _e( 'Add book', 'bpsp' ); ?>" />
+                <p>
+                    <input type="submit" name="bib[submit]" value="<?php _e( 'Add book', 'bpsp' ); ?>" />
+                </p>
             </div>
             <?php echo $bibs_nonce; ?>
         </form>
     </div>
     <?php endif; ?>
+    <hr/>
     <div id="courseware-bibs-list" style="clear: both;">
         <h4><?php _e( 'Bibliography listing', 'bpsp'); ?></h4>
         <?php if( count( $bibs ) > 0 ): ?>
-            <ul>
-                <?php foreach( $bibs as $b): ?>
-                    <li>
-                        <?php if( isset( $b['cover'] ) ): ?>
-                            <img src="<?php echo $b['cover']; ?>" alt="<?php echo $b['plain']; ?>" />
-                        <?php
-                            endif;
-                            echo $b['html'];
-                            if( $has_bib_caps ):
-                        ?>
-                        <span style="float: right">
-                            <a href="<?php echo add_query_arg( 'bhash', $b['hash'] . ',' . $post_id, $bibs_edit_uri ); ?>">
-                                <?php _e( 'Edit Entry', 'bpsp' ); ?>
-                            </a>
-                            &nbsp;|
-                            <a href="<?php echo add_query_arg( 'bhash', $b['hash'] . ',' . $post_id, $bibs_delete_uri ); ?>">
-                                <?php _e( 'Delete Entry', 'bpsp' ); ?>
-                            </a>
-                        </span>
-                        <?php endif; ?>
-                    </li>
+            <table class="datatables">
+                <thead>
+                    <tr>
+                        <th><?php _e( '#', 'bpsp' ); ?> &nbsp; </th>
+                        <th><?php _e( 'Title', 'bpsp' ); ?></th>
+                        <th><?php _e( 'Actions', 'bpsp' ); ?></th>
+                    </tr>
+                </thead>
+                <tbody>
+                <?php $i = 0; foreach( $bibs as $b): $i++; ?>
+                    <tr>
+                        <td>
+                            <a href="#B<?php echo $i; ?>" id="B<?php echo $i; ?>"><?php echo $i; ?></a>
+                        </td>
+                        <td>
+                            <?php if( isset( $b['cover'] ) ): ?>
+                                <img src="<?php echo $b['cover']; ?>" alt="<?php echo $b['plain']; ?>" class="alignleft" />
+                            <?php
+                                endif;
+                                echo $b['html'];
+                            ?>
+                        </td>
+                        <td>
+                            <?php if( $has_bib_caps ): ?>
+                                <a href="<?php echo add_query_arg( 'bhash', $b['hash'] . ',' . $post_id, $bibs_edit_uri ); ?>">
+                                    <?php _e( 'Edit Entry', 'bpsp' ); ?>
+                                </a>
+                                &nbsp;|
+                                <a href="<?php echo add_query_arg( 'bhash', $b['hash'] . ',' . $post_id, $bibs_delete_uri ); ?>">
+                                    <?php _e( 'Delete Entry', 'bpsp' ); ?>
+                                </a>
+                            <?php endif; ?>
+                        </td>
+                    </tr>
                 <?php endforeach; ?>
-            </ul>
+                </tbody>
+            </table>
         <?php endif; ?>
     </div>
 </div>

@@ -1,5 +1,5 @@
 <form action="<?php echo $current_option; ?>" method="post" class="standard-form" id="new-assignment-form">
-    <h5><?php _e( 'Add a new schedule', 'bpsp' ); ?></h5>
+    <h4><?php _e( 'Add a new schedule', 'bpsp' ); ?></h4>
     <div id="new-schedule-content">
         <div id="new-schedule-content-description">
             <label for="schedule[desc]"><?php _e( 'Description', 'bpsp' ); ?></label>
@@ -42,6 +42,7 @@
             <input type="hidden" id="new-schedule-post-object" name="schedule[object]" value="group"/>
             <input type="hidden" id="new-schedule-post-in" name="schedule[group_id]" value="<?php echo $group_id; ?>">
             <?php echo $nonce ? $nonce: ''; ?>
+            <hr />
             <div id="new-schedule-content-submit">
                 <input type="submit" name="schedule[submit]" id="new-schedule-submit" value="<?php _e( 'Add a new schedule', 'bpsp' ); ?>">
             </div>

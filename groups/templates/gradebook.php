@@ -31,7 +31,10 @@
                 </tr>
             </thead>
             <tbody>
-            <?php foreach ( $students as $student ): ?>
+            <?php foreach ( $students as $student ):
+                if( empty( $grades[$student->user_id]['format'] ) )
+                    $grades[$student->user_id]['format'] = $bpsp_gradebook_format;
+            ?>
                 <tr>
                     <td class="student_info">
                         <span class="student_avatar">

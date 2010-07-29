@@ -5,7 +5,7 @@
             <?php BPSP_Static::get_image( 'loader.gif' ); ?>
         </div>
     </div>
-    <table>
+    <table class="datatables">
         <thead>
             <tr>
                 <th><?php _e( 'Description', 'bpsp' ); ?></th>

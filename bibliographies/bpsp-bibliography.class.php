@@ -393,7 +393,7 @@ class BPSP_Bibliography {
         $this->home_uri = $options[__( 'Home', 'bpsp' )];
         
         if( $this->has_bib_caps( $bp->loggedin_user->id ) || is_super_admin() ) {
-            $options[__( 'New Bibliography', 'bpsp' )] = $options[__( 'Home', 'bpsp' )] . '/new_bibliography';
+            $options[__( 'Bibliography', 'bpsp' )] = $options[__( 'Home', 'bpsp' )] . '/new_bibliography';
         }
         
         return $options;
@@ -478,6 +478,7 @@ class BPSP_Bibliography {
         $bhash = $data[0];
         $new_bhash = null;
         $post_id = null;
+        
         if( isset( $data[1] ) && !empty( $data[1] ) ) {
             $post_id = $data[1];
             // Get the permalink for parent
@@ -506,7 +507,7 @@ class BPSP_Bibliography {
                     $vars['message'] = __( 'Entry updated.', 'bpsp' );
                 }
                 else {
-                    $vars['error'] = __( 'Entry could not be updated.', 'bpsp' );
+                    $vars['error'] = __( 'Entry could not be updated. Or nothing changed.', 'bpsp' );
                 }
             } elseif( !$old_bib && isset( $_POST['bib'] ) )
                 $vars['error'] = __( 'Entry could not be found.', 'bpsp' );
