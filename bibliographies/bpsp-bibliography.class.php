@@ -151,7 +151,7 @@ class BPSP_Bibliography {
             if ( !$user->has_cap( $c ) )
                 $is_ok = false;
         
-        if( get_option( 'bpsp_allow_only_admins' ) )
+        if( !get_option( 'bpsp_allow_only_admins' ) )
             if( !bp_group_is_admin() )
                 $is_ok = false;
         
@@ -364,8 +364,6 @@ class BPSP_Bibliography {
      * Handles uris like groups/ID/courseware/new_bibliography
      */
     function screen_handler( $action_vars ) {
-        add_action( 'bp_head', array( BPSP_Static, 'bibs_enqueues' ) );
-        
         if( isset ( $action_vars[0] ) && 'new_bibliography' == $action_vars[0] ) {
             add_filter( 'courseware_group_template', array( &$this, 'new_bib_screen' ) );
         }

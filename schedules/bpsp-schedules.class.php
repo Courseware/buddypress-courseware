@@ -124,7 +124,7 @@ class BPSP_Schedules {
             if ( !$user->has_cap( $c ) )
                 $is_ok = false;
         
-        if( get_option( 'bpsp_allow_only_admins' ) )
+        if( !get_option( 'bpsp_allow_only_admins' ) )
             if( !bp_group_is_admin() )
                 $is_ok = false;
         
@@ -317,7 +317,7 @@ class BPSP_Schedules {
         $nonce_name = 'new_schedule';
         $repeats = null;
         
-        if( !$this->has_schedule_caps( $bp->loggedin_user->id ) || !is_super_admin() ) {
+        if( !$this->has_schedule_caps( $bp->loggedin_user->id ) && !is_super_admin() ) {
             $vars['die'] = __( 'BuddyPress Courseware Error while forbidden user tried to add a new course.' );
             return $vars;
         }

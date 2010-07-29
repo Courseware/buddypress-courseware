@@ -33,6 +33,7 @@
                 <h4><?php _e( 'Add a book', 'bpsp'); ?></h4>
                 <label for="bib[book][title]"><?php _e( 'Entry title', 'bpsp'); ?></label>
                     <input type="text" name="bib[book][title]" />
+                <p><?php _e( '&mdash; or &mdash;', 'bpsp'); ?></p>
                 <label for="bib[book][isbn]"><?php _e( 'Book ISBN', 'bpsp'); ?></label>
                     <input type="text" name="bib[book][isbn]" />
                 <label for="bib[book][page]"><?php _e( 'Instructions/Description', 'bpsp'); ?></label>
@@ -54,7 +55,9 @@
                     <tr>
                         <th><?php _e( '#', 'bpsp' ); ?> &nbsp; </th>
                         <th><?php _e( 'Title', 'bpsp' ); ?></th>
-                        <th><?php _e( 'Actions', 'bpsp' ); ?></th>
+                        <?php if( $has_bib_caps ): ?>
+                            <th><?php _e( 'Actions', 'bpsp' ); ?></th>
+                        <?php endif; ?>
                     </tr>
                 </thead>
                 <tbody>
@@ -71,17 +74,17 @@
                                 echo $b['html'];
                             ?>
                         </td>
-                        <td>
-                            <?php if( $has_bib_caps ): ?>
+                        <?php if( $has_bib_caps ): ?>
+                            <td style="white-space: nowrap;">
                                 <a href="<?php echo add_query_arg( 'bhash', $b['hash'] . ',' . $post_id, $bibs_edit_uri ); ?>">
                                     <?php _e( 'Edit Entry', 'bpsp' ); ?>
                                 </a>
-                                &nbsp;|
+                                <br/>
                                 <a href="<?php echo add_query_arg( 'bhash', $b['hash'] . ',' . $post_id, $bibs_delete_uri ); ?>">
                                     <?php _e( 'Delete Entry', 'bpsp' ); ?>
                                 </a>
-                            <?php endif; ?>
-                        </td>
+                            </td>
+                        <?php endif; ?>
                     </tr>
                 <?php endforeach; ?>
                 </tbody>

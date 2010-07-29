@@ -11,14 +11,32 @@
     <?php
     if( !empty( $students ) ):
     ?>
-        <div class="import-gradebook-form">
-            <h4><?php _e( 'Import Gradebook from CSV file', 'bpsp' ); ?></h4>
+        <h4>
+            <a href="javascript:jQuery( '.import-gradebook-form' ).slideToggle();">
+                <?php _e( 'Import from CSV', 'bpsp' ); ?>
+            </a>
+        </h4>
+        <div class="import-gradebook-form" style="display: none;">
+            <div id="message" class="info">
+                <p>
+                    <strong><?php _e( 'About CSV source file format', 'bpsp' ); ?></strong>
+                    <br/>
+                    <?php _e( 'This is an example with dummy data for user test.', 'bpsp' ); ?>
+                    <?php _e( 'It\'s important to preserve the first line!', 'bpsp' ); ?>
+                </p>
+            </div>
             <form action="<?php echo $gradebook_permalink . '/import'; ?>" method="post" class="standard-form" enctype="multipart/form-data">
-                <input type="file" name="csv_filename" />
-                <input type="submit" value="Import" />
-                <?php echo $import_gradebook_nonce; ?>
+                <textarea style="height: 40px;"><?php _e( "uid,value,format,prv_comment,pub_comment
+test,10,numeric,\"Private comment text\",\"Public comment text\"", 'bpsp' ); ?></textarea>
+                <p>
+                    <?php _e( 'Upload your file:', 'bpsp' ); ?>
+                    <input type="file" name="csv_filename" />
+                    <input type="submit" value="Import" />
+                    <?php echo $import_gradebook_nonce; ?>
+                </p>
             </form>
         </div>
+        <hr/>
         <form method="post" class="standard-form" action="<?php echo $gradebook_permalink; ?>">
         <table>
             <thead>
@@ -41,7 +59,8 @@
                             <?php echo bp_core_fetch_avatar(
                                 array( 'item_id' => $student->user_id,
                                         'type' => 'thumb',
-                                        'email' => $student->user_email )
+                                        'email' => $student->user_email,
+                                        'class' => 'alignleft' )
                             ); ?>
                         </span>
                         <span class="student_name">

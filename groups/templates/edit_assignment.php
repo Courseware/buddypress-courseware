@@ -2,6 +2,7 @@
 include_once ABSPATH . '/wp-admin/includes/media.php' ;
 require_once ABSPATH . '/wp-admin/includes/post.php' ;
 require_once BPSP_PLUGIN_DIR . '/groups/templates/helpers/editor_helpers.php' ;
+wp_tiny_mce();
 ?>
 <form action="<?php echo $assignment_edit_uri; ?>" method="post" class="standard-form" id="new-assignment-form">
     <h5><?php _e( 'Edit assignment', 'bpsp' ); ?> &mdash; <a href="<?php echo $assignment_permalink ?>"><?php _e( 'Preview', 'bpsp' ); ?></a></h5>
@@ -46,6 +47,3 @@ require_once BPSP_PLUGIN_DIR . '/groups/templates/helpers/editor_helpers.php' ;
 <script type="text/javascript" >
     var tb_closeImage = "/wp-includes/js/thickbox/tb-close.png";
 </script>
-<?php
-wp_tiny_mce();
-?>

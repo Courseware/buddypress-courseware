@@ -61,11 +61,6 @@ class BPSP_Static {
         wp_enqueue_style( 'datatables' );
     }
     
-    function bibs_enqueues_deregister() {
-        wp_deregister_script( 'bibliographies' );
-        wp_deregister_style( 'flexselect' );
-    }
-    
     function schedules_enqueues() {
         wp_enqueue_style( 'datetimepicker' );
         wp_enqueue_script( 'schedules' );

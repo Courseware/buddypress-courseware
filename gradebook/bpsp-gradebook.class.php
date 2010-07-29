@@ -140,7 +140,7 @@ class BPSP_Gradebook {
             if ( !$user->has_cap( $c ) )
                 $is_ok = false;
         
-        if( get_option( 'bpsp_allow_only_admins' ) )
+        if( !get_option( 'bpsp_allow_only_admins' ) )
             if( !bp_group_is_admin() )
                 $is_ok = false;
         
