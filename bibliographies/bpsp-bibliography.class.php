@@ -171,6 +171,9 @@ class BPSP_Bibliography {
             $post_id = $this->current_parent;
         
         $bibs = get_post_meta( $post_id, $this->bid );
+        if( empty( $bibs ) )
+            return;
+        
         foreach( $bibs as &$b ) {
             $b = $this->format( $b );
         }

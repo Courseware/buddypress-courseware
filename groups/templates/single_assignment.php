@@ -1,10 +1,32 @@
 <?php setup_postdata( $assignment ); ?>
 <div id="courseware-assignment">
     <div class="assignment-content">
+        <div id="assignment-forum-meta" style="float: right">
+            <?php if( !empty( $assignment->forum_link ) ): ?>
+                <div id="assignment-forum-link">
+                    <a href="<?php echo $assignment->forum_link ?>">
+                        <?php _e( 'Visit Assignment Forum', 'bpsp' ); ?>
+                    </a>
+                </div>
+            <?php elseif( isset( $assignment_e_forum_permalink ) ): ?>
+                <div id="assignment-enable-forum">
+                    <form method="post" action="<?php echo $assignment_e_forum_permalink; ?>" class="standard-form" >
+                        <input type="submit" value="<?php _e( 'Enable Assignment Forum', 'bpsp' ); ?>" />
+                        <?php echo $assignment_e_forum_nonce; ?>
+                    </form>
+                </div>
+            <?php else: ?>
+                <div id="assignment-forum-inactive">
+                    <form method="post" class="standard-form" >
+                        <input type="submit" value="<?php _e( 'Enable forums to allow forum integration.', 'bpsp' ); ?>" disabled="true" />
+                    </form>
+                </div>
+            <?php endif; ?>
+        </div>
         <h4 id="assignment-title"><?php echo $assignment->post_title; ?></h4>
-        <h5 id="assignment-due-date">
+        <div id="assignment-due-date">
             <?php _e( 'Due date' ); ?>: <?php echo mysql2date( get_option('date_format'), $assignment->due_date ); ?>
-        </h5>
+        </div>
         <?php if( isset( $user_grade ) ): ?>
             <div id="assignment-grade">
                 <em><?php _e( 'Your grade for this assignment was:' ); ?></em>

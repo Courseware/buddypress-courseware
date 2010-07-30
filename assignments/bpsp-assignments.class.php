@@ -173,6 +173,10 @@ class BPSP_Assignments {
             elseif( isset ( $action_vars[2] ) && 'delete' == $action_vars[2] ) {
                 add_filter( 'courseware_group_template', array( &$this, 'delete_assignment_screen' ) );
             }
+            elseif( isset ( $action_vars[2] ) && 'enable_forum' == $action_vars[2] ) {
+                do_action( 'courseware_bibliography_screen' );
+                add_filter( 'courseware_group_template', array( &$this, 'enable_forum_assignment_screen' ) );
+            }
             else {
                 do_action( 'courseware_bibliography_screen' );
                 add_filter( 'courseware_group_template', array( &$this, 'single_assignment_screen' ) );
@@ -196,7 +200,7 @@ class BPSP_Assignments {
         global $bp;
         
         if( !$assignment_identifier )
-            $this->current_assignment;
+            $assignment_identifier = $this->current_assignment;
         
         $assignment_query = array(
             'post_type' => 'assignment',
@@ -215,6 +219,7 @@ class BPSP_Assignments {
             $assignment[0]->group = wp_get_object_terms( $assignment[0]->ID, 'group_id' );
             $assignment_course = wp_get_object_terms( $assignment[0]->ID, 'course_id' );
             $assignment[0]->course = BPSP_Courses::is_course($assignment_course[0]->name );
+            $assignment[0]->forum_link = get_post_meta( $assignment[0]->ID, 'topic_link', true );
             return $assignment[0];
         }
         else
@@ -307,7 +312,7 @@ class BPSP_Assignments {
     /**
      * list_assignments_screen( $vars )
      *
-     * Hooks into assignments_screen_handler
+     * Hooks into screen_handler
      * Adds a UI to list assignments.
      *
      * @param Array $vars a set of variables received for this screen template
@@ -330,7 +335,7 @@ class BPSP_Assignments {
     /**
      * single_assignment_screen( $vars )
      *
-     * Hooks into assignments_screen_handler
+     * Hooks into screen_handler
      * Displays a single assignment screen
      *
      * @param Array $vars a set of variables received for this screen template
@@ -338,6 +343,8 @@ class BPSP_Assignments {
      */
     function single_assignment_screen( $vars ) {
         global $bp;
+        $e_forum_nonce = 'assignment_enable_forum';
+        
         $assignment = $this->is_assignment( $this->current_assignment );
         
         if(  $assignment->post_author == $bp->loggedin_user->id || is_super_admin() )
@@ -350,13 +357,71 @@ class BPSP_Assignments {
         $vars['assignment_edit_uri'] = $vars['current_uri'] . '/assignment/' . $this->current_assignment . '/edit';
         $vars['course_permalink'] = $vars['current_uri'] . '/course/' . $assignment->course->ID;
         $vars['assignment'] = $assignment;
+        
+        if( bp_group_is_forum_enabled() ) {
+            $vars['assignment_e_forum_permalink'] = $vars['assignment_permalink'] . '/enable_forum';
+            $vars['assignment_e_forum_nonce'] = wp_nonce_field( $e_forum_nonce, '_wpnonce', true, false );
+        }
+        
         return apply_filters( 'courseware_assignment', $vars );
+    }
+    
+    /**
+     * enable_forum_assignment_screen( $vars )
+     *
+     * Hooks into screen_handler
+     * If forum is active for group, creates a thread for assignment
+     *
+     * @param Array $vars a set of variables received for this screen template
+     * @return Array $vars a set of variable passed to this screen template
+     */
+    function enable_forum_assignment_screen( $vars ) {
+        global $bp;
+        
+        $e_forum_nonce = 'assignment_enable_forum';
+        $is_nonce = false;
+        
+        if( isset( $_POST['_wpnonce'] ) )
+            $is_nonce = wp_verify_nonce( $_POST['_wpnonce'], $e_forum_nonce );
+            
+        if( $is_nonce && bp_group_is_forum_enabled() ) {
+            $assignment = $this->is_assignment( $this->current_assignment );
+            $assignment_forum_id = groups_get_groupmeta( $bp->groups->current_group->id, 'forum_id' );
+            
+            // Append assignment link to the content
+            $assignment->post_content =
+                $assignment->post_content . "\n\n" .
+                "<a href=\"" . $vars['current_uri'] . '/assignment/' . $assignment->post_name . "\">" .
+                __( 'Courseware Assignment Link', 'bpsp' ). "</a>";
+            
+            // Create tags from title and append 'assignment' to it
+            $assignment->tags = str_replace( '-', ', ', $assignment->post_name ) . __( ", assignment" , 'bpsp' );
+            
+            // Create a topic for current assignment
+            $topic = groups_new_group_forum_topic(
+                $assignment->post_title,
+                $assignment->post_content,
+                $assignment->tags,
+                $assignment_forum_id
+            );
+            
+            // Create topic for assignment and save in post_meta topic link
+            if( $topic ) {
+                $topic_permalink = bp_get_group_permalink( $bp->groups->current_group ) . 'forum/topic/' . $topic->topic_slug;
+                
+                if( update_post_meta( $assignment->ID, 'topic_link', $topic_permalink ) )
+                    $vars['message'] = __( 'Assignment forum created.', 'bpsp' );
+            }
+        } else
+            $vars['error'] = __( 'Forum forum was not created.', 'bpsp' );
+        
+        return $this->single_assignment_screen( $vars );
     }
     
     /**
      * delete_assignment_screen( $vars )
      *
-     * Hooks into assignments_screen_handler
+     * Hooks into screen_handler
      * Delete assignment screen
      *
      * @param Array $vars a set of variables received for this screen template
