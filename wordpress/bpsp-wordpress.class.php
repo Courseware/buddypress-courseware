@@ -9,8 +9,13 @@ class BPSP_WordPress {
      * Constructor, loads all the required hooks
      */
     function BPSP_WordPress() {
+        // Add our screen to BuddyPress menu
         add_action('admin_menu', array(&$this, 'menus'));
-        //Initialize our options
+        
+        // Help Screen
+        add_action('admin_head', array(&$this, 'screen_help'));
+        
+        // Initialize our options
         add_option( 'bpsp_curriculum' );
         add_option( 'bpsp_allow_only_admins' );
         add_option( 'bpsp_gradebook_format' );
@@ -35,8 +40,32 @@ class BPSP_WordPress {
             );
     }
     
-    /** screen()
-     *
+    /**
+     * screen_help()
+     * 
+     * Handles the screen() help
+     */
+    function screen_help() {
+        global $current_screen;
+        
+        // If it's not Courseware Screen
+        if( !stristr( $current_screen->id, 'courseware' ) )
+            return;
+        
+        add_contextual_help( $current_screen,
+            '<p><strong>' . __( 'BuddyPress Courseware Help and Recommendations', 'bpsp' ) . '</strong></p>' . "\n".
+            '<p>' . __( 'The following plugins are recommended to use with BuddyPress Courseware:', 'bpsp' ) . '</p>' . "\n".
+                '<ul>'  . "\n" .
+                    '<li><a href="http://wordpress.org/extend/plugins/invite-anyone/">' . __( 'Invite Anyone', 'bpsp' ) . '</a></li>' . "\n" .
+                    '<li><a href="http://wordpress.org/extend/plugins/buddypress-group-documents/">' . __( 'Group Documents', 'bpsp' ) . '</a></li>' . "\n" .
+                '</ul>' . "\n" .
+            '<p>' . __( 'If you find issues, please report them here.', 'bpsp' ) . '</p>' . "\n"
+        );
+    }
+    
+    /**
+     * screen()
+     * 
      * Handles the wp-admin screen
      */
     function screen() {
