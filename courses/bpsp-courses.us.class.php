@@ -32,7 +32,7 @@ class BPSP_USCourses extends BPSP_Courses {
             $vars['init_course_link'] =  $this->current_uri . '/course/edit';
         }
         
-        echo BPSP_Groups::load_template($vars);
+        echo BPSP_Groups::load_template( $vars );
     }
     
     /**

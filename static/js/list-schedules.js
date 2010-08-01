@@ -17,7 +17,7 @@ fcLanguage.dayNamesShort = fcLanguage.dayNamesShort.split( ',' );
 // Load the FullCalendar
 jQuery('.courseware-fullcalendar').fullCalendar({
     editable: false,
-    events: "?courseware-schedules",
+    events: "?json",
     header: {
         left: 'prev,next today',
         center: 'title',
@@ -49,3 +49,7 @@ jQuery("table.datatables").dataTable( {
     "aaSorting": [[ 1, "desc" ]],
     "sPaginationType": "full_numbers"
 } );
+
+// Append iCal icon to FullCalendar nonth name
+var iCal_link = '<td><span class="fc-header-space"></span></td><td><div class="fc-state-default fc-corner-left fc-corner-right"><a href="?ical" title="iCal"><span>iCal<img src="' + fcLanguage.ical_img + '" class="alignleft" alt="" /></span></a></td>';
+jQuery( '.fc-header-left tr' ).append( iCal_link );

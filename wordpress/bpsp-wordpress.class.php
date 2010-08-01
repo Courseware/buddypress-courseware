@@ -21,6 +21,7 @@ class BPSP_WordPress {
         add_option( 'bpsp_gradebook_format' );
         add_option( 'bpsp_worldcat_key' );
         add_option( 'bpsp_isbndb_key' );
+        add_option( 'bpsp_load_css' );
     }
     
     /**
@@ -99,6 +100,14 @@ class BPSP_WordPress {
             if( update_option( 'bpsp_isbndb_key', $_POST['isbndb_key'] ) )
                 $vars['flash'][] = __( 'ISBNdb option was updated.' );
         
+        if( isset( $_POST['bpsp_load_css_check'] ) && isset( $_POST['bpsp_load_css'] ) )
+            if( update_option( 'bpsp_load_css', strtolower( $_POST['bpsp_load_css'] ) ) )
+                $vars['flash'][] = __( 'Courseware customization options updated.' );
+        if( isset( $_POST['bpsp_load_css_check'] ) && !isset( $_POST['bpsp_load_css'] ) )
+            if( update_option( 'bpsp_load_css', '' ) )
+                $vars['flash'][] = __( 'Courseware customization options updated.' );
+        
+        
         $current_option = get_option( 'bpsp_curriculum' );
         if( $current_option == 'us' )
             $vars['us'] = $current_option;
@@ -109,6 +118,7 @@ class BPSP_WordPress {
         $vars['bpsp_allow_only_admins'] = get_option( 'bpsp_allow_only_admins' );
         $vars['worldcat_key'] = get_option( 'bpsp_worldcat_key' );
         $vars['isbndb_key'] = get_option( 'bpsp_isbndb_key' );
+        $vars['bpsp_load_css'] = get_option( 'bpsp_load_css' );
         
         //Load the template
         ob_start();

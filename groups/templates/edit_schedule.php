@@ -6,7 +6,7 @@
     <div id="schedule-content">
         <div id="schedule-content-description">
             <label for="schedule[desc]"><?php _e( 'Description', 'bpsp' ); ?></label>
-                <textarea id="schedule-description" name="schedule[desc]"><?php echo $schedule->post_title; ?></textarea>
+                <textarea id="schedule-description" name="schedule[desc]"><?php echo $schedule->post_content; ?></textarea>
         </div>
         <div id="schedule-course">
             <label for="schedule[course_id]"><?php _e( 'Include a course', 'bpsp' ); ?></label>

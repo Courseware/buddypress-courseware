@@ -1,6 +1,7 @@
+<?php setup_postdata( $schedule ); ?>
 <div id="courseware-schedule">
     <div class="schedule-content">
-        <h4 id="schedule-desc"><?php echo $schedule->post_title; ?></h4>
+        <div id="schedule-desc"><?php the_content(); ?></div>
         <?php if( !empty( $schedule->course ) ): ?>
         <div id="schedule-courseinfo">
             <span>
@@ -26,6 +27,7 @@
             <?php echo mysql2date( get_option('date_format'), $schedule->start_date ); ?>
             <?php echo mysql2date( get_option('time_format'), $schedule->start_date ); ?>
         </div>
+        <?php if( !empty( $schedule->end_date ) ) : ?>
         <div id="schedule-enddate">
             <span>
                 <?php _e( 'End Date:', 'bpsp' ); ?>
@@ -33,6 +35,7 @@
             <?php echo mysql2date( get_option('date_format'), $schedule->end_date ); ?>
             <?php echo mysql2date( get_option('time_format'), $schedule->end_date ); ?>
         </div>
+        <?php endif; ?>
     </div>
     <div class="schedule-meta">
         <span class="meta">

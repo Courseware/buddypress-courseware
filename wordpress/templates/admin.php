@@ -62,8 +62,10 @@
             <div class="inside">
                 <p>
                     <?php _e( 'Enabling this, will allow any teacher to contribute to
-                    group Courseware by editing/adding new courses, schedules and
-                    assignments. By default only group admins can manage Courseware.', 'bpsp' )?>
+                    group Courseware by editing/adding new courses, schedules and assignments.', 'bpsp' )?>
+                </p>
+                <p>
+                    <?php _e( 'By default only group admins can manage Courseware.', 'bpsp' )?>
                 </p>
                 <form action="" method="post" >
                     <p>
@@ -139,6 +141,32 @@
                     </p>
                     <p>
                         <input type="submit" class="button" value="<?php _e( 'Save Changes','bpsp' ); ?>" />
+                        <?php echo $nonce; ?>
+                    </p>
+                </form>
+            </div>
+        </div>
+        <div class="postbox">
+            <h3 class="hndle" ><?php _e( 'Customization', 'bpsp' )?></h3>
+            <div class="inside">
+                <p>
+                    <?php _e( 'Enabling this, will check if there\'s
+                    a <code>courseware.css</code> file in your theme directory,
+                    and will load it automatically.', 'bpsp' )?>
+                </p>
+                <p>
+                    <?php _e( 'This will make Courseware use your CSS rules. File should exist physically!', 'bpsp' )?>
+                </p>
+                <form action="" method="post" >
+                    <p>
+                        <label>
+                            <input type="checkbox" name="bpsp_load_css" <?php checked( !empty( $bpsp_load_css ) ); ?> />
+                            <strong><?php _e( 'Load <code>courseware.css</code> from my theme directory.', 'bpsp' ); ?></strong>
+                        </label>
+                    </p>
+                    <p>
+                        <input type="submit" class="button" value="<?php _e( 'Save Changes','bpsp' ); ?>" />
+                        <input type="hidden" name="bpsp_load_css_check" value="true" />
                         <?php echo $nonce; ?>
                     </p>
                 </form>

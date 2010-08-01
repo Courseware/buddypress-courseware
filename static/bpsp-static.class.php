@@ -50,6 +50,7 @@ class BPSP_Static {
         wp_register_style( 'flexselect', BPSP_WEB_URI . '/static/css/flexselect/jquery.flexselect.css', null, '0.2' );
     
         // Hooks
+        add_action( 'bp_head', array( &$this, 'load_courseware_css' ) );
         add_action( 'courseware_list_schedules_screen', array( &$this, 'list_schedules_enqueues' ) );
         add_action( 'courseware_list_assignments_screen', array( &$this, 'list_assignments_enqueues' ) );
         add_action( 'courseware_bibliography_screen', array( &$this, 'bibs_enqueues' ) );
@@ -57,6 +58,24 @@ class BPSP_Static {
         add_action( 'courseware_new_schedule_screen', array( &$this, 'schedules_enqueues' ) );
         add_action( 'courseware_edit_schedule_screen', array( &$this, 'schedules_enqueues' ));
         add_action( 'courseware_gradebook_screen', array( &$this, 'gradebook_enqueues' ) );
+    }
+    
+    /**
+     * load_courseware_css()
+     *
+     * Function will check if courseware.css option is checked and will load the file if this exists
+     */
+    function load_courseware_css() {
+        $to_load = get_option( 'bpsp_load_css' );
+        $css_name = '/courseware.css';
+        
+        if( empty( $to_load ) )
+            return;
+        
+        if( file_exists( TEMPLATEPATH . $css_name ) ) {
+            $web_uri = get_bloginfo( 'stylesheet_url' );
+            wp_enqueue_style( 'custom-courseware-css', $web_uri . $css_name, null, BPSP_VERSION );
+        }
     }
     
     function bibs_enqueues() {
@@ -124,13 +143,14 @@ class BPSP_Static {
         
         return array(
             "timeFormat"        => __( 'H(:mm)', 'bpsp' ), // 'H(:mm)' for 24-hour clock
-            "buttonTextKeys"        => implode( ',' , array_keys( $buttonText ) ),
-            "buttonTextVals"        => implode( ',' , array_values( $buttonText ) ),
+            "buttonTextKeys"    => implode( ',' , array_keys( $buttonText ) ),
+            "buttonTextVals"    => implode( ',' , array_values( $buttonText ) ),
             "monthNames"        => implode( ',', $this->months_l10n() ),
             "monthNamesShort"   => implode( ',', $this->months_short_l10n() ),
             "dayNames"          => implode( ',', $this->days_l10n() ),
             "dayNamesShort"     => implode( ',', $this->days_short_l10n() ),
             "firstDay"          => __( '1', 'bpsp' ),
+            "ical_img"          => self::get_image( 'calendar_link.png', false, false )
         );
     }
     

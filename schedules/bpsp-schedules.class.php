@@ -53,7 +53,7 @@ class BPSP_Schedules {
             'hierarchical'          => false,
             'rewrite'               => false,
             'query_var'             => false,
-            'supports'              => array( 'title', 'author', 'custom-fields' )
+            'supports'              => array( 'editor', 'excerpt', 'author', 'custom-fields' )
         );
         if( !register_post_type( 'schedule', $schedule_post_def ) )
             wp_die( __( 'BuddyPress Courseware error while registering schedule post type.', 'bpsp' ) );
@@ -160,8 +160,14 @@ class BPSP_Schedules {
                 add_filter( 'courseware_group_template', array( &$this, 'single_schedule_screen' ) );
         }
         elseif ( $action_vars[0] == 'schedules' ) {
-            if( isset( $_GET['courseware-schedules'] ) )
-                die( $this->toJSON() );
+            // Output json
+            if( isset( $_GET['json'] ) )
+                return $this->toJSON();
+            
+            // Output iCal
+            if( isset( $_GET['ical'] ) )
+                return $this->toICS();
+            
             do_action( 'courseware_list_schedules_screen' );
             add_filter( 'courseware_group_template', array( &$this, 'list_schedules_screen' ) );
         }
@@ -323,6 +329,12 @@ class BPSP_Schedules {
         
         // Save new schedule
         if( isset( $_POST['schedule'] ) && $_POST['schedule']['object'] == 'group' && isset( $_POST['_wpnonce'] ) ) {
+            if( empty( $_POST['schedule']['desc'] ) || empty( $_POST['schedule']['start_date'] ) ) {
+                $vars['error'] = __( 'New schedule could not be added. Missing description and/or start date.', 'bpsp' );
+                $_POST = null;
+                return $this->new_schedule_screen( $vars );
+            }
+            
             $new_schedule = $_POST['schedule'];
             
             if( !empty( $new_schedule['repetition'] ) && !empty( $new_schedule['repetition_times'] ) )
@@ -347,7 +359,7 @@ class BPSP_Schedules {
                     // create a template
                     $first_schedule = array(
                         'post_author'   => $bp->loggedin_user->id,
-                        'post_title'    => sanitize_text_field( $new_schedule['desc'] ),
+                        'post_content'    => sanitize_text_field( $new_schedule['desc'] ),
                         'post_status'   => 'publish',
                         'post_type'     => 'schedule',
                         'cw_group_id'   => $new_schedule['group_id'],
@@ -365,7 +377,6 @@ class BPSP_Schedules {
                     if( is_array( $valid_dates ) ) {
                         foreach( $valid_dates as $p ) {
                             $schedule_copy = reset( $new_schedules );
-                            $schedule_copy['post_title'] .= __( ' for ', 'bpsp' ) . $p['start_date'];
                             $schedule_copy['cw_start_date'] = $p['start_date'];
                             $schedule_copy['cw_end_date'] = $p['end_date'];
                             $new_schedules[] = $schedule_copy;
@@ -390,7 +401,7 @@ class BPSP_Schedules {
                     return $this->list_schedules_screen( $vars );
                 } else
                     $vars['error'] = __( 'New schedule could not be added.', 'bpsp' );
-            }
+        }
         
         $vars['name'] = 'new_schedule';
         $vars['group_id'] = $bp->groups->current_group->id;
@@ -506,6 +517,11 @@ class BPSP_Schedules {
         
         // Update schedule
         if( isset( $_POST['schedule'] ) && $_POST['schedule']['object'] == 'group' && isset( $_POST['_wpnonce'] ) ) {
+            if( empty( $_POST['schedule']['desc'] ) || empty( $_POST['schedule']['start_date'] ) ) {
+                $vars['error'] = __( 'New schedule could not be added. Missing description and/or start date.', 'bpsp' );
+                $_POST = null;
+                return $this->edit_schedule_screen( $vars );
+            }
             $updated_schedule = $_POST['schedule'];
             $is_nonce = wp_verify_nonce( $_POST['_wpnonce'], $nonce_name );
             if( true != $is_nonce )
@@ -519,7 +535,7 @@ class BPSP_Schedules {
                 ) {
                     $updated_schedule_id =  wp_update_post( array(
                         'ID'            => $old_schedule->ID,
-                        'post_title'    => sanitize_text_field( $updated_schedule['desc'] ),
+                        'post_content'    => sanitize_text_field( $updated_schedule['desc'] ),
                     ));
                     
                     if( $updated_schedule_id ) {
@@ -555,14 +571,20 @@ class BPSP_Schedules {
         return $vars;
     }
     
+    /**
+     * toJSON()
+     *
+     * Outputs a jsonified output with group schedules
+     */
     function toJSON() {
         $unjsoned = array();
         
         $schedules = $this->has_schedules();
         foreach ( $schedules as $s ) {
+            setup_postdata( $s );
             $entry = array(
-                "id" => $s->ID,
-                "title" => $s->post_title,
+                "id" => get_the_ID(),
+                "title" => get_the_excerpt(),
                 "start" => date( 'c', strtotime( $s->start_date ) ),
                 "end" => date( 'c', strtotime( $s->end_date ) ),
                 "url" => $s->permalink,
@@ -574,7 +596,64 @@ class BPSP_Schedules {
         }
         
         header("HTTP/1.1 200 OK");
-        return json_encode( $unjsoned );
+        die( json_encode( $unjsoned ) );
+    }
+    
+    /**
+     * toICS()
+     *
+     * Outputs group schedules in ICS format
+     */
+    function toICS() {
+        require_once BPSP_PLUGIN_DIR . '/schedules/iCalcreator.class.php';
+        global $bp;
+        define( 'ICAL_LANG', get_bloginfo( 'language' ) );
+        
+        $cal = new vcalendar();
+        $cal->setConfig( 'unique_id', str_replace( 'http://', '', get_bloginfo( 'siteurl' ) ) );
+        $cal->setConfig( 'filename', $bp->groups->current_group->slug );
+        $cal->setProperty( 'X-WR-CALNAME', __( 'Calendar for: ', 'bpsp' ) . $bp->groups->current_group->name );
+        $cal->setProperty( 'X-WR-CALDESC', $bp->groups->current_group->description );
+        $cal->setProperty( 'X-WR-TIMEZONE', get_option('timezone_string') );
+        
+        $schedules = $this->has_schedules();
+        foreach ( $schedules as $s ) {
+            setup_postdata( $s );
+            
+            $e = new vevent();
+            
+            $date = getdate( strtotime( $s->start_date ) );
+            $dtstart['year'] = $date['year'];
+            $dtstart['month'] = $date['mon'];
+            $dtstart['day'] = $date['mday'];
+            $dtstart['hour'] = $date['hours'];
+            $dtstart['min'] = $date['minutes'];
+            $dtstart['sec'] = $date['seconds'];
+            $e->setProperty( 'dtstart', $dtstart );
+            
+            $e->setProperty( 'description', get_the_content() );
+            
+            if( !empty( $s->location ) )
+                $e->setProperty( 'location', $s->location );
+            if( !empty( $s->end_date ) ) {
+                $date = getdate( strtotime( $s->end_date ) );
+                $dtend['year'] = $date['year'];
+                $dtend['month'] = $date['mon'];
+                $dtend['day'] = $date['mday'];
+                $dtend['hour'] = $date['hours'];
+                $dtend['min'] = $date['minutes'];
+                $dtend['sec'] = $date['seconds'];
+                $e->setProperty( 'dtend', $dtend );
+            }
+            
+            $e->setProperty( 'summary', get_the_excerpt() . "\n" . $s->permalink );
+            $e->setProperty( 'status', 'CONFIRMED' );
+            
+            $cal->setComponent( $e );
+        }
+        
+        header("HTTP/1.1 200 OK");
+        die( $cal->returnCalendar() );
     }
 }
 ?>

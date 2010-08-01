@@ -17,18 +17,19 @@
         <tbody>
         <?php
             foreach ( $schedules as $schedule ):
+            setup_postdata( $schedule );
         ?>
             <tr>
                 <td class="description">
                     <a href="<?php echo $schedules_hanlder_uri . $schedule->post_name; ?>">
-                        <?php echo $schedule->post_title; ?>
+                        <?php the_excerpt(); ?>
                     </a>
                     <div class="schedule-meta">
                         <?php
                             printf(
                                 __( 'added on %1$s by %2$s.', 'bpsp' ),
-                                mysql2date( get_option('date_format'), $schedule->post_date ),
-                                bp_core_get_userlink( $schedule->post_author )
+                                get_the_date(),
+                                get_the_author()
                             );
                         ?>
                     </div>
