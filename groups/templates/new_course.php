@@ -1,7 +1,5 @@
 <?php
-include_once ABSPATH . '/wp-admin/includes/media.php' ;
-require_once ABSPATH . '/wp-admin/includes/post.php' ;
-require_once BPSP_PLUGIN_DIR . '/groups/templates/helpers/editor_helpers.php' ;
+bpsp_load_editor_files();
 wp_tiny_mce();
 ?>
 <form action="<?php echo $current_option; ?>" method="post" class="standard-form" id="new-course-form">

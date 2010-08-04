@@ -135,6 +135,11 @@ class BPSP_Groups {
 	    $vars['echo'] = true;
 	
 	$templates_path = BPSP_PLUGIN_DIR . '/groups/templates/';
+	$vars['templates_path'] = $templates_path;
+	
+	// Load helpers
+	foreach ( glob( $templates_path . "helpers/*.php" ) as $helper )
+	    include_once $helper;
 	
 	//Exclude internal templates like navigation, starts with an underscore
 	if(  substr( $vars['name'], 0, 1) != '_' )

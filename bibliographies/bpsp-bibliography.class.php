@@ -337,6 +337,7 @@ class BPSP_Bibliography {
             if( $bib['type'] == 'www' || $bib['type'] == 'misc' ) {
                 $content['html'] = '<a href="' . $bib['url'] . '">' . $bib['title'] . '</a>';
                 $content['plain'] = $bib['title'] . ' &mdash; ' . $bib['url'];
+                $content['cover'] = BPSP_Bibliography_WebApis::get_www_cover();
             } else {
                 $authors = $bib['author_lname'] . ' ' . $bib['author_fname'];
                 if( '' != trim( $authors ) )
@@ -353,8 +354,9 @@ class BPSP_Bibliography {
                         $content['html'] = $bib['citation'];
                     else
                         $content['html'] = $content['plain'];
-                if( isset( $bib['isbn'] ) )
-                    $content['cover'] = BPSP_Bibliography_WebApis::get_book_cover( $bib['isbn'] );
+                if( !isset( $bib['isbn'] ) )
+                    $bib['isbn'] = '';
+                $content['cover'] = BPSP_Bibliography_WebApis::get_book_cover( $bib['isbn'] );
             }
         }
         return $content;

@@ -22,6 +22,7 @@ require_once BPSP_PLUGIN_DIR . '/roles/bpsp-roles.class.php';
 require_once BPSP_PLUGIN_DIR . '/courses/bpsp-courses.class.php';
 require_once BPSP_PLUGIN_DIR . '/courses/bpsp-courses.us.class.php';
 require_once BPSP_PLUGIN_DIR . '/assignments/bpsp-assignments.class.php';
+require_once BPSP_PLUGIN_DIR . '/responses/bpsp-responses.class.php';
 require_once BPSP_PLUGIN_DIR . '/gradebook/bpsp-gradebook.class.php';
 require_once BPSP_PLUGIN_DIR . '/bibliographies/bpsp-bibliography.class.php';
 require_once BPSP_PLUGIN_DIR . '/bibliographies/bpsp-bibliography-webapis.class.php';
@@ -43,6 +44,7 @@ add_action( 'init', 'bpsp_textdomain' );
 function bpsp_registration() {
     BPSP_Courses::register_post_types();
     BPSP_Assignments::register_post_types();
+    BPSP_Responses::register_post_types();
     BPSP_Gradebook::register_post_types();
     BPSP_Bibliography::register_post_types();
     BPSP_Schedules::register_post_types();
@@ -68,6 +70,7 @@ function bpsp_init() {
         new BPSP_Courses();
 
     new BPSP_Assignments();
+    new BPSP_Responses();
     new BPSP_Gradebook();
     new BPSP_Bibliography();
     new BPSP_Schedules();

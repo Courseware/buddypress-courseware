@@ -10,7 +10,7 @@
         <?php 
             printf(
                 __( '%1$s by %2$s.' ),
-                mysql2date( get_option('date_format'), $course->post_date ),
+                bpsp_get_date( $course->post_date ),
                 bp_core_get_userlink( $course->post_author )
             );
         ?>

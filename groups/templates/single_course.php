@@ -1,7 +1,7 @@
 <?php setup_postdata( $course ); ?>
 <div id="courseware-course">
     <div class="course-content">
-        <h4 id="course-title"><?php echo $course->post_title; ?></h4>
+        <h4 id="course-title"><?php the_title(); ?></h4>
         <div id="course-body">
             <?php the_content(); ?>
         </div>
@@ -11,7 +11,7 @@
         <?php
             printf(
                 __( 'added on %1$s by %2$s.', 'bpsp' ),
-                mysql2date( get_option('date_format'), $course->post_date ),
+                bpsp_get_date( $course->post_date ),
                 bp_core_get_userlink( $course->post_author )
             );
         ?>
@@ -24,6 +24,6 @@
     </div>
 </div>
 <?php
-if( isset( $has_bibs ) )
-    require_once BPSP_PLUGIN_DIR . '/groups/templates/_bibs.php';
+    // Load bibs
+    bpsp_partial( $templates_path, '_bibs', get_defined_vars() );
 ?>

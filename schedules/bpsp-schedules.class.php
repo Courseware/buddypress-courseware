@@ -522,17 +522,20 @@ class BPSP_Schedules {
                 $_POST = null;
                 return $this->edit_schedule_screen( $vars );
             }
+            
             $updated_schedule = $_POST['schedule'];
+            
+            if( isset( $updated_schedule['end_date'] ) && !empty( $updated_schedule['end_date'] ) )
+                $valid_dates = $this->datecheck( $updated_schedule['start_date'], $updated_schedule['end_date'] );
+            else
+                $valid_dates = true;
+            
             $is_nonce = wp_verify_nonce( $_POST['_wpnonce'], $nonce_name );
             if( true != $is_nonce )
                 $vars['error'] = __( 'Nonce Error while editing a schedule.', 'bpsp' );
             else 
-                if( !empty( $updated_schedule['desc'] ) &&
-                    !empty( $updated_schedule['start_date'] ) &&
-                    !empty( $updated_schedule['end_date'] ) &&
-                    !empty( $updated_schedule['group_id'] ) &&
-                    $this->datecheck( $updated_schedule['start_date'], $updated_schedule['end_date'] )
-                ) {
+                if( !empty( $updated_schedule['group_id'] ) && $valid_dates ) {
+                    
                     $updated_schedule_id =  wp_update_post( array(
                         'ID'            => $old_schedule->ID,
                         'post_content'    => sanitize_text_field( $updated_schedule['desc'] ),
@@ -631,7 +634,7 @@ class BPSP_Schedules {
             $dtstart['sec'] = $date['seconds'];
             $e->setProperty( 'dtstart', $dtstart );
             
-            $e->setProperty( 'description', get_the_content() );
+            $e->setProperty( 'description', get_the_content() . "\n\n" . $s->permalink );
             
             if( !empty( $s->location ) )
                 $e->setProperty( 'location', $s->location );
@@ -644,9 +647,10 @@ class BPSP_Schedules {
                 $dtend['min'] = $date['minutes'];
                 $dtend['sec'] = $date['seconds'];
                 $e->setProperty( 'dtend', $dtend );
-            }
+            } else
+                $e->setProperty( 'duration', 0, 1, 0 ); // Assume it's an one day event
             
-            $e->setProperty( 'summary', get_the_excerpt() . "\n" . $s->permalink );
+            $e->setProperty( 'summary', get_the_excerpt() );
             $e->setProperty( 'status', 'CONFIRMED' );
             
             $cal->setComponent( $e );

@@ -27,7 +27,7 @@
                         <?php
                             printf(
                                 __( 'added on %1$s by %2$s.', 'bpsp' ),
-                                mysql2date( get_option('date_format'), $assignment->post_date ),
+                                bpsp_get_date( $assignment->post_date ),
                                 bp_core_get_userlink( $assignment->post_author )
                             );
                         ?>
@@ -37,7 +37,7 @@
                     <?php
                         $due_date = get_post_meta( $assignment->ID, 'due_date' );
                         if( !empty( $due_date ) )
-                            echo mysql2date( get_option('date_format'), end( $due_date ) );
+                            bpsp_date( end( $due_date ) );
                     ?>
                 </td>
             </tr>

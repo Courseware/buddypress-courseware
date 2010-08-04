@@ -119,8 +119,22 @@ class BPSP_Bibliography_WebApis {
      * @return String the generated URL
      */
     function get_book_cover( $isbn, $size = 'S' ) {
+        if( empty( $isbn ) )
+            return BPSP_Static::get_image( "blank_book.png", false, false );
+        
         $openlibrary_uri = 'http://covers.openlibrary.org/b/isbn/%s-%s.jpg';
         return sprintf( $openlibrary_uri, $isbn, $size );
+    }
+    
+    /**
+     * get_www_cover()
+     * 
+     * Returns a webpage dummy icon
+     * @return String the generated URL
+     */
+    function get_www_cover() {
+        if( empty( $isbn ) )
+            return BPSP_Static::get_image( "web.png", false, false );
     }
     
     /**

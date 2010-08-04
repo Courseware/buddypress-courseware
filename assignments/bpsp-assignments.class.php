@@ -154,6 +154,7 @@ class BPSP_Assignments {
      * Handles uris like groups/ID/courseware/assignments/args
      */
     function screen_handler( $action_vars ) {
+        
         if( $action_vars[0] == 'new_assignment' ) {
             //Load editor
             add_action( 'bp_head', array( &$this, 'load_editor' ) );
@@ -181,6 +182,8 @@ class BPSP_Assignments {
                 do_action( 'courseware_bibliography_screen' );
                 add_filter( 'courseware_group_template', array( &$this, 'single_assignment_screen' ) );
             }
+            
+            do_action( 'courseware_assignment_screen_handler', $action_vars );
         }
         elseif ( $action_vars[0] == 'assignments' ) {
             do_action( 'courseware_list_assignments_screen' );
@@ -323,7 +326,6 @@ class BPSP_Assignments {
         $assignments = get_posts( array(
             'post_type' => 'assignment',
             'group_id' => $bp->groups->current_group->id,
-            'numberposts' => get_option( 'posts_per_page', '10' ),
         ));
         
         $vars['name'] = 'list_assignments';
@@ -355,6 +357,7 @@ class BPSP_Assignments {
         $vars['name'] = 'single_assignment';
         $vars['assignment_permalink'] = $vars['current_uri'] . '/assignment/' . $this->current_assignment;
         $vars['assignment_edit_uri'] = $vars['current_uri'] . '/assignment/' . $this->current_assignment . '/edit';
+        
         $vars['course_permalink'] = $vars['current_uri'] . '/course/' . $assignment->course->ID;
         $vars['assignment'] = $assignment;
         

@@ -24,16 +24,14 @@
             <span>
                 <?php _e( 'Start Date:', 'bpsp' ); ?>
             </span>
-            <?php echo mysql2date( get_option('date_format'), $schedule->start_date ); ?>
-            <?php echo mysql2date( get_option('time_format'), $schedule->start_date ); ?>
+            <?php bpsp_date( $schedule->start_date ); ?>
         </div>
         <?php if( !empty( $schedule->end_date ) ) : ?>
         <div id="schedule-enddate">
             <span>
                 <?php _e( 'End Date:', 'bpsp' ); ?>
             </span>
-            <?php echo mysql2date( get_option('date_format'), $schedule->end_date ); ?>
-            <?php echo mysql2date( get_option('time_format'), $schedule->end_date ); ?>
+            <?php bpsp_date( $schedule->end_date ); ?>
         </div>
         <?php endif; ?>
     </div>
@@ -42,7 +40,7 @@
         <?php
             printf(
                 __( 'added on %1$s by %2$s.', 'bpsp' ),
-                mysql2date( get_option('date_format'), $schedule->post_date ),
+                bpsp_get_date( $schedule->post_date ),
                 bp_core_get_userlink( $schedule->post_author )
             );
         ?>

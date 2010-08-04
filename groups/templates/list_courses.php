@@ -33,7 +33,7 @@
                     </div>
                 </td>
                 <td>
-                    <?php echo mysql2date( get_option('date_format'), $course->post_date ); ?>
+                    <?php bpsp_date( $course->post_date ); ?>
                 </td>
             </tr>
         <?php

@@ -35,10 +35,10 @@
                     </div>
                 </td>
                 <td class="start-date">
-                    <?php echo mysql2date( get_option('date_format') . ', ' . get_option('time_format'), $schedule->start_date ); ?>
+                    <?php bpsp_date( $schedule->start_date ); ?>
                 </td>
                 <td class="end-date">
-                    <?php echo mysql2date( get_option('date_format') . ', ' . get_option('time_format'), $schedule->end_date ); ?>
+                    <?php bpsp_date( $schedule->end_date ); ?>
                 </td>
                 <td class="location">
                     <?php echo $schedule->location; ?>

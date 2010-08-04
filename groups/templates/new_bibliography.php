@@ -74,5 +74,6 @@
 <hr/>
 <?php
 if( isset( $has_bibs ) )
-    require_once BPSP_PLUGIN_DIR . '/groups/templates/_bibs.php';
+    // Load bibs
+    bpsp_partial( $templates_path, '_bibs', get_defined_vars() );
 ?>
