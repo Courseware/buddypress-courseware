@@ -5,7 +5,7 @@ setup_postdata( $parent_assignment );
 ?>
 <div id="assignment-response-form">
     <form action="" method="post" class="standard-form" id="new-response-form">
-        <h5><?php _e( 'Add your response to: ', 'bpsp' ); the_title(); ?></h5>
+        <h5><?php _e( 'Add your response to: ', 'bpsp' ); echo get_the_title( $parent_assignment->ID ); ?></h5>
         <div id="new-response-content">
             <div id="new-response-content-title">
                 <label for="response[title]"><?php _e( 'Title', 'bpsp' ); ?></label>

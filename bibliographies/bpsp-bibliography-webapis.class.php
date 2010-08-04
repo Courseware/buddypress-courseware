@@ -21,7 +21,7 @@ class BPSP_Bibliography_WebApis {
     /**
      * Citation format
      */
-    var $cformat = 'apa';
+    var $cformat = 'TURABIAN';
     
     /**
      * Number of results to return
