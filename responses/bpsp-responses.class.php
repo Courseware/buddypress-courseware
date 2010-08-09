@@ -343,8 +343,10 @@ class BPSP_Responses {
                     if( $new_response_id ) {
                         // Save author id in assignment post_meta so we don't have to query it all over
                         add_post_meta( $this->current_assignment->ID, 'responded_author', $bp->loggedin_user->id );
+                        $vars = $this->single_response_screen( $vars );
+                        do_action( 'courseware_response_added', $vars );
                         $vars['message'] = __( 'New response was added.', 'bpsp' );
-                        return $this->single_response_screen( $vars );
+                        return $vars;
                     } else
                         $vars['error'] = __( 'New response could not be added (fill the title/content).', 'bpsp' );
                 }
@@ -407,7 +409,7 @@ class BPSP_Responses {
         
         $vars['name'] = 'single_response';
         $vars['assignment_permalink'] = $vars['current_uri'] . '/assignment/' . $this->current_assignment->post_name;
-        $vars['assignment'] = $assignment;
+        $vars['assignment'] = $this->current_assignment;
         $vars['response'] = $response; 
         if(  is_super_admin() || $this->has_response_caps() ) {
             $vars['response_delete_permalink'] = $vars['assignment_permalink'] . '/response/' . $response->post_name . '/delete';
@@ -446,6 +448,8 @@ class BPSP_Responses {
         if( $this->has_response_caps() || is_super_admin() ) {
             wp_delete_post( $response->ID );
             delete_post_meta( $this->current_assignment->ID, 'responded_author', $response->post_author );
+            if( isset( $vars['assignment'] ) )
+                $vars = $this->populate_responses( $vars );
         } else {
             $vars['die'] = __( 'BuddyPress Courseware Error while forbidden user tried to delete the response.', 'bpsp' );
             return $vars;

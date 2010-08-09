@@ -29,6 +29,8 @@ require_once BPSP_PLUGIN_DIR . '/bibliographies/bpsp-bibliography-webapis.class.
 require_once BPSP_PLUGIN_DIR . '/schedules/bpsp-schedules.class.php';
 require_once BPSP_PLUGIN_DIR . '/groups/bpsp-groups.class.php';
 require_once BPSP_PLUGIN_DIR . '/static/bpsp-static.class.php';
+require_once BPSP_PLUGIN_DIR . '/activity/bpsp-activity.class.php';
+require_once BPSP_PLUGIN_DIR . '/notifications/bpsp-notifications.class.php';
 
 /**
  * i18n
@@ -76,6 +78,8 @@ function bpsp_init() {
     new BPSP_Schedules();
     new BPSP_Groups();
     new BPSP_Static();
+    new BPSP_Activity();
+    new BPSP_Notifications();
 }
 add_action( 'bp_init', 'bpsp_init' );
 
@@ -87,6 +91,6 @@ register_activation_hook( 'courseware/courseware.php', 'bpsp_activation' );
 
 /** TEMPORARY HELPERS **/
 function _d($stuff) {
-    echo( '<pre>' . var_dump( $stuff ) . '</pre>');
+    die( '<pre>' . var_dump( $stuff ) . '</pre>');
 }
 ?>

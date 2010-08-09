@@ -213,9 +213,10 @@ class BPSP_Bibliography {
     function get_bib( $hash, $post_id = null ) {
         if( $post_id ) {
             $bibs = $this->has_bibs( $post_id );
-            foreach( $bibs as $b )
-                if( $b['hash'] == $hash )
-                    return $b['raw'];
+            if( !empty( $bibs ) )
+                foreach( $bibs as $b )
+                    if( $b['hash'] == $hash )
+                        return $b['raw'];
             
             return null;
         }

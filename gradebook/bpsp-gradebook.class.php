@@ -153,11 +153,13 @@ class BPSP_Gradebook {
      */
     function screen_handler( $action_vars ) {
         if ( $action_vars[0] == 'assignment' ) {
-            if( isset ( $action_vars[1] ) && null != BPSP_Assignments::is_assignment( $action_vars[1] ) )
-                $this->current_assignment = $action_vars[1];
-            else {
+            
+            $current_assignment = BPSP_Assignments::is_assignment( $action_vars[1] );
+            
+            if( isset ( $action_vars[1] ) && null != $current_assignment )
+                $this->current_assignment = $current_assignment;
+            else
                 wp_redirect( wp_redirect( get_option( 'siteurl' ) ) );
-            }
             
             if( isset ( $action_vars[2] ) && 'gradebook' == $action_vars[2] && 'clear' == $action_vars[3] )
                 add_filter( 'courseware_group_template', array( &$this, 'clear_gradebook_screen' ) );
@@ -383,8 +385,15 @@ class BPSP_Gradebook {
         if( !empty( $_POST['grade'] ) ){
             foreach( $_POST['grade'] as $grade )
                 if( !empty( $grade ) && !empty( $grade['uid'] ) && !empty( $grade['value'] ) )
-                    if( $this->save_grade( $gradebook_id, $grade ) )
+                    if( $this->save_grade( $gradebook_id, $grade ) ) {
+                        $data = array(
+                            'grade' => $grade,
+                            'teacher' => $bp->loggedin_user->userdata,
+                            'assignment' => $this->current_assignment,
+                        );
+                        do_action( 'courseware_grade_updated', $data );
                         $vars['message'] = __( 'Gradebook saved.', 'bpsp' );
+                    }
         }
         
         $vars['name'] = 'gradebook';

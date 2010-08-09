@@ -216,7 +216,7 @@ class BPSP_Schedules {
     }
     
     /**
-     * has_schedules( $group_id )
+     * has_schedules( $group_id = null )
      *
      * Checks if a $group_id has schedules
      *
@@ -583,15 +583,27 @@ class BPSP_Schedules {
         $unjsoned = array();
         
         $schedules = $this->has_schedules();
-        foreach ( $schedules as $s ) {
-            setup_postdata( $s );
-            $entry = array(
-                "id" => get_the_ID(),
-                "title" => get_the_excerpt(),
-                "start" => date( 'c', strtotime( $s->start_date ) ),
-                "end" => date( 'c', strtotime( $s->end_date ) ),
-                "url" => $s->permalink,
-            );
+        $assignments = BPSP_Assignments::has_assignments();
+        $entries = array_merge( $assignments, $schedules );
+        foreach ( $entries as $e ) {
+            setup_postdata( $e );
+            if( $e->post_type == "schedule" )
+                $entry = array(
+                    "id" => get_the_ID(),
+                    "title" => get_the_excerpt(),
+                    "start" => date( 'c', strtotime( $e->start_date ) ),
+                    "end" => date( 'c', strtotime( $e->end_date ) ),
+                    "url" => $e->permalink,
+                );
+            elseif( $e->post_type == "assignment" )
+                $entry = array(
+                    "id" => get_the_ID(),
+                    "title" => get_the_excerpt(),
+                    "start" => date( 'c', strtotime( $e->post_date ) ),
+                    "end" => date( 'c', strtotime( $e->due_date ) ),
+                    "url" => $e->permalink,
+                );
+            
             if( !empty( $entry['end'] ) )
                 $entry['allDay'] = false;
             
@@ -620,12 +632,17 @@ class BPSP_Schedules {
         $cal->setProperty( 'X-WR-TIMEZONE', get_option('timezone_string') );
         
         $schedules = $this->has_schedules();
-        foreach ( $schedules as $s ) {
-            setup_postdata( $s );
+        $assignments = BPSP_Assignments::has_assignments();
+        $entries = array_merge( $assignments, $schedules );
+        foreach ( $entries as $entry ) {
+            setup_postdata( $entry );
             
             $e = new vevent();
             
-            $date = getdate( strtotime( $s->start_date ) );
+            if( $entry->post_type == "schedule" )
+                $date = getdate( strtotime( $entry->start_date ) );
+            elseif( $entry->post_type == "assignment" )
+                $date = getdate( strtotime( $entry->post_date ) );
             $dtstart['year'] = $date['year'];
             $dtstart['month'] = $date['mon'];
             $dtstart['day'] = $date['mday'];
@@ -634,12 +651,16 @@ class BPSP_Schedules {
             $dtstart['sec'] = $date['seconds'];
             $e->setProperty( 'dtstart', $dtstart );
             
-            $e->setProperty( 'description', get_the_content() . "\n\n" . $s->permalink );
+            $e->setProperty( 'description', get_the_content() . "\n\n" . $entry->permalink );
             
-            if( !empty( $s->location ) )
-                $e->setProperty( 'location', $s->location );
-            if( !empty( $s->end_date ) ) {
-                $date = getdate( strtotime( $s->end_date ) );
+            if( !empty( $entry->location ) )
+                $e->setProperty( 'location', $entry->location );
+            
+            if( $entry->post_type == "assignment" )
+                $entry->end_date = $entry->due_date; // make assignments compatible with schedule parser
+            
+            if( !empty( $entry->end_date ) ) {
+                $date = getdate( strtotime( $entry->end_date ) );
                 $dtend['year'] = $date['year'];
                 $dtend['month'] = $date['mon'];
                 $dtend['day'] = $date['mday'];

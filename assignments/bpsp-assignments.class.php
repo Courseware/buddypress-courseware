@@ -160,9 +160,11 @@ class BPSP_Assignments {
             add_action( 'bp_head', array( &$this, 'load_editor' ) );
             add_filter( 'courseware_group_template', array( &$this, 'new_assignment_screen' ) );
         }
-        elseif ( $action_vars[0] == 'assignment' ) {
-            if( isset ( $action_vars[1] ) && null != $this->is_assignment( $action_vars[1] ) )
-                $this->current_assignment = $action_vars[1];
+        elseif( $action_vars[0] == 'assignment' ) {
+            $current_assignment = BPSP_Assignments::is_assignment( $action_vars[1] );
+            
+            if( isset ( $action_vars[1] ) && null != $current_assignment )
+                $this->current_assignment = $current_assignment;
             else {
                 wp_redirect( wp_redirect( get_option( 'siteurl' ) ) );
             }
@@ -202,6 +204,9 @@ class BPSP_Assignments {
     function is_assignment( $assignment_identifier = null ) {
         global $bp;
         
+        if( is_object( $assignment_identifier ) && $assignment_identifier->post_type == "assignment" )
+            return $assignment_identifier;
+        
         if( !$assignment_identifier )
             $assignment_identifier = $this->current_assignment;
         
@@ -223,10 +228,42 @@ class BPSP_Assignments {
             $assignment_course = wp_get_object_terms( $assignment[0]->ID, 'course_id' );
             $assignment[0]->course = BPSP_Courses::is_course($assignment_course[0]->name );
             $assignment[0]->forum_link = get_post_meta( $assignment[0]->ID, 'topic_link', true );
+            $assignment[0]->permalink = $bp->bp_options_nav['groups']['courseware']['link'] . 'assignment/' . $assignment[0]->post_name;
             return $assignment[0];
         }
         else
             return null;
+    }
+    
+    /**
+     * has_assignments( $group_id = null )
+     *
+     * Checks if a $group_id has assignments
+     *
+     * @param Int $group_id of the group to be checked
+     * @return Mixed Schedule objects if assignments exist and null if not.
+     */
+    function has_assignments( $group_id = null ) {
+        global $bp;
+        $assignment_ids = null;
+        $assignments = array();
+        
+        if( empty( $group_id ) )
+            $group_id = $bp->groups->current_group->id;
+        
+        $term_id = get_term_by( 'slug', $group_id, 'group_id' );
+        if( !empty( $term_id ) )
+            $assignment_ids = get_objects_in_term( $term_id->term_taxonomy_id, 'group_id' );
+        
+        if( !empty( $assignment_ids ) )
+            arsort( $assignment_ids ); // Get latest entries first
+        else
+            return null;
+        
+        foreach ( $assignment_ids as $aid )
+            $assignments[] = self::is_assignment( $aid );
+        
+        return array_filter( $assignments );
     }
     
     /**
@@ -298,6 +335,7 @@ class BPSP_Assignments {
                         wp_set_post_terms( $new_assignment_id, $new_assignment['course_id'], 'course_id' );
                         add_post_meta( $new_assignment_id, 'due_date', $new_assignment['due_date'] );
                         $vars['message'] = __( 'New assignment was added.', 'bpsp' );
+                        do_action( 'courseware_assignment_added', $this->is_assignment( $new_assignment_id ) );
                         return $this->list_assignments_screen( $vars );
                     } else
                         $vars['error'] = __( 'New assignment could not be added.', 'bpsp' );
@@ -355,8 +393,8 @@ class BPSP_Assignments {
             $vars['show_edit'] = null;
         
         $vars['name'] = 'single_assignment';
-        $vars['assignment_permalink'] = $vars['current_uri'] . '/assignment/' . $this->current_assignment;
-        $vars['assignment_edit_uri'] = $vars['current_uri'] . '/assignment/' . $this->current_assignment . '/edit';
+        $vars['assignment_permalink'] = $vars['current_uri'] . '/assignment/' . $this->current_assignment->post_name;
+        $vars['assignment_edit_uri'] = $vars['current_uri'] . '/assignment/' . $this->current_assignment->post_name . '/edit';
         
         $vars['course_permalink'] = $vars['current_uri'] . '/course/' . $assignment->course->ID;
         $vars['assignment'] = $assignment;
@@ -507,6 +545,7 @@ class BPSP_Assignments {
                         wp_set_post_terms( $updated_assignment_id, $updated_assignment['course_id'], 'course_id' );
                         update_post_meta( $updated_assignment_id, 'due_date', $updated_assignment['due_date'], $old_assignment->due_date );
                         $vars['message'] = __( 'Assignment was updated.', 'bpsp' );
+                        do_action( 'courseware_assignment_activity', $this->is_assignment( $updated_assignment_id ), 'update' );
                     }
                     else
                         $vars['error'] = __( 'Assignment could not be updated.', 'bpsp' );
@@ -518,9 +557,9 @@ class BPSP_Assignments {
         $vars['user_id'] = $bp->loggedin_user->id;
         $vars['courses'] = BPSP_Courses::has_courses( $bp->groups->current_group->id );
         $vars['assignment'] = $this->is_assignment( $updated_assignment_id );
-        $vars['assignment_edit_uri'] = $vars['current_uri'] . '/assignment/' . $this->current_assignment . '/edit';
-        $vars['assignment_delete_uri'] = $vars['current_uri'] . '/assignment/' . $this->current_assignment . '/delete';
-        $vars['assignment_permalink'] = $vars['current_uri'] . '/assignment/' . $this->current_assignment;
+        $vars['assignment_edit_uri'] = $vars['current_uri'] . '/assignment/' . $this->current_assignment->post_name . '/edit';
+        $vars['assignment_delete_uri'] = $vars['current_uri'] . '/assignment/' . $this->current_assignment->post_name . '/delete';
+        $vars['assignment_permalink'] = $vars['current_uri'] . '/assignment/' . $this->current_assignment->post_name;
         $vars['nonce'] = wp_nonce_field( $nonce_name, '_wpnonce', true, false );
         $vars['delete_nonce'] = add_query_arg( '_wpnonce', wp_create_nonce( 'delete_assignment' ), $vars['assignment_delete_uri'] );
         return $vars;

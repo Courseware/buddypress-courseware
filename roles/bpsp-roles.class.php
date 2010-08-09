@@ -27,8 +27,8 @@ class BPSP_Roles {
         if( $field_value == __( 'Apply for Teacher', 'bpsp' ) ) {
             $users_search = new WP_User_Search( null, null, 'administrator' );
             $superadmins = $users_search->get_results();
-            $content = $this->request_message( $bp->loggedin_user->id, true );
-            $subject = $this->request_message( $bp->loggedin_user->id, false, true );
+            $content = $this->request_message( $bp->loggedin_user->userdata, true );
+            $subject = $this->request_message( $bp->loggedin_user->userdata, false, true );
             if( !is_super_admin() )
                 messages_new_message(
                     array(
@@ -55,24 +55,24 @@ class BPSP_Roles {
      * 
      * Generated content for new request messages.
      * 
-     * @param $user_id the user id of the sender and request author
+     * @param Mixed $userdata the user object of the sender and request author
      * @param bool $body if true generates the message body content
      * @param bool $subject if true generates the message subject content
      * @return String $content the generated message content
      */
-    function request_message( $user_id, $body = false, $subject = false ) {
-        $userdata = bp_core_get_core_userdata( $user_id );
+    function request_message( $userdata, $body = false, $subject = false ) {
         $content = null;
         if( $subject )
-            $content = $userdata->user_nicename . __( ' applied to become a teacher. Please review.', 'bpsp' );
+            $content = sprintf( __( 'Please review %s application to become a teacher.', 'bpsp' ), $userdata->user_nicename );
         if( $body ) {
             $fields_group_id = $this->field_group_id_from_name( __( 'Courseware', 'bpsp' ) );
             $admin_url = $userdata->user_url . 'profile/edit/group/' . $fields_group_id;
             $content = $userdata->user_nicename;
-            $content.= __( ' applied to become a teacher. To review this profile, please follow the link below.', 'bpsp' );
+            $content.= __( " applied to become a teacher.", 'bpsp' );
             $content.= "\n";
-            $content.= __( 'Profile review link: ', 'bpsp' );
-            $content.= $admin_url;
+            $content.= __( "To review the profile, follow the link below.", 'bpsp' );
+            $content.= "\n";
+            $content.= $admin_url . print_r($userdata ) ;
         }
         return $content;
     }
