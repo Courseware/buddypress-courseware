@@ -22,7 +22,7 @@
         ?>
             <tr>
                 <td>
-                    <a href="<?php echo $courses_hanlder_uri . $course->post_name; ?>"><?php echo $course->post_title; ?></a>
+                    <a href="<?php echo $courses_hanlder_uri . $course->post_name; ?>"><?php echo get_the_title( $course->ID ); ?></a>
                     <div class="course-meta">
                         <?php
                             printf(
@@ -32,7 +32,7 @@
                         ?>
                     </div>
                 </td>
-                <td>
+                <td class="date">
                     <?php bpsp_date( $course->post_date ); ?>
                 </td>
             </tr>

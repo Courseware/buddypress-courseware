@@ -53,7 +53,7 @@
         <table class="datatables">
             <thead>
                 <tr>
-                    <th><?php _e( '#', 'bpsp' ); ?> &nbsp; </th>
+                    <th></th>
                     <th><?php _e( 'Title', 'bpsp' ); ?></th>
                     <th><?php _e( 'Instructions/Description', 'bpsp' ); ?></th>
                     <?php if( $has_bib_caps ): ?>
@@ -67,25 +67,22 @@
                     <td>
                         <a href="#B<?php echo $i; ?>" id="B<?php echo $i; ?>"><?php echo $i; ?></a>
                     </td>
-                    <td>
+                    <td class="citation">
                         <?php if( isset( $b['cover'] ) ): ?>
-                            <img src="<?php echo $b['cover']; ?>" alt="<?php echo $b['plain']; ?>" class="alignleft" />
-                        <?php
-                            endif;
-                            echo $b['html'];
-                        ?>
+                            <img src="<?php echo $b['cover']; ?>" alt="<?php echo $b['plain']; ?>" class="alignright cover" />
+                        <?php endif; ?>
+                        <?php echo $b['html']; ?>
                     </td>
                     <td>
-                        <?php echo !empty( $b['data']['desc'] ) ? $b['data']['desc']: __( 'None for this bibliography.' ); ?>
+                        <?php if( !empty( $b['data']['desc'] ) ) echo $b['data']['desc']; ?>
                     </td>
                     <?php if( $has_bib_caps ): ?>
-                        <td style="white-space: nowrap;">
-                            <a href="<?php echo add_query_arg( 'bhash', $b['hash'] . ',' . $post_id, $bibs_edit_uri ); ?>">
-                                <?php _e( 'Edit Entry', 'bpsp' ); ?>
+                        <td class="actions nowrap">
+                            <a href="<?php echo add_query_arg( 'bhash', $b['hash'] . ',' . $post_id, $bibs_edit_uri ); ?>" class="action">
+                                <?php _e( 'Edit', 'bpsp' ); ?>
                             </a>
-                            <br/>
-                            <a href="<?php echo add_query_arg( 'bhash', $b['hash'] . ',' . $post_id, $bibs_delete_uri ); ?>">
-                                <?php _e( 'Delete Entry', 'bpsp' ); ?>
+                            <a href="<?php echo add_query_arg( 'bhash', $b['hash'] . ',' . $post_id, $bibs_delete_uri ); ?>" class="action">
+                                <?php _e( 'Delete', 'bpsp' ); ?>
                             </a>
                         </td>
                     <?php endif; ?>

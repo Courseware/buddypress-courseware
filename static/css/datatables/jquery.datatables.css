@@ -7,7 +7,6 @@
 	clear: both;
 	_height: 302px;
 	zoom: 1; /* Feeling sorry for IE */
-	background-color: #EAEAEA;
 }
 
 .dataTables_wrapper table {
@@ -33,26 +32,20 @@
 .dataTables_length {
 	width: 40%;
 	float: left;
-	padding: 10px;
 }
 
 .dataTables_filter {
 	width: 50%;
 	float: right;
 	text-align: right;
-	padding: 10px;
 }
 
 .dataTables_info {
-	float: left;
-	padding: 10px;
-	background-color: #EAEAEA;
+	float: right;
 }
 
 .dataTables_paginate {
 	width: auto !important;
-	padding: 10px;
-	background-color: #EAEAEA;
 }
 
 /* Pagination nested */
@@ -166,11 +159,6 @@ td.group {
 td.details {
 	background-color: #d1cfd0;
 	border: 2px solid #A19B9E;
-}
-
-
-.example_alt_pagination div.dataTables_info {
-	width: 40%;
 }
 
 .paging_full_numbers {

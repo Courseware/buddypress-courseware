@@ -12,8 +12,8 @@ jQuery.datepicker.setDefaults( dtpLanguage );
 
 // This will enable the calendar for start date field
 jQuery( "input[name$='schedule[start_date]']" ).datetimepicker({
-    holdDatepickerOpen: false,
-    showButtonPanel: false,
+    holdDatepickerOpen: true,
+    showButtonPanel: true,
     timeFormat: 'hh:mm:ss',
     dateFormat: 'yy-mm-dd'
 });
@@ -27,8 +27,8 @@ function courseware_toggle_datefields( reset ) {
     var start_date = jQuery( "input[name$='schedule[start_date]']" ).datepicker('getDate');
     if( start_date != null ) {
         jQuery( "input[name$='schedule[end_date]']" ).datetimepicker({
-            holdDatepickerOpen: false,
-            showButtonPanel: false,
+            holdDatepickerOpen: true,
+            showButtonPanel: true,
             timeFormat: 'hh:mm:ss',
             dateFormat: 'yy-mm-dd',
             minDate: start_date

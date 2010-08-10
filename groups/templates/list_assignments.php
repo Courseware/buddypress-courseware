@@ -22,7 +22,7 @@
         ?>
             <tr>
                 <td>
-                    <a href="<?php echo $assignments_hanlder_uri . $assignment->post_name; ?>"><?php echo $assignment->post_title; ?></a>
+                    <a href="<?php echo $assignments_hanlder_uri . $assignment->post_name; ?>"><?php echo get_the_title( $assignment->ID ); ?></a>
                     <div class="assignment-meta">
                         <?php
                             printf(

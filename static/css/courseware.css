@@ -1,0 +1,24 @@
+/**
+ * Courseware Stylesheet
+ */
+
+/* Courseware action buttons */
+.courseware a.action { border-radius: 3px; -webkit-border-radius: 3px; -moz-border-radius: 3px;
+    border: 1px solid #DDD; text-decoration: none; color: #888; padding: 3px 5px;
+    background: #FFF url('../../../buddypress/bp-themes/bp-default/_inc/images/white-grad.png') repeat-x;
+    cursor: pointer; vertical-align: bottom; }
+
+/* DataTables customization */
+.courseware .fg-toolbar{ color: #444; padding: 3px; }
+.courseware .fg-button { cursor: pointer; padding: 0 5px; }
+.courseware table table thead * { padding: 3px; white-space: nowrap; }
+.courseware table table tbody * { padding: 3px; vertical-align: middle; }
+.courseware .fc td, .courseware .fc th { padding: 0; }
+.courseware table .css_right { float: left; vertical-align: middle; padding: 0; }
+.courseware table .cover { padding: 0; min-height: 40px; }
+.courseware table tbody a { padding: 0; }
+.courseware table .actions { white-space: nowrap; }
+.courseware table .start-date { white-space: nowrap; padding: 0 5px; }
+.courseware table .end-date { white-space: nowrap; padding: 0 5px; }
+.courseware table .schedule-meta, .courseware table .course-meta, .courseware table .assignment-meta { font-style: italic; }
+.courseware table .location { width: 300px; }

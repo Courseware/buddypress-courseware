@@ -10,8 +10,8 @@ class BPSP_USCourses extends BPSP_Courses {
      */
     function BPSP_USCourses() {
         add_action( 'bp_after_group_header', array( &$this, 'course_group_header' ) );
-        add_action( 'courseware_group_screen_handler', array( &$this, 'courses_screen_handler' ) );
-        add_filter( 'courseware_group_nav_options', array( &$this, 'courses_add_nav_options' ) );
+        add_action( 'courseware_group_screen_handler', array( &$this, 'screen_handler' ) );
+        add_filter( 'courseware_group_nav_options', array( &$this, 'add_nav_options' ) );
     }
     
     /**
@@ -36,12 +36,12 @@ class BPSP_USCourses extends BPSP_Courses {
     }
     
     /**
-     * courses_screen_handler( $action_vars )
+     * screen_handler( $action_vars )
      *
      * Courses screens handler.
      * Handles uris like groups/ID/courseware/action/args
      */
-    function courses_screen_handler( $action_vars ) {
+    function screen_handler( $action_vars ) {
         if ( $action_vars[0] == 'course' ) {
             $course = $this->is_course( $this->current_course );
             
@@ -59,20 +59,22 @@ class BPSP_USCourses extends BPSP_Courses {
             elseif( isset ( $action_vars[1] ) && 'delete' == $action_vars[1] ) {
                 add_filter( 'courseware_group_template', array( &$this, 'delete_course_screen' ) );
             }
-            else
+            else {
+                do_action( 'courseware_bibliography_screen' );
                 add_filter( 'courseware_group_template', array( &$this, 'single_course_screen' ) );
+            }
         }
     }
     
     /**
-     * courses_add_nav_options()
+     * add_nav_options( $options )
      *
      * Adds courses specific navigations options
      *
      * @param Array $options A set of current nav options
      * @return Array containing new nav options
      */
-    function courses_add_nav_options( $options ) {
+    function add_nav_options( $options ) {
         global $bp;
         $options[__( 'Course Description', 'bpsp' )] = $options[__( 'Home', 'bpsp' )] . '/course';
         return $options;

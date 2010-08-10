@@ -22,14 +22,14 @@
             <tr>
                 <td class="description">
                     <a href="<?php echo $schedules_hanlder_uri . $schedule->post_name; ?>">
-                        <?php the_excerpt(); ?>
+                        <?php echo get_the_excerpt(); ?>
                     </a>
                     <div class="schedule-meta">
                         <?php
                             printf(
                                 __( 'added on %1$s by %2$s.', 'bpsp' ),
                                 get_the_date(),
-                                get_the_author()
+                                bp_core_get_userlink( $schedule->post_author )
                             );
                         ?>
                     </div>

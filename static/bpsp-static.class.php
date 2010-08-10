@@ -43,6 +43,7 @@ class BPSP_Static {
         wp_register_script( 'list-schedules', BPSP_WEB_URI . '/static/js/list-schedules.js', array( 'fullcalendar', 'datatables' ), BPSP_VERSION, true );
         
         // Styles
+        wp_register_style( 'courseware', BPSP_WEB_URI . '/static/css/courseware.css', BPSP_VERSION );
         wp_register_style( 'jquery-ui-courseware-custom', BPSP_WEB_URI . '/static/css/jquery-ui-custom/theme/smoothness/jquery-ui-1.8.2.custom.css', '1.8.2' );
         wp_register_style( 'fullcalendar', BPSP_WEB_URI . '/static/css/fullcalendar/jquery.fullcalendar.css', null, '1.4.7' );
         wp_register_style( 'datatables', BPSP_WEB_URI . '/static/css/datatables/jquery.datatables.css', null, '1.6.2' );
@@ -63,9 +64,14 @@ class BPSP_Static {
     /**
      * load_courseware_css()
      *
-     * Function will check if courseware.css option is checked and will load the file if this exists
+     * Function will check if courseware.css option is checked
+     * and will load the file if this exists
+     * Also a default courseware.css is loaded
      */
     function load_courseware_css() {
+        // Load default css
+        wp_enqueue_style( 'courseware' );
+        // Load customized css
         $to_load = get_option( 'bpsp_load_css' );
         $css_name = '/courseware.css';
         
@@ -82,32 +88,37 @@ class BPSP_Static {
         wp_enqueue_script( 'bibliographies' );
         wp_enqueue_style( 'flexselect' );
         wp_enqueue_style( 'datatables' );
+        wp_enqueue_style( 'jquery-ui-courseware-custom' );
     }
     
     function gradebook_enqueues() {
         wp_enqueue_script( 'gradebook' );
         wp_enqueue_style( 'datatables' );
+        wp_enqueue_style( 'jquery-ui-courseware-custom' );
     }
     
     function schedules_enqueues() {
         wp_enqueue_style( 'datetimepicker' );
         wp_enqueue_script( 'schedules' );
-    }
-    
+    }   
+
     function list_assignments_enqueues() {
         wp_enqueue_script( 'list-assignments' );
         wp_enqueue_style( 'datatables' );
+        wp_enqueue_style( 'jquery-ui-courseware-custom' );
     }
     
     function list_courses_enqueues() {
         wp_enqueue_script( 'list-courses' );
         wp_enqueue_style( 'datatables' );
+        wp_enqueue_style( 'jquery-ui-courseware-custom' );
     }
     
     function list_schedules_enqueues() {
         wp_enqueue_style( 'fullcalendar' );
         wp_enqueue_style( 'datatables' );
         wp_enqueue_script( 'list-schedules' );
+        wp_enqueue_style( 'jquery-ui-courseware-custom' );
     }
     
     /**

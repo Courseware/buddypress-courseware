@@ -11,8 +11,8 @@ dtpLanguage['showMonthAfterYear'] = eval( dtpLanguage['showMonthAfterYear'] );
 jQuery.datepicker.setDefaults( dtpLanguage );
 
 jQuery( "input[name$='assignment[due_date]']" ).datetimepicker({
-    holdDatepickerOpen: false,
-    showButtonPanel: false,
+    holdDatepickerOpen: true,
+    showButtonPanel: true,
     timeFormat: 'hh:mm:ss',
-    dateFormat: 'yy-mm-dd',
+    dateFormat: 'yy-mm-dd'
 });
