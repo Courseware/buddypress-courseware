@@ -383,6 +383,7 @@ class BPSP_Schedules {
                         }
                     }
                     // Add all schedules
+                    $counted_schedules = count( $new_schedules );
                     foreach( $new_schedules as $newschedule ) {
                         $newschedule_id = wp_insert_post( $newschedule );
                         
@@ -398,6 +399,7 @@ class BPSP_Schedules {
                     }
                     
                     $vars['message'] = __( 'New schedule was added.', 'bpsp' );
+                    do_action( 'courseware_schedule_activity', $counted_schedules );
                     return $this->list_schedules_screen( $vars );
                 } else
                     $vars['error'] = __( 'New schedule could not be added.', 'bpsp' );

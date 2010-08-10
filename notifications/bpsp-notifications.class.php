@@ -60,7 +60,7 @@ class BPSP_Notifications {
             $content = $data['teacher']->user_nicename;
             $content.= __( " graded your assignment: ", 'bpsp' );
             $content.= "\n";
-            $content.= '<a href="' . $data['assignment']->permalink . '">' . $data['assignment']->post_title . '</a>';
+            $content.= '<a href="' . $data['assignment']->permalink . '">' . attribute_escape( $data['assignment']->post_title ) . '</a>';
             $content.= "\n";
             $content.= __( "Follow the link above to see the grade.", 'bpsp' );
         }
@@ -82,10 +82,10 @@ class BPSP_Notifications {
         if( $subject )
             $content = __( 'Student replied to your assignment.', 'bpsp' );
         if( $body ) {
-            $content = bp_core_get_userlink( $data['response']->post_author );
+            $content = bp_core_get_user_displayname( $data['response']->post_author );
             $content.= __( " added a response to: ", 'bpsp' );
             $content.= "\n";
-            $content.= '<a href="' . $data['assignment']->permalink . '">' . $data['assignment']->post_title . '</a>';
+            $content.= '<a href="' . $data['assignment']->permalink . '">' . attribute_escape( $data['assignment']->post_title ) . '</a>';
             $content.= "\n";
             $content.= __( "Follow the link above to see it.", 'bpsp' );
         }

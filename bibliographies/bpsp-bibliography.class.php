@@ -358,6 +358,7 @@ class BPSP_Bibliography {
                 if( !isset( $bib['isbn'] ) )
                     $bib['isbn'] = '';
                 $content['cover'] = BPSP_Bibliography_WebApis::get_book_cover( $bib['isbn'] );
+                $content['data'] = $bib;
             }
         }
         return $content;
@@ -413,6 +414,7 @@ class BPSP_Bibliography {
      */
     function delete_bib_screen( $vars ) {
         $nonce_name = 'delete_bib';
+        $to_redirect = true;
         
         if( !$this->has_bib_caps( $bp->loggedin_user->id ) && !is_super_admin() ) {
             $vars['die'] = __( 'BuddyPress Courseware Error while forbidden user tried to delete bibliography.', 'bpsp' );
@@ -431,6 +433,7 @@ class BPSP_Bibliography {
         if( isset( $data[1] ) && !empty( $data[1] ) )
             $post_id = $data[1];
         else {
+            $to_redirect = false;
             $bibdb_def = array(
                 'post_title'    => 'BIBSDB',
                 'post_status'   => 'draft',
@@ -453,9 +456,12 @@ class BPSP_Bibliography {
         else
             $vars['error'] = __( 'No Bibliography database was created.', 'bpsp' );
         
+        if( $to_redirect )
+            $vars['redirect_to'] = $_SERVER['HTTP_REFERER'];
+        
         return $this->new_bib_screen( $vars );
     }
-        
+    
     /**
      * edit_bib_screen( $vars )
      *

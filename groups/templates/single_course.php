@@ -1,7 +1,7 @@
 <?php setup_postdata( $course ); ?>
 <div id="courseware-course">
     <div class="course-content">
-        <h4 id="course-title"><?php the_title(); ?></h4>
+        <h4 id="course-title"><?php echo get_the_title( $course->ID ); ?></h4>
         <div id="course-body">
             <?php the_content(); ?>
         </div>

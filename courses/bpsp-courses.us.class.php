@@ -28,7 +28,7 @@ class BPSP_USCourses extends BPSP_Courses {
         } else {
             $vars['name'] = '_no_course_group_header';
             $vars['echo'] = false;
-            $this->current_uri = $bp->root_domain . '/' . $bp->groups->slug . '/' . $bp->groups->current_group->slug . '/' . $bp->courseware->slug;
+            $this->current_uri = bp_get_group_permalink( $bp->groups->current_group ) . $bp->courseware->slug;
             $vars['init_course_link'] =  $this->current_uri . '/course/edit';
         }
         

@@ -48,7 +48,7 @@
                 </div>
             <?php endif; ?>
         </div>
-        <h4 id="assignment-title"><?php echo $assignment->post_title; ?></h4>
+        <h4 id="assignment-title"><?php echo get_the_title( $assignment->ID ); ?></h4>
         <div id="assignment-due-date">
             <?php _e( 'Due date', 'bpsp' ); ?>: <?php bpsp_date( $assignment->due_date ); ?>
         </div>

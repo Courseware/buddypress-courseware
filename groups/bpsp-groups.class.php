@@ -95,6 +95,7 @@ class BPSP_Groups {
             do_action( 'courseware_group_screen_handler', $bp->action_variables );
 	    add_action( 'bp_template_content', array( &$this, 'load_template' ) );
         }
+	groups_update_last_activity( $bp->groups->current_group->id );
         bp_core_load_template( apply_filters( 'bp_core_template_plugin' , 'groups/single/plugins' ) );
     }
     

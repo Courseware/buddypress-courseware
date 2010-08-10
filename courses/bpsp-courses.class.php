@@ -294,6 +294,7 @@ class BPSP_Courses {
                     if( $new_course_id ) {
                         wp_set_post_terms( $new_course_id, $new_course['group_id'], 'group_id' );
                         $vars['message'] = __( 'New course was added.', 'bpsp' );
+                        do_action( 'courseware_course_activity', $this->is_course( $new_course_id ) );
                         return $this->list_courses_screen( $vars );
                     } else
                         $vars['error'] = __( 'New course could not be added.', 'bpsp' );

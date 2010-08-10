@@ -46,49 +46,53 @@
         </form>
     </div>
     <?php endif; ?>
+    <?php if( count( $bibs ) > 0 ): ?>
     <hr/>
     <div id="courseware-bibs-list" style="clear: both;">
         <h4><?php _e( 'Bibliography listing', 'bpsp'); ?></h4>
-        <?php if( count( $bibs ) > 0 ): ?>
-            <table class="datatables">
-                <thead>
-                    <tr>
-                        <th><?php _e( '#', 'bpsp' ); ?> &nbsp; </th>
-                        <th><?php _e( 'Title', 'bpsp' ); ?></th>
-                        <?php if( $has_bib_caps ): ?>
-                            <th><?php _e( 'Actions', 'bpsp' ); ?></th>
-                        <?php endif; ?>
-                    </tr>
-                </thead>
-                <tbody>
-                <?php $i = 0; foreach( $bibs as $b): $i++; ?>
-                    <tr>
-                        <td>
-                            <a href="#B<?php echo $i; ?>" id="B<?php echo $i; ?>"><?php echo $i; ?></a>
+        <table class="datatables">
+            <thead>
+                <tr>
+                    <th><?php _e( '#', 'bpsp' ); ?> &nbsp; </th>
+                    <th><?php _e( 'Title', 'bpsp' ); ?></th>
+                    <th><?php _e( 'Instructions/Description', 'bpsp' ); ?></th>
+                    <?php if( $has_bib_caps ): ?>
+                        <th><?php _e( 'Actions', 'bpsp' ); ?></th>
+                    <?php endif; ?>
+                </tr>
+            </thead>
+            <tbody>
+            <?php $i = 0; foreach( $bibs as $b): $i++; ?>
+                <tr>
+                    <td>
+                        <a href="#B<?php echo $i; ?>" id="B<?php echo $i; ?>"><?php echo $i; ?></a>
+                    </td>
+                    <td>
+                        <?php if( isset( $b['cover'] ) ): ?>
+                            <img src="<?php echo $b['cover']; ?>" alt="<?php echo $b['plain']; ?>" class="alignleft" />
+                        <?php
+                            endif;
+                            echo $b['html'];
+                        ?>
+                    </td>
+                    <td>
+                        <?php echo !empty( $b['data']['desc'] ) ? $b['data']['desc']: __( 'None for this bibliography.' ); ?>
+                    </td>
+                    <?php if( $has_bib_caps ): ?>
+                        <td style="white-space: nowrap;">
+                            <a href="<?php echo add_query_arg( 'bhash', $b['hash'] . ',' . $post_id, $bibs_edit_uri ); ?>">
+                                <?php _e( 'Edit Entry', 'bpsp' ); ?>
+                            </a>
+                            <br/>
+                            <a href="<?php echo add_query_arg( 'bhash', $b['hash'] . ',' . $post_id, $bibs_delete_uri ); ?>">
+                                <?php _e( 'Delete Entry', 'bpsp' ); ?>
+                            </a>
                         </td>
-                        <td>
-                            <?php if( isset( $b['cover'] ) ): ?>
-                                <img src="<?php echo $b['cover']; ?>" alt="<?php echo $b['plain']; ?>" class="alignleft" />
-                            <?php
-                                endif;
-                                echo $b['html'];
-                            ?>
-                        </td>
-                        <?php if( $has_bib_caps ): ?>
-                            <td style="white-space: nowrap;">
-                                <a href="<?php echo add_query_arg( 'bhash', $b['hash'] . ',' . $post_id, $bibs_edit_uri ); ?>">
-                                    <?php _e( 'Edit Entry', 'bpsp' ); ?>
-                                </a>
-                                <br/>
-                                <a href="<?php echo add_query_arg( 'bhash', $b['hash'] . ',' . $post_id, $bibs_delete_uri ); ?>">
-                                    <?php _e( 'Delete Entry', 'bpsp' ); ?>
-                                </a>
-                            </td>
-                        <?php endif; ?>
-                    </tr>
-                <?php endforeach; ?>
-                </tbody>
-            </table>
-        <?php endif; ?>
+                    <?php endif; ?>
+                </tr>
+            <?php endforeach; ?>
+            </tbody>
+        </table>
     </div>
+    <?php endif; ?>
 </div>
