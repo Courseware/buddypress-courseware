@@ -112,11 +112,11 @@ table.display td.center {
  * DataTables row classes
  */
 tr.odd {
-	background-color: #EEE;
+	background-color: #FFF;
 }
 
 tr.even {
-	background-color: #FFF;
+	background-color: #EEE;
 }
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *

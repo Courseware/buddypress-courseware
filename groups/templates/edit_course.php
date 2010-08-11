@@ -5,18 +5,17 @@ require_once BPSP_PLUGIN_DIR . '/groups/templates/helpers/editor_helpers.php' ;
 wp_tiny_mce();
 ?>
 <form action="<?php echo $course_edit_uri; ?>" method="post" class="standard-form" id="update-course-form">
-    <h5><?php _e( 'Edit course', 'bpsp' ); ?> &mdash; <a href="<?php echo $course_permalink ?>"><?php _e( 'Preview', 'bpsp' ); ?></a></h5>
     <div id="update-course-content">
         <div id="update-course-content-title">
             <label for="course[title]"><?php _e( 'Title', 'bpsp' ); ?></label>
-                <input type="text" id="course-title" name="course[title]" value="<?php echo $course->post_title; ?>"/>
+                <input type="text" id="course-title" class="long" name="course[title]" value="<?php echo $course->post_title; ?>"/>
         </div>
         <div id="update-course-content-textarea">
             <div id="editor-toolbar">
-                <?php
-                    echo bpsp_media_buttons();
-                    the_editor( $course->post_content, 'course[content]', 'course[title]', false );
-                ?>
+                <div id="media-toolbar">
+                    <?php echo bpsp_media_buttons(); ?>
+                </div>
+                <?php the_editor( $course->post_content, 'course[content]', 'course[title]', false ); ?>
             </div>
         </div>
         <div id="update-course-content-options">
@@ -25,9 +24,12 @@ wp_tiny_mce();
             <?php echo $nonce ? $nonce: ''; ?>
             <div id="update-course-submit">
                 <input type="submit" name="course[submit]" id="update-course-submit" value="<?php _e( 'Update course', 'bpsp' ); ?>">
-                <?php if( $delete_nonce ): ?>
-                    <a href="<?php echo $delete_nonce; ?>"><?php echo $course_delete_title; ?></a>
-                <?php endif; ?>
+                <span class="alignright">
+                    <?php if( $delete_nonce ): ?>
+                        <a href="<?php echo $delete_nonce; ?>" class="action alert"><?php echo $course_delete_title; ?></a>
+                    <?php endif; ?>
+                    <a href="<?php echo $course_permalink ?>" class="action safe"><?php _e( 'Cancel/Go Back', 'bpsp' ); ?></a>
+                </span>
             </div>
         </div>
     </div>

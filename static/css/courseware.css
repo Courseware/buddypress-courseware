@@ -2,11 +2,40 @@
  * Courseware Stylesheet
  */
 
+/* Courses */
+#courseware-course-header {
+    clear: both; margin: 0 0 20px; border-radius: 3px;
+    -webkit-border-radius: 3px; -moz-border-radius: 3px;
+    border: 1px dotted #DDD; padding: 5px; }
+#courseware-course-header .course-meta { text-align: right; font-style: italic; }
+#courseware-course #course-content { margin-right: 200px; }
+#courseware-course #course-title { font-style: italic; margin-bottom: 5px; }
+#courseware-course #course-body {
+    border-radius: 3px; -webkit-border-radius: 3px;
+    -moz-border-radius: 3px; border: 1px solid #DDD; padding: 0 10px 10px; }
+#courseware-course #course-meta { float: right; width: 190px; margin: 0; padding: 0 0 0 10px; text-align: right; }
+#courseware-course #course-meta h4 {  border-bottom: 1px dotted #DDD; margin-bottom: 0; font-style: italic; font-weight: normal; }
+#courseware-course #course-meta ul { list-style: none; }
+#courseware-course #course-meta ul li { border-bottom: 1px dotted #DDD; padding: 5px 0; }
+
+/* Bibliography */
+#courseware-bibs h4 { font-style: italic; font-weight: normal; border-bottom: 1px dotted #DDD; clear: both; }
+#courseware-bibs-form { clear: both; margin-right: 200px; }
+#courseware-bibs-form .book .left-part { float: left; width: 45%; margin: 0; padding: 0; }
+#courseware-bibs-form .book .left-part label { margin-top: 0; }
+#courseware-bibs-form .book .midl-part { float: left; width: 10%; margin: 0; padding: 0; padding-top: 20px; }
+#courseware-bibs-form .book .right-part { float: left; width: 45%; margin: 0; padding: 0; }
+#courseware-bibs-form .book .right-part label { margin-top: 0; }
+
 /* Courseware action buttons */
-.courseware a.action { border-radius: 3px; -webkit-border-radius: 3px; -moz-border-radius: 3px;
-    border: 1px solid #DDD; text-decoration: none; color: #888; padding: 3px 5px;
+.courseware a.action, #courseware-course-header a.action {
+    border-radius: 3px; font-size: 12px;
+    -webkit-border-radius: 3px; -moz-border-radius: 3px;
+    border: 1px solid #DDD; text-decoration: none; color: #888; padding: 4px 10px;
     background: #FFF url('../../../buddypress/bp-themes/bp-default/_inc/images/white-grad.png') repeat-x;
     cursor: pointer; vertical-align: bottom; }
+.courseware a.alert { color: #CC0000; }
+.courseware a.safe { color: #1A9B00; }
 
 /* DataTables customization */
 .courseware .fg-toolbar{ color: #444; padding: 3px; }
@@ -20,5 +49,7 @@
 .courseware table .actions { white-space: nowrap; }
 .courseware table .start-date { white-space: nowrap; padding: 0 5px; }
 .courseware table .end-date { white-space: nowrap; padding: 0 5px; }
-.courseware table .schedule-meta, .courseware table .course-meta, .courseware table .assignment-meta { font-style: italic; }
+.courseware table .schedule-meta,
+.courseware table .course-meta, .courseware table .assignment-meta { font-style: italic; }
 .courseware table .location { width: 300px; }
+

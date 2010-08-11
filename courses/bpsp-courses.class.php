@@ -458,6 +458,7 @@ class BPSP_Courses {
      * Loads editor scripts and styles
      */
     function load_editor() {
+        wp_enqueue_style( 'courseware-editor' );
         wp_enqueue_script( 'post' );
         wp_enqueue_script( 'editor' );
         wp_enqueue_script( 'utils' );

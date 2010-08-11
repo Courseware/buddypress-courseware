@@ -1,7 +1,35 @@
 /**
  * Javascript calls for bibliographies screens
  */
+// FlexSelect
 jQuery("select.[name$='bib[existing]']").flexselect();
+
+// Toggle Bibs
+jQuery("#courseware-bibs-list").hide();
+jQuery("#courseware-bibs-form .add").hide();
+
+jQuery("#course-meta ul li.add").hide();
+
+jQuery("#course-meta ul li.show-bibs a").bind('click', function(){
+    jQuery("#course-meta ul li.add").slideToggle();
+    jQuery("#courseware-bibs-form .add").hide();
+    jQuery("#courseware-bibs-list").slideToggle();
+})
+
+jQuery("#course-meta ul li.add.bib").bind('click', function(){
+    jQuery("#courseware-bibs-form .add").hide();
+    jQuery("#courseware-bibs-form .existing").slideToggle();
+})
+
+jQuery("#course-meta ul li.add.book").bind('click', function(){
+    jQuery("#courseware-bibs-form .add").hide();
+    jQuery("#courseware-bibs-form .book").slideToggle();
+})
+
+jQuery("#course-meta ul li.add.www").bind('click', function(){
+    jQuery("#courseware-bibs-form .add").hide();
+    jQuery("#courseware-bibs-form .www").slideToggle();
+})
 
 // Didn't find another way to 'localize' this
 oLanguage.oPaginate             = [];
