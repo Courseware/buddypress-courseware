@@ -3,14 +3,42 @@
     <div class="schedule-meta courseware-sidebar">
         <h4 class="meta"><?php _e( 'Schedule Meta', 'bpsp' ); ?></h4>
         <ul class="courseware-meta">
-            <li class="date">
+            <!-- Ponintless--li class="date">
             <?php
                 printf(
                     __( 'Date: %1$s', 'bpsp' ),
                     bpsp_get_date( $schedule->post_date )
                 );
             ?>
+            </li-->
+            <li id="schedule-startdate">
+                <?php
+                    printf(
+                        __( 'Start Date: %1$s', 'bpsp' ),
+                        bpsp_get_date( $schedule->start_date )
+                    );
+                ?>
             </li>
+            <?php if( !empty( $schedule->end_date ) ) : ?>
+                <li id="schedule-enddate">
+                    <?php
+                        printf(
+                            __( 'End Date: %1$s', 'bpsp' ),
+                            bpsp_get_date( $schedule->end_date )
+                        );
+                    ?>
+                </li>
+            <?php endif; ?>
+            <?php if( $schedule->location ): ?>
+                <li id="schedule-location">
+                    <?php
+                        printf(
+                            __( 'Location: %1$s', 'bpsp' ),
+                            $schedule->location
+                        );
+                    ?>
+                </li>
+            <?php endif; ?>
             <li class="author">
             <?php
                 printf(
@@ -25,34 +53,6 @@
                     <a href="<?php echo $current_uri . '/course/' . $schedule->course->post_name; ?>">
                         <?php echo $schedule->course->post_title; ?>
                     </a>
-                </li>
-            <?php endif; ?>
-            <?php if( $schedule->location ): ?>
-                <li id="schedule-location">
-                    <?php
-                        printf(
-                            __( 'Location: %1$s', 'bpsp' ),
-                            $schedule->location
-                        );
-                    ?>
-                </li>
-            <?php endif; ?>
-                <li id="schedule-startdate">
-                    <?php
-                        printf(
-                            __( 'Start Date: %1$s', 'bpsp' ),
-                            bpsp_get_date( $schedule->start_date )
-                        );
-                    ?>
-                </li>
-            <?php if( !empty( $schedule->end_date ) ) : ?>
-                <li id="schedule-enddate">
-                    <?php
-                        printf(
-                            __( 'End Date: %1$s', 'bpsp' ),
-                            bpsp_get_date( $schedule->end_date )
-                        );
-                    ?>
                 </li>
             <?php endif; ?>
             <?php if( $show_edit ): ?>

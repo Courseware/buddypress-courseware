@@ -308,7 +308,7 @@ class BPSP_Responses {
         global $bp;
         $nonce_name = 'add_response';
         
-        if( !$this->has_student_caps( $bp->loggedin_user->id ) && !is_super_admin() ) {
+        if( !$this->has_student_caps( $bp->loggedin_user->id ) || !is_super_admin() ) {
             $vars['die'] = __( 'BuddyPress Courseware Error while forbidden user tried to add a new response.' );
             return $vars;
         }
@@ -369,7 +369,7 @@ class BPSP_Responses {
      * @return Array $vars a set of variable passed to this screen template
      */
     function populate_responses( $vars ) {
-        if( $this->has_student_caps() )
+        if( $this->has_student_caps() && is_user_logged_in() )
             $vars['response_add_uri'] = $vars['assignment_permalink'] . '/add_response';
         
         $vars['response'] = $this->has_response();
