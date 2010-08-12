@@ -1,8 +1,8 @@
 <?php setup_postdata( $course ); ?>
 <div id="courseware-course">
-    <div id="course-meta">
-        <h4 class="meta-title"><?php _e( 'Course Info', 'bpsp' ) ?></h4>
-        <ul>
+    <div id="course-meta" class="courseware-sidebar">
+        <h4 class="meta"><?php _e( 'Course Info', 'bpsp' ) ?></h4>
+        <ul class="courseware-meta">
             <li class="date">
             <?php
                 printf(
@@ -19,6 +19,9 @@
                 );
             ?>
             </li>
+            <li class="show-responses">
+                <a href="#courseware-responses-list" class="action"><?php _e( 'Responses', 'bpsp' ); ?></a>
+            </li>
             <li class="show-bibs">
                 <a href="#courseware-bibs-list" class="action"><?php _e( 'Bibliography', 'bpsp' ); ?></a>
             </li>
@@ -33,14 +36,16 @@
                     <a href="#courseware-bibs-form" class="action"><?php _e( 'Quick Add Webpage', 'bpsp' ); ?></a>
                 </li>
                 <li class="edit-link">
-                    <a href="<?php echo $course_edit_uri; ?>" class="action"><?php _e( 'Edit Course', 'bpsp' ); ?></a>
+                    <a href="<?php echo $course_edit_uri; ?>" class="action safe"><?php _e( 'Edit Course', 'bpsp' ); ?></a>
                 </li>
             <?php endif; ?>
         </ul>
     </div>
-    <div id="course-content">
-        <h4 id="course-title"><?php echo get_the_title( $course->ID ); ?></h4>
-        <div id="course-body">
+    <div id="course-content" class="courseware-content-wrapper">
+        <h4 id="course-title" class="courseware-title">
+            <?php echo get_the_title( $course->ID ); ?>
+        </h4>
+        <div id="course-body" class="courseware-content">
             <?php the_content(); ?>
         </div>
     </div>

@@ -2,6 +2,11 @@
  * Javascript calls for gradebook screens
  */
 
+jQuery('#courseware-gradebook .import-gradebook-form').hide();
+jQuery('#courseware-gradebook a').bind( 'click', function(){
+    jQuery('#courseware-gradebook .import-gradebook-form').slideToggle();
+});
+
 // Didn't find another way to 'localize' this
 oLanguage.oPaginate             = [];
 oLanguage.oPaginate.sFirst      = '&laquo;';
@@ -11,6 +16,7 @@ oLanguage.oPaginate.sLast       = '&raquo;';
 
 // Load DataTables
 jQuery("#courseware-gradebook table").dataTable( {
+    "bJQueryUI": true,
     "oLanguage": oLanguage,
     "aoColumns": [
         { "bSortable": true },
@@ -20,5 +26,5 @@ jQuery("#courseware-gradebook table").dataTable( {
         { "bSortable": false },
     ],
     "aaSorting": [[ 0, "desc" ]],
-    "sPaginationType": "full_numbers"
+    "bPaginate": false
 } );

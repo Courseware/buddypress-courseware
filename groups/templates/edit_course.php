@@ -7,8 +7,7 @@ wp_tiny_mce();
 <form action="<?php echo $course_edit_uri; ?>" method="post" class="standard-form" id="update-course-form">
     <div id="update-course-content">
         <div id="update-course-content-title">
-            <label for="course[title]"><?php _e( 'Title', 'bpsp' ); ?></label>
-                <input type="text" id="course-title" class="long" name="course[title]" value="<?php echo $course->post_title; ?>"/>
+            <input type="text" id="course-title" class="long" name="course[title]" value="<?php echo $course->post_title; ?>"/>
         </div>
         <div id="update-course-content-textarea">
             <div id="editor-toolbar">
@@ -24,12 +23,12 @@ wp_tiny_mce();
             <?php echo $nonce ? $nonce: ''; ?>
             <div id="update-course-submit">
                 <input type="submit" name="course[submit]" id="update-course-submit" value="<?php _e( 'Update course', 'bpsp' ); ?>">
-                <span class="alignright">
+                <div class="alignright submits">
                     <?php if( $delete_nonce ): ?>
                         <a href="<?php echo $delete_nonce; ?>" class="action alert"><?php echo $course_delete_title; ?></a>
                     <?php endif; ?>
                     <a href="<?php echo $course_permalink ?>" class="action safe"><?php _e( 'Cancel/Go Back', 'bpsp' ); ?></a>
-                </span>
+                </div>
             </div>
         </div>
     </div>

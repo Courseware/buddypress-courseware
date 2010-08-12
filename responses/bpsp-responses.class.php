@@ -466,6 +466,7 @@ class BPSP_Responses {
      * Loads editor scripts and styles
      */
     function load_editor() {
+        do_action( 'courseware_editor' );
         wp_enqueue_script( 'assignments' );
         wp_enqueue_style( 'datetimepicker' );
         wp_enqueue_script( 'post' );

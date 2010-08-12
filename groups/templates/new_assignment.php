@@ -3,30 +3,31 @@ bpsp_load_editor_files();
 wp_tiny_mce();
 ?>
 <form action="<?php echo $current_option; ?>" method="post" class="standard-form" id="new-assignment-form">
-    <h5><?php _e( 'Add a new assignment', 'bpsp' ); ?></h5>
-    <div id="new-assignment-content">
+    <div id="new-assignment-meta" class="courseware-sidebar">
+        <h4 class="meta"><?php _e( 'Course &amp; Due Date', 'bpsp' ); ?></h4>
+        <ul class="courseware-meta">
+            <li id="new-assignment-course">
+                    <select name="assignment[course_id]">
+                        <?php foreach( $courses as $c ): ?>
+                            <option value="<?php echo $c->ID; ?>"><?php echo $c->post_title; ?></option>
+                        <?php endforeach; ?>
+                    </select>
+            </li>
+            <li id="new-assignment-due-date">
+                <input type="text" name="assignment[due_date]" title="<?php _e( 'Due date', 'bpsp' ); ?>" />
+            </li>
+        </ul>
+    </div>
+    <div id="new-assignment-content" class="courseware-content-wrapper" >
         <div id="new-assignment-content-title">
-            <label for="assignment[title]"><?php _e( 'Title', 'bpsp' ); ?></label>
-                <input type="text" id="assignment-title" name="assignment[title]"/>
-        </div>
-        <div id="new-assignment-course">
-            <label for="assignment[course_id]"><?php _e( 'Course', 'bpsp' ); ?></label>
-                <select name="assignment[course_id]">
-                    <?php foreach( $courses as $c ): ?>
-                        <option value="<?php echo $c->ID; ?>"><?php echo $c->post_title; ?></option>
-                    <?php endforeach; ?>
-                </select>
-        </div>
-        <div id="new-assignment-due-date">
-            <label for="assignment[due_date]"><?php _e( 'Due date', 'bpsp' ); ?></label>
-                <input type="text" name="assignment[due_date]" />
+            <input type="text" id="assignment-title" name="assignment[title]" class="long" title="<?php _e( 'Assignment Title', 'bpsp' ); ?>"/>
         </div>
         <div id="new-assignment-content-textarea">
             <div id="editor-toolbar">
-                <?php
-                    echo bpsp_media_buttons();
-                    the_editor( '', 'assignment[content]', 'assignment[title]', false );
-                ?>
+                <div id="media-toolbar">
+                    <?php echo bpsp_media_buttons(); ?>
+                </div>
+                <?php the_editor( '', 'assignment[content]', 'assignment[title]', false ); ?>
             </div>
         </div>
         <div id="new-assignment-content-options">

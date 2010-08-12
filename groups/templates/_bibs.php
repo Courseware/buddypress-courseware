@@ -5,7 +5,7 @@
             <?php if( !$hide_existing ): ?>
             <div class="add existing">
                 <h4><?php _e( 'Add an existing bibliography', 'bpsp'); ?></h4>
-                <select name="bib[existing]">
+                <select name="bib[existing]" class="long">
                     <option value=""><?php _e( 'Type something to search...', 'bpsp' ); ?></option>
                     <?php
                     if( is_array( $bibdb ) )
@@ -88,10 +88,10 @@
                     </td>
                     <?php if( $has_bib_caps ): ?>
                         <td class="actions nowrap">
-                            <a href="<?php echo add_query_arg( 'bhash', $b['hash'] . ',' . $post_id, $bibs_edit_uri ); ?>" class="action">
+                            <a href="<?php echo add_query_arg( 'bhash', $b['hash'] . ',' . $post_id, $bibs_edit_uri ); ?>" class="action safe">
                                 <?php _e( 'Edit', 'bpsp' ); ?>
                             </a>
-                            <a href="<?php echo add_query_arg( 'bhash', $b['hash'] . ',' . $post_id, $bibs_delete_uri ); ?>" class="action">
+                            <a href="<?php echo add_query_arg( 'bhash', $b['hash'] . ',' . $post_id, $bibs_delete_uri ); ?>" class="action alert">
                                 <?php _e( 'Delete', 'bpsp' ); ?>
                             </a>
                         </td>

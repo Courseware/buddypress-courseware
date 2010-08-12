@@ -1,19 +1,18 @@
 /**
  * Editor Screens
  */
-input.long { width: 99% !important; }
-#editor-toolbar { margin: 10px 0; }
+#editor-toolbar { margin: 10px 0 0; }
 #editorcontainer {
-	border: 1px solid #DDD;
-	border-collapse: separate;
-	-moz-border-radius: 6px 6px 0 0;
-	-webkit-border-top-right-radius: 6px;
-	-webkit-border-top-left-radius: 6px;
-	-khtml-border-top-right-radius: 6px;
-	-khtml-border-top-left-radius: 6px;
-	border-top-right-radius: 6px;
-	border-top-left-radius: 6px;
-        clear: both;
+    border: 1px solid #DDD;
+    border-collapse: separate;
+    -moz-border-radius: 6px 6px 0 0;
+    -webkit-border-top-right-radius: 6px;
+    -webkit-border-top-left-radius: 6px;
+    -khtml-border-top-right-radius: 6px;
+    -khtml-border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+    border-top-left-radius: 6px;
+    clear: both;
 }
 #editorcontainer table *,
 #mce_fullscreen_container table * { padding: 0; }

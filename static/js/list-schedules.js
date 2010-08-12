@@ -52,5 +52,5 @@ jQuery("table.datatables").dataTable( {
 } );
 
 // Append iCal icon to FullCalendar month name
-var iCal_link = '<td><span class="fc-header-space"></span></td><td><div class="fc-state-default fc-corner-left fc-corner-right"><a href="?ical" title="iCal"><span>iCal<img src="' + fcLanguage.ical_img + '" class="alignleft" alt="" /></span></a></td>';
+var iCal_link = '<td><span class="fc-header-space"></span></td><td><div class="fc-state-default ical fc-corner-left fc-corner-right"><a href="?ical" title="iCal"><span>iCal<img src="' + fcLanguage.ical_img + '" class="alignleft" alt="" /></span></a></td>';
 jQuery( '.fc-header-left tr' ).append( iCal_link );

@@ -182,6 +182,7 @@ class BPSP_Assignments {
             }
             else {
                 do_action( 'courseware_bibliography_screen' );
+                do_action( 'courseware_assignment_screen' );
                 add_filter( 'courseware_group_template', array( &$this, 'single_assignment_screen' ) );
             }
             
@@ -505,6 +506,7 @@ class BPSP_Assignments {
     function edit_assignment_screen( $vars ) {
         global $bp;
         $nonce_name = 'edit_assignment';
+        $updated_assignment_id = $this->current_assignment;
         
         $old_assignment = $this->is_assignment( $this->current_assignment );
         
@@ -571,6 +573,7 @@ class BPSP_Assignments {
      * Loads editor scripts and styles
      */
     function load_editor() {
+        do_action( 'courseware_editor' );
         wp_enqueue_script( 'assignments' );
         wp_enqueue_style( 'datetimepicker' );
         wp_enqueue_script( 'post' );

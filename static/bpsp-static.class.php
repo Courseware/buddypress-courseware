@@ -33,13 +33,19 @@ class BPSP_Static {
         // Localize datatables
         wp_localize_script( 'datatables', 'oLanguage', $this->datatables_l10n() );
         
+        // InputHint
+        wp_register_script( 'inputhint', BPSP_WEB_URI . '/static/js/inputhint/jquery.inputhint.js', array( 'jquery' ), '1.0' );
+        
         // Loaders
+        wp_register_script( 'courseware-editor', BPSP_WEB_URI . '/static/js/courseware-editor.js', array( 'inputhint' ), BPSP_VERSION, true );
         wp_register_script( 'list-courses', BPSP_WEB_URI . '/static/js/list-courses.js', array( 'datatables' ), BPSP_VERSION, true );
         wp_register_script( 'list-assignments', BPSP_WEB_URI . '/static/js/list-assignments.js', array( 'datatables' ), BPSP_VERSION, true );
+        wp_register_script( 'single-assignment', BPSP_WEB_URI . '/static/js/single-assignment.js', array( 'jquery' ), BPSP_VERSION, true );
         wp_register_script( 'assignments', BPSP_WEB_URI . '/static/js/assignments.js', array( 'datetimepicker' ), BPSP_VERSION, true );
         wp_register_script( 'bibliographies', BPSP_WEB_URI . '/static/js/bibliographies.js', array( 'flexselect', 'datatables' ), BPSP_VERSION, true );
+        wp_register_script( 'new-bibliograpy', BPSP_WEB_URI . '/static/js/new-bibliograpy.js', array( 'inputhint' ), BPSP_VERSION, true );
         wp_register_script( 'gradebook', BPSP_WEB_URI . '/static/js/gradebook.js', array( 'datatables' ), BPSP_VERSION, true );
-        wp_register_script( 'schedules', BPSP_WEB_URI . '/static/js/schedules.js', array( 'datetimepicker' ), BPSP_VERSION, true );
+        wp_register_script( 'schedules', BPSP_WEB_URI . '/static/js/schedules.js', array( 'datetimepicker', 'inputhint' ), BPSP_VERSION, true );
         wp_register_script( 'list-schedules', BPSP_WEB_URI . '/static/js/list-schedules.js', array( 'fullcalendar', 'datatables' ), BPSP_VERSION, true );
         
         // Styles
@@ -53,13 +59,25 @@ class BPSP_Static {
     
         // Hooks
         add_action( 'bp_head', array( &$this, 'load_courseware_css' ) );
+        add_action( 'courseware_editor', array( &$this, 'courseware_editor_enqueues' ) );
         add_action( 'courseware_list_schedules_screen', array( &$this, 'list_schedules_enqueues' ) );
         add_action( 'courseware_list_assignments_screen', array( &$this, 'list_assignments_enqueues' ) );
+        add_action( 'courseware_assignment_screen', array( &$this, 'assignment_enqueues' ) );
         add_action( 'courseware_bibliography_screen', array( &$this, 'bibs_enqueues' ) );
+        add_action( 'courseware_new_bibliography_screen', array( &$this, 'new_bib_enqueues' ) );
         add_action( 'courseware_list_courses_screen', array( &$this, 'list_courses_enqueues' ) );
         add_action( 'courseware_new_schedule_screen', array( &$this, 'schedules_enqueues' ) );
         add_action( 'courseware_edit_schedule_screen', array( &$this, 'schedules_enqueues' ));
         add_action( 'courseware_gradebook_screen', array( &$this, 'gradebook_enqueues' ) );
+    }
+    
+    /**
+     * courseware_editor_enqueues()
+     * Loads the screen editor styles and scripts
+     */
+    function courseware_editor_enqueues() {
+        wp_enqueue_script( 'courseware-editor' );
+        wp_enqueue_style( 'courseware-editor' );
     }
     
     /**
@@ -92,6 +110,10 @@ class BPSP_Static {
         wp_enqueue_style( 'jquery-ui-courseware-custom' );
     }
     
+    function new_bib_enqueues() {
+        wp_enqueue_script( 'new-bibliograpy' );
+    }
+    
     function gradebook_enqueues() {
         wp_enqueue_script( 'gradebook' );
         wp_enqueue_style( 'datatables' );
@@ -107,6 +129,10 @@ class BPSP_Static {
         wp_enqueue_script( 'list-assignments' );
         wp_enqueue_style( 'datatables' );
         wp_enqueue_style( 'jquery-ui-courseware-custom' );
+    }
+    
+    function assignment_enqueues() {
+        wp_enqueue_script( 'single-assignment' );
     }
     
     function list_courses_enqueues() {

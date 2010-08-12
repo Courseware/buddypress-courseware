@@ -373,13 +373,15 @@ class BPSP_Bibliography {
     function screen_handler( $action_vars ) {
         if( isset ( $action_vars[0] ) && 'new_bibliography' == $action_vars[0] ) {
             do_action( 'courseware_bibliography_screen' );
+            do_action( 'courseware_new_bibliography_screen' );
             add_filter( 'courseware_group_template', array( &$this, 'new_bib_screen' ) );
         }
         elseif( isset ( $action_vars[0] ) && 'import_bibliographies' == $action_vars[0] ) {
             add_filter( 'courseware_group_template', array( &$this, 'import_bibs_screen' ) );
         }
-        elseif ( isset ( $action_vars[0] ) && 'edit_bibliography' == $action_vars[0] ) {   
-                add_filter( 'courseware_group_template', array( &$this, 'edit_bib_screen' ) );
+        elseif ( isset ( $action_vars[0] ) && 'edit_bibliography' == $action_vars[0] ) {
+            do_action( 'courseware_new_bibliography_screen' );
+            add_filter( 'courseware_group_template', array( &$this, 'edit_bib_screen' ) );
         }
         elseif( isset ( $action_vars[0] ) && 'delete_bibliography' == $action_vars[0] )
             add_filter( 'courseware_group_template', array( &$this, 'delete_bib_screen' ) );

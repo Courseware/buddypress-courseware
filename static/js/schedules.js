@@ -20,8 +20,10 @@ jQuery( "input[name$='schedule[start_date]']" ).datetimepicker({
 
 // Function will check the start date field and ensure the end date will not be older
 function courseware_toggle_datefields( reset ) {
-    if( reset == true )
-        jQuery( "input[name$='schedule[end_date]']" ).val('');
+    if( reset == true ) {
+        var title = jQuery( "input[name$='schedule[end_date]']" ).attr('title');
+        jQuery( "input[name$='schedule[end_date]']" ).val(title);
+    }
     
     jQuery( "input[name$='schedule[end_date]']" ).datepicker('destroy');
     var start_date = jQuery( "input[name$='schedule[start_date]']" ).datepicker('getDate');
@@ -48,3 +50,8 @@ jQuery( "form #new-schedule-end-date" ).hide();
 jQuery( "input[name$='schedule[start_date]']" )
     .bind( 'change', function() { courseware_toggle_datefields( true ) })
     .bind( 'focusout', function() { courseware_toggle_datefields( true ) });
+
+/* Editor Screens */
+jQuery('#new-assignment-form label').hide();
+jQuery('#new-assignment-form input[type="text"]').inputHint();
+jQuery('#new-assignment-form textarea').inputHint();
