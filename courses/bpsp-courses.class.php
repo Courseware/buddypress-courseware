@@ -46,10 +46,10 @@ class BPSP_Courses {
             'label'                 => __( 'Courses', 'bpsp' ),
             'singular_label'        => __( 'Course', 'bpsp' ),
             'description'           => __( 'BuddyPress ScholarPress Courseware Courses', 'bpsp' ),
-            'public'                => true, //TODO: set to false when stable
+            'public'                => BPSP_DEBUG,
             'publicly_queryable'    => false,
             'exclude_from_search'   => false,
-            'show_ui'               => true, //TODO: set to false when stable
+            'show_ui'               => BPSP_DEBUG,
             'capability_type'       => 'course',
             'hierarchical'          => false,
             'rewrite'               => false,
@@ -60,8 +60,8 @@ class BPSP_Courses {
             wp_die( __( 'BuddyPress Courseware error while registering courses post type.', 'bpsp' ) );
         
         $course_rel_def = array(
-            'public'        => true, //TODO: set to false when stable
-            'show_ui'       => true, //TODO: set to false when stable
+            'public'        => BPSP_DEBUG,
+            'show_ui'       => BPSP_DEBUG,
             'hierarchical'  => false,
             'label'         => __( 'Group ID', 'bpsp'),
             'query_var'     => true,

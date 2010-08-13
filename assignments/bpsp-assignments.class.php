@@ -47,10 +47,10 @@ class BPSP_Assignments {
             'label'                 => __( 'Assignments', 'bpsp' ),
             'singular_label'        => __( 'Assignment', 'bpsp' ),
             'description'           => __( 'BuddyPress ScholarPress Courseware Assignments', 'bpsp' ),
-            'public'                => true, //TODO: set to false when stable
+            'public'                => BPSP_DEBUG,
             'publicly_queryable'    => false,
             'exclude_from_search'   => false,
-            'show_ui'               => true, //TODO: set to false when stable
+            'show_ui'               => BPSP_DEBUG,
             'capability_type'       => 'assignment',
             'hierarchical'          => false,
             'rewrite'               => false,
@@ -61,8 +61,8 @@ class BPSP_Assignments {
             $this->error = __( 'BuddyPress Courseware error while registering assignment post type.', 'bpsp' );
         
         $assignment_rel_def = array(
-            'public'        => true, //TODO: set to false when stable
-            'show_ui'       => true, //TODO: set to false when stable
+            'public'        => BPSP_DEBUG,
+            'show_ui'       => BPSP_DEBUG,
             'hierarchical'  => false,
             'label'         => __( 'Course ID', 'bpsp'),
             'query_var'     => true,

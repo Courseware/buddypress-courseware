@@ -45,10 +45,10 @@ class BPSP_Schedules {
             'label'                 => __( 'Schedules', 'bpsp' ),
             'singular_label'        => __( 'Schedule', 'bpsp' ),
             'description'           => __( 'BuddyPress ScholarPress Courseware Schedules', 'bpsp' ),
-            'public'                => true, //TODO: set to false when stable
+            'public'                => BPSP_DEBUG,
             'publicly_queryable'    => false,
             'exclude_from_search'   => false,
-            'show_ui'               => true, //TODO: set to false when stable
+            'show_ui'               => BPSP_DEBUG,
             'capability_type'       => 'schedule',
             'hierarchical'          => false,
             'rewrite'               => false,

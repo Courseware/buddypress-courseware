@@ -60,10 +60,10 @@ class BPSP_Responses {
             'label'                 => __( 'Responses', 'bpsp' ),
             'singular_label'        => __( 'Response', 'bpsp' ),
             'description'           => __( 'BuddyPress ScholarPress Courseware Responses', 'bpsp' ),
-            'public'                => true, //TODO: set to false when stable
+            'public'                => BPSP_DEBUG,
             'publicly_queryable'    => false,
             'exclude_from_search'   => false,
-            'show_ui'               => true, //TODO: set to false when stable
+            'show_ui'               => BPSP_DEBUG,
             'capability_type'       => 'response',
             'hierarchical'          => false,
             'rewrite'               => false,

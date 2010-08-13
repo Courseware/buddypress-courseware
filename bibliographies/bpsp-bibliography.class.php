@@ -64,10 +64,10 @@ class BPSP_Bibliography {
             'label'                 => __( 'Bibliographies', 'bpsp' ),
             'singular_label'        => __( 'Bibliography', 'bpsp' ),
             'description'           => __( 'BuddyPress ScholarPress Courseware Bibliographies', 'bpsp' ),
-            'public'                => true, //TODO: set to false when stable
+            'public'                => BPSP_DEBUG,
             'publicly_queryable'    => false,
             'exclude_from_search'   => false,
-            'show_ui'               => true, //TODO: set to false when stable
+            'show_ui'               => BPSP_DEBUG,
             'capability_type'       => 'bib',
             'hierarchical'          => false,
             'rewrite'               => false,

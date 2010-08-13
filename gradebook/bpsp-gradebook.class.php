@@ -45,10 +45,10 @@ class BPSP_Gradebook {
             'label'                 => __( 'Gradebooks', 'bpsp' ),
             'singular_label'        => __( 'Gradebook', 'bpsp' ),
             'description'           => __( 'BuddyPress ScholarPress Courseware Gradebook', 'bpsp' ),
-            'public'                => true, //TODO: set to false when stable
+            'public'                => BPSP_DEBUG,
             'publicly_queryable'    => false,
             'exclude_from_search'   => false,
-            'show_ui'               => true, //TODO: set to false when stable
+            'show_ui'               => BPSP_DEBUG,
             'capability_type'       => 'gradebook',
             'hierarchical'          => false,
             'rewrite'               => false,
@@ -59,8 +59,8 @@ class BPSP_Gradebook {
             wp_die( __( 'BuddyPress Courseware error while registering grade post type.', 'bpsp' ) );
         
         $grade_rel_def = array(
-            'public'        => true, //TODO: set to false when stable
-            'show_ui'       => true, //TODO: set to false when stable
+            'public'        => BPSP_DEBUG,
+            'show_ui'       => BPSP_DEBUG,
             'hierarchical'  => false,
             'label'         => __( 'Assignment ID', 'bpsp'),
             'query_var'     => true,
