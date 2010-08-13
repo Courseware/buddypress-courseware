@@ -1,4 +1,4 @@
-<div id="courseware-new-bibliography" >
+<div id="courseware-edit-bibliography" >
     <form action="<?php echo $bibs_form_uri; ?>" method="post" class="standard-form" >
     <div class="courseware-sidebar">
         <h4 class="meta"><?php _e( 'Update Bibliography', 'bpsp' ); ?></h4>
@@ -40,7 +40,7 @@
     </div>
     <div class="courseware-content-wrapper" >
         <div id="bibliography-form-content">
-            <h4><?php _e( 'Author(s)', 'bpsp' ); ?></h4>
+            <h4 class="meta"><?php _e( 'Author(s)', 'bpsp' ); ?></h4>
             <div class="courseware-form-section">
                 <label for="bib[author_lname]"><?php _e( 'Author Last Name', 'bpsp' ); ?></label>
                     <input type="text" name="bib[author_lname]" title="<?php _e( 'Author Last Name', 'bpsp' ); ?>" value="<?php echo $bib['author'] ? $bib['author'] : $bib['author_lname'] ; ?>" />
@@ -51,7 +51,7 @@
                 <label for="bib[author_fname2]"><?php _e( 'Author Two First Name', 'bpsp' ); ?></label>
                     <input type="text" name="bib[author_fname2]" title="<?php _e( 'Author Two First Name', 'bpsp' ); ?>" value="<?php echo $bib['author_fname2']; ?>" />
             </div>
-            <h4><?php _e( 'Publish Information', 'bpsp' ); ?></h4>
+            <h4 class="meta"><?php _e( 'Publish Information', 'bpsp' ); ?></h4>
             <div class="courseware-form-section">
                 <label for="bib[title]"><?php _e( 'Title', 'bpsp' ); ?></label>
                     <input type="text" name="bib[title]" title="<?php _e( 'Title', 'bpsp' ); ?>" value="<?php echo $bib['title']; ?>" />
@@ -70,7 +70,7 @@
                 <label for="bib[wwwtitle]"><?php _e( 'Website Title', 'bpsp' ); ?></label>
                     <input type="text" name="bib[wwwtitle]" title="<?php _e( 'Website Title', 'bpsp' ); ?>" value="<?php echo $bib['wwwtitle']; ?>" />
             </div>
-            <h4><?php _e( 'Additional Information', 'bpsp' ); ?></h4>
+            <h4 class="meta"><?php _e( 'Additional Information', 'bpsp' ); ?></h4>
             <div class="courseware-form-section">
                 <label for="bib[pubdate]"><?php _e( 'Date Published', 'bpsp' ); ?></label>
                     <input type="text" name="bib[pubdate]" title="<?php _e( 'Date Published', 'bpsp' ); ?>" value="<?php echo $bib['pubdate']; ?>" />

@@ -310,9 +310,6 @@ class BPSP_Assignments {
         if( isset( $_POST['assignment'] ) &&
             $_POST['assignment']['object'] == 'group' &&
             BPSP_Courses::is_course( $_POST['assignment']['course_id'] ) &&
-            !empty( $_POST['assignment']['content'] ) &&
-            !empty( $_POST['assignment']['title'] ) &&
-            !empty( $_POST['assignment']['due_date'] ) &&
             isset( $_POST['_wpnonce'] )
         ) {
             $new_assignment = $_POST['assignment'];
@@ -344,8 +341,7 @@ class BPSP_Assignments {
                     } else
                         $vars['error'] = __( 'New assignment could not be added.', 'bpsp' );
                 }
-        } else
-            $vars['error'] = __( 'New assignment could not be added, fill all the fields.', 'bpsp' );
+        }
         
         $vars['posted_data'] = $_POST['assignment'];
         $vars['courses'] = BPSP_Courses::has_courses( $bp->groups->current_group->id );
