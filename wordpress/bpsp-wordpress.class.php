@@ -131,6 +131,7 @@ class BPSP_WordPress {
      * get_posts( $terms, $post_types, $s )
      *
      * A hack to query multiple custom terms
+     * Left for backwards compatibility, on the removal list!
      *
      * @param Mixed $terms, a set of term slugs as keys and taxonomies as values
      * @param Mixed $post_types, a set of post types to query
@@ -145,6 +146,7 @@ class BPSP_WordPress {
         $posts = array();
         
         // Get term ids
+        // TODO: Here's something wrong, totally!!!
         foreach ( $terms as $term => $taxonomy ) {
             $t = get_term_by( 'slug', $taxonomy, $term );
             if( !empty( $t ) )

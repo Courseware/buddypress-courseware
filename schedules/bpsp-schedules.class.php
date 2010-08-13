@@ -183,6 +183,7 @@ class BPSP_Schedules {
      */
     function is_schedule( $schedule_identifier = null ) {
         global $bp;
+        $courseware_uri = bp_get_group_permalink( $bp->groups->current_group ) . 'courseware/' ;
         
         if( !$schedule_identifier )
             $this->current_schedule;
@@ -207,7 +208,7 @@ class BPSP_Schedules {
         $schedule->start_date = get_post_meta( $schedule->ID, 'start_date', true );
         $schedule->end_date = get_post_meta( $schedule->ID, 'end_date', true );
         $schedule->location = get_post_meta( $schedule->ID, 'location', true );
-        $schedule->permalink = $bp->bp_options_nav['groups']['courseware']['link'] . 'schedule/' . $schedule->post_name;
+        $schedule->permalink = $courseware_uri . 'schedule/' . $schedule->post_name;
         $course_id = wp_get_object_terms( $schedule->ID, 'course_id' );
         if( !empty( $course_id ) )
             $schedule->course = BPSP_Courses::is_course( $course_id[0]->name );
@@ -241,7 +242,7 @@ class BPSP_Schedules {
             return null;
         
         foreach ( $schedule_ids as $sid )
-            $schedules[] = $this->is_schedule( $sid );
+            $schedules[] = self::is_schedule( $sid );
         
         return array_filter( $schedules );
     }
@@ -260,7 +261,7 @@ class BPSP_Schedules {
         if( $this->has_schedule_caps( $bp->loggedin_user->id ) || is_super_admin() )
             $options[__( 'New Schedule', 'bpsp' )] = $options[__( 'Home', 'bpsp' )] . '/new_schedule';
         
-        $options[__( 'Schedules', 'bpsp' )] = $options[__( 'Home', 'bpsp' )] . '/schedules';
+        $options[__( 'Calendar', 'bpsp' )] = $options[__( 'Home', 'bpsp' )] . '/schedules';
         return $options;
     }
     
@@ -429,7 +430,6 @@ class BPSP_Schedules {
             $vars['message'] = __( 'No schedules exist.', 'bpsp' );
         
         $vars['name'] = 'list_schedules';
-        $vars['schedules_hanlder_uri'] = $vars['current_uri'] . '/schedule/';
         return $vars;
     }
     
@@ -452,8 +452,7 @@ class BPSP_Schedules {
             $vars['show_edit'] = null;
         
         $vars['name'] = 'single_schedule';
-        $vars['schedule_permalink'] = $vars['current_uri'] . '/schedule/' . $this->current_schedule;
-        $vars['schedule_edit_uri'] = $vars['current_uri'] . '/schedule/' . $this->current_schedule . '/edit';
+        $vars['schedule_edit_uri'] = $schedule->permalink . '/edit';
         $vars['schedule'] = $schedule;
         return $vars;
     }

@@ -232,7 +232,6 @@ class BPSP_Responses {
      * @return Response object if response exists and null if not.
      */
     function is_response( $response_identifier = null ) {
-        
         if( !$response_identifier )
             $response_identifier = $this->current_response;
         
@@ -308,7 +307,7 @@ class BPSP_Responses {
         global $bp;
         $nonce_name = 'add_response';
         
-        if( !$this->has_student_caps( $bp->loggedin_user->id ) || !is_super_admin() ) {
+        if( !$this->has_student_caps( $bp->loggedin_user->id ) && !is_super_admin() || ! is_user_logged_in() ) {
             $vars['die'] = __( 'BuddyPress Courseware Error while forbidden user tried to add a new response.' );
             return $vars;
         }

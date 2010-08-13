@@ -14,20 +14,24 @@ wp_tiny_mce();
                     </select>
             </li>
             <li id="new-assignment-due-date">
-                <input type="text" name="assignment[due_date]" title="<?php _e( 'Due date', 'bpsp' ); ?>" />
+                <input type="text" name="assignment[due_date]" title="<?php _e( 'Due date', 'bpsp' ); ?>"
+                    value="<?php echo $posted_data['due_date'] ? $posted_data['due_date'] : ''; ?>"/>
             </li>
         </ul>
     </div>
     <div id="new-assignment-content" class="courseware-content-wrapper" >
         <div id="new-assignment-content-title">
-            <input type="text" id="assignment-title" name="assignment[title]" class="long" title="<?php _e( 'Assignment Title', 'bpsp' ); ?>"/>
+            <input type="text" id="assignment-title" name="assignment[title]"
+                   value="<?php echo $posted_data['title'] ? $posted_data['title'] : ''; ?>"
+                   class="long" title="<?php _e( 'Assignment Title', 'bpsp' ); ?>"/>
         </div>
         <div id="new-assignment-content-textarea">
             <div id="editor-toolbar">
                 <div id="media-toolbar">
                     <?php echo bpsp_media_buttons(); ?>
                 </div>
-                <?php the_editor( '', 'assignment[content]', 'assignment[title]', false ); ?>
+                <?php $content = $posted_data['content'] ? $posted_data['content'] : ''; ?>
+                <?php the_editor( $content, 'assignment[content]', 'assignment[title]', false ); ?>
             </div>
         </div>
         <div id="new-assignment-content-options">

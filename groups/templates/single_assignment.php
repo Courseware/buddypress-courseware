@@ -44,54 +44,56 @@
             ?>
             </li>
             <?php if( !empty( $assignment->forum_link ) ): ?>
-            <li id="assignment-forum-link">
-                <a href="<?php echo $assignment->forum_link ?>" class="action">
-                    <?php _e( 'Visit Assignment Forum', 'bpsp' ); ?>
-                </a>
-            </li>
-            <?php elseif( isset( $assignment_e_forum_permalink ) && $show_edit ): ?>
-            <li id="assignment-enable-forum">
-                <form method="post" action="<?php echo $assignment_e_forum_permalink; ?>" class="standard-form" >
-                    <input type="submit" class="safe" value="<?php _e( 'Enable Assignment Forum', 'bpsp' ); ?>" />
-                    <?php echo $assignment_e_forum_nonce; ?>
-                </form>
-            </li>
-            <?php else: ?>
-            <li id="assignment-forum-inactive">
-                <a href="#" class="action alert"><?php _e( 'You need forums enabled', 'bpsp' ); ?></a>
-            </li>
+                <li id="assignment-forum-link">
+                    <a href="<?php echo $assignment->forum_link ?>" class="action">
+                        <?php _e( 'Visit Assignment Forum', 'bpsp' ); ?>
+                    </a>
+                </li>
+            <?php elseif( isset( $assignment_e_forum_permalink ) && bp_group_is_admin() ): ?>
+                <li id="assignment-enable-forum">
+                    <form method="post" action="<?php echo $assignment_e_forum_permalink; ?>" class="standard-form" >
+                        <input type="submit" class="safe" value="<?php _e( 'Enable Assignment Forum', 'bpsp' ); ?>" />
+                        <?php echo $assignment_e_forum_nonce; ?>
+                    </form>
+                </li>
+            <?php elseif( bp_group_is_admin() ): ?>
+                <li id="assignment-forum-inactive">
+                    <a href="#" class="action alert"><?php _e( 'You need forums enabled', 'bpsp' ); ?></a>
+                </li>
             <?php endif; ?>
-            <li id="responses">
-                <a href="#courseware-responses-list" class="action">
-                    <?php _e( 'Responses', 'bpsp' ); ?>
-                </a>
-            </li>
+            <?php if( count( $responses ) > 0 ): ?>
+                <li id="responses">
+                    <a href="#courseware-responses-list" class="action">
+                        <?php _e( 'Responses', 'bpsp' ); ?>
+                    </a>
+                </li>
+            <?php endif; ?>
             <?php if( empty( $response ) && isset( $response_add_uri ) ): ?>
-            <li id="assignment-response">
-                <a href="<?php echo $response_add_uri; ?>" class="action">
-                    <?php _e( 'Add a Response', 'bpsp' ); ?>
-                </a>
-            </li>
+                <li id="assignment-response">
+                    <a href="<?php echo $response_add_uri; ?>" class="action">
+                        <?php _e( 'Add a Response', 'bpsp' ); ?>
+                    </a>
+                </li>
             <?php elseif( !empty( $response ) ): ?>
-            <li id="assignment-solution-meta">
-                <a href="<?php echo $response_permalink . $response->post_name; ?>" class="action">
-                    <?php _e( 'Your response', 'bpsp' ); ?>
-                </a>
-            </li>
+                <li id="assignment-solution-meta">
+                    <a href="<?php echo $response_permalink . $response->post_name; ?>" class="action">
+                        <?php _e( 'Your response', 'bpsp' ); ?>
+                    </a>
+                </li>
             <?php endif; ?>
             <?php if( $show_edit ): ?>
-            <li class="edit-link">
-                <a href="<?php echo $assignment_edit_uri; ?>" class="action"><?php _e( 'Edit Assignment', 'bpsp' ); ?></a>
-            </li>
+                <li class="edit-link">
+                    <a href="<?php echo $assignment_edit_uri; ?>" class="action"><?php _e( 'Edit Assignment', 'bpsp' ); ?></a>
+                </li>
             <?php endif; ?>
             <?php if( isset( $has_gradebook_caps ) && $has_gradebook_caps ): ?>
                 <li class="gradebook-link">
                     <a href="<?php echo $assignment_permalink . '/gradebook'; ?>" class="action"><?php _e( 'Gradebook', 'bpsp' ); ?></a>
                 </li>
             <?php endif; ?>
-            <li class="show-bibs">
-                <a href="#courseware-bibs-list" class="action"><?php _e( 'Bibliography', 'bpsp' ); ?></a>
-            </li>
+                <li class="show-bibs">
+                    <a href="#courseware-bibs-list" class="action"><?php _e( 'Bibliography', 'bpsp' ); ?></a>
+                </li>
             <?php if( $show_edit ): ?>
                 <li class="add bib">
                     <a href="#courseware-bibs-form" class="action"><?php _e( 'Quick Add Bibliography', 'bpsp' ); ?></a>

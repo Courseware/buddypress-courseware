@@ -173,15 +173,16 @@ class BPSP_Gradebook {
     }
     
     /**
-     * has_gradebook( $assignment_id = null )
+     * has_gradebook( $assignment_id = null, $force_creation = true )
      *
      * Checks if $assignment_id has a gradebook
      * 
      * @param String $assignment_id, is assignment identifier
-     * default is null which defaults to $this->current_assignment as $assignment_id
+     *  default is null which defaults to $this->current_assignment as $assignment_id
+     * @param Bool $force_creation, to force the creation of a gradebook if none exists
      * @return Int the ID of the gradebook
      */
-    function has_gradebook( $assignment_id = null ) {
+    function has_gradebook( $assignment_id = null, $force_creation = true ) {
         global $bp;
         $gradebook_id = null;
         
@@ -190,29 +191,26 @@ class BPSP_Gradebook {
         
         $assignment = BPSP_Assignments::is_assignment( $assignment_id );
         if( $assignment ) {
-            $gradebook_terms = array(
-                'group_id' => $bp->groups->current_group->id,
-                'assignment_id' => $assignment->ID,
+            $gradebook = reset(
+                get_children( array(
+                    'post_parent' => $assignment->ID,
+                    'post_type' => 'gradebook'
+                ) )
             );
-            $gradebook_post_type = array(
-                'post_type' => 'gradebook',
-            );
-            $gradebook = BPSP_WordPress::get_posts( $gradebook_terms, $gradebook_post_type );
-            if( !empty( $gradebook[0] ) )
-                $gradebook_id = $gradebook[0]->ID;
+            if( !empty( $gradebook ) )
+                $gradebook_id = $gradebook->ID;
         } else
             return null;
         
-        if( !$gradebook_id ) {
+        if( !$gradebook_id && $force_creation ) {
             $gradebook_id = wp_insert_post( array(
                     'post_title' => ' ',
                     'post_type' => 'gradebook',
-                    'post_status' => 'publish'
+                    'post_status' => 'publish',
+                    'post_parent' => $assignment->ID
             ) );
-            if( $gradebook_id ) {
+            if( $gradebook_id )
                 wp_set_post_terms( $gradebook_id, $bp->groups->current_group->id, 'group_id' );
-                wp_set_post_terms( $gradebook_id, $assignment->ID, 'assignment_id' );
-            }
         }
         
         return $gradebook_id;
@@ -285,7 +283,7 @@ class BPSP_Gradebook {
             $user_id = $bp->loggedin_user->id;
         }
         
-        $gradebook_id = $this->has_gradebook( $assignment );
+        $gradebook_id = self::has_gradebook( $assignment, false );
         if( !$gradebook_id )
             return;
         

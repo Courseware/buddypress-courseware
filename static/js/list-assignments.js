@@ -13,6 +13,6 @@ oLanguage.oPaginate.sLast       = '&raquo;';
 jQuery("table.datatables").dataTable( {
     "bJQueryUI": true,
     "oLanguage": oLanguage,
-    "aaSorting": [[ 1, "desc" ]],
+    "aaSorting": [[ 2, "desc" ]],
     "sPaginationType": "full_numbers"
 } );

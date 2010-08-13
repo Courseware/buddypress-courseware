@@ -204,6 +204,7 @@ class BPSP_Assignments {
      */
     function is_assignment( $assignment_identifier = null ) {
         global $bp;
+        $courseware_uri = bp_get_group_permalink( $bp->groups->current_group ) . 'courseware/' ;
         
         if( is_object( $assignment_identifier ) && $assignment_identifier->post_type == "assignment" )
             return $assignment_identifier;
@@ -229,10 +230,9 @@ class BPSP_Assignments {
             $assignment_course = wp_get_object_terms( $assignment[0]->ID, 'course_id' );
             $assignment[0]->course = BPSP_Courses::is_course($assignment_course[0]->name );
             $assignment[0]->forum_link = get_post_meta( $assignment[0]->ID, 'topic_link', true );
-            $assignment[0]->permalink = $bp->bp_options_nav['groups']['courseware']['link'] . 'assignment/' . $assignment[0]->post_name;
+            $assignment[0]->permalink = $courseware_uri . 'assignment/' . $assignment[0]->post_name;
             return $assignment[0];
-        }
-        else
+        } else
             return null;
     }
     
@@ -310,6 +310,9 @@ class BPSP_Assignments {
         if( isset( $_POST['assignment'] ) &&
             $_POST['assignment']['object'] == 'group' &&
             BPSP_Courses::is_course( $_POST['assignment']['course_id'] ) &&
+            !empty( $_POST['assignment']['content'] ) &&
+            !empty( $_POST['assignment']['title'] ) &&
+            !empty( $_POST['assignment']['due_date'] ) &&
             isset( $_POST['_wpnonce'] )
         ) {
             $new_assignment = $_POST['assignment'];
@@ -341,8 +344,10 @@ class BPSP_Assignments {
                     } else
                         $vars['error'] = __( 'New assignment could not be added.', 'bpsp' );
                 }
-        }
+        } else
+            $vars['error'] = __( 'New assignment could not be added, fill all the fields.', 'bpsp' );
         
+        $vars['posted_data'] = $_POST['assignment'];
         $vars['courses'] = BPSP_Courses::has_courses( $bp->groups->current_group->id );
         $vars['name'] = 'new_assignment';
         $vars['group_id'] = $bp->groups->current_group->id;

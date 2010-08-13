@@ -209,6 +209,38 @@ class BPSP_Roles {
         
         return $group_id;
     }
+    
+    /**
+     * is_teacher( $user_id )
+     *
+     * Checks if $user_id is a teacher
+     * @param Int $user_id, user ID to check for
+     * @return Bool, true if is a teacher and false on failure
+     */
+    function is_teacher( $user_id ) {
+        if( __( 'Teacher', 'bpsp') == xprofile_get_field_data( __( 'Role'), $user_id ) )
+            return true;
+        else
+            return false;
+    }
+    
+    /**
+     * get_teachers( $group_id )
+     *
+     * Returns an array with group teachers user_id
+     * @param Int $group_id, the group ID to check for
+     * @return Mixed, an array of user_id's
+     */
+    function get_teachers( $group_id ) {
+        $teachers = array();
+        
+        $group_admins = groups_get_group_admins( $group_id );
+        foreach ( $group_admins as $admin )
+            if( self::is_teacher( $admin->user_id ) )
+                $teachers[] = $admin->user_id;
+        
+        return $teachers;
+    }
 }
 
 ?>

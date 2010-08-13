@@ -19,9 +19,6 @@
                 );
             ?>
             </li>
-            <li class="show-responses">
-                <a href="#courseware-responses-list" class="action"><?php _e( 'Responses', 'bpsp' ); ?></a>
-            </li>
             <li class="show-bibs">
                 <a href="#courseware-bibs-list" class="action"><?php _e( 'Bibliography', 'bpsp' ); ?></a>
             </li>

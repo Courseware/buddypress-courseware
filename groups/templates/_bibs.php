@@ -47,7 +47,7 @@
                 </div>
                 <p>
                     <label for="bib[book][page]"><?php _e( 'Instructions/Description for this entry', 'bpsp'); ?></label>
-                        <input type="text" name="bib[book][desc]" />
+                        <input type="text" class="long" name="bib[book][desc]" />
                 <br />
                     <input type="submit" name="bib[submit]" value="<?php _e( 'Add book', 'bpsp' ); ?>" />
                 </p>

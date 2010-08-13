@@ -5,6 +5,7 @@
             <?php BPSP_Static::get_image( 'loader.gif' ); ?>
         </div>
     </div>
+    <h4 class="meta padded"><?php _e( 'Schedules', 'bpsp' ); ?></h4>
     <table class="datatables">
         <thead>
             <tr>
@@ -21,7 +22,7 @@
         ?>
             <tr>
                 <td class="description">
-                    <a href="<?php echo $schedules_hanlder_uri . $schedule->post_name; ?>">
+                    <a href="<?php echo $schedule->permalink; ?>">
                         <?php echo get_the_excerpt(); ?>
                     </a>
                     <div class="schedule-meta">

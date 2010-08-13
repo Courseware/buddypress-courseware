@@ -191,6 +191,10 @@ class BPSP_Courses {
      */
     function is_course( $course_identifier = null ) {
         global $bp;
+        $courseware_uri = bp_get_group_permalink( $bp->groups->current_group ) . 'courseware/' ;
+        
+        if( is_object( $course_identifier ) && $course_identifier->post_type == "course" )
+            return $course_identifier;
         
         if( !$course_identifier )
             $this->current_course;
@@ -207,9 +211,10 @@ class BPSP_Courses {
         
         $course = get_posts( $course_query );
         
-        if( !empty( $course[0] ) )
+        if( !empty( $course[0] ) ) {
+            $course[0]->permalink = $courseware_uri . 'course/' . $course[0]->post_name;
             return $course[0];
-        else
+        } else
             return null;
     }
     
@@ -221,22 +226,26 @@ class BPSP_Courses {
      * @return null if no groups and Course object if has courses.
      */
     function has_courses( $group_id = null ) {
-        if( !$group_id ) {
-            global $bp;
+        global $bp;
+        $cours_ids = null;
+        $courses = array();
+        
+        if( empty( $group_id ) )
             $group_id = $bp->groups->current_group->id;
-        }
         
-        $course_query = array(
-            'post_type' => 'course',
-            'group_id' => $group_id,
-        );
+        $term_id = get_term_by( 'slug', $group_id, 'group_id' );
+        if( !empty( $term_id ) )
+            $cours_ids = get_objects_in_term( $term_id->term_taxonomy_id, 'group_id' );
         
-        $course = get_posts( $course_query );
-        
-        if( !empty( $course ) )
-            return $course;
+        if( !empty( $cours_ids ) )
+            arsort( $cours_ids ); // Get latest entries first
         else
             return null;
+        
+        foreach ( $cours_ids as $cid )
+            $courses[] = self::is_course( $cid );
+        
+        return array_filter( $courses );
     }
     
     /**

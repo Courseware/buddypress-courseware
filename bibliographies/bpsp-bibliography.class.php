@@ -159,11 +159,11 @@ class BPSP_Bibliography {
     }
     
     /**
-     * has_bibs()
+     * has_bibs( $post_id = null )
      *
      * Loads all the course bibliography entries
      *
-     * @param Int $post_id the id of the course
+     * @param Int $post_id the id of the course, default null
      * @return Mixed a set of entries, or null else
      */
     function has_bibs( $post_id = null ) {
@@ -178,6 +178,22 @@ class BPSP_Bibliography {
             $b = $this->format( $b );
         }
         return $bibs;
+    }
+    
+    /**
+     * get_bibs( $post_id = null )
+     *
+     * Gets all the bibliography entries, static method
+     *
+     * @see BPSP_Bibliography::has_bibs()
+     * @param Int $post_id the id of the post, default null
+     * @return Mixed a set of entries, or null else
+     */
+    function get_bibs( $post_id = null ) {
+        if( $post_id == null )
+            return;
+        
+        return get_post_meta( $post_id, 'bibliography' );
     }
     
     /**

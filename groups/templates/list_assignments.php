@@ -3,6 +3,7 @@
         <thead>
             <tr>
                 <th><?php _e( 'Description', 'bpsp' ); ?></th>
+                <th><?php _e( 'Responses', 'bpsp' ); ?></th>
                 <th><?php _e( 'Due Date', 'bpsp' ); ?></th>
             </tr>
         </thead>
@@ -32,6 +33,11 @@
                             );
                         ?>
                     </div>
+                </td>
+                <td>
+                    <?php
+                        echo count( get_post_meta( $assignment->ID, 'responded_author' ) );
+                    ?>
                 </td>
                 <td>
                     <?php

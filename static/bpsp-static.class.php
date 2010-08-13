@@ -36,6 +36,9 @@ class BPSP_Static {
         // InputHint
         wp_register_script( 'inputhint', BPSP_WEB_URI . '/static/js/inputhint/jquery.inputhint.js', array( 'jquery' ), '1.0' );
         
+        // Sprakline
+        wp_register_script( 'sparkline', BPSP_WEB_URI . '/static/js/sparkline/jquery.sparkline.min.js', array( 'jquery' ), '1.5.1' );
+        
         // Loaders
         wp_register_script( 'courseware-editor', BPSP_WEB_URI . '/static/js/courseware-editor.js', array( 'inputhint' ), BPSP_VERSION, true );
         wp_register_script( 'list-courses', BPSP_WEB_URI . '/static/js/list-courses.js', array( 'datatables' ), BPSP_VERSION, true );
@@ -47,6 +50,7 @@ class BPSP_Static {
         wp_register_script( 'gradebook', BPSP_WEB_URI . '/static/js/gradebook.js', array( 'datatables' ), BPSP_VERSION, true );
         wp_register_script( 'schedules', BPSP_WEB_URI . '/static/js/schedules.js', array( 'datetimepicker', 'inputhint' ), BPSP_VERSION, true );
         wp_register_script( 'list-schedules', BPSP_WEB_URI . '/static/js/list-schedules.js', array( 'fullcalendar', 'datatables' ), BPSP_VERSION, true );
+        wp_register_script( 'group-dashboard', BPSP_WEB_URI . '/static/js/group-dashboard.js', array( 'sparkline' ), BPSP_VERSION, true );
         
         // Styles
         wp_register_style( 'courseware', BPSP_WEB_URI . '/static/css/courseware.css', BPSP_VERSION );
@@ -69,6 +73,7 @@ class BPSP_Static {
         add_action( 'courseware_new_schedule_screen', array( &$this, 'schedules_enqueues' ) );
         add_action( 'courseware_edit_schedule_screen', array( &$this, 'schedules_enqueues' ));
         add_action( 'courseware_gradebook_screen', array( &$this, 'gradebook_enqueues' ) );
+        add_action( 'courseware_group_dashboard', array( &$this, 'group_dashboard_enqueues' ) );
     }
     
     /**
@@ -146,6 +151,10 @@ class BPSP_Static {
         wp_enqueue_style( 'datatables' );
         wp_enqueue_script( 'list-schedules' );
         wp_enqueue_style( 'jquery-ui-courseware-custom' );
+    }
+    
+    function group_dashboard_enqueues() {
+        wp_enqueue_script( 'group-dashboard' );
     }
     
     /**
