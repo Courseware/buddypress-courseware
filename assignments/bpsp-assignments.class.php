@@ -401,6 +401,10 @@ class BPSP_Assignments {
         $vars['course_permalink'] = $vars['current_uri'] . '/course/' . $assignment->course->ID;
         $vars['assignment'] = $assignment;
         
+        //TODO: find why the forum_link is not showing up instantly
+        if( empty( $assignment->forum_link ) && isset( $vars['forum_link'] ) )
+            $assignment->forum_link = $vars['forum_link'];
+        
         if( bp_group_is_forum_enabled() ) {
             $vars['assignment_e_forum_permalink'] = $vars['assignment_permalink'] . '/enable_forum';
             $vars['assignment_e_forum_nonce'] = wp_nonce_field( $e_forum_nonce, '_wpnonce', true, false );
@@ -426,7 +430,8 @@ class BPSP_Assignments {
         
         if( isset( $_POST['_wpnonce'] ) )
             $is_nonce = wp_verify_nonce( $_POST['_wpnonce'], $e_forum_nonce );
-            
+        
+        // Nonce will take care of dublicates
         if( $is_nonce && bp_group_is_forum_enabled() ) {
             $assignment = $this->is_assignment( $this->current_assignment );
             $assignment_forum_id = groups_get_groupmeta( $bp->groups->current_group->id, 'forum_id' );
@@ -454,9 +459,12 @@ class BPSP_Assignments {
                 
                 if( update_post_meta( $assignment->ID, 'topic_link', $topic_permalink ) )
                     $vars['message'] = __( 'Assignment forum created.', 'bpsp' );
+                
+                // Force saving the new permalink to $vars, since it doesn't show up
+                $vars['forum_link'] = $topic_permalink;
             }
         } else
-            $vars['error'] = __( 'Forum forum was not created.', 'bpsp' );
+            $vars['error'] = __( 'Forum was not created.', 'bpsp' );
         
         return $this->single_assignment_screen( $vars );
     }

@@ -63,7 +63,7 @@ class BPSP_Static {
         wp_register_style( 'flexselect', BPSP_WEB_URI . '/static/css/flexselect/jquery.flexselect.css', null, '0.2' );
     
         // Hooks
-        add_action( 'courseware_group_screen_handler', array( &$this, 'load_courseware_css' ) );
+        add_action( 'bp_head', array( &$this, 'load_courseware_css' ) );
         add_action( 'courseware_editor', array( &$this, 'courseware_editor_enqueues' ) );
         add_action( 'courseware_list_schedules_screen', array( &$this, 'list_schedules_enqueues' ) );
         add_action( 'courseware_list_assignments_screen', array( &$this, 'list_assignments_enqueues' ) );

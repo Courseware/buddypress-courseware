@@ -81,11 +81,6 @@
                     </a>
                 </li>
             <?php endif; ?>
-            <?php if( $show_edit ): ?>
-                <li class="edit-link">
-                    <a href="<?php echo $assignment_edit_uri; ?>" class="action"><?php _e( 'Edit Assignment', 'bpsp' ); ?></a>
-                </li>
-            <?php endif; ?>
             <?php if( isset( $has_gradebook_caps ) && $has_gradebook_caps ): ?>
                 <li class="gradebook-link">
                     <a href="<?php echo $assignment_permalink . '/gradebook'; ?>" class="action"><?php _e( 'Gradebook', 'bpsp' ); ?></a>
