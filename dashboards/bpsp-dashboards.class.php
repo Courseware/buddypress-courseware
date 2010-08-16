@@ -37,12 +37,13 @@ class BPSP_Dashboards {
         $group_data['assignment_topics_count'] = 0;
         $group_data['user_grades'] = array();
         
-        $group_data['courses'] = BPSP_Courses::has_courses( $group_id );
-        $group_data['assignments'] = BPSP_Assignments::has_assignments( $group_id );
+        $group_data['courses'] = ( array )BPSP_Courses::has_courses( $group_id );
+        $group_data['assignments'] = ( array )BPSP_Assignments::has_assignments( $group_id );
         $group_data['schedules'] = BPSP_Schedules::has_schedules( $group_id );
         
         $posts = array_merge( $group_data['courses'], $group_data['assignments'] );
         
+        if( $posts )
         foreach ( $posts as &$post ) {
             // Get group bibs
             $group_data['bibliography'] = array_merge( $group_data['bibliography'], BPSP_Bibliography::get_bibs( $post->ID ) );

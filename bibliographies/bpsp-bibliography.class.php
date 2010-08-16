@@ -399,8 +399,11 @@ class BPSP_Bibliography {
             do_action( 'courseware_edit_bibliography_screen' );
             add_filter( 'courseware_group_template', array( &$this, 'edit_bib_screen' ) );
         }
-        elseif( isset ( $action_vars[0] ) && 'delete_bibliography' == $action_vars[0] )
+        elseif( isset ( $action_vars[0] ) && 'delete_bibliography' == $action_vars[0] ) {
+            do_action( 'courseware_bibliography_screen' );
+            do_action( 'courseware_new_bibliography_screen' );
             add_filter( 'courseware_group_template', array( &$this, 'delete_bib_screen' ) );
+        }
     }
 
     /**

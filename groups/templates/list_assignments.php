@@ -16,6 +16,7 @@
                     <?php _e( 'No assignments were added.', 'bpsp' ); ?>
                 </td>
                 <td></td>
+                <td></td>
             </tr>
         <?php
         else:

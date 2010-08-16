@@ -90,7 +90,9 @@
             <?php echo $bibs_nonce; ?>
             <input type="submit" value="<?php _e( 'Update', 'bpsp' ); ?>" />
             <?php if( isset( $back_uri ) ): ?>
-                <a href="<?php echo $back_uri; ?>"><?php _e( 'Go back', 'bpsp' ); ?></a>
+                <div class="alignright submits">
+                    <a href="<?php echo $back_uri; ?>" class="safe action"><?php _e( 'Go back', 'bpsp' ); ?></a>
+                </div>
             <?php endif; ?>
         </div>
     </form>
