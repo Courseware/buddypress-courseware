@@ -1,6 +1,6 @@
 === BuddyPress ScholarPress Courseware ===
 Contributors: sushkov, jeremyboggs, boonebgorges
-Tags: buddypress
+Tags: buddypress, lms, courseware, education, teaching
 Requires at least: WordPress 3.0, BuddyPress 1.2.5
 Tested up to: WordPress 3.0.1 / BuddyPress 1.2.5.2
 Stable tag: 0.1
