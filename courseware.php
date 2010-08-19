@@ -11,7 +11,7 @@ Tested up to: WordPress 3.0.1 / BuddyPress 1.2.5.2
 Author URI: http://github.com/scholarpress/
 */
 
-define( 'BPSP_VERSION', '0.1-beta' );
+define( 'BPSP_VERSION', '0.1' );
 define( 'BPSP_DEBUG', false ); // This will allow you to see post types in wp-admin
 define( 'BPSP_PLUGIN_DIR', dirname( __FILE__ ) );
 define( 'BPSP_WEB_URI', WP_PLUGIN_URL . '/' . basename(BPSP_PLUGIN_DIR) ); //correct path
