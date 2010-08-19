@@ -4,7 +4,7 @@ Plugin Name: BuddyPress ScholarPress Courseware
 Plugin URI: http://scholarpress.net/
 Description: A LMS for BuddyPress.
 Author: Stas Sușcov
-Version: 0.1-beta
+Version: 0.1-rc
 License: GNU/GPL 2
 Requires at least: WordPress 3.0, BuddyPress 1.2.5
 Tested up to: WordPress 3.0.1 / BuddyPress 1.2.5.2
@@ -14,8 +14,7 @@ Author URI: http://stas.nerd.ro/
 define( 'BPSP_VERSION', '0.1-beta' );
 define( 'BPSP_DEBUG', false ); // This will allow you to see post types in wp-admin
 define( 'BPSP_PLUGIN_DIR', dirname( __FILE__ ) );
-define( 'BPSP_WEB_URI', WP_PLUGIN_URL . '/courseware' ); //hardcoded cause of symlinks
-//define( 'BPSP_WEB_URI', WP_PLUGIN_URL . '/' . basename(BPSP_PLUGIN_DIR) ); //correct path
+define( 'BPSP_WEB_URI', WP_PLUGIN_URL . '/' . basename(BPSP_PLUGIN_DIR) ); //correct path
 
 /* Load the components */
 require_once BPSP_PLUGIN_DIR . '/wordpress/bpsp-wordpress.class.php';
@@ -92,8 +91,4 @@ function bpsp_activation() {
 }
 register_activation_hook( 'courseware/courseware.php', 'bpsp_activation' );
 
-/** TEMPORARY HELPERS **/
-function _d($stuff) {
-    echo( '<pre>' . var_dump( $stuff ) . '</pre>');
-}
 ?>
