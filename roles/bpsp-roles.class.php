@@ -72,7 +72,7 @@ class BPSP_Roles {
             $content.= "\n";
             $content.= __( "To review the profile, follow the link below.", 'bpsp' );
             $content.= "\n";
-            $content.= $admin_url . print_r($userdata ) ;
+            $content.= $admin_url;
         }
         return $content;
     }
