@@ -24,6 +24,8 @@ function bpsp_admin_url( $path ) {
 }
 
 function bpsp_make_media_urls( $string ) {
+    // Hack, to make insert image button work
+    $string = str_replace( 'post_id=0', 'post_id=1', $string );
     // This line does not work in .org
     return str_replace( 'media-upload.php?', bpsp_admin_url( 'media-upload.php?bpsp-upload=true&' ), $string );
 }
