@@ -89,6 +89,6 @@ add_action( 'bp_init', 'bpsp_init' );
 function bpsp_activation() {
     BPSP_Roles::register_profile_fields();
 }
-register_activation_hook( 'courseware/courseware.php', 'bpsp_activation' );
+register_activation_hook( 'buddypress-courseware/courseware.php', 'bpsp_activation' );
 
 ?>
