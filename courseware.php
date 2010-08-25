@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: BuddyPress ScholarPress Courseware
-Plugin URI: http://scholarpress.net/
+Plugin URI: http://scholarpress.github.com/buddypress-courseware/
 Description: A LMS for BuddyPress.
 Author: ScholarPress Dev Crew
 Version: 0.1-rc

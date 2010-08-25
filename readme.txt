@@ -33,7 +33,3 @@ Here's the features list:
 == Installation ==
 
 Download and upload the plugin to your plugins folder. Activate it!
-
-== Notes ==
-
-In active development. Marked as RC!
