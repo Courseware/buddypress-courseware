@@ -92,3 +92,4 @@ class BPSP_Notifications {
         return $content;
     }
 }
+?>
