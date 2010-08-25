@@ -10,6 +10,31 @@
     <h2><?php _e('BuddyPress Courseware','bpsp')?></h2>
     <div id="poststuff" class="metabox-holder">
         <div class="postbox">
+            <h3 class="hndle" ><?php _e( 'Global Settings', 'bpsp' )?></h3>
+            <div class="inside">
+                <p>
+                    <?php _e( 'Enabling this, will enable Courseware component for
+                    every existing group.', 'bpsp' )?>
+                </p>
+                <p>
+                    <?php _e( 'A per group option is available in group Admin screen.', 'bpsp' )?>
+                </p>
+                <form action="" method="post" >
+                    <p>
+                        <label>
+                            <input type="checkbox" name="bpsp_global_status" <?php checked( !empty( $bpsp_global_status ) ); ?> />
+                            <strong><?php _e( 'Enable Courseware globally', 'bpsp' ); ?></strong>
+                        </label>
+                    </p>
+                    <p>
+                        <input type="submit" class="button" value="<?php _e( 'Save Changes','bpsp' ); ?>" />
+                        <input type="hidden" name="bpsp_global_status_check" value="true" />
+                        <?php echo $nonce; ?>
+                    </p>
+                </form>
+            </div>
+        </div>
+        <div class="postbox">
             <h3 class="hndle" ><?php _e( 'Default behaviour for Courseware', 'bpsp' )?></h3>
             <div class="inside">
                 <p>

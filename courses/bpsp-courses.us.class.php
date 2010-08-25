@@ -19,6 +19,10 @@ class BPSP_USCourses extends BPSP_Courses {
      */
     function course_group_header() {
         global $bp;
+        
+        if( !$this->has_course_caps( $bp->loggedin_user->id ) )
+            return;
+        
         $c = $this->has_courses();
         if( !empty( $c[0] ) ) {
             $this->current_course = $c[0]->ID;
