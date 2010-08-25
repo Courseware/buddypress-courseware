@@ -12,6 +12,7 @@ A LMS for BuddyPress.
 A BuddyPress GSoC 2010 project.
 
 Here's the features list:
+
 * Class Dashboard
 * Courses
   * Works for both learning models: European/United States
