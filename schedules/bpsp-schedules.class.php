@@ -425,8 +425,9 @@ class BPSP_Schedules {
      */
     function list_schedules_screen( $vars ) {
         $vars['schedules'] = $this->has_schedules();
+        $vars['assignments'] = BPSP_Assignments::has_assignments();
         
-        if( empty( $vars['schedules'] ) )
+        if( empty( $vars['schedules'] ) && empty( $vars['assignments'] ) )
             $vars['message'] = __( 'No schedules exist.', 'bpsp' );
         
         $vars['name'] = 'list_schedules';
@@ -600,7 +601,7 @@ class BPSP_Schedules {
                 $entry = array(
                     "id" => get_the_ID(),
                     "title" => get_the_excerpt(),
-                    "start" => date( 'c', strtotime( $e->post_date ) ),
+                    "start" => date( 'c', strtotime( $e->due_date ) ),
                     "end" => date( 'c', strtotime( $e->due_date ) ),
                     "url" => $e->permalink,
                 );
