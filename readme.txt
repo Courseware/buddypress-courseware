@@ -3,7 +3,7 @@ Contributors: sushkov, jeremyboggs, boonebgorges
 Tags: buddypress, lms, courseware, education, teaching
 Requires at least: WordPress 3.0, BuddyPress 1.2.5
 Tested up to: WordPress 3.0.1 / BuddyPress 1.2.5.2
-Stable tag: 0.1-beta
+Stable tag: 0.1.1
 
 A LMS for BuddyPress.
 
@@ -35,6 +35,15 @@ Here's the features list:
 
 Download and upload the plugin to your plugins folder. Activate it!
 
-== Notes ==
+== Frequently Asked Questions ==
 
-In active development. Marked as beta!
+Before asking questions, please check the [BuddyPress Courseware Handbook](http://scholarpress.github.com/buddypress-courseware/handbook.html).
+
+== Changelog ==
+
+= 0.1.1 =
+* Minor bugfixes, mostly permissions related issues in courses.
+* The calendar now shows the assignment due_dates, even if no schedules exist.
+
+= 0.1 =
+* First stable release.

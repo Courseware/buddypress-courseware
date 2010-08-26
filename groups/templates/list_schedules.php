@@ -1,5 +1,5 @@
 <div id="courseware-schedules-list">
-    <?php if( !empty( $schedules ) ): ?>
+    <?php if( !empty( $schedules ) || !empty( $assignments ) ): ?>
     <div class="courseware-fullcalendar">
         <div id="loading" style="display:none">
             <?php BPSP_Static::get_image( 'loader.gif' ); ?>
@@ -17,8 +17,9 @@
         </thead>
         <tbody>
         <?php
+            if( !empty( $schedules ) )
             foreach ( $schedules as $schedule ):
-            setup_postdata( $schedule );
+                setup_postdata( $schedule );
         ?>
             <tr>
                 <td class="description">

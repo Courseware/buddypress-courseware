@@ -1,17 +1,17 @@
 <?php
 /*
 Plugin Name: BuddyPress ScholarPress Courseware
-Plugin URI: http://scholarpress.net/
+Plugin URI: http://scholarpress.github.com/buddypress-courseware/
 Description: A LMS for BuddyPress.
 Author: ScholarPress Dev Crew
-Version: 0.1-rc
+Version: 0.1-dev
 License: GNU/GPL 2
 Requires at least: WordPress 3.0, BuddyPress 1.2.5
 Tested up to: WordPress 3.0.1 / BuddyPress 1.2.5.2
 Author URI: http://github.com/scholarpress/
 */
 
-define( 'BPSP_VERSION', '0.1' );
+define( 'BPSP_VERSION', '0.1.1' );
 define( 'BPSP_DEBUG', false ); // This will allow you to see post types in wp-admin
 define( 'BPSP_PLUGIN_DIR', dirname( __FILE__ ) );
 define( 'BPSP_WEB_URI', WP_PLUGIN_URL . '/buddypress-courseware' ); //hardcoded cause of symlinks
@@ -90,7 +90,7 @@ add_action( 'bp_init', 'bpsp_init' );
 function bpsp_activation() {
     BPSP_Roles::register_profile_fields();
 }
-register_activation_hook( 'courseware/courseware.php', 'bpsp_activation' );
+register_activation_hook( 'buddypress-courseware/courseware.php', 'bpsp_activation' );
 
 /** TEMPORARY HELPERS **/
 function _d($stuff) {
