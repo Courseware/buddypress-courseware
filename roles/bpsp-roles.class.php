@@ -225,6 +225,31 @@ class BPSP_Roles {
     }
     
     /**
+     * can_teach( $user_id )
+     *
+     * This will check if current user is allowed to manage courseware for current group
+     * @param Int $user_id, the id of the user to check
+     * @return Bool, true or false
+     */
+    function can_teach( $user_id ) {
+        $is_admin = false;
+        
+        if( !BPSP_Groups::courseware_status() )
+            return false;
+        
+        if( is_super_admin( $user_id ) )
+            return true;
+        
+        if( self::is_teacher( $user_id) )
+            $is_admin = true;
+        
+        if( !get_option( 'bpsp_allow_only_admins' ) && !bp_group_is_admin() )
+            $is_admin = false;
+            
+        return $is_admin;
+    }
+    
+    /**
      * get_teachers( $group_id )
      *
      * Returns an array with group teachers user_id

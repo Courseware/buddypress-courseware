@@ -88,35 +88,13 @@ class BPSP_Dashboards {
         
         $vars['founder'] = $bp->groups->current_group->creator_id;
         $vars['teachers'] = BPSP_Roles::get_teachers( $bp->groups->current_group->id );
-        $vars['is_teacher'] = $this->is_teacher( $bp->loggedin_user->id );
+        $vars['is_teacher'] = BPSP_Roles::can_teach( $bp->loggedin_user->id );
         $vars['group_course'] = reset( $group_data['courses'] );
         $vars['bpsp_curriculum'] = get_option( 'bpsp_curriculum' );
         $vars = array_merge( $vars, $group_data );
         $vars['items_limit'] = 5;
         $vars['name'] = 'home';
         return $vars;
-    }
-    
-    /**
-     * is_teacher( $user_id )
-     *
-     * This will check if current user is allowed to administer the dashboard
-     * @param Int $user_id, the id of the user to check
-     * @return Bool, true or false
-     */
-    function is_teacher( $user_id ) {
-        $is_admin = false;
-        
-        if( is_super_admin( $user_id ) )
-            return true;
-        
-        if( BPSP_Roles::is_teacher( $user_id) )
-            $is_admin = true;
-        
-        if( !get_option( 'bpsp_allow_only_admins' ) && !bp_group_is_admin() )
-            $is_admin = false;
-            
-        return $is_admin;
     }
 }
 ?>
