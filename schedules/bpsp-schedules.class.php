@@ -387,7 +387,6 @@ class BPSP_Schedules {
                     $counted_schedules = count( $new_schedules );
                     foreach( $new_schedules as $newschedule ) {
                         $newschedule_id = wp_insert_post( $newschedule );
-                        
                         if( $newschedule_id ) {
                             wp_set_post_terms( $newschedule_id, $newschedule['cw_group_id'], 'group_id' );
                             if( $newschedule['cw_course_id'] )
@@ -504,7 +503,6 @@ class BPSP_Schedules {
     function edit_schedule_screen( $vars ) {
         global $bp;
         $nonce_name = 'edit_schedule';
-        
         $old_schedule = $this->is_schedule( $this->current_schedule );
         $old_schedule->terms = wp_get_object_terms($old_course->ID, 'group_id' );
         
@@ -540,7 +538,7 @@ class BPSP_Schedules {
                     
                     $updated_schedule_id =  wp_update_post( array(
                         'ID'            => $old_schedule->ID,
-                        'post_content'    => sanitize_text_field( $updated_schedule['desc'] ),
+                        'post_content'  => sanitize_text_field( $updated_schedule['desc'] ),
                     ));
                     
                     if( $updated_schedule_id ) {

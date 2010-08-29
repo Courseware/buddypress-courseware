@@ -48,8 +48,7 @@ if( cw_start_date != null )
 // but only if start date field is populated
 jQuery( "form #new-schedule-end-date" ).hide();
 jQuery( "input[name$='schedule[start_date]']" )
-    .bind( 'change', function() { courseware_toggle_datefields( true ) })
-    .bind( 'focusout', function() { courseware_toggle_datefields( true ) });
+    .bind( 'change', function() { courseware_toggle_datefields( true ) });
 
 /* Editor Screens */
 jQuery('#new-assignment-form label').hide();

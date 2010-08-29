@@ -158,6 +158,7 @@ class BPSP_Assignments {
         if( $action_vars[0] == 'new_assignment' ) {
             //Load editor
             add_action( 'bp_head', array( &$this, 'load_editor' ) );
+            do_action( 'courseware_list_assignments_screen' );
             add_filter( 'courseware_group_template', array( &$this, 'new_assignment_screen' ) );
         }
         elseif( $action_vars[0] == 'assignment' ) {
@@ -364,8 +365,9 @@ class BPSP_Assignments {
     function list_assignments_screen( $vars ) {
         global $bp;
         $assignments = get_posts( array(
-            'post_type' => 'assignment',
-            'group_id' => $bp->groups->current_group->id,
+            'numberposts'   => '-1',
+            'post_type'     => 'assignment',
+            'group_id'      => $bp->groups->current_group->id,
         ));
         
         $vars['name'] = 'list_assignments';
