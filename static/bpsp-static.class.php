@@ -176,7 +176,7 @@ class BPSP_Static {
             "sInfo"             => __( "Showing _START_ to _END_ of _TOTAL_ records", 'bpsp' ),
             "sInfoEmpty"        => __( "Showing 0 to 0 of 0 records", 'bpsp' ),
             "sInfoFiltered"     => __( "(filtered from _MAX_ total records)", 'bpsp' ),
-            "sInfoPostFix"      => __( "", 'bpsp' ),
+            "sInfoPostFix"      => __( " ", 'bpsp' ),
             "sSearch"           => __( "Search", 'bpsp' ),
         );
     }
