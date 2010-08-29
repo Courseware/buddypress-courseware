@@ -329,6 +329,7 @@ class BPSP_Courses {
     function list_courses_screen( $vars ) {
         global $bp;
         $courses = get_posts( array(
+            'numberposts'   => '-1',
             'post_type' => 'course',
             'group_id' => $bp->groups->current_group->id,
         ));
