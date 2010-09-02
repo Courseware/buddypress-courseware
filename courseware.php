@@ -37,7 +37,7 @@ require_once BPSP_PLUGIN_DIR . '/notifications/bpsp-notifications.class.php';
  * i18n
  */
 function bpsp_textdomain() {
-    load_plugin_textdomain( 'bpsp', false, BPSP_DIR . '/i18n' );
+    load_plugin_textdomain( 'bpsp', false, basename( BPSP_PLUGIN_DIR ) . '/i18n' );
 }
 add_action( 'init', 'bpsp_textdomain' );
 
