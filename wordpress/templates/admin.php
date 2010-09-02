@@ -45,7 +45,7 @@
                 </p>
                 <p>
                     <?php _e( 'In Europe, is more common the concept of classes,
-                    where students are gourped as <strong><em>students enrolled in
+                    where students are grouped as <strong><em>students enrolled in
                     a class</em></strong>. This means that BuddyPress groups will be
                     treaten as classes. The main workflow difference is
                     that teachers will be able to manage a set of courses
