@@ -234,7 +234,7 @@ class BPSP_Schedules {
         
         $term_id = get_term_by( 'slug', $group_id, 'group_id' );
         if( !empty( $term_id ) )
-            $schedule_ids = get_objects_in_term( $term_id->term_taxonomy_id, 'group_id' );
+            $schedule_ids = get_objects_in_term( $term_id->term_id, 'group_id' );
         
         if( !empty( $schedule_ids ) )
             arsort( $schedule_ids ); // Get latest entries first
