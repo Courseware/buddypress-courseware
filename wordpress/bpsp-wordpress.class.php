@@ -165,7 +165,7 @@ class BPSP_WordPress {
         foreach ( $terms as $term => $taxonomy ) {
             $t = get_term_by( 'slug', $taxonomy, $term );
             if( !empty( $t ) )
-                $term_ids[ $t->term_taxonomy_id ] = $term;
+                $term_ids[ $t->term_id ] = $term;
         }
         // Get term's objects
         if( !empty( $term_ids ) )
