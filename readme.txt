@@ -41,6 +41,9 @@ Before asking questions, please check the [BuddyPress Courseware Handbook](http:
 
 == Changelog ==
 
+= 0.1.4 =
+* Added Italian translation, thanks to [Luca Camellini](http://buddypress.org/community/members/luccame/)
+
 = 0.1.3 =
 * Fixed some spelling errors
 * Fixed critical query bug in get_objects_in_term() with term_id, props boonebgorges and ebar
