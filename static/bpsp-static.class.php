@@ -54,8 +54,8 @@ class BPSP_Static {
         wp_register_script( 'group-dashboard', BPSP_WEB_URI . '/static/js/group-dashboard.js', array( 'sparkline' ), BPSP_VERSION, true );
         
         // Styles
-        wp_register_style( 'courseware', BPSP_WEB_URI . '/static/css/courseware.css', BPSP_VERSION );
-        wp_register_style( 'courseware-editor', BPSP_WEB_URI . '/static/css/courseware-editor.css', BPSP_VERSION );
+        wp_register_style( 'courseware', BPSP_WEB_URI . '/static/css/courseware.css', null, BPSP_VERSION );
+        wp_register_style( 'courseware-editor', BPSP_WEB_URI . '/static/css/courseware-editor.css', null, BPSP_VERSION );
         wp_register_style( 'jquery-ui-courseware-custom', BPSP_WEB_URI . '/static/css/jquery-ui-custom/theme/smoothness/jquery-ui-1.8.2.custom.css', '1.8.2' );
         wp_register_style( 'fullcalendar', BPSP_WEB_URI . '/static/css/fullcalendar/jquery.fullcalendar.css', null, '1.4.7' );
         wp_register_style( 'datatables', BPSP_WEB_URI . '/static/css/datatables/jquery.datatables.css', null, '1.6.2' );
@@ -104,8 +104,8 @@ class BPSP_Static {
         if( empty( $to_load ) )
             return;
         
-        if( file_exists( TEMPLATEPATH . $css_name ) ) {
-            $web_uri = get_bloginfo( 'stylesheet_url' );
+        if( file_exists( STYLESHEETPATH . $css_name ) ) {
+            $web_uri = get_bloginfo( 'stylesheet_directory' );    
             wp_enqueue_style( 'custom-courseware-css', $web_uri . $css_name, null, BPSP_VERSION );
         }
     }
