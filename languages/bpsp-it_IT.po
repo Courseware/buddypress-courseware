@@ -1,0 +1,1879 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: BuddyPress ScholarPress Courseware\n"
+"Report-Msgid-Bugs-To: http://github.com/scholarpress/buddypress-courseware/issues\n"
+"POT-Creation-Date: 2010-08-29 20:07+0200\n"
+"PO-Revision-Date: \n"
+"Last-Translator: Luca Camellini <luccame@gmail.com>\n"
+"Language-Team: luccame <luccame@gmail.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: Italian\n"
+"X-Poedit-Country: ITALY\n"
+"X-Poedit-SourceCharset: utf-8\n"
+
+#: roles/bpsp-roles.class.php:27
+#: roles/bpsp-roles.class.php:92
+#: roles/bpsp-roles.class.php:179
+#: roles/bpsp-roles.class.php:188
+msgid "Apply for Teacher"
+msgstr "Inoltra richiesta per diventare docente."
+
+#: roles/bpsp-roles.class.php:41
+#: roles/bpsp-roles.class.php:45
+#: roles/bpsp-roles.class.php:49
+#: roles/bpsp-roles.class.php:91
+#: roles/bpsp-roles.class.php:106
+#: roles/bpsp-roles.class.php:107
+#: roles/bpsp-roles.class.php:156
+#: roles/bpsp-roles.class.php:186
+#: roles/bpsp-roles.class.php:221
+#: responses/bpsp-responses.class.php:88
+msgid "Teacher"
+msgstr "Docente"
+
+#: roles/bpsp-roles.class.php:42
+msgid "BuddyPress Courseware error, you are not allowed to assign Teachers."
+msgstr "Errore di BuddyPress Courseware, non sei abilitato ad assegnare i docenti."
+
+#: roles/bpsp-roles.class.php:66
+#, php-format
+msgid "Please review %s application to become a teacher."
+msgstr "Si prega di valutare la domanda di %s per diventare docente."
+
+#: roles/bpsp-roles.class.php:68
+#: roles/bpsp-roles.class.php:123
+#: roles/bpsp-roles.class.php:128
+#: groups/bpsp-groups.class.php:97
+#: groups/bpsp-groups.class.php:254
+msgid "Courseware"
+msgstr "Courseware"
+
+#: roles/bpsp-roles.class.php:71
+msgid " applied to become a teacher."
+msgstr " ha fatto richiesta per essere docente."
+
+#: roles/bpsp-roles.class.php:73
+msgid "To review the profile, follow the link below."
+msgstr "Per vedere il profilo, segui il collegamento qui sotto."
+
+#: roles/bpsp-roles.class.php:88
+#: roles/bpsp-roles.class.php:140
+#: roles/bpsp-roles.class.php:147
+#: roles/bpsp-roles.class.php:221
+#: responses/bpsp-responses.class.php:88
+#: responses/bpsp-responses.class.php:176
+msgid "Role"
+msgstr "Ruolo"
+
+#: roles/bpsp-roles.class.php:129
+msgid "Students and Teachers fields. Do not delete as long as you use BuddyPress ScholarPress Courseware!"
+msgstr "Campi Studenti e Docenti. Non eliminarli se usi BuddyPress ScholarPress Courseware!"
+
+#: roles/bpsp-roles.class.php:134
+msgid "BuddyPress Courseware error when saving xProfile group."
+msgstr "Errore di BuddyPress Courseware durante il salvataggio del gruppo xProfile."
+
+#: roles/bpsp-roles.class.php:142
+msgid "You role when using Courseware. Every request requires moderation. Please be patient untill an administrator reviews it."
+msgstr "Il tuo ruolo quando usi Courseware. Ogni richiesta necessita di moderazione. Si prega di attendere la risposta di un amministratore."
+
+#: roles/bpsp-roles.class.php:149
+msgid "BuddyPress Courseware error when saving xProfile field."
+msgstr "Errore di BuddyPress Courseware durante il salvataggio del campo xProfile."
+
+#: roles/bpsp-roles.class.php:167
+#: roles/bpsp-roles.class.php:187
+#: responses/bpsp-responses.class.php:178
+msgid "Student"
+msgstr "Studente"
+
+#: roles/bpsp-roles.class.php:190
+msgid "BuddyPress Courseware error when saving xProfile field options."
+msgstr "Errore di BuddyPress Courseware durante il salvataggio delle opzioni del campo xProfile."
+
+#: responses/bpsp-responses.class.php:60
+msgid "Responses"
+msgstr "Risposte"
+
+#: responses/bpsp-responses.class.php:61
+msgid "Response"
+msgstr "Risposta"
+
+#: responses/bpsp-responses.class.php:62
+msgid "BuddyPress ScholarPress Courseware Responses"
+msgstr "Risposte di BuddyPress ScholarPress Courseware"
+
+#: responses/bpsp-responses.class.php:74
+msgid "BuddyPress Courseware error while registering response post type."
+msgstr "Errore di BuddyPress Courseware durante la registrazione del tipo di articolo risposta."
+
+#: responses/bpsp-responses.class.php:312
+msgid "BuddyPress Courseware Error while forbidden user tried to add a new response."
+msgstr "Errore di BuddyPress Courseware mentre un utente non autorizzato ha tentato di creare una nuova risposta."
+
+#: responses/bpsp-responses.class.php:325
+msgid "Nonce Error while adding a response."
+msgstr "Nonce Error durante la creazione della risposta."
+
+#: responses/bpsp-responses.class.php:329
+msgid "You already sent your response."
+msgstr "Hai già inviato la tua risposta."
+
+#: responses/bpsp-responses.class.php:348
+msgid "New response was added."
+msgstr "Una nuova risposta è stata aggiunta."
+
+#: responses/bpsp-responses.class.php:351
+msgid "New response could not be added (fill the title/content)."
+msgstr "Impossibile aggiungere la nuova risposta (compila il titolo/contenuto)."
+
+#: responses/bpsp-responses.class.php:445
+msgid "Nonce Error while deleting the response."
+msgstr "Nonce Error durante l'eliminazione della risposta."
+
+#: responses/bpsp-responses.class.php:455
+msgid "BuddyPress Courseware Error while forbidden user tried to delete the response."
+msgstr "Errore di BuddyPress Courseware mentre un utente non autorizzato ha tentato di eliminare la risposta."
+
+#: responses/bpsp-responses.class.php:460
+msgid "Response deleted successfully."
+msgstr "Risposta eliminata con successo."
+
+#: assignments/bpsp-assignments.class.php:47
+#: assignments/bpsp-assignments.class.php:288
+msgid "Assignments"
+msgstr "Esercitazioni"
+
+#: assignments/bpsp-assignments.class.php:48
+msgid "Assignment"
+msgstr "Esercitazione"
+
+#: assignments/bpsp-assignments.class.php:49
+msgid "BuddyPress ScholarPress Courseware Assignments"
+msgstr "Esercitazioni di BuddyPress ScholarPress Courseware"
+
+#: assignments/bpsp-assignments.class.php:61
+msgid "BuddyPress Courseware error while registering assignment post type."
+msgstr "Errore di BuddyPress Courseware durante la registrazione del tipo di articolo esercitazione."
+
+#: assignments/bpsp-assignments.class.php:67
+msgid "Course ID"
+msgstr "ID Corso"
+
+#: assignments/bpsp-assignments.class.php:82
+msgid "BuddyPress Courseware error while registering assignment taxonomies."
+msgstr "Errore di BuddyPress Courseware durante la registrazione delle tassonomie delle esercitazioni."
+
+#: assignments/bpsp-assignments.class.php:285
+msgid "New Assignment"
+msgstr "Nuova Esercitazione"
+
+#: assignments/bpsp-assignments.class.php:285
+#: assignments/bpsp-assignments.class.php:288
+#: bibliographies/bpsp-bibliography.class.php:420
+#: bibliographies/bpsp-bibliography.class.php:423
+#: bibliographies/bpsp-bibliography.class.php:518
+#: bibliographies/bpsp-bibliography.class.php:521
+#: groups/bpsp-groups.class.php:106
+#: groups/bpsp-groups.class.php:123
+#: groups/bpsp-groups.class.php:164
+msgid "Home"
+msgstr "Home"
+
+#: assignments/bpsp-assignments.class.php:306
+msgid "BuddyPress Courseware Error while forbidden user tried to add a new assignment."
+msgstr "Errore di BuddyPress Courseware mentre un utente non autorizzato ha tentato di creare una nuova esercitazione."
+
+#: assignments/bpsp-assignments.class.php:319
+msgid "Nonce Error while adding an assignment."
+msgstr "Nonce Error durante la creazione dell'esercitazione."
+
+#: assignments/bpsp-assignments.class.php:339
+msgid "New assignment was added."
+msgstr "La nuova esercitazione è stata aggiunta."
+
+#: assignments/bpsp-assignments.class.php:343
+msgid "New assignment could not be added."
+msgstr "Impossibile aggiungere la nuova esercitazione."
+
+#: assignments/bpsp-assignments.class.php:445
+msgid "Courseware Assignment Link"
+msgstr "Collegamento Esercitazione Courseware"
+
+#: assignments/bpsp-assignments.class.php:448
+msgid ", assignment"
+msgstr ", esercitazione"
+
+#: assignments/bpsp-assignments.class.php:463
+msgid "Assignment forum created."
+msgstr "Il forum dell'esercitazione è stato creato."
+
+#: assignments/bpsp-assignments.class.php:469
+msgid "Forum was not created."
+msgstr "Il forum non è stato creato."
+
+#: assignments/bpsp-assignments.class.php:493
+msgid "Nonce Error while deleting the assignment."
+msgstr "Nonce Error durante l'eliminazione dell'esercitazione."
+
+#: assignments/bpsp-assignments.class.php:500
+msgid "BuddyPress Courseware Error while forbidden user tried to delete the assignment."
+msgstr "Errore di BuddyPress Courseware mentre un utente non autorizzato ha tentato di eliminare l'esercitazione."
+
+#: assignments/bpsp-assignments.class.php:504
+msgid "Assignment deleted successfully."
+msgstr "Esercitazione eliminata con successo."
+
+#: assignments/bpsp-assignments.class.php:529
+msgid "BuddyPress Courseware Error while forbidden user tried to update the assignment."
+msgstr "Errore di BuddyPress Courseware mentre un utente non autorizzato ha tentato di aggiornare l'esercitazione."
+
+#: assignments/bpsp-assignments.class.php:542
+msgid "Nonce Error while editing the assignment."
+msgstr "Nonce Error durante la modifica dell'esercitazione."
+
+#: assignments/bpsp-assignments.class.php:560
+msgid "Assignment was updated."
+msgstr "L'esercitazione è stata aggiornata."
+
+#: assignments/bpsp-assignments.class.php:564
+msgid "Assignment could not be updated."
+msgstr "Impossibile aggiornare l'esercitazione."
+
+#: static/bpsp-static.class.php:173
+msgid "Processing..."
+msgstr "In elaborazione..."
+
+#: static/bpsp-static.class.php:174
+msgid "Display _MENU_ records per page"
+msgstr "Mostra _MENU_ voci per pagina"
+
+#: static/bpsp-static.class.php:175
+msgid "Nothing found - sorry"
+msgstr "Spiacente, nessun risultato."
+
+#: static/bpsp-static.class.php:176
+msgid "Showing _START_ to _END_ of _TOTAL_ records"
+msgstr "Stai vedendo le voci da _START_ a _END_ su _TOTAL_"
+
+#: static/bpsp-static.class.php:177
+msgid "Showing 0 to 0 of 0 records"
+msgstr "Stai vedendo i record da 0 a 0 su 0"
+
+#: static/bpsp-static.class.php:178
+msgid "(filtered from _MAX_ total records)"
+msgstr "(filtrati da _MAX_ voci totali)"
+
+#: static/bpsp-static.class.php:179
+msgid " "
+msgstr " "
+
+#: static/bpsp-static.class.php:180
+msgid "Search"
+msgstr "Ricerca"
+
+#: static/bpsp-static.class.php:191
+msgid "today"
+msgstr "oggi"
+
+#: static/bpsp-static.class.php:192
+msgid "month"
+msgstr "mese"
+
+#: static/bpsp-static.class.php:193
+msgid "week"
+msgstr "settimana"
+
+#: static/bpsp-static.class.php:194
+msgid "day"
+msgstr "giorno"
+
+#: static/bpsp-static.class.php:198
+msgid "H(:mm)"
+msgstr "H(:mm)"
+
+#: static/bpsp-static.class.php:205
+#: static/bpsp-static.class.php:223
+msgid "1"
+msgstr "1"
+
+#: static/bpsp-static.class.php:217
+msgid "Done"
+msgstr "Fatto"
+
+#: static/bpsp-static.class.php:218
+msgid "Prev"
+msgstr "Prec."
+
+#: static/bpsp-static.class.php:219
+msgid "Next"
+msgstr "Succ."
+
+#: static/bpsp-static.class.php:220
+msgid "Today"
+msgstr "Oggi"
+
+#: static/bpsp-static.class.php:224
+#: static/bpsp-static.class.php:225
+msgid "false"
+msgstr "falso"
+
+#: static/bpsp-static.class.php:230
+msgid "January"
+msgstr "Gennaio"
+
+#: static/bpsp-static.class.php:231
+msgid "February"
+msgstr "Febbraio"
+
+#: static/bpsp-static.class.php:232
+msgid "March"
+msgstr "Marzo"
+
+#: static/bpsp-static.class.php:233
+msgid "April"
+msgstr "Aprile"
+
+#: static/bpsp-static.class.php:234
+#: static/bpsp-static.class.php:250
+msgid "May"
+msgstr "Maggio"
+
+#: static/bpsp-static.class.php:235
+msgid "June"
+msgstr "Giugno"
+
+#: static/bpsp-static.class.php:236
+msgid "July"
+msgstr "Luglio"
+
+#: static/bpsp-static.class.php:237
+msgid "August"
+msgstr "Agosto"
+
+#: static/bpsp-static.class.php:238
+msgid "September"
+msgstr "Settembre"
+
+#: static/bpsp-static.class.php:239
+msgid "October"
+msgstr "Ottobre"
+
+#: static/bpsp-static.class.php:240
+msgid "November"
+msgstr "Novembre"
+
+#: static/bpsp-static.class.php:241
+msgid "December"
+msgstr "Dicembre"
+
+#: static/bpsp-static.class.php:246
+msgid "Jan"
+msgstr "Gen"
+
+#: static/bpsp-static.class.php:247
+msgid "Feb"
+msgstr "Feb"
+
+#: static/bpsp-static.class.php:248
+msgid "Mar"
+msgstr "Mar"
+
+#: static/bpsp-static.class.php:249
+msgid "Apr"
+msgstr "Apr"
+
+#: static/bpsp-static.class.php:251
+msgid "Jun"
+msgstr "Giu"
+
+#: static/bpsp-static.class.php:252
+msgid "Jul"
+msgstr "Lug"
+
+#: static/bpsp-static.class.php:253
+msgid "Aug"
+msgstr "Ago"
+
+#: static/bpsp-static.class.php:254
+msgid "Sep"
+msgstr "Set"
+
+#: static/bpsp-static.class.php:255
+msgid "Oct"
+msgstr "Ott"
+
+#: static/bpsp-static.class.php:256
+msgid "Nov"
+msgstr "Nov"
+
+#: static/bpsp-static.class.php:257
+msgid "Dec"
+msgstr "Dic"
+
+#: static/bpsp-static.class.php:262
+msgid "Sunday"
+msgstr "Domenica"
+
+#: static/bpsp-static.class.php:263
+msgid "Monday"
+msgstr "Lunedì"
+
+#: static/bpsp-static.class.php:264
+msgid "Tuesday"
+msgstr "Martedì"
+
+#: static/bpsp-static.class.php:265
+msgid "Wednesday"
+msgstr "Mercoledì"
+
+#: static/bpsp-static.class.php:266
+msgid "Thursday"
+msgstr "Giovedì"
+
+#: static/bpsp-static.class.php:267
+msgid "Friday"
+msgstr "Venerdì"
+
+#: static/bpsp-static.class.php:268
+msgid "Saturday"
+msgstr "Sabato"
+
+#: static/bpsp-static.class.php:273
+msgid "Sun"
+msgstr "Dom"
+
+#: static/bpsp-static.class.php:274
+msgid "Mon"
+msgstr "Lun"
+
+#: static/bpsp-static.class.php:275
+msgid "Tue"
+msgstr "Mar"
+
+#: static/bpsp-static.class.php:276
+msgid "Wed"
+msgstr "Mer"
+
+#: static/bpsp-static.class.php:277
+msgid "Thu"
+msgstr "Gio"
+
+#: static/bpsp-static.class.php:278
+msgid "Fri"
+msgstr "Ven"
+
+#: static/bpsp-static.class.php:279
+msgid "Sat"
+msgstr "Sab"
+
+#: static/bpsp-static.class.php:284
+msgid "Su"
+msgstr "Do"
+
+#: static/bpsp-static.class.php:285
+msgid "Mo"
+msgstr "Lu"
+
+#: static/bpsp-static.class.php:286
+msgid "Tu"
+msgstr "Ma"
+
+#: static/bpsp-static.class.php:287
+msgid "We"
+msgstr "Me"
+
+#: static/bpsp-static.class.php:288
+msgid "Th"
+msgstr "Gi"
+
+#: static/bpsp-static.class.php:289
+msgid "Fr"
+msgstr "Ve"
+
+#: static/bpsp-static.class.php:290
+msgid "Sa"
+msgstr "Sa"
+
+#: gradebook/bpsp-gradebook.class.php:45
+msgid "Gradebooks"
+msgstr "Registri Valutazioni"
+
+#: gradebook/bpsp-gradebook.class.php:46
+msgid "Gradebook"
+msgstr "Registro Valutazioni"
+
+#: gradebook/bpsp-gradebook.class.php:47
+msgid "BuddyPress ScholarPress Courseware Gradebook"
+msgstr "Registro Valutazioni di BuddyPress ScholarPress Courseware"
+
+#: gradebook/bpsp-gradebook.class.php:59
+msgid "BuddyPress Courseware error while registering grade post type."
+msgstr "Errore di BuddyPress Courseware durante la registrazione del tipo di articolo valutazione."
+
+#: gradebook/bpsp-gradebook.class.php:65
+msgid "Assignment ID"
+msgstr "ID Esercitazione"
+
+#: gradebook/bpsp-gradebook.class.php:80
+msgid "BuddyPress Courseware error while registering grade taxonomies."
+msgstr "Errore di BuddyPress Courseware durante la registrazione delle tassonomie delle valutazioni."
+
+#: gradebook/bpsp-gradebook.class.php:363
+msgid "BuddyPress Courseware Error while forbidden user tried to manage gradebook."
+msgstr "Errore di BuddyPress Courseware mentre un utente non autorizzato ha tentato di gestire il registro delle valutazioni."
+
+#: gradebook/bpsp-gradebook.class.php:373
+msgid "BuddyPress Courseware Nonce Error while updating gradebook."
+msgstr "Errore Nonce di BuddyPress Courseware durante l'aggiornamento del registro valutazioni."
+
+#: gradebook/bpsp-gradebook.class.php:379
+msgid "BuddyPress Courseware Error while creating gradebook."
+msgstr "Errore di BuddyPress Courseware durante la creazione del registro valutazioni."
+
+#: gradebook/bpsp-gradebook.class.php:393
+msgid "Gradebook saved."
+msgstr "Registro valutazioni salvato."
+
+#: gradebook/bpsp-gradebook.class.php:422
+msgid "BuddyPress Courseware Nonce Error while clearing gradebook."
+msgstr "Errore Nonce di BuddyPress Courseware durante la pulizia del registro valutazioni."
+
+#: gradebook/bpsp-gradebook.class.php:431
+msgid "Gradebook was cleared"
+msgstr "Registro valutazioni pulito"
+
+#: gradebook/bpsp-gradebook.class.php:448
+msgid "BuddyPress Courseware Nonce Error while importing gradebook."
+msgstr "Errore Nonce di BuddyPress Courseware durante l'importazione del registro valutazioni."
+
+#: gradebook/bpsp-gradebook.class.php:464
+msgid "Data imported successfully, but it is not saved yet! Save this form changes to keep the data."
+msgstr "Dati importati con successo, ma non ancora salvati! Premi salva per conservare i dati."
+
+#: bibliographies/bpsp-bibliography.class.php:64
+msgid "Bibliographies"
+msgstr "Bibliografie"
+
+#: bibliographies/bpsp-bibliography.class.php:65
+#: bibliographies/bpsp-bibliography.class.php:423
+#: groups/templates/new_bibliography.php:28
+msgid "Bibliography"
+msgstr "Bibliografia"
+
+#: bibliographies/bpsp-bibliography.class.php:66
+msgid "BuddyPress ScholarPress Courseware Bibliographies"
+msgstr "Bibliografie di BuddyPress ScholarPress Courseware"
+
+#: bibliographies/bpsp-bibliography.class.php:78
+msgid "BuddyPress Courseware error while registering bibliography post type."
+msgstr "Errore di BuddyPress Courseware durante la registrazione del tipo di articolo bibliografia."
+
+#: bibliographies/bpsp-bibliography.class.php:441
+msgid "BuddyPress Courseware Error while forbidden user tried to delete bibliography."
+msgstr "Errore di BuddyPress Courseware mentre un utente non autorizzato ha tentato di eliminare la bibliografia."
+
+#: bibliographies/bpsp-bibliography.class.php:447
+msgid "BuddyPress Courseware Nonce Error while deleting a post."
+msgstr "Errore Nonce di BuddyPress Courseware durante l'eliminazione dell'articolo."
+
+#: bibliographies/bpsp-bibliography.class.php:471
+msgid "Entry deleted."
+msgstr "Voce eliminata."
+
+#: bibliographies/bpsp-bibliography.class.php:473
+msgid "Entry could not be deleted."
+msgstr "Impossibile eliminare la voce."
+
+#: bibliographies/bpsp-bibliography.class.php:475
+#: bibliographies/bpsp-bibliography.class.php:545
+msgid "Entry could not be found."
+msgstr "Impossibile trovare la voce."
+
+#: bibliographies/bpsp-bibliography.class.php:478
+#: bibliographies/bpsp-bibliography.class.php:548
+msgid "No Bibliography database was created."
+msgstr "Non è stato creato nessun database bibliografico."
+
+#: bibliographies/bpsp-bibliography.class.php:499
+msgid "BuddyPress Courseware Error while forbidden user tried to edit bibliography."
+msgstr "Errore di BuddyPress Courseware mentre un utente non autorizzato ha tentato di modificare la bibliografia."
+
+#: bibliographies/bpsp-bibliography.class.php:505
+msgid "BuddyPress Courseware Nonce Error while editing bibliography."
+msgstr "Errore Nonce di BuddyPress Courseware durante la modifica della bibliografia."
+
+#: bibliographies/bpsp-bibliography.class.php:539
+msgid "Entry updated."
+msgstr "Voce aggiornata."
+
+#: bibliographies/bpsp-bibliography.class.php:542
+msgid "Entry could not be updated. Or nothing changed."
+msgstr "Impossibile aggiornare la voce. Oppure nessuna modifica apportata."
+
+#: bibliographies/bpsp-bibliography.class.php:578
+#: bibliographies/bpsp-bibliography.class.php:636
+msgid "BuddyPress Courseware Error while forbidden user tried to add a new bibliography."
+msgstr "Errore di BuddyPress Courseware mentre un utente non autorizzato ha tentato di creare una nuova bibliografia."
+
+#: bibliographies/bpsp-bibliography.class.php:584
+msgid "BuddyPress Courseware Nonce Error while adding bibliography."
+msgstr "Errore Nonce di BuddyPress Courseware durante la creazione della bibliografia."
+
+#: bibliographies/bpsp-bibliography.class.php:593
+msgid "Entry added."
+msgstr "Voce aggiunta."
+
+#: bibliographies/bpsp-bibliography.class.php:595
+#: bibliographies/bpsp-bibliography.class.php:602
+#: bibliographies/bpsp-bibliography.class.php:743
+msgid "Entry could not be added"
+msgstr "Impossibile aggiungere la voce"
+
+#: bibliographies/bpsp-bibliography.class.php:600
+#: bibliographies/bpsp-bibliography.class.php:741
+msgid "Entry added"
+msgstr "Voce aggiunta"
+
+#: bibliographies/bpsp-bibliography.class.php:606
+#: bibliographies/bpsp-bibliography.class.php:747
+msgid "Book added"
+msgstr "Libro aggiunto"
+
+#: bibliographies/bpsp-bibliography.class.php:608
+#: bibliographies/bpsp-bibliography.class.php:749
+msgid "Book could not be added"
+msgstr "Impossibile aggiungere il libro"
+
+#: bibliographies/bpsp-bibliography.class.php:690
+msgid "entries were imported."
+msgstr "voci sono statenimportate."
+
+#: bibliographies/bpsp-bibliography.class.php:693
+msgid "entries were not imported (caused by duplication or misformat)."
+msgstr "le voci non sono state importate (a causa di duplicazione o formato non valido)."
+
+#: bibliographies/bpsp-bibliography.class.php:726
+msgid "BuddyPress Courseware Error while forbidden user tried to add bibliography entries."
+msgstr "Errore di BuddyPress Courseware mentre un utente non autorizzato ha tentato di aggiungere una voce alla bibliografia."
+
+#: bibliographies/bpsp-bibliography.class.php:734
+msgid "Bibliography added"
+msgstr "Bibliografia aggiunta"
+
+#: bibliographies/bpsp-bibliography.class.php:736
+msgid "Bibliography could not be added"
+msgstr "Impossibile aggiungere la bibliografia"
+
+#: bibliographies/bpsp-bibliography.class.php:751
+msgid "No bibliography entry could be added."
+msgstr "Impossibile aggiungere voci bibliografiche."
+
+#: notifications/bpsp-notifications.class.php:58
+msgid "Your assignment was graded."
+msgstr "La tua esercitazione è stata valutata."
+
+#: notifications/bpsp-notifications.class.php:61
+msgid " graded your assignment: "
+msgstr " ha valutato la tua esercitazione:"
+
+#: notifications/bpsp-notifications.class.php:65
+msgid "Follow the link above to see the grade."
+msgstr "Segui il collegamento qui sopra per vedere la valutazione."
+
+#: notifications/bpsp-notifications.class.php:83
+msgid "Student replied to your assignment."
+msgstr "Uno studente ha risposto ad un'esercitazione."
+
+#: notifications/bpsp-notifications.class.php:86
+msgid " added a response to: "
+msgstr " ha inviato una risposta a:"
+
+#: notifications/bpsp-notifications.class.php:90
+msgid "Follow the link above to see it."
+msgstr "Segui il collegamento qui sopra per vederlo."
+
+#: activity/bpsp-activity.class.php:28
+msgid "New assignment"
+msgstr "Nuova esercitazione"
+
+#: activity/bpsp-activity.class.php:29
+msgid "New course"
+msgstr "Nuovo corso"
+
+#: activity/bpsp-activity.class.php:30
+msgid "New response"
+msgstr "Nuova risposta"
+
+#: activity/bpsp-activity.class.php:31
+msgid "New Schedule"
+msgstr "Nuova Pianificazione"
+
+#: activity/bpsp-activity.class.php:40
+msgid "Show New Courses"
+msgstr "Mostra Nuovi Corsi"
+
+#: activity/bpsp-activity.class.php:41
+msgid "Show New Assignments"
+msgstr "Mostra Nuove Esercitazioni"
+
+#: activity/bpsp-activity.class.php:42
+msgid "Show New Schedules"
+msgstr "Mostra Nuove Pianificazioni"
+
+#: activity/bpsp-activity.class.php:43
+msgid "Show New Responses"
+msgstr "Mostra Nuove Risposte"
+
+#: activity/bpsp-activity.class.php:57
+#, php-format
+msgid "%s created assignment %s in %s Courseware:"
+msgstr "%s ha creato l'esercitazione %s nel Courseware di %s:"
+
+#: activity/bpsp-activity.class.php:87
+#, php-format
+msgid "%s created course %s in %s Courseware:"
+msgstr "%s ha creato il corso %s nel Courseware di %s:"
+
+#: activity/bpsp-activity.class.php:119
+#, php-format
+msgid "%s added a response %s to %s Courseware Assignment:"
+msgstr "%s ha aggiunto una risposta %s nell'esercitazione Courseware di %s:"
+
+#: activity/bpsp-activity.class.php:149
+#, php-format
+msgid "%s added %s schedules to %s Courseware:"
+msgstr "%s ha aggiunto una pianificazione %s nel Courseware di %s:"
+
+#: groups/bpsp-groups.class.php:289
+msgid "Group Courseware settings were successfully updated."
+msgstr "Impostazioni Courseware del gruppo aggiornate con successo."
+
+#: groups/bpsp-groups.class.php:291
+msgid "Group Courseware settings were not updated."
+msgstr "Le impostazioni Courseware del gruppo non sono state aggiornate."
+
+#: groups/templates/new_bibliography.php:4
+msgid "Bibliography Tools"
+msgstr "Strumenti Bibliografici"
+
+#: groups/templates/new_bibliography.php:9
+msgid "Select a type of source..."
+msgstr "Seleziona un tipo di sorgente..."
+
+#: groups/templates/new_bibliography.php:10
+msgid "Book"
+msgstr "Libro"
+
+#: groups/templates/new_bibliography.php:11
+msgid "Article"
+msgstr "Articolo"
+
+#: groups/templates/new_bibliography.php:12
+msgid "Volume Chapter"
+msgstr "Capitolo del volume"
+
+#: groups/templates/new_bibliography.php:13
+msgid "Unpublished"
+msgstr "Non pubblicato"
+
+#: groups/templates/new_bibliography.php:14
+msgid "Website"
+msgstr "Sito web"
+
+#: groups/templates/new_bibliography.php:15
+msgid "Webpage"
+msgstr "Pagina web"
+
+#: groups/templates/new_bibliography.php:16
+msgid "Video"
+msgstr "Video"
+
+#: groups/templates/new_bibliography.php:17
+msgid "Audio"
+msgstr "Audio"
+
+#: groups/templates/new_bibliography.php:22
+msgid "Add a new bibliography"
+msgstr "Crea nuova bibliografia"
+
+#: groups/templates/new_bibliography.php:25
+msgid "Import Bibliography"
+msgstr "Importa Bibliografia"
+
+#: groups/templates/new_bibliography.php:31
+msgid "Quick Add Book"
+msgstr "Inserimento Veloce Libro"
+
+#: groups/templates/new_bibliography.php:34
+msgid "Quick Add Webpage"
+msgstr "Inserimento Veloce Pagina web"
+
+#: groups/templates/new_bibliography.php:40
+msgid "Author(s)"
+msgstr "Autore/i"
+
+#: groups/templates/new_bibliography.php:42
+#: groups/templates/new_bibliography.php:43
+msgid "Author Last Name"
+msgstr "Cognome Autore"
+
+#: groups/templates/new_bibliography.php:44
+#: groups/templates/new_bibliography.php:45
+msgid "Author First Name"
+msgstr "Nome Autore"
+
+#: groups/templates/new_bibliography.php:46
+#: groups/templates/new_bibliography.php:47
+msgid "Author Two Last Name"
+msgstr "Cognome Secondo Autore"
+
+#: groups/templates/new_bibliography.php:48
+#: groups/templates/new_bibliography.php:49
+msgid "Author Two First Name"
+msgstr "Nome Secondo Autore"
+
+#: groups/templates/new_bibliography.php:51
+msgid "Publish Information"
+msgstr "Informazioni Pubblicazione"
+
+#: groups/templates/new_bibliography.php:53
+#: groups/templates/new_bibliography.php:54
+msgid "Title"
+msgstr "Titolo"
+
+#: groups/templates/new_bibliography.php:55
+#: groups/templates/new_bibliography.php:56
+msgid "Short Title"
+msgstr "Titolo Corto"
+
+#: groups/templates/new_bibliography.php:57
+#: groups/templates/new_bibliography.php:58
+msgid "Journal Title"
+msgstr "Titolo Periodico"
+
+#: groups/templates/new_bibliography.php:59
+#: groups/templates/new_bibliography.php:60
+msgid "Volume Title"
+msgstr "Titolo del volume"
+
+#: groups/templates/new_bibliography.php:61
+#: groups/templates/new_bibliography.php:62
+msgid "Volume Editor(s)"
+msgstr "Editore/i Volume"
+
+#: groups/templates/new_bibliography.php:63
+#: groups/templates/new_bibliography.php:64
+msgid "Publication Place"
+msgstr "Luogo di Pubblicazione"
+
+#: groups/templates/new_bibliography.php:65
+#: groups/templates/new_bibliography.php:66
+msgid "Publisher"
+msgstr "Editore"
+
+#: groups/templates/new_bibliography.php:67
+#: groups/templates/new_bibliography.php:68
+msgid "Website Title"
+msgstr "Titolo del sito web"
+
+#: groups/templates/new_bibliography.php:70
+msgid "Additional Information"
+msgstr "Informazioni Aggiuntive"
+
+#: groups/templates/new_bibliography.php:72
+#: groups/templates/new_bibliography.php:73
+msgid "Date Published"
+msgstr "Data di Pubblicazione"
+
+#: groups/templates/new_bibliography.php:74
+#: groups/templates/new_bibliography.php:75
+msgid "Date Accessed"
+msgstr "Data Accesso"
+
+#: groups/templates/new_bibliography.php:76
+#: groups/templates/new_bibliography.php:77
+msgid "URL"
+msgstr "URL"
+
+#: groups/templates/new_bibliography.php:78
+#: groups/templates/new_bibliography.php:79
+msgid "Volume"
+msgstr "Volume"
+
+#: groups/templates/new_bibliography.php:80
+#: groups/templates/new_bibliography.php:81
+msgid "Issue"
+msgstr "Edizione"
+
+#: groups/templates/new_bibliography.php:82
+#: groups/templates/new_bibliography.php:83
+msgid "Pages"
+msgstr "Pagine"
+
+#: groups/templates/new_bibliography.php:84
+#: groups/templates/new_bibliography.php:85
+#: groups/templates/list_schedules.php:12
+msgid "Description"
+msgstr "Descrizione"
+
+#: groups/templates/new_bibliography.php:87
+msgid "Add"
+msgstr "Aggiungi"
+
+#: groups/templates/list_schedules.php:8
+msgid "Schedules"
+msgstr "Pianificazioni"
+
+#: groups/templates/list_schedules.php:13
+msgid "Start date"
+msgstr "Data d'inizio"
+
+#: groups/templates/list_schedules.php:14
+msgid "End date"
+msgstr "Data di fine"
+
+#: groups/templates/list_schedules.php:15
+msgid "Location"
+msgstr "Località"
+
+#: groups/templates/list_schedules.php:32
+#, php-format
+msgid "added on %1$s by %2$s."
+msgstr "aggiunto il %1$s da %2$s."
+
+#: groups/templates/_group_admin_screen.php:5
+msgid "This option will enable or disable Courseware for current group."
+msgstr "Questa opzione abilita o disabilita Courseware per questo gruppo."
+
+#: groups/templates/_group_admin_screen.php:6
+msgid "There's a default global option on Courseware Settings page."
+msgstr "C'è una opzione globale predefinita nella pagina delle impostazioni di Courseware."
+
+#: groups/templates/_group_admin_screen.php:12
+msgid "Enabled"
+msgstr "Abilitato"
+
+#: groups/templates/_group_admin_screen.php:16
+msgid "Disabled"
+msgstr "Disabilitato"
+
+#: groups/templates/new_schedule.php:6
+msgid "Include a course"
+msgstr "Includi un corso"
+
+#: groups/templates/new_schedule.php:8
+msgid "Select Course"
+msgstr "Seleziona Corso"
+
+#: groups/templates/new_schedule.php:27
+msgid "Repeats"
+msgstr "Si ripete"
+
+#: groups/templates/new_schedule.php:29
+msgid "No Repetition"
+msgstr "Non si ripete"
+
+#: groups/templates/new_schedule.php:30
+msgid "Daily"
+msgstr "Ogni giorno"
+
+#: groups/templates/new_schedule.php:31
+msgid "Weekly"
+msgstr "Ogni settimana"
+
+#: groups/templates/new_schedule.php:32
+msgid "Monthly"
+msgstr "Ogni mese"
+
+#: groups/templates/new_schedule.php:34
+msgid "for"
+msgstr "per"
+
+#: groups/templates/new_schedule.php:35
+msgid "for X"
+msgstr "per X"
+
+#: groups/templates/new_schedule.php:36
+msgid "times"
+msgstr "volte"
+
+#: groups/templates/new_schedule.php:50
+msgid "Add a new schedule"
+msgstr "Aggiungi una nuova pianificazione"
+
+#: groups/templates/_responses.php:3
+msgid "List of responses"
+msgstr "Elenco delle risposte"
+
+#: groups/templates/_responses.php:10
+msgid "By "
+msgstr "Da"
+
+#: groups/templates/_responses.php:12
+msgid "On "
+msgstr "Il"
+
+#: groups/templates/_message.php:10
+#: groups/templates/edit_bibliography.php:94
+msgid "Go back"
+msgstr "Torna indietro"
+
+#: groups/templates/new_course.php:7
+msgid "Add a New Course"
+msgstr "Crea un Nuovo Corso"
+
+#: groups/templates/new_course.php:10
+msgid "Course Title"
+msgstr "Titolo del Corso"
+
+#: groups/templates/new_course.php:25
+msgid "Add a new course"
+msgstr "Crea un nuovo corso"
+
+#: groups/templates/home.php:2
+msgid "At a glance"
+msgstr "In un colpo d'occhio"
+
+#: groups/templates/home.php:10
+#, php-format
+msgid "Courseware started by %s and managed by %d teacher(s) with %d course(s) for class %s"
+msgstr "Courseware avviato da %s e gestito da %d docente/i con %d corso/i per la classe %s"
+
+#: groups/templates/home.php:19
+msgid "Create a course  &raquo;"
+msgstr "Crea un corso &raquo;"
+
+#: groups/templates/home.php:23
+msgid "All courses  &raquo;"
+msgstr "Tutti i corsi  &raquo;"
+
+#: groups/templates/home.php:31
+#, php-format
+msgid "<strong>%s</strong> course class started by %s and managed by %d teacher(s) for this group"
+msgstr "Il corso <strong>%s</strong> è stato avviato da %s ed è gestito da %d docente/i"
+
+#: groups/templates/home.php:39
+msgid "Update Course  &raquo;"
+msgstr "Aggiorna Corso &raquo;"
+
+#: groups/templates/home.php:43
+msgid "Course description  &raquo;"
+msgstr "Descrizione Corso &raquo;"
+
+#: groups/templates/home.php:51
+#, php-format
+msgid "<em>%s</em> Assignment(s)"
+msgstr "<em>%s</em> Esercitazione/i"
+
+#: groups/templates/home.php:57
+msgid "Create an assignment &raquo;"
+msgstr "Crea un'esercitazione &raquo;"
+
+#: groups/templates/home.php:61
+#: groups/templates/home.php:161
+msgid "All assignments  &raquo;"
+msgstr "Tutte le esercitazioni  &raquo;"
+
+#: groups/templates/home.php:68
+#, php-format
+msgid "<em>%s</em> Response(s)"
+msgstr "<em>%s</em> Risposta/e"
+
+#: groups/templates/home.php:73
+msgid "All responses &raquo;"
+msgstr "Tutte le risposte &raquo;"
+
+#: groups/templates/home.php:79
+#, php-format
+msgid "<em>%s</em> Schedule(s)"
+msgstr "<em>%s</em> Pianificazione/i"
+
+#: groups/templates/home.php:85
+msgid "Add a schedule &raquo;"
+msgstr "Aggiungi una pianificazione &raquo;"
+
+#: groups/templates/home.php:89
+msgid "All schedules  &raquo;"
+msgstr "Tutte le pianificazioni &raquo;"
+
+#: groups/templates/home.php:96
+#, php-format
+msgid "<em>%s</em> Bibliography entries"
+msgstr "<em>%s</em> voci bibliografiche"
+
+#: groups/templates/home.php:102
+msgid "Manage bibliography &raquo;"
+msgstr "Gestisci la bibliografia &raquo;"
+
+#: groups/templates/home.php:110
+#, php-format
+msgid "<em>%d</em> Assignment discussions started"
+msgstr "<em>%d</em> discussioni su esercitazioni cominciate"
+
+#: groups/templates/home.php:115
+msgid "Visit forums &raquo;"
+msgstr "Visita i forum &raquo;"
+
+#: groups/templates/home.php:129
+msgid "Latest courses"
+msgstr "Corsi recenti"
+
+#: groups/templates/home.php:130
+msgid "Courses"
+msgstr "Corsi"
+
+#: groups/templates/home.php:131
+msgid "Latest courses  &raquo;"
+msgstr "Corsi recenti &raquo;"
+
+#: groups/templates/home.php:143
+#: groups/templates/home.php:173
+#: groups/templates/home.php:203
+#: groups/templates/home.php:237
+#, php-format
+msgid "By %s, on %s"
+msgstr "Da %s, il %s"
+
+#: groups/templates/home.php:159
+msgid "Latest assignments"
+msgstr "Esercitazioni recenti"
+
+#: groups/templates/home.php:189
+msgid " Latest schedules"
+msgstr " Pianificazioni recenti"
+
+#: groups/templates/home.php:190
+msgid "Calendar"
+msgstr "Calendario"
+
+#: groups/templates/home.php:191
+msgid "All schedules &raquo;"
+msgstr "Tutte le pianificazioni &raquo;"
+
+#: groups/templates/home.php:217
+msgid "Latest responses"
+msgstr "Risposte recenti"
+
+#: groups/templates/home.php:246
+msgid "No responses yet."
+msgstr "Nessuna risposta per ora."
+
+#: groups/templates/home.php:254
+msgid "Your progress based on received grades"
+msgstr "I tuoi progressi in base alle valutazioni ricevute"
+
+#: groups/templates/list_assignments.php:7
+msgid "Due Date"
+msgstr "Termine di consegna"
+
+#: groups/templates/list_assignments.php:16
+msgid "No assignments were added."
+msgstr "Nessuna esercitazione è stata aggiunta."
+
+#: groups/templates/single_assignment.php:4
+msgid "Assignment Meta"
+msgstr "Metainformazioni Esercitazione"
+
+#: groups/templates/single_assignment.php:7
+#: groups/templates/new_assignment.php:17
+msgid "Due date"
+msgstr "Termine di consegna"
+
+#: groups/templates/single_assignment.php:12
+msgid "Your Grade:"
+msgstr "La tua valutazione:"
+
+#: groups/templates/single_assignment.php:25
+#, php-format
+msgid "Date: %1$s"
+msgstr "Data: %1$s"
+
+#: groups/templates/single_assignment.php:33
+#, php-format
+msgid "Author: %1$s"
+msgstr "Autore: %1$s"
+
+#: groups/templates/single_assignment.php:41
+#, php-format
+msgid "Course: %1$s"
+msgstr "Corso: %1$s"
+
+#: groups/templates/single_assignment.php:49
+msgid "Visit Assignment Forum"
+msgstr "Visita il Forum dell'Esercitazione"
+
+#: groups/templates/single_assignment.php:55
+msgid "Enable Assignment Forum"
+msgstr "Abilita il Forum dell'Esercitazione"
+
+#: groups/templates/single_assignment.php:61
+msgid "You need forums enabled"
+msgstr "È necessario abilitare il forum"
+
+#: groups/templates/single_assignment.php:74
+msgid "Add a Response"
+msgstr "Aggiungi una Risposta"
+
+#: groups/templates/single_assignment.php:80
+msgid "Your response"
+msgstr "La tua risposta"
+
+#: groups/templates/single_assignment.php:94
+msgid "Quick Add Bibliography"
+msgstr "Inserimento Veloce Bibliografia"
+
+#: groups/templates/single_assignment.php:103
+msgid "Edit Assignment"
+msgstr "Modifica Esercitazione"
+
+#: groups/templates/_course_group_header.php:11
+#, php-format
+msgid "Course started on %1$s by %2$s."
+msgstr "Corso avviato il %1$s da %2$s"
+
+#: groups/templates/list_courses.php:6
+msgid "Creation Date"
+msgstr "Data Creazione"
+
+#: groups/templates/list_courses.php:15
+msgid "No courses were added."
+msgstr "Nessun corso è stato aggiunto."
+
+#: groups/templates/list_courses.php:29
+#, php-format
+msgid "added by %1$s."
+msgstr "aggiunto da %1$s."
+
+#: groups/templates/new_assignment.php:7
+#: groups/templates/edit_assignment.php:9
+msgid "Course &amp; Due Date"
+msgstr "Corso &amp; Termine di consegna"
+
+#: groups/templates/new_assignment.php:26
+msgid "Assignment Title"
+msgstr "Titolo Esercitazione"
+
+#: groups/templates/new_assignment.php:42
+msgid "Add a new assignment"
+msgstr "Aggiungi una nuova esercitazione"
+
+#: groups/templates/edit_bibliography.php:4
+msgid "Update Bibliography"
+msgstr "Aggiorna Bibliografia"
+
+#: groups/templates/edit_bibliography.php:91
+msgid "Update"
+msgstr "Aggiorna"
+
+#: groups/templates/import_bibliographies.php:3
+msgid "Import Your Bibliography"
+msgstr "Importa la tua Bibliografia"
+
+#: groups/templates/import_bibliographies.php:6
+msgid "Paste your BibTeX contents in the textarea and submit <strong>Import</strong>."
+msgstr "Incolla i tuoi contenuti BibTeX nell'area di testo e premi <strong>Importa</strong>."
+
+#: groups/templates/import_bibliographies.php:12
+msgid "Import"
+msgstr "Importa"
+
+#: groups/templates/edit_assignment.php:39
+msgid "Update assignment"
+msgstr "Aggiorna esercitazione"
+
+#: groups/templates/edit_assignment.php:42
+msgid "Delete Assignment"
+msgstr "Elimina Esercitazione"
+
+#: groups/templates/edit_assignment.php:44
+msgid "Cancel/Go back"
+msgstr "Annulla/Indietro"
+
+#: groups/templates/edit_course.php:25
+msgid "Update course"
+msgstr "Aggiorna corso"
+
+#: groups/templates/edit_course.php:30
+msgid "Cancel/Go Back"
+msgstr "Annulla/Indietro"
+
+#: groups/templates/single_schedule.php:4
+msgid "Schedule Meta"
+msgstr "Metainformazioni Pianificazione"
+
+#: groups/templates/single_schedule.php:17
+#, php-format
+msgid "Start Date: %1$s"
+msgstr "Data d'inizio: %1$s"
+
+#: groups/templates/single_schedule.php:26
+#, php-format
+msgid "End Date: %1$s"
+msgstr "Data di fine: %1$s"
+
+#: groups/templates/single_schedule.php:36
+#, php-format
+msgid "Location: %1$s"
+msgstr "Luogo: %1$s"
+
+#: groups/templates/single_schedule.php:52
+msgid "Course:"
+msgstr "Corso:"
+
+#: groups/templates/single_schedule.php:60
+msgid "Edit Schedule"
+msgstr "Modifica Pianificazione"
+
+#: groups/templates/single_response.php:4
+msgid "Response Meta"
+msgstr "Metainformazioni Risposta"
+
+#: groups/templates/single_response.php:23
+msgid "Assignment page"
+msgstr "Pagina esercitazione"
+
+#: groups/templates/single_response.php:27
+msgid "Delete Response"
+msgstr "Elimina Risposta"
+
+#: groups/templates/gradebook.php:3
+msgid "There are no students in this class yet."
+msgstr "Non ci sono ancora studenti in questa classe."
+
+#: groups/templates/gradebook.php:8
+msgid "Import from CSV"
+msgstr "Importa da CSV"
+
+#: groups/templates/gradebook.php:11
+msgid "Gradebook for: "
+msgstr "Registro valutazioni per:"
+
+#: groups/templates/gradebook.php:18
+msgid "About CSV source file format"
+msgstr "Formato del file sorgente CSV"
+
+#: groups/templates/gradebook.php:20
+msgid "Here is an example of such a file with dummy data for user test."
+msgstr "Ecco un esempio di tale file con dati di esempio per l'utente test."
+
+#: groups/templates/gradebook.php:22
+msgid "It's important to preserve the first line!"
+msgstr "E' importante preservare la prima linea!"
+
+#: groups/templates/gradebook.php:26
+msgid ""
+"uid,value,format,prv_comment,pub_comment\n"
+"test,10,numeric,\"Private comment text\",\"Public comment text\""
+msgstr ""
+"uid,value,format,prv_comment,pub_comment\n"
+"test,10,numeric,\"Testo del commento privato\",\"Testo del commento pubblico\""
+
+#: groups/templates/gradebook.php:29
+msgid "Upload your file:"
+msgstr "Carica il tuo file:"
+
+#: groups/templates/gradebook.php:43
+msgid "Grade value"
+msgstr "Valore valutazione"
+
+#: groups/templates/gradebook.php:44
+msgid "Grade format"
+msgstr "Formato valutazione"
+
+#: groups/templates/gradebook.php:45
+msgid "Private comment"
+msgstr "Commento privato"
+
+#: groups/templates/gradebook.php:46
+msgid "Public comment"
+msgstr "Commento pubblico"
+
+#: groups/templates/gradebook.php:77
+#: wordpress/templates/admin.php:124
+msgid "Numeric"
+msgstr "Numerico"
+
+#: groups/templates/gradebook.php:80
+#: wordpress/templates/admin.php:126
+msgid "Percentage"
+msgstr "Percentuale"
+
+#: groups/templates/gradebook.php:83
+#: wordpress/templates/admin.php:125
+msgid "Letter"
+msgstr "Lettera"
+
+#: groups/templates/gradebook.php:103
+msgid "Save grades"
+msgstr "Salva valutazioni"
+
+#: groups/templates/gradebook.php:105
+msgid "Clear Gradebook"
+msgstr "Pulisci Registro Valutazioni"
+
+#: groups/templates/edit_schedule.php:2
+#: groups/templates/edit_schedule.php:40
+msgid "Update schedule"
+msgstr "Aggiorna pianificazione"
+
+#: groups/templates/edit_schedule.php:6
+msgid "Link to a Course"
+msgstr "Collegamento a un Corso"
+
+#: groups/templates/edit_schedule.php:42
+msgid "Delete schedule"
+msgstr "Elimina pianificazione"
+
+#: groups/templates/single_course.php:4
+msgid "Course Info"
+msgstr "Informazioni sul Corso"
+
+#: groups/templates/single_course.php:36
+msgid "Edit Course"
+msgstr "Modifica Corso"
+
+#: groups/templates/_no_course_group_header.php:3
+msgid "You can manage this group Courseware."
+msgstr "Puoi gestire il Courseware di questo gruppo."
+
+#: groups/templates/_no_course_group_header.php:5
+msgid "Update course information &raquo;"
+msgstr "Aggiorna informazioni corso &raquo;"
+
+#: groups/templates/add_response.php:9
+msgid "My response for: "
+msgstr "La mia risposta per: "
+
+#: groups/templates/add_response.php:23
+msgid "Add my response"
+msgstr "Aggiungi la mia risposta"
+
+#: groups/templates/_bibs.php:7
+msgid "Add an existing bibliography"
+msgstr "Aggiungi una bibliografia esistente"
+
+#: groups/templates/_bibs.php:9
+msgid "Type something to search..."
+msgstr "Digitare per iniziare la ricerca..."
+
+#: groups/templates/_bibs.php:20
+#: groups/templates/_bibs.php:31
+msgid "Add entry"
+msgstr "Aggiungi una voce"
+
+#: groups/templates/_bibs.php:25
+msgid "Add a webpage"
+msgstr "Aggiungi una pagina web"
+
+#: groups/templates/_bibs.php:26
+msgid "Entry title"
+msgstr "Titolo della voce"
+
+#: groups/templates/_bibs.php:28
+msgid "Webpage address"
+msgstr "Indirizzo della pagina web"
+
+#: groups/templates/_bibs.php:35
+msgid "Add a book"
+msgstr "Aggiungi un libro"
+
+#: groups/templates/_bibs.php:37
+msgid "Book Title"
+msgstr "Titolo del libro"
+
+#: groups/templates/_bibs.php:42
+msgid "&mdash; or &mdash;"
+msgstr "&mdash; o &mdash;"
+
+#: groups/templates/_bibs.php:45
+msgid "Book ISBN"
+msgstr "ISBN del libro"
+
+#: groups/templates/_bibs.php:49
+msgid "Instructions/Description for this entry"
+msgstr "Istruzioni/Descrizione per questa voce"
+
+#: groups/templates/_bibs.php:52
+msgid "Add book"
+msgstr "Aggiungi libro"
+
+#: groups/templates/_bibs.php:62
+msgid "Bibliography listing"
+msgstr "Elenco bibliografico"
+
+#: groups/templates/_bibs.php:68
+msgid "Instructions/Description"
+msgstr "Istruzioni/Descrizione"
+
+#: groups/templates/_bibs.php:70
+msgid "Actions"
+msgstr "Azioni"
+
+#: groups/templates/_bibs.php:92
+msgid "Edit"
+msgstr "Modifica"
+
+#: groups/templates/_bibs.php:95
+msgid "Delete"
+msgstr "Elimina"
+
+#: schedules/bpsp-schedules.class.php:46
+msgid "Schedule"
+msgstr "Pianificazione"
+
+#: schedules/bpsp-schedules.class.php:47
+msgid "BuddyPress ScholarPress Courseware Schedules"
+msgstr "Pianificazioni di BuddyPress ScholarPress Courseware"
+
+#: schedules/bpsp-schedules.class.php:59
+msgid "BuddyPress Courseware error while registering schedule post type."
+msgstr "Errore di BuddyPress Courseware durante la registrazione del tipo di articolo pianificazione."
+
+#: schedules/bpsp-schedules.class.php:65
+msgid "BuddyPress Courseware error while registering schedule taxonomies."
+msgstr "Errore di BuddyPress Courseware durante la registrazione delle tassonomie delle pianificazioni."
+
+#: schedules/bpsp-schedules.class.php:327
+#: courses/bpsp-courses.class.php:283
+msgid "BuddyPress Courseware Error while forbidden user tried to add a new course."
+msgstr "Errore di BuddyPress Courseware mentre un utente non autorizzato ha tentato di creare un corso."
+
+#: schedules/bpsp-schedules.class.php:334
+#: schedules/bpsp-schedules.class.php:521
+msgid "New schedule could not be added. Missing description and/or start date."
+msgstr "Impossibile aggiungere la nuova pianificazione. Manca la descrizione e/o la data d'inizio."
+
+#: schedules/bpsp-schedules.class.php:352
+msgid "Nonce Error while adding a schedule."
+msgstr "Nonce Error durante la creazione della pianificazione."
+
+#: schedules/bpsp-schedules.class.php:401
+msgid "New schedule was added."
+msgstr "La nuova pianificazione è stata aggiunta."
+
+#: schedules/bpsp-schedules.class.php:405
+msgid "New schedule could not be added."
+msgstr "Impossibile aggiungere la nuova pianificazione."
+
+#: schedules/bpsp-schedules.class.php:430
+msgid "No schedules exist."
+msgstr "Non esistono pianificazioni."
+
+#: schedules/bpsp-schedules.class.php:479
+msgid "BuddyPress Courseware Nonce Error while deleting a schedule."
+msgstr "Errore Nonce di BuddyPress Courseware durante l'eliminazione della pianificazione."
+
+#: schedules/bpsp-schedules.class.php:486
+msgid "BuddyPress Courseware Error while forbidden user tried to delete a schedule."
+msgstr "Errore di BuddyPress Courseware mentre un utente non autorizzato ha tentato di eliminare la pianificazione."
+
+#: schedules/bpsp-schedules.class.php:490
+msgid "Schedule deleted successfully."
+msgstr "La pianificazione è stata cancellata con successo."
+
+#: schedules/bpsp-schedules.class.php:514
+msgid "BuddyPress Courseware Error while forbidden user tried to update the schedule."
+msgstr "Errore di BuddyPress Courseware mentre un utente non autorizzato ha tentato di aggiornare la pianificazione."
+
+#: schedules/bpsp-schedules.class.php:535
+msgid "Nonce Error while editing a schedule."
+msgstr "Nonce Error durante la modifica della pianificazione."
+
+#: schedules/bpsp-schedules.class.php:556
+msgid "Schedule was updated."
+msgstr "La pianificazione è stata aggiornata."
+
+#: schedules/bpsp-schedules.class.php:559
+msgid "Schedule could not be updated."
+msgstr "Impossibile aggiornare la pianificazione."
+
+#: schedules/bpsp-schedules.class.php:570
+#: courses/bpsp-courses.class.php:457
+msgid "Delete Course"
+msgstr "Elimina Corso"
+
+#: schedules/bpsp-schedules.class.php:630
+msgid "Calendar for: "
+msgstr "Calendario per: "
+
+#: wordpress/bpsp-wordpress.class.php:58
+msgid "BuddyPress Courseware Help and Recommendations"
+msgstr "Aiuto e Raccomandazioni per BuddyPress Courseware"
+
+#: wordpress/bpsp-wordpress.class.php:59
+msgid "The following plugins are recommended to use with BuddyPress Courseware:"
+msgstr "Ti raccomandiamo di usare i seguenti plugin con BuddyPress Courseware:"
+
+#: wordpress/bpsp-wordpress.class.php:61
+msgid "Invite Anyone"
+msgstr "Invite Anyone"
+
+#: wordpress/bpsp-wordpress.class.php:62
+msgid "Group Documents"
+msgstr "Group Documents"
+
+#: wordpress/bpsp-wordpress.class.php:64
+msgid "If you find issues, please report them here."
+msgstr "Se trovi malfunzionamenti, ti preghiamo di riportarli qui."
+
+#: wordpress/bpsp-wordpress.class.php:85
+#: wordpress/bpsp-wordpress.class.php:90
+#: wordpress/bpsp-wordpress.class.php:93
+#: wordpress/bpsp-wordpress.class.php:98
+#: wordpress/bpsp-wordpress.class.php:101
+msgid "Courseware option was updated."
+msgstr "Impostazione di Courseware aggiornata."
+
+#: wordpress/bpsp-wordpress.class.php:106
+msgid "Courseware gradebook format option was updated."
+msgstr "Il formato predefinito del registro valutazioni di Courseware è stato aggiornato."
+
+#: wordpress/bpsp-wordpress.class.php:111
+msgid "WorldCat option was updated."
+msgstr "Impostazione di WorldCat aggiornata."
+
+#: wordpress/bpsp-wordpress.class.php:114
+msgid "ISBNdb option was updated."
+msgstr "Impostazione di ISBNdb aggiornata."
+
+#: wordpress/bpsp-wordpress.class.php:119
+#: wordpress/bpsp-wordpress.class.php:122
+msgid "Courseware customization options updated."
+msgstr "Le opzioni di Courseware sono state aggiornate."
+
+#: wordpress/templates/admin.php:10
+msgid "BuddyPress Courseware"
+msgstr "BuddyPress Courseware"
+
+#: wordpress/templates/admin.php:13
+msgid "Global Settings"
+msgstr "Impostazioni Globali"
+
+#: wordpress/templates/admin.php:16
+msgid ""
+"Enabling this, will enable Courseware component for\n"
+"                    every existing group."
+msgstr "Se abilitato, attiva il componente Courseware per tutti i gruppi esistenti."
+
+#: wordpress/templates/admin.php:20
+msgid "A per group option is available in group Admin screen."
+msgstr "Nella schermata di amministrazione di ogni gruppo è presente un'opzione per abilitare Courseware nel singolo gruppo."
+
+#: wordpress/templates/admin.php:26
+msgid "Enable Courseware globally"
+msgstr "Abilita Courseware globalmente"
+
+#: wordpress/templates/admin.php:30
+#: wordpress/templates/admin.php:79
+#: wordpress/templates/admin.php:103
+#: wordpress/templates/admin.php:130
+#: wordpress/templates/admin.php:168
+#: wordpress/templates/admin.php:193
+msgid "Save Changes"
+msgstr "Salva le Modifiche"
+
+#: wordpress/templates/admin.php:38
+msgid "Default behaviour for Courseware"
+msgstr "Funzionamento predefinito di Courseware"
+
+#: wordpress/templates/admin.php:41
+msgid ""
+"In short, this feature was added due to differences\n"
+"                    between how (for example) European and US academic institutions\n"
+"                    are managing curriculum and student participation along\n"
+"                    educational process."
+msgstr "Questa opzione è stata aggiunta per far fronte alle differenze nel modo in cui le istituzioni accademiche gestiscono i curriculum e la partecipazione degli studenti al processo educativo."
+
+#: wordpress/templates/admin.php:47
+msgid ""
+"In Europe, is more common the concept of classes,\n"
+"                    where students are gourped as <strong><em>students enrolled in\n"
+"                    a class</em></strong>. This means that BuddyPress groups will be\n"
+"                    treaten as classes. The main workflow difference is\n"
+"                    that teachers will be able to manage a set of courses\n"
+"                    within such a class."
+msgstr "In Europa è più comune il concetto di classe e <strong><em>gli studenti sono raggruppati in classi</em></strong>. Questo significa che i gruppi di BuddyPress saranno considerati come classi. La principale differenza sta nel fatto che i docenti saranno in grado di gestire un insieme di corsi all'interno di ogni classe."
+
+#: wordpress/templates/admin.php:55
+msgid ""
+"In United States, is more common the concept of courses,\n"
+"                    where students are gourped as <strong><em>students enrolled on\n"
+"                    a course</em></strong>. This means that BuddyPress groups will be\n"
+"                    treaten as courses. The main workflow difference is\n"
+"                    that teachers will be able to manage one course\n"
+"                    per BuddyPress group and users will subscrie to each group."
+msgstr "Negli Stati Uniti è più comune il concetto di corso e <strong><em>gli studenti sono raggruppati in corsi</em></strong>. Questo significa che i gruppi di BuddyPress saranno considerati come corsi. La principale differenza sta nel fatto che i docenti saranno in grado di gestire un solo corso per ogni gruppo di BuddyPress e gli studenti dovranno iscriversi ad ogni gruppo."
+
+#: wordpress/templates/admin.php:66
+msgid "European style"
+msgstr "Modello Europeo"
+
+#: wordpress/templates/admin.php:67
+msgid ""
+"Use this setting if a single roster of students\n"
+"                            is shared between multiple courses."
+msgstr "Usa questa opzione se una singola lista di studenti è condivisa tra una pluralità di corsi."
+
+#: wordpress/templates/admin.php:74
+msgid "US style"
+msgstr "Modello USA"
+
+#: wordpress/templates/admin.php:75
+msgid "Use this setting if each course will have its own roster."
+msgstr "Usa questa opzione se ogni corso avrà una sua lista di studenti."
+
+#: wordpress/templates/admin.php:86
+msgid "Collaboration settings"
+msgstr "Impostazioni di collaborazione"
+
+#: wordpress/templates/admin.php:89
+msgid ""
+"Enabling this, will allow any teacher to contribute to\n"
+"                    group Courseware by editing/adding new courses, schedules and assignments."
+msgstr "Se abilitato, permetterà a qualsiasi docente di contribuire al Courseware di ogni gruppo, modificando o aggiungendo corsi, pianificazioni ed esercitazioni."
+
+#: wordpress/templates/admin.php:93
+msgid "By default only group admins can manage Courseware."
+msgstr "L'impostazione predefinita permette la gestione di Courseware solo agli amministratori del gruppo."
+
+#: wordpress/templates/admin.php:99
+msgid "Allow any teacher to contribute to class Courseware content"
+msgstr "Permetti a qualsiasi docente di contribuire al contenuto delle classi Courseware"
+
+#: wordpress/templates/admin.php:111
+msgid "Gradebook default grade format"
+msgstr "Formato predefinito del registro valutazioni"
+
+#: wordpress/templates/admin.php:114
+msgid ""
+"Courseware gradebook has support\n"
+"                    for most common grading formats, setting a default one\n"
+"                    will save some time when grading students."
+msgstr "Il registro valutazioni di Courseware supporta i più comuni formati di valutazione. Impostandone uno come predefinito, si risparmierà tempo durante l'inserimento delle valutazioni."
+
+#: wordpress/templates/admin.php:121
+msgid "Current gradebook format"
+msgstr "Formato attuale del registro valutazioni"
+
+#: wordpress/templates/admin.php:138
+msgid "Webservices API Integration"
+msgstr "Integrazione API servizi web"
+
+#: wordpress/templates/admin.php:141
+msgid ""
+"This will allow you to use webservices to query\n"
+"                    books and articles easily."
+msgstr "Questa opzione ti permetterà di interrogare i servizi web per inserire più agevolmente libri ed articoli."
+
+#: wordpress/templates/admin.php:147
+msgid "WorldCat Webservices Key"
+msgstr "WorldCat Webservices Key"
+
+#: wordpress/templates/admin.php:149
+msgid "Free registration for Basic API"
+msgstr "Registrazione libera per la Basic API"
+
+#: wordpress/templates/admin.php:158
+msgid "ISBNdb Webservices Key"
+msgstr "ISBNdb Webservices Key"
+
+#: wordpress/templates/admin.php:160
+msgid "Free Registration"
+msgstr "Registrazione Libera"
+
+#: wordpress/templates/admin.php:175
+msgid "Customization"
+msgstr "Personalizzazione"
+
+#: wordpress/templates/admin.php:178
+msgid ""
+"Enabling this, will check if there's\n"
+"                    a <code>courseware.css</code> file in your theme directory,\n"
+"                    and will load it automatically."
+msgstr "Se abilitato, controllerà la presenza del file <code>courseware.css</code> nella cartella del tuo tema e lo caricherà automaticamente."
+
+#: wordpress/templates/admin.php:183
+msgid "This will make Courseware use your CSS rules. File should exist physically!"
+msgstr "Ti permette di applicare a Courseware le tue regole CSS. Il file deve esistere!"
+
+#: wordpress/templates/admin.php:189
+msgid "Load <code>courseware.css</code> from my theme directory."
+msgstr "Carica <code>courseware.css</code> dalla cartella del mio tema."
+
+#: courses/bpsp-courses.class.php:47
+msgid "Course"
+msgstr "Corso"
+
+#: courses/bpsp-courses.class.php:48
+msgid "BuddyPress ScholarPress Courseware Courses"
+msgstr "Corsi di BuddyPress ScholarPress Courseware"
+
+#: courses/bpsp-courses.class.php:60
+msgid "BuddyPress Courseware error while registering courses post type."
+msgstr "Errore di BuddyPress Courseware durante la registrazione del tipo di articolo corso."
+
+#: courses/bpsp-courses.class.php:66
+msgid "Group ID"
+msgstr "ID Gruppo"
+
+#: courses/bpsp-courses.class.php:78
+msgid "BuddyPress Courseware error while registering courses taxonomies."
+msgstr "Errore di BuddyPress Courseware durante la registrazione delle tassonomie dei corsi."
+
+#: courses/bpsp-courses.class.php:263
+msgid "New Course"
+msgstr "Nuovo Corso"
+
+#: courses/bpsp-courses.class.php:292
+msgid "Nonce Error while adding a course."
+msgstr "Nonce Error durante la creazione del corso."
+
+#: courses/bpsp-courses.class.php:305
+#: courses/bpsp-courses.us.class.php:135
+msgid "New course was added."
+msgstr "Il nuovo corso è stato aggiunto."
+
+#: courses/bpsp-courses.class.php:309
+#: courses/bpsp-courses.us.class.php:137
+msgid "New course could not be added."
+msgstr "Impossibile aggiungere il nuovo corso."
+
+#: courses/bpsp-courses.class.php:387
+msgid "BuddyPress Courseware Nonce Error while deleting the course."
+msgstr "Errore Nonce di BuddyPress Courseware durante l'eliminazione del corso."
+
+#: courses/bpsp-courses.class.php:394
+msgid "BuddyPress Courseware Error while forbidden user tried to delete the course."
+msgstr "Errore di BuddyPress Courseware mentre un utente non autorizzato ha tentato di eliminare il corso."
+
+#: courses/bpsp-courses.class.php:398
+msgid "Course deleted successfully."
+msgstr "Corso eliminato con successo."
+
+#: courses/bpsp-courses.class.php:422
+#: courses/bpsp-courses.us.class.php:160
+msgid "BuddyPress Courseware Error while forbidden user tried to update the course."
+msgstr "Errore di BuddyPress Courseware mentre un utente non autorizzato ha tentato di aggiornare il corso."
+
+#: courses/bpsp-courses.class.php:431
+#: courses/bpsp-courses.us.class.php:169
+msgid "Nonce Error while editing a course."
+msgstr "Nonce Error durante la modifica del corso."
+
+#: courses/bpsp-courses.class.php:445
+#: courses/bpsp-courses.us.class.php:183
+msgid "New course was updated."
+msgstr "Il nuovo corso è stato aggiornato."
+
+#: courses/bpsp-courses.class.php:447
+#: courses/bpsp-courses.us.class.php:185
+msgid "New course could not be updated."
+msgstr "Impossibile aggiornare il nuovo corso."
+
+#: courses/bpsp-courses.us.class.php:87
+msgid "Course Description"
+msgstr "Descrizione del Corso"
+

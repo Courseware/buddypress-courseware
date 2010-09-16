@@ -15,7 +15,6 @@ class BPSP_Responses {
         'delete_response',
         'assign_responses',
         'upload_files',
-        'edit_files',
     );
     
     /**

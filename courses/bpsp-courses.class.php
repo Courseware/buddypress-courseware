@@ -16,7 +16,6 @@ class BPSP_Courses {
         'assign_courses',
         'manage_group_id',
         'upload_files',
-        'edit_files',
     );
     
     /**
