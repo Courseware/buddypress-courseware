@@ -63,6 +63,9 @@
         </ul>
     </div>
     <div class="schedule-content courseware-content-wrapper">
+        <h4 id="course-title" class="courseware-title">
+            <?php echo get_the_title( $schedule->ID ); ?>
+        </h4>
         <div id="schedule-desc" class="courseware-content">
             <?php the_content(); ?>
         </div>

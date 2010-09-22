@@ -53,7 +53,7 @@ class BPSP_Schedules {
             'hierarchical'          => false,
             'rewrite'               => false,
             'query_var'             => false,
-            'supports'              => array( 'editor', 'excerpt', 'author', 'custom-fields' )
+            'supports'              => array( 'title', 'editor', 'excerpt', 'author', 'custom-fields' )
         );
         if( !register_post_type( 'schedule', $schedule_post_def ) )
             wp_die( __( 'BuddyPress Courseware error while registering schedule post type.', 'bpsp' ) );
@@ -330,8 +330,8 @@ class BPSP_Schedules {
         
         // Save new schedule
         if( isset( $_POST['schedule'] ) && $_POST['schedule']['object'] == 'group' && isset( $_POST['_wpnonce'] ) ) {
-            if( empty( $_POST['schedule']['desc'] ) || empty( $_POST['schedule']['start_date'] ) ) {
-                $vars['error'] = __( 'New schedule could not be added. Missing description and/or start date.', 'bpsp' );
+            if( empty( $_POST['schedule']['title'] ) || empty( $_POST['schedule']['desc'] ) || empty( $_POST['schedule']['start_date'] ) ) {
+                $vars['error'] = __( 'New schedule could not be added. Missing description/title and/or start date.', 'bpsp' );
                 $_POST = null;
                 return $this->new_schedule_screen( $vars );
             }
@@ -360,7 +360,8 @@ class BPSP_Schedules {
                     // create a template
                     $first_schedule = array(
                         'post_author'   => $bp->loggedin_user->id,
-                        'post_content'    => sanitize_text_field( $new_schedule['desc'] ),
+                        'post_title'    => sanitize_text_field( $new_schedule['title'] ),
+                        'post_content'  => sanitize_text_field( $new_schedule['desc'] ),
                         'post_status'   => 'publish',
                         'post_type'     => 'schedule',
                         'cw_group_id'   => $new_schedule['group_id'],
@@ -538,6 +539,7 @@ class BPSP_Schedules {
                     
                     $updated_schedule_id =  wp_update_post( array(
                         'ID'            => $old_schedule->ID,
+                        'post_title'  => sanitize_text_field( $updated_schedule['title'] ),
                         'post_content'  => sanitize_text_field( $updated_schedule['desc'] ),
                     ));
                     
@@ -590,7 +592,7 @@ class BPSP_Schedules {
             if( $e->post_type == "schedule" )
                 $entry = array(
                     "id" => get_the_ID(),
-                    "title" => get_the_excerpt(),
+                    "title" => get_the_title( $e->ID ),
                     "start" => date( 'c', strtotime( $e->start_date ) ),
                     "end" => date( 'c', strtotime( $e->end_date ) ),
                     "url" => $e->permalink,
@@ -598,7 +600,7 @@ class BPSP_Schedules {
             elseif( $e->post_type == "assignment" )
                 $entry = array(
                     "id" => get_the_ID(),
-                    "title" => get_the_excerpt(),
+                    "title" => get_the_title( $e->ID ),
                     "start" => date( 'c', strtotime( $e->due_date ) ),
                     "end" => date( 'c', strtotime( $e->due_date ) ),
                     "url" => $e->permalink,
@@ -671,7 +673,7 @@ class BPSP_Schedules {
             } else
                 $e->setProperty( 'duration', 0, 1, 0 ); // Assume it's an one day event
             
-            $e->setProperty( 'summary', get_the_excerpt() );
+            $e->setProperty( 'summary', get_the_title( $entry->ID ) );
             $e->setProperty( 'status', 'CONFIRMED' );
             
             $cal->setComponent( $e );

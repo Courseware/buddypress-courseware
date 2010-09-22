@@ -38,6 +38,10 @@
         </ul>
     </div>
     <div id="new-schedule-content" class="courseware-content-wrapper">
+        <div id="schedule-title">
+            <label for="schedule[title]"><?php _e( 'Title', 'bpsp' ); ?></label>
+                <input type="text" name="schedule[title]" class="long" title="<?php _e( 'Title', 'bpsp' ); ?>" value="<?php echo $schedule->post_title ? $schedule->title : '' ; ?>" />
+        </div>
         <div id="new-schedule-content-description">
             <label for="schedule[desc]"><?php _e( 'Description', 'bpsp' ); ?></label>
                 <textarea class="long" id="schedule-description" name="schedule[desc]"></textarea>
