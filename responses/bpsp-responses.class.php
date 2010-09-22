@@ -15,7 +15,6 @@ class BPSP_Responses {
         'delete_response',
         'assign_responses',
         'upload_files',
-        'edit_files',
     );
     
     /**
@@ -280,6 +279,7 @@ class BPSP_Responses {
         if( $has_responded ) {
             $response = get_posts(
                 array(
+                    'numberposts'   => '-1',
                     'post_parent' => $assignment_id,
                     'author' => $author_id,
                     'post_type' => 'response',
@@ -376,6 +376,7 @@ class BPSP_Responses {
         
         $vars['responses'] = get_posts(
             array(
+                'numberposts'   => '-1',
                 'post_type' => 'response',
                 'post_status' => 'publish',
                 'post_parent' => $this->current_assignment->ID,

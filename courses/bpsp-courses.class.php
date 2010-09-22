@@ -16,7 +16,6 @@ class BPSP_Courses {
         'assign_courses',
         'manage_group_id',
         'upload_files',
-        'edit_files',
     );
     
     /**
@@ -227,7 +226,7 @@ class BPSP_Courses {
      */
     function has_courses( $group_id = null ) {
         global $bp;
-        $cours_ids = null;
+        $course_ids = null;
         $courses = array();
         
         if( empty( $group_id ) )
@@ -235,14 +234,14 @@ class BPSP_Courses {
         
         $term_id = get_term_by( 'slug', $group_id, 'group_id' );
         if( !empty( $term_id ) )
-            $cours_ids = get_objects_in_term( $term_id->term_taxonomy_id, 'group_id' );
+            $course_ids = get_objects_in_term( $term_id->term_id, 'group_id' );
         
-        if( !empty( $cours_ids ) )
-            arsort( $cours_ids ); // Get latest entries first
+        if( !empty( $course_ids ) )
+            arsort( $course_ids ); // Get latest entries first
         else
             return null;
         
-        foreach ( $cours_ids as $cid )
+        foreach ( $course_ids as $cid )
             $courses[] = self::is_course( $cid );
         
         return array_filter( $courses );
@@ -329,6 +328,7 @@ class BPSP_Courses {
     function list_courses_screen( $vars ) {
         global $bp;
         $courses = get_posts( array(
+            'numberposts'   => '-1',
             'post_type' => 'course',
             'group_id' => $bp->groups->current_group->id,
         ));

@@ -17,7 +17,6 @@ class BPSP_Assignments {
         'manage_group_id',
         'manage_course_id',
         'upload_files',
-        'edit_files',
     );
     
     /**
@@ -158,6 +157,7 @@ class BPSP_Assignments {
         if( $action_vars[0] == 'new_assignment' ) {
             //Load editor
             add_action( 'bp_head', array( &$this, 'load_editor' ) );
+            do_action( 'courseware_list_assignments_screen' );
             add_filter( 'courseware_group_template', array( &$this, 'new_assignment_screen' ) );
         }
         elseif( $action_vars[0] == 'assignment' ) {
@@ -254,7 +254,7 @@ class BPSP_Assignments {
         
         $term_id = get_term_by( 'slug', $group_id, 'group_id' );
         if( !empty( $term_id ) )
-            $assignment_ids = get_objects_in_term( $term_id->term_taxonomy_id, 'group_id' );
+            $assignment_ids = get_objects_in_term( $term_id->term_id, 'group_id' );
         
         if( !empty( $assignment_ids ) )
             arsort( $assignment_ids ); // Get latest entries first
@@ -364,8 +364,9 @@ class BPSP_Assignments {
     function list_assignments_screen( $vars ) {
         global $bp;
         $assignments = get_posts( array(
-            'post_type' => 'assignment',
-            'group_id' => $bp->groups->current_group->id,
+            'numberposts'   => '-1',
+            'post_type'     => 'assignment',
+            'group_id'      => $bp->groups->current_group->id,
         ));
         
         $vars['name'] = 'list_assignments';

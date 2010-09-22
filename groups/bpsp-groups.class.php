@@ -206,11 +206,16 @@ class BPSP_Groups {
      * Hooks into groups_get_groups filter and extends search to include Courseware used post types
      */
     function extend_search( $groups, $params ) {
+	// Don't bother searching if nothing queried
+	if( empty( $params['search_terms'] ) )
+	    return $groups;
+	
 	// A hack to make WordPress believe the taxonomy is registered
 	if( !taxonomy_exists( 'group_id' ) ) {
 	    global $wp_taxonomies;
 	    $wp_taxonomies['group_id'] = '';
 	}
+	
 	$all_groups = BP_Groups_Group::get_alphabetically();
 	foreach( $all_groups['groups'] as $group ) {
 	    // Search posts from current $group

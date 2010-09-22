@@ -88,7 +88,7 @@ class BPSP_Dashboards {
         
         $vars['founder'] = $bp->groups->current_group->creator_id;
         $vars['teachers'] = BPSP_Roles::get_teachers( $bp->groups->current_group->id );
-        $vars['is_teacher'] = BPSP_Roles::is_teacher( $bp->loggedin_user->id );
+        $vars['is_teacher'] = BPSP_Roles::can_teach( $bp->loggedin_user->id );
         $vars['group_course'] = reset( $group_data['courses'] );
         $vars['bpsp_curriculum'] = get_option( 'bpsp_curriculum' );
         $vars = array_merge( $vars, $group_data );

@@ -54,15 +54,8 @@ class BPSP_WordPress {
         if( !stristr( $current_screen->id, 'courseware' ) )
             return;
         
-        add_contextual_help( $current_screen,
-            '<p><strong>' . __( 'BuddyPress Courseware Help and Recommendations', 'bpsp' ) . '</strong></p>' . "\n".
-            '<p>' . __( 'The following plugins are recommended to use with BuddyPress Courseware:', 'bpsp' ) . '</p>' . "\n".
-                '<ul>'  . "\n" .
-                    '<li><a href="http://wordpress.org/extend/plugins/invite-anyone/">' . __( 'Invite Anyone', 'bpsp' ) . '</a></li>' . "\n" .
-                    '<li><a href="http://wordpress.org/extend/plugins/buddypress-group-documents/">' . __( 'Group Documents', 'bpsp' ) . '</a></li>' . "\n" .
-                '</ul>' . "\n" .
-            '<p>' . __( 'If you find issues, please report them here.', 'bpsp' ) . '</p>' . "\n"
-        );
+        $vars['name'] = 'contextual_help';
+        add_contextual_help( $current_screen, self::load_template( $vars ) );
     }
     
     /**
@@ -128,6 +121,8 @@ class BPSP_WordPress {
         elseif ( $current_option == 'eu' )
             $vars['eu'] = $current_option;
         
+        $vars['name'] = 'admin';
+        $vars['echo'] = 'true';
         $vars['bpsp_gradebook_format'] = get_option( 'bpsp_gradebook_format' );
         $vars['bpsp_allow_only_admins'] = get_option( 'bpsp_allow_only_admins' );
         $vars['bpsp_global_status'] = get_option( 'bpsp_global_status' );
@@ -136,10 +131,19 @@ class BPSP_WordPress {
         $vars['bpsp_load_css'] = get_option( 'bpsp_load_css' );
         
         //Load the template
+        self::load_template( $vars );
+    }
+    
+    function load_template( $vars ) {
         ob_start();
         extract( $vars );
-        include( BPSP_PLUGIN_DIR . '/wordpress/templates/admin.php' );
-        echo ob_get_clean();
+        if( file_exists( BPSP_PLUGIN_DIR . '/wordpress/templates/' . $name . '.php' ) )
+            include( BPSP_PLUGIN_DIR . '/wordpress/templates/' . $name . '.php' );
+        
+        if( isset( $echo ) && $echo )
+            echo ob_get_clean();
+        else
+            return ob_get_clean();
     }
     
     /**
@@ -165,7 +169,7 @@ class BPSP_WordPress {
         foreach ( $terms as $term => $taxonomy ) {
             $t = get_term_by( 'slug', $taxonomy, $term );
             if( !empty( $t ) )
-                $term_ids[ $t->term_taxonomy_id ] = $term;
+                $term_ids[ $t->term_id ] = $term;
         }
         // Get term's objects
         if( !empty( $term_ids ) )
