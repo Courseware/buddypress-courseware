@@ -54,3 +54,18 @@ jQuery( "input[name$='schedule[start_date]']" )
 jQuery('#new-assignment-form label').hide();
 jQuery('#new-assignment-form input[type="text"]').inputHint();
 jQuery('#new-assignment-form textarea').inputHint();
+
+// Didn't find another way to 'localize' this
+oLanguage.oPaginate             = [];
+oLanguage.oPaginate.sFirst      = '&laquo;';
+oLanguage.oPaginate.sPrevious   = '&lsaquo;';
+oLanguage.oPaginate.sNext       = '&rsaquo;';
+oLanguage.oPaginate.sLast       = '&raquo;';
+
+// Load DataTables
+jQuery("table.datatables").dataTable( {
+    "bJQueryUI": true,
+    "oLanguage": oLanguage,
+    "aaSorting": [[ 1, "desc" ]],
+    "sPaginationType": "full_numbers"
+} );

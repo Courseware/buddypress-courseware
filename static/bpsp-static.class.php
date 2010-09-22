@@ -49,7 +49,7 @@ class BPSP_Static {
         wp_register_script( 'new-bibliograpy', BPSP_WEB_URI . '/static/js/new-bibliograpy.js', array( 'inputhint' ), BPSP_VERSION, true );
         wp_register_script( 'edit-bibliograpy', BPSP_WEB_URI . '/static/js/edit-bibliograpy.js', array( 'inputhint' ), BPSP_VERSION, true );
         wp_register_script( 'gradebook', BPSP_WEB_URI . '/static/js/gradebook.js', array( 'datatables' ), BPSP_VERSION, true );
-        wp_register_script( 'schedules', BPSP_WEB_URI . '/static/js/schedules.js', array( 'datetimepicker', 'inputhint' ), BPSP_VERSION, true );
+        wp_register_script( 'schedules', BPSP_WEB_URI . '/static/js/schedules.js', array( 'datatables', 'datetimepicker', 'inputhint' ), BPSP_VERSION, true );
         wp_register_script( 'list-schedules', BPSP_WEB_URI . '/static/js/list-schedules.js', array( 'fullcalendar', 'datatables' ), BPSP_VERSION, true );
         wp_register_script( 'group-dashboard', BPSP_WEB_URI . '/static/js/group-dashboard.js', array( 'sparkline' ), BPSP_VERSION, true );
         
