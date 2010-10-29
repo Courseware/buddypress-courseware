@@ -320,7 +320,6 @@ class BPSP_Assignments {
                 if( isset( $new_assignment['title'] ) &&
                     isset( $new_assignment['content'] ) &&
                     isset( $new_assignment['group_id'] ) &&
-                    strtotime( $new_assignment['due_date'] ) &&
                     is_numeric( $new_assignment['course_id'] )
                 ) {
                     $new_assignment['title'] = strip_tags( $new_assignment['title'] );
@@ -334,7 +333,8 @@ class BPSP_Assignments {
                     if( $new_assignment_id ) {
                         wp_set_post_terms( $new_assignment_id, $new_assignment['group_id'], 'group_id' );
                         wp_set_post_terms( $new_assignment_id, $new_assignment['course_id'], 'course_id' );
-                        add_post_meta( $new_assignment_id, 'due_date', $new_assignment['due_date'] );
+                        if( strtotime( $new_assignment['due_date'] ) )
+                            add_post_meta( $new_assignment_id, 'due_date', $new_assignment['due_date'] );
                         $vars['message'] = __( 'New assignment was added.', 'bpsp' );
                         do_action( 'courseware_assignment_added', $this->is_assignment( $new_assignment_id ) );
                         return $this->list_assignments_screen( $vars );
@@ -391,7 +391,7 @@ class BPSP_Assignments {
         
         $assignment = $this->is_assignment( $this->current_assignment );
         
-        if(  $assignment->post_author == $bp->loggedin_user->id || is_super_admin() )
+        if(  $this->has_assignment_caps( $bp->loggedin_user->id ) || is_super_admin() )
             $vars['show_edit'] = true;
         else
             $vars['show_edit'] = null;
@@ -544,7 +544,6 @@ class BPSP_Assignments {
                 if( isset( $updated_assignment['title'] ) &&
                     isset( $updated_assignment['content'] ) &&
                     isset( $updated_assignment['course_id'] ) &&
-                    strtotime( $updated_assignment['due_date'] ) &&
                     is_numeric( $updated_assignment['group_id'] )
                 ) {
                     $updated_assignment['title'] = strip_tags( $updated_assignment['title'] );
@@ -556,7 +555,8 @@ class BPSP_Assignments {
                     
                     if( $updated_assignment_id ) {
                         wp_set_post_terms( $updated_assignment_id, $updated_assignment['course_id'], 'course_id' );
-                        update_post_meta( $updated_assignment_id, 'due_date', $updated_assignment['due_date'], $old_assignment->due_date );
+                        if( strtotime( $new_assignment['due_date'] ) )
+                            update_post_meta( $updated_assignment_id, 'due_date', $updated_assignment['due_date'], $old_assignment->due_date );
                         $vars['message'] = __( 'Assignment was updated.', 'bpsp' );
                         do_action( 'courseware_assignment_activity', $this->is_assignment( $updated_assignment_id ), 'update' );
                     }

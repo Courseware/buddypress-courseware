@@ -101,7 +101,7 @@ class BPSP_USCourses extends BPSP_Courses {
         global $bp;
         $course = $this->is_course( $this->current_course );
         
-        if(  $course->post_author == $bp->loggedin_user->id || is_super_admin() )
+        if( $this->has_course_caps( $bp->loggedin_user->id ) || is_super_admin() )
             $vars['show_edit'] = true;
         else
             $vars['show_edit'] = null;
