@@ -206,6 +206,16 @@ class BPSP_Schedules {
         else
             return null;
         
+        // Backwards compatibility for <0.5 versions that use no title
+        if( empty( $schedule->post_title ) ) {
+            wp_update_post(
+                array(
+                        'ID'          => $schedule->ID,
+                        'post_title'  => bp_create_excerpt( $schedule->post_content )
+                    )
+            );
+        }
+        
         $schedule->start_date = get_post_meta( $schedule->ID, 'start_date', true );
         $schedule->end_date = get_post_meta( $schedule->ID, 'end_date', true );
         $schedule->location = get_post_meta( $schedule->ID, 'location', true );
