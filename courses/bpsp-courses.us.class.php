@@ -153,9 +153,8 @@ class BPSP_USCourses extends BPSP_Courses {
         $old_course = $this->is_course( $this->current_course );
         $old_course->terms = wp_get_object_terms($old_course->ID, 'group_id' );
         
-        if( ( !$this->has_course_caps( $bp->loggedin_user->id ) &&
-            $bp->groups->current_group->id != $old_course->terms[0]->name ) ||
-            ( $bp->loggedin_user->id != $old_course->post_author && !is_super_admin() )
+        if( !$this->has_course_caps( $bp->loggedin_user->id ) || !is_super_admin() &&
+            $bp->groups->current_group->id != $old_course->terms[0]->name
         ) {
             $vars['die'] = __( 'BuddyPress Courseware Error while forbidden user tried to update the course.', 'bpsp' );
             return $vars;
