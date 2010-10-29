@@ -340,7 +340,8 @@ class BPSP_Assignments {
                         return $this->list_assignments_screen( $vars );
                     } else
                         $vars['error'] = __( 'New assignment could not be added.', 'bpsp' );
-                }
+                } else
+                    $vars['error'] = __( 'Please fill in all the fields.', 'bpsp' );
         }
         
         $vars['posted_data'] = $_POST['assignment'];

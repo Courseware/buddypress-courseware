@@ -15,6 +15,16 @@ class BPSP_Roles {
     }
     
     /**
+     * activate()
+     *
+     * Workaround! Will activate the xprofile sync before $bp is populated
+     * BuddyPress is very lazy at this!
+     */
+    function activate() {
+        add_action( 'bp_setup_globals', 'xprofile_sync_wp_profile' );
+    }
+    
+    /**
      * profile_screen_new_request()
      * 
      * Action to notify site_admin that a new request has been sent

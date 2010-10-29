@@ -59,6 +59,7 @@ add_action( 'init', 'bpsp_registration' );
  */
 function bpsp_on_plugins_load() {
     BPSP_Groups::activate_component();
+    BPSP_Roles::activate();
 }
 add_action( 'plugins_loaded', 'bpsp_on_plugins_load', 5 );
 
