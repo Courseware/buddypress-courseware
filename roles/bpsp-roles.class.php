@@ -15,16 +15,6 @@ class BPSP_Roles {
     }
     
     /**
-     * activate()
-     *
-     * Workaround! Will activate the xprofile sync before $bp is populated
-     * BuddyPress is very lazy at this!
-     */
-    function activate() {
-        add_action( 'bp_setup_globals', 'xprofile_sync_wp_profile' );
-    }
-    
-    /**
      * profile_screen_new_request()
      * 
      * Action to notify site_admin that a new request has been sent
@@ -75,6 +65,8 @@ class BPSP_Roles {
         if( $subject )
             $content = sprintf( __( 'Please review %s application to become a teacher.', 'bpsp' ), $userdata->user_nicename );
         if( $body ) {
+            if( empty( $userdata->user_url ) )
+                $userdata->user_url = bp_core_get_userlink( $userdata->ID, false, true );
             $fields_group_id = $this->field_group_id_from_name( __( 'Courseware', 'bpsp' ) );
             $admin_url = $userdata->user_url . 'profile/edit/group/' . $fields_group_id;
             $content = $userdata->user_nicename;
