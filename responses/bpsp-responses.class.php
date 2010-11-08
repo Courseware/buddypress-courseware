@@ -190,6 +190,30 @@ class BPSP_Responses {
     }
     
     /**
+     * group_responses_status( $gid )
+     *
+     * Will check if groups responses are public or private
+     * @param Int $gid, group id to check, default is current group
+     * @return Bool true if private flag is set or false if responses are public
+     */
+    function group_responses_status( $gid = null ) {
+        if( !$gid ) {
+            global $bp;
+            $gid = $bp->groups->current_group->id;
+        }
+        
+        $global_status = get_option( 'bpsp_private_responses' );
+        $group_status = groups_get_groupmeta( $bp->groups->current_group->id, 'courseware_responses' );
+        
+        if( 'true' == $group_status )
+            return true;
+        else if( $global_status )
+            return true;
+        else
+            return false;
+    }
+    
+    /**
      * screen_handler( $action_vars )
      *
      * Response screens handler.
@@ -343,7 +367,8 @@ class BPSP_Responses {
                         // Save author id in assignment post_meta so we don't have to query it all over
                         add_post_meta( $this->current_assignment->ID, 'responded_author', $bp->loggedin_user->id );
                         $vars = $this->single_response_screen( $vars );
-                        do_action( 'courseware_response_added', $vars );
+                        if( $this->group_responses_status() )
+                            do_action( 'courseware_response_added', $vars );
                         $vars['message'] = __( 'New response was added.', 'bpsp' );
                         return $vars;
                     } else
@@ -374,14 +399,15 @@ class BPSP_Responses {
         $vars['response'] = $this->has_response();
         $vars['response_permalink'] = $vars['assignment_permalink'] . '/response/';
         
-        $vars['responses'] = get_posts(
-            array(
-                'numberposts'   => '-1',
-                'post_type' => 'response',
-                'post_status' => 'publish',
-                'post_parent' => $this->current_assignment->ID,
-            )
-        );
+        if( !$this->group_responses_status() || $this->has_response_caps() )
+            $vars['responses'] = get_posts(
+                array(
+                    'numberposts'   => '-1',
+                    'post_type' => 'response',
+                    'post_status' => 'publish',
+                    'post_parent' => $this->current_assignment->ID,
+                )
+            );
         
         return $vars;
     }
@@ -400,12 +426,17 @@ class BPSP_Responses {
         $nonce_delete_name = 'response_delete';
         $response = null;
         
-        if( isset( $vars['response'] ) )
-            $response = $vars['response'];
-        elseif( !empty( $this->current_response ) )
+        if( !empty( $this->current_response ) )
             $response = $this->current_response;
         else
             $response = $this->has_response();            
+        
+        if( $this->group_responses_status() && !$this->has_response_caps() &&
+           ( $bp->loggedin_user->id != $response->post_author )
+        ) {
+            $vars['die'] = __( 'BuddyPress Courseware Error while forbidden user tried to access a private response.', 'bpsp' );
+            return $vars;
+        }
         
         $vars['name'] = 'single_response';
         $vars['assignment_permalink'] = $vars['current_uri'] . '/assignment/' . $this->current_assignment->post_name;

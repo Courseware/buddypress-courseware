@@ -20,6 +20,7 @@ class BPSP_WordPress {
         add_option( 'bpsp_allow_only_admins' );
         add_option( 'bpsp_global_status' );
         add_option( 'bpsp_gradebook_format' );
+        add_option( 'bpsp_private_responses' );
         add_option( 'bpsp_worldcat_key' );
         add_option( 'bpsp_isbndb_key' );
         add_option( 'bpsp_load_css' );
@@ -93,6 +94,14 @@ class BPSP_WordPress {
             if( update_option( 'bpsp_allow_only_admins', '' ) )
                 $vars['flash'][] = __( 'Courseware option was updated.' );
         
+        // Courseware Private Responses
+        if( isset( $_POST['bpsp_private_responses_check'] ) )
+            if( update_option( 'bpsp_private_responses', strtolower( $_POST['bpsp_private_responses'] ) ) )
+                $vars['flash'][] = __( 'Courseware option was updated.' );
+        if( isset( $_POST['bpsp_private_responses_check'] ) && !isset( $_POST['bpsp_private_responses'] ) )
+            if( update_option( 'bpsp_private_responses', '' ) )
+                $vars['flash'][] = __( 'Courseware option was updated.' );
+        
         // Courseware Default Gradebook Format
         if( isset( $_POST['bpsp_gradebook_format_check'] ) && isset( $_POST['bpsp_gradebook_format'] ) )
             if( update_option( 'bpsp_gradebook_format', strtolower( $_POST['bpsp_gradebook_format'] ) ) )
@@ -123,6 +132,7 @@ class BPSP_WordPress {
         
         $vars['name'] = 'admin';
         $vars['echo'] = 'true';
+        $vars['bpsp_private_responses'] = get_option( 'bpsp_private_responses' );
         $vars['bpsp_gradebook_format'] = get_option( 'bpsp_gradebook_format' );
         $vars['bpsp_allow_only_admins'] = get_option( 'bpsp_allow_only_admins' );
         $vars['bpsp_global_status'] = get_option( 'bpsp_global_status' );
