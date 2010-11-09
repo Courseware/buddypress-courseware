@@ -555,7 +555,7 @@ class BPSP_Assignments {
                     
                     if( $updated_assignment_id ) {
                         wp_set_post_terms( $updated_assignment_id, $updated_assignment['course_id'], 'course_id' );
-                        if( strtotime( $new_assignment['due_date'] ) )
+                        if( strtotime( $updated_assignment['due_date'] ) )
                             update_post_meta( $updated_assignment_id, 'due_date', $updated_assignment['due_date'], $old_assignment->due_date );
                         $vars['message'] = __( 'Assignment was updated.', 'bpsp' );
                         do_action( 'courseware_assignment_activity', $this->is_assignment( $updated_assignment_id ), 'update' );

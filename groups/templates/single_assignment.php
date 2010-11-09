@@ -3,10 +3,12 @@
     <div id="assignment-meta" class="courseware-sidebar">
         <h4 class="meta"><?php _e( 'Assignment Meta', 'bpsp' ); ?></h4>
         <ul class="courseware-meta">
+            <?php if( !empty( $assignment->due_date ) ): ?>
             <li id="assignment-due-date">
                 <?php _e( 'Due date', 'bpsp' ); ?>:
                 <strong><?php bpsp_date( $assignment->due_date ); ?></strong>
             </li>
+            <?php endif; ?>
             <?php if( isset( $user_grade ) ): ?>
             <li id="assignment-grade">
                 <?php _e( 'Your Grade:' ); ?>
