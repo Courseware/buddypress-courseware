@@ -4,6 +4,7 @@ Tags: buddypress, lms, courseware, education, teaching
 Requires at least: WordPress 3.0, BuddyPress 1.2.5
 Tested up to: WordPress 3.0.1 / BuddyPress 1.2.5.2
 Stable tag: 0.1.5
+Donate link: http://stas.nerd.ro/pub/donate/
 
 A LMS for BuddyPress.
 
@@ -33,13 +34,28 @@ Here's the features list:
 
 == Installation ==
 
-Download and upload the plugin to your plugins folder. Activate it!
+Please follow the [standard installation procedure for WordPress plugins](http://codex.wordpress.org/Managing_Plugins#Installing_Plugins).
 
 == Frequently Asked Questions ==
 
 Before asking questions, please check the [BuddyPress Courseware Handbook](http://scholarpress.github.com/buddypress-courseware/handbook.html).
 
 == Changelog ==
+
+= 0.1.5 =
+* Fixed the issue with aliens can post responses.
+* Added options to make responses private. Closes [#18](https://github.com/scholarpress/buddypress-courseware/issues/issue/18).
+* Removed `due_date` field as required from assignments. Closes [#23](https://github.com/scholarpress/buddypress-courseware/issues/issue/23).
+* Fixed screen permissions for assignments,courses and schedule.
+* Added datatables to schedule delete screen.
+* Fixed the Teacher persmission for course editor screen. Closes [#26](https://github.com/scholarpress/buddypress-courseware/issues/issue/26)
+* Added error handling for assignments, fixed the late profile sync issue that closes [#25](https://github.com/scholarpress/buddypress-courseware/issues/issue/25)
+* Added datatables for schedule listing.
+* Added titles for schedules. Closes [#16](https://github.com/scholarpress/buddypress-courseware/issues/issue/16)
+* Fixed assignment `due_date` typo.
+* Updated jquery.timepicker to 0.7
+* Updated jquery.fullcalendar to 1.4.8
+* The "bábú" release.
 
 = 0.1.4 =
 * Added Italian translation, thanks to [Luca Camellini](http://buddypress.org/community/members/luccame/)
@@ -67,3 +83,7 @@ Before asking questions, please check the [BuddyPress Courseware Handbook](http:
 
 = 0.1 =
 * First stable release.
+
+== Screenshots ==
+
+Please visit the [project page](http://scholarpress.github.com/buddypress-courseware/) for media files.
