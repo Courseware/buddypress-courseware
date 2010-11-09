@@ -221,6 +221,7 @@
                     <?php
                         $no_responses = true;
                         $count = $items_limit;
+                        if( !empty( $assignments ) )
                         foreach ( $assignments as $a )
                             if( !empty( $a->responses ) && $count > 0 )
                                 foreach ( $a->responses as $r ) :

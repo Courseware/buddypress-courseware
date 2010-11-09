@@ -24,7 +24,7 @@
             <tr>
                 <td class="description">
                     <a href="<?php echo $schedule->permalink; ?>">
-                        <?php echo get_the_excerpt(); ?>
+                        <?php echo get_the_title( $schedule->ID ); ?>
                     </a>
                     <div class="schedule-meta">
                         <?php

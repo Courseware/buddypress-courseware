@@ -53,7 +53,7 @@ class BPSP_Schedules {
             'hierarchical'          => false,
             'rewrite'               => false,
             'query_var'             => false,
-            'supports'              => array( 'editor', 'excerpt', 'author', 'custom-fields' )
+            'supports'              => array( 'title', 'editor', 'excerpt', 'author', 'custom-fields' )
         );
         if( !register_post_type( 'schedule', $schedule_post_def ) )
             wp_die( __( 'BuddyPress Courseware error while registering schedule post type.', 'bpsp' ) );
@@ -154,6 +154,7 @@ class BPSP_Schedules {
                 add_filter( 'courseware_group_template', array( &$this, 'edit_schedule_screen' ) );
             }
             elseif( isset ( $action_vars[2] ) && 'delete' == $action_vars[2] ) {
+                do_action( 'courseware_delete_schedule_screen' );
                 add_filter( 'courseware_group_template', array( &$this, 'delete_schedule_screen' ) );
             }
             else
@@ -204,6 +205,16 @@ class BPSP_Schedules {
             $schedule = $schedule[0];
         else
             return null;
+        
+        // Backwards compatibility for <0.5 versions that use no title
+        if( empty( $schedule->post_title ) ) {
+            wp_update_post(
+                array(
+                        'ID'          => $schedule->ID,
+                        'post_title'  => bp_create_excerpt( $schedule->post_content )
+                    )
+            );
+        }
         
         $schedule->start_date = get_post_meta( $schedule->ID, 'start_date', true );
         $schedule->end_date = get_post_meta( $schedule->ID, 'end_date', true );
@@ -322,7 +333,6 @@ class BPSP_Schedules {
         global $bp;
         $nonce_name = 'new_schedule';
         $repeats = null;
-        
         if( !$this->has_schedule_caps( $bp->loggedin_user->id ) && !is_super_admin() ) {
             $vars['die'] = __( 'BuddyPress Courseware Error while forbidden user tried to add a new course.' );
             return $vars;
@@ -330,8 +340,10 @@ class BPSP_Schedules {
         
         // Save new schedule
         if( isset( $_POST['schedule'] ) && $_POST['schedule']['object'] == 'group' && isset( $_POST['_wpnonce'] ) ) {
-            if( empty( $_POST['schedule']['desc'] ) || empty( $_POST['schedule']['start_date'] ) ) {
-                $vars['error'] = __( 'New schedule could not be added. Missing description and/or start date.', 'bpsp' );
+            if( empty( $_POST['schedule']['title'] ) || empty( $_POST['schedule']['desc'] ) || empty( $_POST['schedule']['start_date'] ) ) {
+                $vars['error'] = __( 'New schedule could not be added. Missing description/title and/or start date.', 'bpsp' );
+                $vars['schedule']->title = $_POST['schedule']['title'];
+                $vars['schedule']->desc = $_POST['schedule']['desc'];
                 $_POST = null;
                 return $this->new_schedule_screen( $vars );
             }
@@ -360,7 +372,8 @@ class BPSP_Schedules {
                     // create a template
                     $first_schedule = array(
                         'post_author'   => $bp->loggedin_user->id,
-                        'post_content'    => sanitize_text_field( $new_schedule['desc'] ),
+                        'post_title'    => sanitize_text_field( $new_schedule['title'] ),
+                        'post_content'  => sanitize_text_field( $new_schedule['desc'] ),
                         'post_status'   => 'publish',
                         'post_type'     => 'schedule',
                         'cw_group_id'   => $new_schedule['group_id'],
@@ -446,7 +459,7 @@ class BPSP_Schedules {
         global $bp;
         $schedule = $this->is_schedule( $this->current_schedule );
         
-        if(  $schedule->post_author == $bp->loggedin_user->id || is_super_admin() )
+        if( $this->has_schedule_caps( $bp->loggedin_user->id ) || is_super_admin() )
             $vars['show_edit'] = true;
         else
             $vars['show_edit'] = null;
@@ -480,7 +493,7 @@ class BPSP_Schedules {
             return $this->list_schedules_screen( $vars );
         }
         
-        if(  ( $schedule->post_author == $bp->loggedin_user->id ) || is_super_admin() ) {
+        if( $this->has_schedule_caps( $bp->loggedin_user->id ) || is_super_admin() ) {
             wp_delete_post( $schedule->ID );
         } else {
             $vars['die'] = __( 'BuddyPress Courseware Error while forbidden user tried to delete a schedule.', 'bpsp' );
@@ -504,12 +517,10 @@ class BPSP_Schedules {
         global $bp;
         $nonce_name = 'edit_schedule';
         $old_schedule = $this->is_schedule( $this->current_schedule );
-        $old_schedule->terms = wp_get_object_terms($old_course->ID, 'group_id' );
+        $old_schedule->terms = wp_get_object_terms($old_schedule->ID, 'group_id' );
         
-        if( !$this->has_schedule_caps( $bp->loggedin_user->id ) &&
-            $bp->loggedin_user->id != $old_schedule->post_author &&
-            $bp->groups->current_group->id != $old_schedule->terms[0]->name &&
-            !is_super_admin()
+        if( !$this->has_schedule_caps( $bp->loggedin_user->id ) || !is_super_admin() &&
+            $bp->groups->current_group->id != $old_schedule->terms[0]->name
         ) {
             $vars['die'] = __( 'BuddyPress Courseware Error while forbidden user tried to update the schedule.', 'bpsp' );
             return $vars;
@@ -535,9 +546,9 @@ class BPSP_Schedules {
                 $vars['error'] = __( 'Nonce Error while editing a schedule.', 'bpsp' );
             else 
                 if( !empty( $updated_schedule['group_id'] ) && $valid_dates ) {
-                    
                     $updated_schedule_id =  wp_update_post( array(
                         'ID'            => $old_schedule->ID,
+                        'post_title'  => sanitize_text_field( $updated_schedule['title'] ),
                         'post_content'  => sanitize_text_field( $updated_schedule['desc'] ),
                     ));
                     
@@ -590,7 +601,7 @@ class BPSP_Schedules {
             if( $e->post_type == "schedule" )
                 $entry = array(
                     "id" => get_the_ID(),
-                    "title" => get_the_excerpt(),
+                    "title" => get_the_title( $e->ID ),
                     "start" => date( 'c', strtotime( $e->start_date ) ),
                     "end" => date( 'c', strtotime( $e->end_date ) ),
                     "url" => $e->permalink,
@@ -598,7 +609,7 @@ class BPSP_Schedules {
             elseif( $e->post_type == "assignment" )
                 $entry = array(
                     "id" => get_the_ID(),
-                    "title" => get_the_excerpt(),
+                    "title" => get_the_title( $e->ID ),
                     "start" => date( 'c', strtotime( $e->due_date ) ),
                     "end" => date( 'c', strtotime( $e->due_date ) ),
                     "url" => $e->permalink,
@@ -671,7 +682,7 @@ class BPSP_Schedules {
             } else
                 $e->setProperty( 'duration', 0, 1, 0 ); // Assume it's an one day event
             
-            $e->setProperty( 'summary', get_the_excerpt() );
+            $e->setProperty( 'summary', get_the_title( $entry->ID ) );
             $e->setProperty( 'status', 'CONFIRMED' );
             
             $cal->setComponent( $e );

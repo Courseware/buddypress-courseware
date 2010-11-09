@@ -65,6 +65,8 @@ class BPSP_Roles {
         if( $subject )
             $content = sprintf( __( 'Please review %s application to become a teacher.', 'bpsp' ), $userdata->user_nicename );
         if( $body ) {
+            if( empty( $userdata->user_url ) )
+                $userdata->user_url = bp_core_get_userlink( $userdata->ID, false, true );
             $fields_group_id = $this->field_group_id_from_name( __( 'Courseware', 'bpsp' ) );
             $admin_url = $userdata->user_url . 'profile/edit/group/' . $fields_group_id;
             $content = $userdata->user_nicename;

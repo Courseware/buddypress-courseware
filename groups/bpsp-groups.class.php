@@ -292,8 +292,13 @@ class BPSP_Groups {
 		
 		if( groups_update_groupmeta( $bp->groups->current_group->id, 'courseware', $post_value ) )
 		    $vars['message'] = __( 'Group Courseware settings were successfully updated.', 'bpsp' );
-		else
-		    $vars['error'] = __( 'Group Courseware settings were not updated.', 'bpsp' );
+	    }
+	    
+	    if( isset( $_POST['responses_courseware_status'] ) && !empty( $_POST['responses_courseware_status'] ) ) {
+		$post_value = sanitize_key( $_POST['responses_courseware_status'] );
+		
+		if( groups_update_groupmeta( $bp->groups->current_group->id, 'courseware_responses', $post_value ) )
+		    $vars['message'] = __( 'Group Courseware responses settings were successfully updated.', 'bpsp' );
 	    }
 	}
 	
@@ -301,6 +306,7 @@ class BPSP_Groups {
 	$vars['form_action'] = $bp->root_domain . '/' . $bp->groups->slug . '/' . $group_slug . '/admin/courseware';
 	$vars['form_nonce'] = wp_nonce_field( $nonce_name, '_wpnonce', true, false );
 	$vars['current_status'] = groups_get_groupmeta( $bp->groups->current_group->id, 'courseware' );
+	$vars['current_responses_status'] = groups_get_groupmeta( $bp->groups->current_group->id, 'courseware_responses' );
 	$this->load_template( $vars );
     }
 }

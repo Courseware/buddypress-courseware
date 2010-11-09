@@ -108,6 +108,31 @@
             </div>
         </div>
         <div class="postbox">
+            <h3 class="hndle" ><?php _e( 'Make assignment responses private', 'bpsp' )?></h3>
+            <div class="inside">
+                <p>
+                    <?php _e( 'This will allow only teachers see
+                    the student responses.', 'bpsp' )?>
+                </p>
+                <p>
+                    <?php _e( 'This will enable it for every group. There\'s also a per-group option for it!', 'bpsp' )?>
+                </p>
+                <form action="" method="post" >
+                    <p>
+                        <label>
+                            <input type="checkbox" name="bpsp_private_responses" <?php checked( !empty( $bpsp_private_responses ) ); ?> />
+                            <strong><?php _e( 'Enable private responses.', 'bpsp' ); ?></strong>
+                        </label>
+                    </p>
+                    <p>
+                        <input type="submit" class="button" value="<?php _e( 'Save Changes','bpsp' ); ?>" />
+                        <input type="hidden" name="bpsp_private_responses_check" value="true" />
+                        <?php echo $nonce; ?>
+                    </p>
+                </form>
+            </div>
+        </div>
+        <div class="postbox">
             <h3 class="hndle" ><?php _e( 'Gradebook default grade format', 'bpsp' )?></h3>
             <div class="inside">
                 <p>

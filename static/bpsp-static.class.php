@@ -21,7 +21,7 @@ class BPSP_Static {
         wp_localize_script( 'fullcalendar', 'fcLanguage', $this->fullcalendar_l10n() );
         
         // jQuery UI Date & Time picker
-        wp_register_script( 'datetimepicker', BPSP_WEB_URI . '/static/js/datetimepicker/jquery-ui-timepicker-addon-0.5.min.js', array( 'jquery-ui-courseware-custom' ), '0.5' );
+        wp_register_script( 'datetimepicker', BPSP_WEB_URI . '/static/js/datetimepicker/jquery-ui-timepicker-addon-0.7.min.js', array( 'jquery-ui-courseware-custom' ), '0.5' );
         wp_localize_script( 'datetimepicker', 'dtpLanguage', $this->datetimepicker_l10n() );
         
         // Flexselect
@@ -49,8 +49,9 @@ class BPSP_Static {
         wp_register_script( 'new-bibliograpy', BPSP_WEB_URI . '/static/js/new-bibliograpy.js', array( 'inputhint' ), BPSP_VERSION, true );
         wp_register_script( 'edit-bibliograpy', BPSP_WEB_URI . '/static/js/edit-bibliograpy.js', array( 'inputhint' ), BPSP_VERSION, true );
         wp_register_script( 'gradebook', BPSP_WEB_URI . '/static/js/gradebook.js', array( 'datatables' ), BPSP_VERSION, true );
-        wp_register_script( 'schedules', BPSP_WEB_URI . '/static/js/schedules.js', array( 'datetimepicker', 'inputhint' ), BPSP_VERSION, true );
+        wp_register_script( 'schedules', BPSP_WEB_URI . '/static/js/schedules.js', array( 'datatables', 'datetimepicker', 'inputhint' ), BPSP_VERSION, true );
         wp_register_script( 'list-schedules', BPSP_WEB_URI . '/static/js/list-schedules.js', array( 'fullcalendar', 'datatables' ), BPSP_VERSION, true );
+        wp_register_script( 'delete-schedule', BPSP_WEB_URI . '/static/js/delete-schedule.js', array( 'datatables' ), BPSP_VERSION, true );
         wp_register_script( 'group-dashboard', BPSP_WEB_URI . '/static/js/group-dashboard.js', array( 'sparkline' ), BPSP_VERSION, true );
         
         // Styles
@@ -74,6 +75,7 @@ class BPSP_Static {
         add_action( 'courseware_list_courses_screen', array( &$this, 'list_courses_enqueues' ) );
         add_action( 'courseware_new_schedule_screen', array( &$this, 'schedules_enqueues' ) );
         add_action( 'courseware_edit_schedule_screen', array( &$this, 'schedules_enqueues' ));
+        add_action( 'courseware_delete_schedule_screen', array( &$this, 'delete_schedule_enqueues' ) );
         add_action( 'courseware_gradebook_screen', array( &$this, 'gradebook_enqueues' ) );
         add_action( 'courseware_group_dashboard', array( &$this, 'group_dashboard_enqueues' ) );
     }
@@ -156,6 +158,12 @@ class BPSP_Static {
         wp_enqueue_style( 'fullcalendar' );
         wp_enqueue_style( 'datatables' );
         wp_enqueue_script( 'list-schedules' );
+        wp_enqueue_style( 'jquery-ui-courseware-custom' );
+    }
+
+    function delete_schedule_enqueues() {
+        wp_enqueue_style( 'datatables' );
+        wp_enqueue_script( 'delete-schedule' );
         wp_enqueue_style( 'jquery-ui-courseware-custom' );
     }
     
