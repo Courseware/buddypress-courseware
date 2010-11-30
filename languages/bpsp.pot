@@ -2,32 +2,33 @@ msgid ""
 msgstr ""
 "Project-Id-Version: BuddyPress ScholarPress Courseware\n"
 "Report-Msgid-Bugs-To: http://github.com/scholarpress/buddypress-courseware/issues\n"
-"POT-Creation-Date: 2010-08-29 20:07+0200\n"
+"POT-Creation-Date: 2010-11-30 12:45+0200\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Stas Sușcov <stas@softwareliber.ro>\n"
-"Language-Team: ScholarPress Dev Crew <jeremy@scholarpress.net>\n"
+"Language-Team: ScholarPress Dev Crew <stas@nerd.ro>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
 #: roles/bpsp-roles.class.php:27
-#: roles/bpsp-roles.class.php:92
-#: roles/bpsp-roles.class.php:179
-#: roles/bpsp-roles.class.php:188
+#: roles/bpsp-roles.class.php:94
+#: roles/bpsp-roles.class.php:181
+#: roles/bpsp-roles.class.php:190
 msgid "Apply for Teacher"
 msgstr ""
 
 #: roles/bpsp-roles.class.php:41
 #: roles/bpsp-roles.class.php:45
 #: roles/bpsp-roles.class.php:49
-#: roles/bpsp-roles.class.php:91
-#: roles/bpsp-roles.class.php:106
-#: roles/bpsp-roles.class.php:107
-#: roles/bpsp-roles.class.php:156
-#: roles/bpsp-roles.class.php:186
-#: roles/bpsp-roles.class.php:221
-#: responses/bpsp-responses.class.php:88
+#: roles/bpsp-roles.class.php:93
+#: roles/bpsp-roles.class.php:108
+#: roles/bpsp-roles.class.php:109
+#: roles/bpsp-roles.class.php:158
+#: roles/bpsp-roles.class.php:188
+#: roles/bpsp-roles.class.php:223
+#: responses/bpsp-responses.class.php:87
 msgid "Teacher"
 msgstr ""
 
@@ -40,136 +41,140 @@ msgstr ""
 msgid "Please review %s application to become a teacher."
 msgstr ""
 
-#: roles/bpsp-roles.class.php:68
-#: roles/bpsp-roles.class.php:123
-#: roles/bpsp-roles.class.php:128
+#: roles/bpsp-roles.class.php:70
+#: roles/bpsp-roles.class.php:125
+#: roles/bpsp-roles.class.php:130
 #: groups/bpsp-groups.class.php:97
-#: groups/bpsp-groups.class.php:254
+#: groups/bpsp-groups.class.php:259
 msgid "Courseware"
 msgstr ""
 
-#: roles/bpsp-roles.class.php:71
+#: roles/bpsp-roles.class.php:73
 msgid " applied to become a teacher."
 msgstr ""
 
-#: roles/bpsp-roles.class.php:73
+#: roles/bpsp-roles.class.php:75
 msgid "To review the profile, follow the link below."
 msgstr ""
 
-#: roles/bpsp-roles.class.php:88
-#: roles/bpsp-roles.class.php:140
-#: roles/bpsp-roles.class.php:147
-#: roles/bpsp-roles.class.php:221
-#: responses/bpsp-responses.class.php:88
-#: responses/bpsp-responses.class.php:176
+#: roles/bpsp-roles.class.php:90
+#: roles/bpsp-roles.class.php:142
+#: roles/bpsp-roles.class.php:149
+#: roles/bpsp-roles.class.php:223
+#: responses/bpsp-responses.class.php:87
+#: responses/bpsp-responses.class.php:175
 msgid "Role"
 msgstr ""
 
-#: roles/bpsp-roles.class.php:129
+#: roles/bpsp-roles.class.php:131
 msgid "Students and Teachers fields. Do not delete as long as you use BuddyPress ScholarPress Courseware!"
 msgstr ""
 
-#: roles/bpsp-roles.class.php:134
+#: roles/bpsp-roles.class.php:136
 msgid "BuddyPress Courseware error when saving xProfile group."
 msgstr ""
 
-#: roles/bpsp-roles.class.php:142
+#: roles/bpsp-roles.class.php:144
 msgid "You role when using Courseware. Every request requires moderation. Please be patient untill an administrator reviews it."
 msgstr ""
 
-#: roles/bpsp-roles.class.php:149
+#: roles/bpsp-roles.class.php:151
 msgid "BuddyPress Courseware error when saving xProfile field."
 msgstr ""
 
-#: roles/bpsp-roles.class.php:167
-#: roles/bpsp-roles.class.php:187
-#: responses/bpsp-responses.class.php:178
+#: roles/bpsp-roles.class.php:169
+#: roles/bpsp-roles.class.php:189
+#: responses/bpsp-responses.class.php:177
 msgid "Student"
 msgstr ""
 
-#: roles/bpsp-roles.class.php:190
+#: roles/bpsp-roles.class.php:192
 msgid "BuddyPress Courseware error when saving xProfile field options."
 msgstr ""
 
-#: responses/bpsp-responses.class.php:60
+#: responses/bpsp-responses.class.php:59
 msgid "Responses"
 msgstr ""
 
-#: responses/bpsp-responses.class.php:61
+#: responses/bpsp-responses.class.php:60
 msgid "Response"
 msgstr ""
 
-#: responses/bpsp-responses.class.php:62
+#: responses/bpsp-responses.class.php:61
 msgid "BuddyPress ScholarPress Courseware Responses"
 msgstr ""
 
-#: responses/bpsp-responses.class.php:74
+#: responses/bpsp-responses.class.php:73
 msgid "BuddyPress Courseware error while registering response post type."
 msgstr ""
 
-#: responses/bpsp-responses.class.php:312
+#: responses/bpsp-responses.class.php:337
 msgid "BuddyPress Courseware Error while forbidden user tried to add a new response."
 msgstr ""
 
-#: responses/bpsp-responses.class.php:325
+#: responses/bpsp-responses.class.php:350
 msgid "Nonce Error while adding a response."
 msgstr ""
 
-#: responses/bpsp-responses.class.php:329
+#: responses/bpsp-responses.class.php:354
 msgid "You already sent your response."
 msgstr ""
 
-#: responses/bpsp-responses.class.php:348
+#: responses/bpsp-responses.class.php:374
 msgid "New response was added."
 msgstr ""
 
-#: responses/bpsp-responses.class.php:351
+#: responses/bpsp-responses.class.php:377
 msgid "New response could not be added (fill the title/content)."
 msgstr ""
 
-#: responses/bpsp-responses.class.php:445
+#: responses/bpsp-responses.class.php:441
+msgid "BuddyPress Courseware Error while forbidden user tried to access a private response."
+msgstr ""
+
+#: responses/bpsp-responses.class.php:479
 msgid "Nonce Error while deleting the response."
 msgstr ""
 
-#: responses/bpsp-responses.class.php:455
+#: responses/bpsp-responses.class.php:489
 msgid "BuddyPress Courseware Error while forbidden user tried to delete the response."
 msgstr ""
 
-#: responses/bpsp-responses.class.php:460
+#: responses/bpsp-responses.class.php:494
 msgid "Response deleted successfully."
 msgstr ""
 
-#: assignments/bpsp-assignments.class.php:47
-#: assignments/bpsp-assignments.class.php:288
+#: assignments/bpsp-assignments.class.php:46
+#: assignments/bpsp-assignments.class.php:287
 msgid "Assignments"
 msgstr ""
 
-#: assignments/bpsp-assignments.class.php:48
+#: assignments/bpsp-assignments.class.php:47
 msgid "Assignment"
 msgstr ""
 
-#: assignments/bpsp-assignments.class.php:49
+#: assignments/bpsp-assignments.class.php:48
 msgid "BuddyPress ScholarPress Courseware Assignments"
 msgstr ""
 
-#: assignments/bpsp-assignments.class.php:61
+#: assignments/bpsp-assignments.class.php:60
 msgid "BuddyPress Courseware error while registering assignment post type."
 msgstr ""
 
-#: assignments/bpsp-assignments.class.php:67
+#: assignments/bpsp-assignments.class.php:66
 msgid "Course ID"
 msgstr ""
 
-#: assignments/bpsp-assignments.class.php:82
+#: assignments/bpsp-assignments.class.php:81
 msgid "BuddyPress Courseware error while registering assignment taxonomies."
 msgstr ""
 
-#: assignments/bpsp-assignments.class.php:285
+#: assignments/bpsp-assignments.class.php:284
 msgid "New Assignment"
 msgstr ""
 
-#: assignments/bpsp-assignments.class.php:285
-#: assignments/bpsp-assignments.class.php:288
+#: assignments/bpsp-assignments.class.php:284
+#: assignments/bpsp-assignments.class.php:287
 #: bibliographies/bpsp-bibliography.class.php:420
 #: bibliographies/bpsp-bibliography.class.php:423
 #: bibliographies/bpsp-bibliography.class.php:518
@@ -180,20 +185,24 @@ msgstr ""
 msgid "Home"
 msgstr ""
 
-#: assignments/bpsp-assignments.class.php:306
+#: assignments/bpsp-assignments.class.php:305
 msgid "BuddyPress Courseware Error while forbidden user tried to add a new assignment."
 msgstr ""
 
-#: assignments/bpsp-assignments.class.php:319
+#: assignments/bpsp-assignments.class.php:318
 msgid "Nonce Error while adding an assignment."
 msgstr ""
 
-#: assignments/bpsp-assignments.class.php:339
+#: assignments/bpsp-assignments.class.php:338
 msgid "New assignment was added."
 msgstr ""
 
-#: assignments/bpsp-assignments.class.php:343
+#: assignments/bpsp-assignments.class.php:342
 msgid "New assignment could not be added."
+msgstr ""
+
+#: assignments/bpsp-assignments.class.php:344
+msgid "Please fill in all the fields."
 msgstr ""
 
 #: assignments/bpsp-assignments.class.php:445
@@ -240,258 +249,258 @@ msgstr ""
 msgid "Assignment could not be updated."
 msgstr ""
 
-#: static/bpsp-static.class.php:173
+#: static/bpsp-static.class.php:181
 msgid "Processing..."
 msgstr ""
 
-#: static/bpsp-static.class.php:174
+#: static/bpsp-static.class.php:182
 msgid "Display _MENU_ records per page"
 msgstr ""
 
-#: static/bpsp-static.class.php:175
+#: static/bpsp-static.class.php:183
 msgid "Nothing found - sorry"
 msgstr ""
 
-#: static/bpsp-static.class.php:176
+#: static/bpsp-static.class.php:184
 msgid "Showing _START_ to _END_ of _TOTAL_ records"
 msgstr ""
 
-#: static/bpsp-static.class.php:177
+#: static/bpsp-static.class.php:185
 msgid "Showing 0 to 0 of 0 records"
 msgstr ""
 
-#: static/bpsp-static.class.php:178
+#: static/bpsp-static.class.php:186
 msgid "(filtered from _MAX_ total records)"
 msgstr ""
 
-#: static/bpsp-static.class.php:179
+#: static/bpsp-static.class.php:187
 msgid " "
 msgstr ""
 
-#: static/bpsp-static.class.php:180
+#: static/bpsp-static.class.php:188
 msgid "Search"
 msgstr ""
 
-#: static/bpsp-static.class.php:191
+#: static/bpsp-static.class.php:199
 msgid "today"
 msgstr ""
 
-#: static/bpsp-static.class.php:192
+#: static/bpsp-static.class.php:200
 msgid "month"
 msgstr ""
 
-#: static/bpsp-static.class.php:193
+#: static/bpsp-static.class.php:201
 msgid "week"
 msgstr ""
 
-#: static/bpsp-static.class.php:194
+#: static/bpsp-static.class.php:202
 msgid "day"
 msgstr ""
 
-#: static/bpsp-static.class.php:198
+#: static/bpsp-static.class.php:206
 msgid "H(:mm)"
 msgstr ""
 
-#: static/bpsp-static.class.php:205
-#: static/bpsp-static.class.php:223
+#: static/bpsp-static.class.php:213
+#: static/bpsp-static.class.php:231
 msgid "1"
 msgstr ""
 
-#: static/bpsp-static.class.php:217
+#: static/bpsp-static.class.php:225
 msgid "Done"
 msgstr ""
 
-#: static/bpsp-static.class.php:218
+#: static/bpsp-static.class.php:226
 msgid "Prev"
 msgstr ""
 
-#: static/bpsp-static.class.php:219
+#: static/bpsp-static.class.php:227
 msgid "Next"
 msgstr ""
 
-#: static/bpsp-static.class.php:220
+#: static/bpsp-static.class.php:228
 msgid "Today"
 msgstr ""
 
-#: static/bpsp-static.class.php:224
-#: static/bpsp-static.class.php:225
+#: static/bpsp-static.class.php:232
+#: static/bpsp-static.class.php:233
 msgid "false"
 msgstr ""
 
-#: static/bpsp-static.class.php:230
+#: static/bpsp-static.class.php:238
 msgid "January"
 msgstr ""
 
-#: static/bpsp-static.class.php:231
+#: static/bpsp-static.class.php:239
 msgid "February"
 msgstr ""
 
-#: static/bpsp-static.class.php:232
+#: static/bpsp-static.class.php:240
 msgid "March"
 msgstr ""
 
-#: static/bpsp-static.class.php:233
+#: static/bpsp-static.class.php:241
 msgid "April"
 msgstr ""
 
-#: static/bpsp-static.class.php:234
-#: static/bpsp-static.class.php:250
+#: static/bpsp-static.class.php:242
+#: static/bpsp-static.class.php:258
 msgid "May"
 msgstr ""
 
-#: static/bpsp-static.class.php:235
+#: static/bpsp-static.class.php:243
 msgid "June"
 msgstr ""
 
-#: static/bpsp-static.class.php:236
+#: static/bpsp-static.class.php:244
 msgid "July"
 msgstr ""
 
-#: static/bpsp-static.class.php:237
+#: static/bpsp-static.class.php:245
 msgid "August"
 msgstr ""
 
-#: static/bpsp-static.class.php:238
+#: static/bpsp-static.class.php:246
 msgid "September"
 msgstr ""
 
-#: static/bpsp-static.class.php:239
+#: static/bpsp-static.class.php:247
 msgid "October"
 msgstr ""
 
-#: static/bpsp-static.class.php:240
+#: static/bpsp-static.class.php:248
 msgid "November"
 msgstr ""
 
-#: static/bpsp-static.class.php:241
+#: static/bpsp-static.class.php:249
 msgid "December"
 msgstr ""
 
-#: static/bpsp-static.class.php:246
+#: static/bpsp-static.class.php:254
 msgid "Jan"
 msgstr ""
 
-#: static/bpsp-static.class.php:247
+#: static/bpsp-static.class.php:255
 msgid "Feb"
 msgstr ""
 
-#: static/bpsp-static.class.php:248
+#: static/bpsp-static.class.php:256
 msgid "Mar"
 msgstr ""
 
-#: static/bpsp-static.class.php:249
+#: static/bpsp-static.class.php:257
 msgid "Apr"
 msgstr ""
 
-#: static/bpsp-static.class.php:251
+#: static/bpsp-static.class.php:259
 msgid "Jun"
 msgstr ""
 
-#: static/bpsp-static.class.php:252
+#: static/bpsp-static.class.php:260
 msgid "Jul"
 msgstr ""
 
-#: static/bpsp-static.class.php:253
+#: static/bpsp-static.class.php:261
 msgid "Aug"
 msgstr ""
 
-#: static/bpsp-static.class.php:254
+#: static/bpsp-static.class.php:262
 msgid "Sep"
 msgstr ""
 
-#: static/bpsp-static.class.php:255
+#: static/bpsp-static.class.php:263
 msgid "Oct"
 msgstr ""
 
-#: static/bpsp-static.class.php:256
+#: static/bpsp-static.class.php:264
 msgid "Nov"
 msgstr ""
 
-#: static/bpsp-static.class.php:257
+#: static/bpsp-static.class.php:265
 msgid "Dec"
 msgstr ""
 
-#: static/bpsp-static.class.php:262
+#: static/bpsp-static.class.php:270
 msgid "Sunday"
 msgstr ""
 
-#: static/bpsp-static.class.php:263
+#: static/bpsp-static.class.php:271
 msgid "Monday"
 msgstr ""
 
-#: static/bpsp-static.class.php:264
+#: static/bpsp-static.class.php:272
 msgid "Tuesday"
 msgstr ""
 
-#: static/bpsp-static.class.php:265
+#: static/bpsp-static.class.php:273
 msgid "Wednesday"
 msgstr ""
 
-#: static/bpsp-static.class.php:266
+#: static/bpsp-static.class.php:274
 msgid "Thursday"
 msgstr ""
 
-#: static/bpsp-static.class.php:267
+#: static/bpsp-static.class.php:275
 msgid "Friday"
 msgstr ""
 
-#: static/bpsp-static.class.php:268
+#: static/bpsp-static.class.php:276
 msgid "Saturday"
 msgstr ""
 
-#: static/bpsp-static.class.php:273
+#: static/bpsp-static.class.php:281
 msgid "Sun"
 msgstr ""
 
-#: static/bpsp-static.class.php:274
+#: static/bpsp-static.class.php:282
 msgid "Mon"
 msgstr ""
 
-#: static/bpsp-static.class.php:275
+#: static/bpsp-static.class.php:283
 msgid "Tue"
 msgstr ""
 
-#: static/bpsp-static.class.php:276
+#: static/bpsp-static.class.php:284
 msgid "Wed"
 msgstr ""
 
-#: static/bpsp-static.class.php:277
+#: static/bpsp-static.class.php:285
 msgid "Thu"
 msgstr ""
 
-#: static/bpsp-static.class.php:278
+#: static/bpsp-static.class.php:286
 msgid "Fri"
 msgstr ""
 
-#: static/bpsp-static.class.php:279
+#: static/bpsp-static.class.php:287
 msgid "Sat"
 msgstr ""
 
-#: static/bpsp-static.class.php:284
+#: static/bpsp-static.class.php:292
 msgid "Su"
 msgstr ""
 
-#: static/bpsp-static.class.php:285
+#: static/bpsp-static.class.php:293
 msgid "Mo"
 msgstr ""
 
-#: static/bpsp-static.class.php:286
+#: static/bpsp-static.class.php:294
 msgid "Tu"
 msgstr ""
 
-#: static/bpsp-static.class.php:287
+#: static/bpsp-static.class.php:295
 msgid "We"
 msgstr ""
 
-#: static/bpsp-static.class.php:288
+#: static/bpsp-static.class.php:296
 msgid "Th"
 msgstr ""
 
-#: static/bpsp-static.class.php:289
+#: static/bpsp-static.class.php:297
 msgid "Fr"
 msgstr ""
 
-#: static/bpsp-static.class.php:290
+#: static/bpsp-static.class.php:298
 msgid "Sa"
 msgstr ""
 
@@ -557,7 +566,6 @@ msgstr ""
 
 #: bibliographies/bpsp-bibliography.class.php:65
 #: bibliographies/bpsp-bibliography.class.php:423
-#: groups/templates/new_bibliography.php:28
 msgid "Bibliography"
 msgstr ""
 
@@ -709,22 +717,6 @@ msgstr ""
 msgid "New Schedule"
 msgstr ""
 
-#: activity/bpsp-activity.class.php:40
-msgid "Show New Courses"
-msgstr ""
-
-#: activity/bpsp-activity.class.php:41
-msgid "Show New Assignments"
-msgstr ""
-
-#: activity/bpsp-activity.class.php:42
-msgid "Show New Schedules"
-msgstr ""
-
-#: activity/bpsp-activity.class.php:43
-msgid "Show New Responses"
-msgstr ""
-
 #: activity/bpsp-activity.class.php:57
 #, php-format
 msgid "%s created assignment %s in %s Courseware:"
@@ -745,196 +737,12 @@ msgstr ""
 msgid "%s added %s schedules to %s Courseware:"
 msgstr ""
 
-#: groups/bpsp-groups.class.php:289
+#: groups/bpsp-groups.class.php:294
 msgid "Group Courseware settings were successfully updated."
 msgstr ""
 
-#: groups/bpsp-groups.class.php:291
-msgid "Group Courseware settings were not updated."
-msgstr ""
-
-#: groups/templates/new_bibliography.php:4
-msgid "Bibliography Tools"
-msgstr ""
-
-#: groups/templates/new_bibliography.php:9
-msgid "Select a type of source..."
-msgstr ""
-
-#: groups/templates/new_bibliography.php:10
-msgid "Book"
-msgstr ""
-
-#: groups/templates/new_bibliography.php:11
-msgid "Article"
-msgstr ""
-
-#: groups/templates/new_bibliography.php:12
-msgid "Volume Chapter"
-msgstr ""
-
-#: groups/templates/new_bibliography.php:13
-msgid "Unpublished"
-msgstr ""
-
-#: groups/templates/new_bibliography.php:14
-msgid "Website"
-msgstr ""
-
-#: groups/templates/new_bibliography.php:15
-msgid "Webpage"
-msgstr ""
-
-#: groups/templates/new_bibliography.php:16
-msgid "Video"
-msgstr ""
-
-#: groups/templates/new_bibliography.php:17
-msgid "Audio"
-msgstr ""
-
-#: groups/templates/new_bibliography.php:22
-msgid "Add a new bibliography"
-msgstr ""
-
-#: groups/templates/new_bibliography.php:25
-msgid "Import Bibliography"
-msgstr ""
-
-#: groups/templates/new_bibliography.php:31
-msgid "Quick Add Book"
-msgstr ""
-
-#: groups/templates/new_bibliography.php:34
-msgid "Quick Add Webpage"
-msgstr ""
-
-#: groups/templates/new_bibliography.php:40
-msgid "Author(s)"
-msgstr ""
-
-#: groups/templates/new_bibliography.php:42
-#: groups/templates/new_bibliography.php:43
-msgid "Author Last Name"
-msgstr ""
-
-#: groups/templates/new_bibliography.php:44
-#: groups/templates/new_bibliography.php:45
-msgid "Author First Name"
-msgstr ""
-
-#: groups/templates/new_bibliography.php:46
-#: groups/templates/new_bibliography.php:47
-msgid "Author Two Last Name"
-msgstr ""
-
-#: groups/templates/new_bibliography.php:48
-#: groups/templates/new_bibliography.php:49
-msgid "Author Two First Name"
-msgstr ""
-
-#: groups/templates/new_bibliography.php:51
-msgid "Publish Information"
-msgstr ""
-
-#: groups/templates/new_bibliography.php:53
-#: groups/templates/new_bibliography.php:54
-msgid "Title"
-msgstr ""
-
-#: groups/templates/new_bibliography.php:55
-#: groups/templates/new_bibliography.php:56
-msgid "Short Title"
-msgstr ""
-
-#: groups/templates/new_bibliography.php:57
-#: groups/templates/new_bibliography.php:58
-msgid "Journal Title"
-msgstr ""
-
-#: groups/templates/new_bibliography.php:59
-#: groups/templates/new_bibliography.php:60
-msgid "Volume Title"
-msgstr ""
-
-#: groups/templates/new_bibliography.php:61
-#: groups/templates/new_bibliography.php:62
-msgid "Volume Editor(s)"
-msgstr ""
-
-#: groups/templates/new_bibliography.php:63
-#: groups/templates/new_bibliography.php:64
-msgid "Publication Place"
-msgstr ""
-
-#: groups/templates/new_bibliography.php:65
-#: groups/templates/new_bibliography.php:66
-msgid "Publisher"
-msgstr ""
-
-#: groups/templates/new_bibliography.php:67
-#: groups/templates/new_bibliography.php:68
-msgid "Website Title"
-msgstr ""
-
-#: groups/templates/new_bibliography.php:70
-msgid "Additional Information"
-msgstr ""
-
-#: groups/templates/new_bibliography.php:72
-#: groups/templates/new_bibliography.php:73
-msgid "Date Published"
-msgstr ""
-
-#: groups/templates/new_bibliography.php:74
-#: groups/templates/new_bibliography.php:75
-msgid "Date Accessed"
-msgstr ""
-
-#: groups/templates/new_bibliography.php:76
-#: groups/templates/new_bibliography.php:77
-msgid "URL"
-msgstr ""
-
-#: groups/templates/new_bibliography.php:78
-#: groups/templates/new_bibliography.php:79
-msgid "Volume"
-msgstr ""
-
-#: groups/templates/new_bibliography.php:80
-#: groups/templates/new_bibliography.php:81
-msgid "Issue"
-msgstr ""
-
-#: groups/templates/new_bibliography.php:82
-#: groups/templates/new_bibliography.php:83
-msgid "Pages"
-msgstr ""
-
-#: groups/templates/new_bibliography.php:84
-#: groups/templates/new_bibliography.php:85
-#: groups/templates/list_schedules.php:12
-msgid "Description"
-msgstr ""
-
-#: groups/templates/new_bibliography.php:87
-msgid "Add"
-msgstr ""
-
-#: groups/templates/list_schedules.php:8
-msgid "Schedules"
-msgstr ""
-
-#: groups/templates/list_schedules.php:13
-msgid "Start date"
-msgstr ""
-
-#: groups/templates/list_schedules.php:14
-msgid "End date"
-msgstr ""
-
-#: groups/templates/list_schedules.php:15
-msgid "Location"
+#: groups/bpsp-groups.class.php:301
+msgid "Group Courseware responses settings were successfully updated."
 msgstr ""
 
 #: groups/templates/list_schedules.php:32
@@ -942,110 +750,9 @@ msgstr ""
 msgid "added on %1$s by %2$s."
 msgstr ""
 
-#: groups/templates/_group_admin_screen.php:5
-msgid "This option will enable or disable Courseware for current group."
-msgstr ""
-
-#: groups/templates/_group_admin_screen.php:6
-msgid "There's a default global option on Courseware Settings page."
-msgstr ""
-
-#: groups/templates/_group_admin_screen.php:12
-msgid "Enabled"
-msgstr ""
-
-#: groups/templates/_group_admin_screen.php:16
-msgid "Disabled"
-msgstr ""
-
-#: groups/templates/new_schedule.php:6
-msgid "Include a course"
-msgstr ""
-
-#: groups/templates/new_schedule.php:8
-msgid "Select Course"
-msgstr ""
-
-#: groups/templates/new_schedule.php:27
-msgid "Repeats"
-msgstr ""
-
-#: groups/templates/new_schedule.php:29
-msgid "No Repetition"
-msgstr ""
-
-#: groups/templates/new_schedule.php:30
-msgid "Daily"
-msgstr ""
-
-#: groups/templates/new_schedule.php:31
-msgid "Weekly"
-msgstr ""
-
-#: groups/templates/new_schedule.php:32
-msgid "Monthly"
-msgstr ""
-
-#: groups/templates/new_schedule.php:34
-msgid "for"
-msgstr ""
-
-#: groups/templates/new_schedule.php:35
-msgid "for X"
-msgstr ""
-
-#: groups/templates/new_schedule.php:36
-msgid "times"
-msgstr ""
-
-#: groups/templates/new_schedule.php:50
-msgid "Add a new schedule"
-msgstr ""
-
-#: groups/templates/_responses.php:3
-msgid "List of responses"
-msgstr ""
-
-#: groups/templates/_responses.php:10
-msgid "By "
-msgstr ""
-
-#: groups/templates/_responses.php:12
-msgid "On "
-msgstr ""
-
-#: groups/templates/_message.php:10
-#: groups/templates/edit_bibliography.php:94
-msgid "Go back"
-msgstr ""
-
-#: groups/templates/new_course.php:7
-msgid "Add a New Course"
-msgstr ""
-
-#: groups/templates/new_course.php:10
-msgid "Course Title"
-msgstr ""
-
-#: groups/templates/new_course.php:25
-msgid "Add a new course"
-msgstr ""
-
-#: groups/templates/home.php:2
-msgid "At a glance"
-msgstr ""
-
 #: groups/templates/home.php:10
 #, php-format
 msgid "Courseware started by %s and managed by %d teacher(s) with %d course(s) for class %s"
-msgstr ""
-
-#: groups/templates/home.php:19
-msgid "Create a course  &raquo;"
-msgstr ""
-
-#: groups/templates/home.php:23
-msgid "All courses  &raquo;"
 msgstr ""
 
 #: groups/templates/home.php:31
@@ -1053,26 +760,9 @@ msgstr ""
 msgid "<strong>%s</strong> course class started by %s and managed by %d teacher(s) for this group"
 msgstr ""
 
-#: groups/templates/home.php:39
-msgid "Update Course  &raquo;"
-msgstr ""
-
-#: groups/templates/home.php:43
-msgid "Course description  &raquo;"
-msgstr ""
-
 #: groups/templates/home.php:51
 #, php-format
 msgid "<em>%s</em> Assignment(s)"
-msgstr ""
-
-#: groups/templates/home.php:57
-msgid "Create an assignment &raquo;"
-msgstr ""
-
-#: groups/templates/home.php:61
-#: groups/templates/home.php:161
-msgid "All assignments  &raquo;"
 msgstr ""
 
 #: groups/templates/home.php:68
@@ -1080,21 +770,9 @@ msgstr ""
 msgid "<em>%s</em> Response(s)"
 msgstr ""
 
-#: groups/templates/home.php:73
-msgid "All responses &raquo;"
-msgstr ""
-
 #: groups/templates/home.php:79
 #, php-format
 msgid "<em>%s</em> Schedule(s)"
-msgstr ""
-
-#: groups/templates/home.php:85
-msgid "Add a schedule &raquo;"
-msgstr ""
-
-#: groups/templates/home.php:89
-msgid "All schedules  &raquo;"
 msgstr ""
 
 #: groups/templates/home.php:96
@@ -1102,129 +780,40 @@ msgstr ""
 msgid "<em>%s</em> Bibliography entries"
 msgstr ""
 
-#: groups/templates/home.php:102
-msgid "Manage bibliography &raquo;"
-msgstr ""
-
 #: groups/templates/home.php:110
 #, php-format
 msgid "<em>%d</em> Assignment discussions started"
-msgstr ""
-
-#: groups/templates/home.php:115
-msgid "Visit forums &raquo;"
-msgstr ""
-
-#: groups/templates/home.php:129
-msgid "Latest courses"
 msgstr ""
 
 #: groups/templates/home.php:130
 msgid "Courses"
 msgstr ""
 
-#: groups/templates/home.php:131
-msgid "Latest courses  &raquo;"
-msgstr ""
-
 #: groups/templates/home.php:143
 #: groups/templates/home.php:173
 #: groups/templates/home.php:203
-#: groups/templates/home.php:237
+#: groups/templates/home.php:238
 #, php-format
 msgid "By %s, on %s"
-msgstr ""
-
-#: groups/templates/home.php:159
-msgid "Latest assignments"
-msgstr ""
-
-#: groups/templates/home.php:189
-msgid " Latest schedules"
 msgstr ""
 
 #: groups/templates/home.php:190
 msgid "Calendar"
 msgstr ""
 
-#: groups/templates/home.php:191
-msgid "All schedules &raquo;"
-msgstr ""
-
-#: groups/templates/home.php:217
-msgid "Latest responses"
-msgstr ""
-
-#: groups/templates/home.php:246
-msgid "No responses yet."
-msgstr ""
-
-#: groups/templates/home.php:254
-msgid "Your progress based on received grades"
-msgstr ""
-
-#: groups/templates/list_assignments.php:7
-msgid "Due Date"
-msgstr ""
-
-#: groups/templates/list_assignments.php:16
-msgid "No assignments were added."
-msgstr ""
-
-#: groups/templates/single_assignment.php:4
-msgid "Assignment Meta"
-msgstr ""
-
-#: groups/templates/single_assignment.php:7
-#: groups/templates/new_assignment.php:17
-msgid "Due date"
-msgstr ""
-
-#: groups/templates/single_assignment.php:12
-msgid "Your Grade:"
-msgstr ""
-
-#: groups/templates/single_assignment.php:25
+#: groups/templates/single_assignment.php:27
 #, php-format
 msgid "Date: %1$s"
 msgstr ""
 
-#: groups/templates/single_assignment.php:33
+#: groups/templates/single_assignment.php:35
 #, php-format
 msgid "Author: %1$s"
 msgstr ""
 
-#: groups/templates/single_assignment.php:41
+#: groups/templates/single_assignment.php:43
 #, php-format
 msgid "Course: %1$s"
-msgstr ""
-
-#: groups/templates/single_assignment.php:49
-msgid "Visit Assignment Forum"
-msgstr ""
-
-#: groups/templates/single_assignment.php:55
-msgid "Enable Assignment Forum"
-msgstr ""
-
-#: groups/templates/single_assignment.php:61
-msgid "You need forums enabled"
-msgstr ""
-
-#: groups/templates/single_assignment.php:74
-msgid "Add a Response"
-msgstr ""
-
-#: groups/templates/single_assignment.php:80
-msgid "Your response"
-msgstr ""
-
-#: groups/templates/single_assignment.php:94
-msgid "Quick Add Bibliography"
-msgstr ""
-
-#: groups/templates/single_assignment.php:103
-msgid "Edit Assignment"
 msgstr ""
 
 #: groups/templates/_course_group_header.php:11
@@ -1232,74 +821,9 @@ msgstr ""
 msgid "Course started on %1$s by %2$s."
 msgstr ""
 
-#: groups/templates/list_courses.php:6
-msgid "Creation Date"
-msgstr ""
-
-#: groups/templates/list_courses.php:15
-msgid "No courses were added."
-msgstr ""
-
 #: groups/templates/list_courses.php:29
 #, php-format
 msgid "added by %1$s."
-msgstr ""
-
-#: groups/templates/new_assignment.php:7
-#: groups/templates/edit_assignment.php:9
-msgid "Course &amp; Due Date"
-msgstr ""
-
-#: groups/templates/new_assignment.php:26
-msgid "Assignment Title"
-msgstr ""
-
-#: groups/templates/new_assignment.php:42
-msgid "Add a new assignment"
-msgstr ""
-
-#: groups/templates/edit_bibliography.php:4
-msgid "Update Bibliography"
-msgstr ""
-
-#: groups/templates/edit_bibliography.php:91
-msgid "Update"
-msgstr ""
-
-#: groups/templates/import_bibliographies.php:3
-msgid "Import Your Bibliography"
-msgstr ""
-
-#: groups/templates/import_bibliographies.php:6
-msgid "Paste your BibTeX contents in the textarea and submit <strong>Import</strong>."
-msgstr ""
-
-#: groups/templates/import_bibliographies.php:12
-msgid "Import"
-msgstr ""
-
-#: groups/templates/edit_assignment.php:39
-msgid "Update assignment"
-msgstr ""
-
-#: groups/templates/edit_assignment.php:42
-msgid "Delete Assignment"
-msgstr ""
-
-#: groups/templates/edit_assignment.php:44
-msgid "Cancel/Go back"
-msgstr ""
-
-#: groups/templates/edit_course.php:25
-msgid "Update course"
-msgstr ""
-
-#: groups/templates/edit_course.php:30
-msgid "Cancel/Go Back"
-msgstr ""
-
-#: groups/templates/single_schedule.php:4
-msgid "Schedule Meta"
 msgstr ""
 
 #: groups/templates/single_schedule.php:17
@@ -1317,203 +841,8 @@ msgstr ""
 msgid "Location: %1$s"
 msgstr ""
 
-#: groups/templates/single_schedule.php:52
-msgid "Course:"
-msgstr ""
-
-#: groups/templates/single_schedule.php:60
-msgid "Edit Schedule"
-msgstr ""
-
-#: groups/templates/single_response.php:4
-msgid "Response Meta"
-msgstr ""
-
-#: groups/templates/single_response.php:23
-msgid "Assignment page"
-msgstr ""
-
-#: groups/templates/single_response.php:27
-msgid "Delete Response"
-msgstr ""
-
-#: groups/templates/gradebook.php:3
-msgid "There are no students in this class yet."
-msgstr ""
-
-#: groups/templates/gradebook.php:8
-msgid "Import from CSV"
-msgstr ""
-
-#: groups/templates/gradebook.php:11
-msgid "Gradebook for: "
-msgstr ""
-
-#: groups/templates/gradebook.php:18
-msgid "About CSV source file format"
-msgstr ""
-
-#: groups/templates/gradebook.php:20
-msgid "Here is an example of such a file with dummy data for user test."
-msgstr ""
-
-#: groups/templates/gradebook.php:22
-msgid "It's important to preserve the first line!"
-msgstr ""
-
-#: groups/templates/gradebook.php:26
-msgid ""
-"uid,value,format,prv_comment,pub_comment\n"
-"test,10,numeric,\"Private comment text\",\"Public comment text\""
-msgstr ""
-
-#: groups/templates/gradebook.php:29
-msgid "Upload your file:"
-msgstr ""
-
-#: groups/templates/gradebook.php:43
-msgid "Grade value"
-msgstr ""
-
-#: groups/templates/gradebook.php:44
-msgid "Grade format"
-msgstr ""
-
-#: groups/templates/gradebook.php:45
-msgid "Private comment"
-msgstr ""
-
-#: groups/templates/gradebook.php:46
-msgid "Public comment"
-msgstr ""
-
-#: groups/templates/gradebook.php:77
-#: wordpress/templates/admin.php:124
-msgid "Numeric"
-msgstr ""
-
-#: groups/templates/gradebook.php:80
-#: wordpress/templates/admin.php:126
-msgid "Percentage"
-msgstr ""
-
-#: groups/templates/gradebook.php:83
-#: wordpress/templates/admin.php:125
-msgid "Letter"
-msgstr ""
-
-#: groups/templates/gradebook.php:103
-msgid "Save grades"
-msgstr ""
-
-#: groups/templates/gradebook.php:105
-msgid "Clear Gradebook"
-msgstr ""
-
-#: groups/templates/edit_schedule.php:2
-#: groups/templates/edit_schedule.php:40
-msgid "Update schedule"
-msgstr ""
-
-#: groups/templates/edit_schedule.php:6
-msgid "Link to a Course"
-msgstr ""
-
-#: groups/templates/edit_schedule.php:42
-msgid "Delete schedule"
-msgstr ""
-
-#: groups/templates/single_course.php:4
-msgid "Course Info"
-msgstr ""
-
-#: groups/templates/single_course.php:36
-msgid "Edit Course"
-msgstr ""
-
-#: groups/templates/_no_course_group_header.php:3
-msgid "You can manage this group Courseware."
-msgstr ""
-
-#: groups/templates/_no_course_group_header.php:5
-msgid "Update course information &raquo;"
-msgstr ""
-
-#: groups/templates/add_response.php:9
-msgid "My response for: "
-msgstr ""
-
-#: groups/templates/add_response.php:23
-msgid "Add my response"
-msgstr ""
-
-#: groups/templates/_bibs.php:7
-msgid "Add an existing bibliography"
-msgstr ""
-
-#: groups/templates/_bibs.php:9
-msgid "Type something to search..."
-msgstr ""
-
-#: groups/templates/_bibs.php:20
-#: groups/templates/_bibs.php:31
-msgid "Add entry"
-msgstr ""
-
-#: groups/templates/_bibs.php:25
-msgid "Add a webpage"
-msgstr ""
-
-#: groups/templates/_bibs.php:26
-msgid "Entry title"
-msgstr ""
-
-#: groups/templates/_bibs.php:28
-msgid "Webpage address"
-msgstr ""
-
-#: groups/templates/_bibs.php:35
-msgid "Add a book"
-msgstr ""
-
-#: groups/templates/_bibs.php:37
-msgid "Book Title"
-msgstr ""
-
-#: groups/templates/_bibs.php:42
-msgid "&mdash; or &mdash;"
-msgstr ""
-
-#: groups/templates/_bibs.php:45
-msgid "Book ISBN"
-msgstr ""
-
-#: groups/templates/_bibs.php:49
-msgid "Instructions/Description for this entry"
-msgstr ""
-
-#: groups/templates/_bibs.php:52
-msgid "Add book"
-msgstr ""
-
-#: groups/templates/_bibs.php:62
-msgid "Bibliography listing"
-msgstr ""
-
-#: groups/templates/_bibs.php:68
-msgid "Instructions/Description"
-msgstr ""
-
-#: groups/templates/_bibs.php:70
-msgid "Actions"
-msgstr ""
-
-#: groups/templates/_bibs.php:92
-msgid "Edit"
-msgstr ""
-
-#: groups/templates/_bibs.php:95
-msgid "Delete"
+#: schedules/bpsp-schedules.class.php:45
+msgid "Schedules"
 msgstr ""
 
 #: schedules/bpsp-schedules.class.php:46
@@ -1532,340 +861,164 @@ msgstr ""
 msgid "BuddyPress Courseware error while registering schedule taxonomies."
 msgstr ""
 
-#: schedules/bpsp-schedules.class.php:327
-#: courses/bpsp-courses.class.php:283
+#: schedules/bpsp-schedules.class.php:337
+#: courses/bpsp-courses.class.php:282
 msgid "BuddyPress Courseware Error while forbidden user tried to add a new course."
 msgstr ""
 
-#: schedules/bpsp-schedules.class.php:334
-#: schedules/bpsp-schedules.class.php:521
-msgid "New schedule could not be added. Missing description and/or start date."
+#: schedules/bpsp-schedules.class.php:344
+msgid "New schedule could not be added. Missing description/title and/or start date."
 msgstr ""
 
-#: schedules/bpsp-schedules.class.php:352
+#: schedules/bpsp-schedules.class.php:364
 msgid "Nonce Error while adding a schedule."
 msgstr ""
 
-#: schedules/bpsp-schedules.class.php:401
+#: schedules/bpsp-schedules.class.php:414
 msgid "New schedule was added."
 msgstr ""
 
-#: schedules/bpsp-schedules.class.php:405
+#: schedules/bpsp-schedules.class.php:418
 msgid "New schedule could not be added."
 msgstr ""
 
-#: schedules/bpsp-schedules.class.php:430
+#: schedules/bpsp-schedules.class.php:443
 msgid "No schedules exist."
 msgstr ""
 
-#: schedules/bpsp-schedules.class.php:479
+#: schedules/bpsp-schedules.class.php:492
 msgid "BuddyPress Courseware Nonce Error while deleting a schedule."
 msgstr ""
 
-#: schedules/bpsp-schedules.class.php:486
+#: schedules/bpsp-schedules.class.php:499
 msgid "BuddyPress Courseware Error while forbidden user tried to delete a schedule."
 msgstr ""
 
-#: schedules/bpsp-schedules.class.php:490
+#: schedules/bpsp-schedules.class.php:503
 msgid "Schedule deleted successfully."
 msgstr ""
 
-#: schedules/bpsp-schedules.class.php:514
+#: schedules/bpsp-schedules.class.php:525
 msgid "BuddyPress Courseware Error while forbidden user tried to update the schedule."
 msgstr ""
 
-#: schedules/bpsp-schedules.class.php:535
+#: schedules/bpsp-schedules.class.php:532
+msgid "New schedule could not be added. Missing description and/or start date."
+msgstr ""
+
+#: schedules/bpsp-schedules.class.php:546
 msgid "Nonce Error while editing a schedule."
 msgstr ""
 
-#: schedules/bpsp-schedules.class.php:556
+#: schedules/bpsp-schedules.class.php:567
 msgid "Schedule was updated."
 msgstr ""
 
-#: schedules/bpsp-schedules.class.php:559
+#: schedules/bpsp-schedules.class.php:570
 msgid "Schedule could not be updated."
 msgstr ""
 
-#: schedules/bpsp-schedules.class.php:570
-#: courses/bpsp-courses.class.php:457
+#: schedules/bpsp-schedules.class.php:581
+#: courses/bpsp-courses.class.php:455
 msgid "Delete Course"
 msgstr ""
 
-#: schedules/bpsp-schedules.class.php:630
+#: schedules/bpsp-schedules.class.php:641
 msgid "Calendar for: "
 msgstr ""
 
-#: wordpress/bpsp-wordpress.class.php:58
-msgid "BuddyPress Courseware Help and Recommendations"
-msgstr ""
-
-#: wordpress/bpsp-wordpress.class.php:59
-msgid "The following plugins are recommended to use with BuddyPress Courseware:"
-msgstr ""
-
-#: wordpress/bpsp-wordpress.class.php:61
-msgid "Invite Anyone"
-msgstr ""
-
-#: wordpress/bpsp-wordpress.class.php:62
-msgid "Group Documents"
-msgstr ""
-
-#: wordpress/bpsp-wordpress.class.php:64
-msgid "If you find issues, please report them here."
-msgstr ""
-
-#: wordpress/bpsp-wordpress.class.php:85
-#: wordpress/bpsp-wordpress.class.php:90
-#: wordpress/bpsp-wordpress.class.php:93
-#: wordpress/bpsp-wordpress.class.php:98
-#: wordpress/bpsp-wordpress.class.php:101
+#: wordpress/bpsp-wordpress.class.php:79
+#: wordpress/bpsp-wordpress.class.php:84
+#: wordpress/bpsp-wordpress.class.php:87
+#: wordpress/bpsp-wordpress.class.php:92
+#: wordpress/bpsp-wordpress.class.php:95
+#: wordpress/bpsp-wordpress.class.php:100
+#: wordpress/bpsp-wordpress.class.php:103
 msgid "Courseware option was updated."
 msgstr ""
 
-#: wordpress/bpsp-wordpress.class.php:106
+#: wordpress/bpsp-wordpress.class.php:108
 msgid "Courseware gradebook format option was updated."
 msgstr ""
 
-#: wordpress/bpsp-wordpress.class.php:111
+#: wordpress/bpsp-wordpress.class.php:113
 msgid "WorldCat option was updated."
 msgstr ""
 
-#: wordpress/bpsp-wordpress.class.php:114
+#: wordpress/bpsp-wordpress.class.php:116
 msgid "ISBNdb option was updated."
 msgstr ""
 
-#: wordpress/bpsp-wordpress.class.php:119
-#: wordpress/bpsp-wordpress.class.php:122
+#: wordpress/bpsp-wordpress.class.php:121
+#: wordpress/bpsp-wordpress.class.php:124
 msgid "Courseware customization options updated."
 msgstr ""
 
-#: wordpress/templates/admin.php:10
-msgid "BuddyPress Courseware"
-msgstr ""
-
-#: wordpress/templates/admin.php:13
-msgid "Global Settings"
-msgstr ""
-
-#: wordpress/templates/admin.php:16
-msgid ""
-"Enabling this, will enable Courseware component for\n"
-"                    every existing group."
-msgstr ""
-
-#: wordpress/templates/admin.php:20
-msgid "A per group option is available in group Admin screen."
-msgstr ""
-
-#: wordpress/templates/admin.php:26
-msgid "Enable Courseware globally"
-msgstr ""
-
-#: wordpress/templates/admin.php:30
 #: wordpress/templates/admin.php:79
-#: wordpress/templates/admin.php:103
-#: wordpress/templates/admin.php:130
-#: wordpress/templates/admin.php:168
-#: wordpress/templates/admin.php:193
 msgid "Save Changes"
 msgstr ""
 
-#: wordpress/templates/admin.php:38
-msgid "Default behaviour for Courseware"
-msgstr ""
-
-#: wordpress/templates/admin.php:41
-msgid ""
-"In short, this feature was added due to differences\n"
-"                    between how (for example) European and US academic institutions\n"
-"                    are managing curriculum and student participation along\n"
-"                    educational process."
-msgstr ""
-
-#: wordpress/templates/admin.php:47
-msgid ""
-"In Europe, is more common the concept of classes,\n"
-"                    where students are gourped as <strong><em>students enrolled in\n"
-"                    a class</em></strong>. This means that BuddyPress groups will be\n"
-"                    treaten as classes. The main workflow difference is\n"
-"                    that teachers will be able to manage a set of courses\n"
-"                    within such a class."
-msgstr ""
-
-#: wordpress/templates/admin.php:55
-msgid ""
-"In United States, is more common the concept of courses,\n"
-"                    where students are gourped as <strong><em>students enrolled on\n"
-"                    a course</em></strong>. This means that BuddyPress groups will be\n"
-"                    treaten as courses. The main workflow difference is\n"
-"                    that teachers will be able to manage one course\n"
-"                    per BuddyPress group and users will subscrie to each group."
-msgstr ""
-
-#: wordpress/templates/admin.php:66
-msgid "European style"
-msgstr ""
-
-#: wordpress/templates/admin.php:67
-msgid ""
-"Use this setting if a single roster of students\n"
-"                            is shared between multiple courses."
-msgstr ""
-
-#: wordpress/templates/admin.php:74
-msgid "US style"
-msgstr ""
-
-#: wordpress/templates/admin.php:75
-msgid "Use this setting if each course will have its own roster."
-msgstr ""
-
-#: wordpress/templates/admin.php:86
-msgid "Collaboration settings"
-msgstr ""
-
-#: wordpress/templates/admin.php:89
-msgid ""
-"Enabling this, will allow any teacher to contribute to\n"
-"                    group Courseware by editing/adding new courses, schedules and assignments."
-msgstr ""
-
-#: wordpress/templates/admin.php:93
-msgid "By default only group admins can manage Courseware."
-msgstr ""
-
-#: wordpress/templates/admin.php:99
-msgid "Allow any teacher to contribute to class Courseware content"
-msgstr ""
-
-#: wordpress/templates/admin.php:111
-msgid "Gradebook default grade format"
-msgstr ""
-
-#: wordpress/templates/admin.php:114
-msgid ""
-"Courseware gradebook has support\n"
-"                    for most common grading formats, setting a default one\n"
-"                    will save some time when grading students."
-msgstr ""
-
-#: wordpress/templates/admin.php:121
-msgid "Current gradebook format"
-msgstr ""
-
-#: wordpress/templates/admin.php:138
-msgid "Webservices API Integration"
-msgstr ""
-
-#: wordpress/templates/admin.php:141
-msgid ""
-"This will allow you to use webservices to query\n"
-"                    books and articles easily."
-msgstr ""
-
-#: wordpress/templates/admin.php:147
-msgid "WorldCat Webservices Key"
-msgstr ""
-
-#: wordpress/templates/admin.php:149
-msgid "Free registration for Basic API"
-msgstr ""
-
-#: wordpress/templates/admin.php:158
-msgid "ISBNdb Webservices Key"
-msgstr ""
-
-#: wordpress/templates/admin.php:160
-msgid "Free Registration"
-msgstr ""
-
-#: wordpress/templates/admin.php:175
-msgid "Customization"
-msgstr ""
-
-#: wordpress/templates/admin.php:178
-msgid ""
-"Enabling this, will check if there's\n"
-"                    a <code>courseware.css</code> file in your theme directory,\n"
-"                    and will load it automatically."
-msgstr ""
-
-#: wordpress/templates/admin.php:183
-msgid "This will make Courseware use your CSS rules. File should exist physically!"
-msgstr ""
-
-#: wordpress/templates/admin.php:189
-msgid "Load <code>courseware.css</code> from my theme directory."
-msgstr ""
-
-#: courses/bpsp-courses.class.php:47
+#: courses/bpsp-courses.class.php:46
 msgid "Course"
 msgstr ""
 
-#: courses/bpsp-courses.class.php:48
+#: courses/bpsp-courses.class.php:47
 msgid "BuddyPress ScholarPress Courseware Courses"
 msgstr ""
 
-#: courses/bpsp-courses.class.php:60
+#: courses/bpsp-courses.class.php:59
 msgid "BuddyPress Courseware error while registering courses post type."
 msgstr ""
 
-#: courses/bpsp-courses.class.php:66
+#: courses/bpsp-courses.class.php:65
 msgid "Group ID"
 msgstr ""
 
-#: courses/bpsp-courses.class.php:78
+#: courses/bpsp-courses.class.php:77
 msgid "BuddyPress Courseware error while registering courses taxonomies."
 msgstr ""
 
-#: courses/bpsp-courses.class.php:263
+#: courses/bpsp-courses.class.php:262
 msgid "New Course"
 msgstr ""
 
-#: courses/bpsp-courses.class.php:292
+#: courses/bpsp-courses.class.php:291
 msgid "Nonce Error while adding a course."
 msgstr ""
 
-#: courses/bpsp-courses.class.php:305
-#: courses/bpsp-courses.us.class.php:135
+#: courses/bpsp-courses.class.php:304
 msgid "New course was added."
 msgstr ""
 
-#: courses/bpsp-courses.class.php:309
-#: courses/bpsp-courses.us.class.php:137
+#: courses/bpsp-courses.class.php:308
 msgid "New course could not be added."
 msgstr ""
 
-#: courses/bpsp-courses.class.php:387
+#: courses/bpsp-courses.class.php:386
 msgid "BuddyPress Courseware Nonce Error while deleting the course."
 msgstr ""
 
-#: courses/bpsp-courses.class.php:394
+#: courses/bpsp-courses.class.php:393
 msgid "BuddyPress Courseware Error while forbidden user tried to delete the course."
 msgstr ""
 
-#: courses/bpsp-courses.class.php:398
+#: courses/bpsp-courses.class.php:397
 msgid "Course deleted successfully."
 msgstr ""
 
-#: courses/bpsp-courses.class.php:422
-#: courses/bpsp-courses.us.class.php:160
+#: courses/bpsp-courses.class.php:420
 msgid "BuddyPress Courseware Error while forbidden user tried to update the course."
 msgstr ""
 
-#: courses/bpsp-courses.class.php:431
-#: courses/bpsp-courses.us.class.php:169
+#: courses/bpsp-courses.class.php:429
 msgid "Nonce Error while editing a course."
 msgstr ""
 
-#: courses/bpsp-courses.class.php:445
-#: courses/bpsp-courses.us.class.php:183
+#: courses/bpsp-courses.class.php:443
 msgid "New course was updated."
 msgstr ""
 
-#: courses/bpsp-courses.class.php:447
-#: courses/bpsp-courses.us.class.php:185
+#: courses/bpsp-courses.class.php:445
 msgid "New course could not be updated."
 msgstr ""
 
