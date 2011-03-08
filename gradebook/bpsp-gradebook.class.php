@@ -449,23 +449,25 @@ class BPSP_Gradebook {
             return $this->gradebook_screen( $vars );
         }
         
+        $grades = array();
         if( isset( $_FILES['csv_filename'] ) && !empty( $_FILES['csv_filename'] )) {
             require_once 'parseCSV.class.php'; // Load CSV parser
             $csv = new parseCSV();
             $csv->auto( $_FILES['csv_filename']['tmp_name'] );
-            foreach ( $csv->data as &$grade ) {
+            
+            foreach ( $csv->data as $grade ) {
                 $id = bp_core_get_userid_from_nicename( $grade['uid'] );
                 if( $id )
-                    $csv->data[$id] = $grade;
-                unset( $grade );
+                    $grades[$id] = $grade;
             }
-            if( !empty( $csv->data ) ) {
-                $vars['grades'] = $csv->data;
+            if( count( $csv->data ) == count( $grades ) )
                 $vars['message'] = __( 'Data imported successfully, but it is not saved yet! Save this form changes to keep the data.', 'bpsp' );
-                $vars['assignment_permalink'] = $vars['assignment_permalink'] . '/gradebook';
-            }
+            else
+                $vars['error'] = __( 'File data contains error or entries from other gradebook. Please check again.', 'bpsp' );
         }
         
+        $vars['grades'] = $grades;
+        $vars['assignment_permalink'] = $vars['assignment_permalink'] . '/gradebook';
         unset( $_POST );
         return $this->gradebook_screen( $vars );
     }
