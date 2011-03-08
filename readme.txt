@@ -2,8 +2,8 @@
 Contributors: sushkov, jeremyboggs, boonebgorges
 Tags: buddypress, lms, courseware, education, teaching
 Requires at least: WordPress 3.0, BuddyPress 1.2.5
-Tested up to: WordPress 3.0.1 / BuddyPress 1.2.5.2
-Stable tag: 0.1.5
+Tested up to: WordPress 3.1 / BuddyPress 1.2.8
+Stable tag: 0.1.6
 Donate link: http://stas.nerd.ro/pub/donate/
 
 A LMS for BuddyPress.
@@ -41,6 +41,13 @@ Please follow the [standard installation procedure for WordPress plugins](http:/
 Before asking questions, please check the [BuddyPress Courseware Handbook](http://scholarpress.github.com/buddypress-courseware/handbook.html).
 
 == Changelog ==
+
+= 0.1.6 =
+* Updated wording, @props mrjarbenne. Closes [#27](https://github.com/scholarpress/buddypress-courseware/issues/issue/27)
+* Importer should work now with php5.1. Closes [#31](https://github.com/scholarpress/buddypress-courseware/issues/issue/31)
+* Close image now loads on response screens. Closes [#35](https://github.com/scholarpress/buddypress-courseware/issues/issue/35)
+* Courseware is now compatible with MS admin menu, @props [djpaul](http://buddypress.org/community/members/djpaul). Closes [#36](https://github.com/scholarpress/buddypress-courseware/issues/issue/36)
+* Fixed the user search according to wp 3.1 changes. Closes [#37](https://github.com/scholarpress/buddypress-courseware/issues/issue/37)
 
 = 0.1.5 =
 * Fixed the issue with aliens can post responses.

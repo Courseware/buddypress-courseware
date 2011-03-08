@@ -39,7 +39,7 @@ class BPSP_Activity {
     function register_filter_options() { ?>
         <option value="course_add"><?php _e( 'Show New Courses', 'bpsp' ) ?></option>
         <option value="assignment_add"><?php _e( 'Show New Assignments', 'bpsp' ) ?></option>
-        <option value="schedule_add"><?php _e( 'Show New Schedules', 'bpsp' ) ?></option>
+        <option value="schedule_add"><?php _e( 'Show Schedule Updates', 'bpsp' ) ?></option>
         <option value="response_add"><?php _e( 'Show New Responses', 'bpsp' ) ?></option>
     <?php }
     
