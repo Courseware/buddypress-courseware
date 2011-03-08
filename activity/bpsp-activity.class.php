@@ -54,7 +54,7 @@ class BPSP_Activity {
         global $bp;
         
         $activity_action = sprintf(
-            __( '%s created assignment %s in %s Courseware:', 'bp'),
+            __( '%s created the assignment %s in %s Courseware:', 'bp'),
             bp_core_get_userlink( $bp->loggedin_user->id ),
             '<a href="' . bp_get_group_permalink( $bp->groups->current_group ) . 'courseware/assignment/' . $assignment->post_name .'/">' . attribute_escape( $assignment->post_title ) . '</a>',
             '<a href="' . bp_get_group_permalink( $bp->groups->current_group ) . '">' . attribute_escape( $bp->groups->current_group->name ) . '</a>'
@@ -84,7 +84,7 @@ class BPSP_Activity {
         global $bp;
         
         $activity_action = sprintf(
-            __( '%s created course %s in %s Courseware:', 'bp'),
+            __( '%s created the course %s in %s Courseware:', 'bp'),
             bp_core_get_userlink( $bp->loggedin_user->id ),
             '<a href="' . bp_get_group_permalink( $bp->groups->current_group ) . 'courseware/course/' . $course->post_name .'/">' . attribute_escape( $course->post_title ) . '</a>',
             '<a href="' . bp_get_group_permalink( $bp->groups->current_group ) . '">' . attribute_escape( $bp->groups->current_group->name ) . '</a>'
@@ -146,9 +146,8 @@ class BPSP_Activity {
         global $bp;
         
         $activity_action = sprintf(
-            __( '%s added %s schedules to %s Courseware:', 'bp'),
+            __( '%s updated %s Courseware schedule.', 'bp'),
             bp_core_get_userlink( $bp->loggedin_user->id ),
-            $schedule_count,
             '<a href="' . bp_get_group_permalink( $bp->groups->current_group ) . '">' . attribute_escape( $bp->groups->current_group->name ) . '</a>'
         );
         $primary_link = bp_get_group_permalink( $bp->groups->current_group ) . 'courseware/schedules/';
