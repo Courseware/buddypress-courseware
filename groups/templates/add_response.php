@@ -29,3 +29,6 @@ wp_tiny_mce();
         </div>
     </form>
 </div>
+<script type="text/javascript" >
+    var tb_closeImage = "/wp-includes/js/thickbox/tb-close.png";
+</script>

@@ -10,10 +10,13 @@ class BPSP_WordPress {
      */
     function BPSP_WordPress() {
         // Add our screen to BuddyPress menu
-        add_action('admin_menu', array(&$this, 'menus'));
+        add_action(
+            is_multisite() ? 'network_admin_menu' : 'admin_menu',
+            array( __CLASS__, 'menus')
+        );
         
         // Help Screen
-        add_action('admin_head', array(&$this, 'screen_help'));
+        add_action('admin_head', array( __CLASS__, 'screen_help'));
         
         // Initialize our options
         add_option( 'bpsp_curriculum' );
@@ -39,7 +42,7 @@ class BPSP_WordPress {
                 __( 'Courseware', 'bpsp' ),
                 'manage_options',
                 'bp-courseware',
-                array(&$this, "screen")
+                array( __CLASS__, "screen")
             );
     }
     

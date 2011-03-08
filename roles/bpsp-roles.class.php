@@ -15,18 +15,16 @@ class BPSP_Roles {
     }
     
     /**
-     * profile_screen_new_request()
+     * profile_screen_new_request( $field_id, $field_value )
      * 
      * Action to notify site_admin that a new request has been sent
+     * @param Int $field_id, the id of the xprofile field
+     * @param String $field_value, the value of the field
      */
     function profile_screen_new_request( $field_id, $field_value ) {
-        //required to search for superadmins
-        require_once ABSPATH . 'wp-admin/includes/user.php';
-        
         global $bp;
         if( $field_value == __( 'Apply for Teacher', 'bpsp' ) ) {
-            $users_search = new WP_User_Search( null, null, 'administrator' );
-            $superadmins = $users_search->get_results();
+            $superadmins = self::get_admins();
             $content = $this->request_message( $bp->loggedin_user->userdata, true );
             $subject = $this->request_message( $bp->loggedin_user->userdata, false, true );
             if( !is_super_admin() )
@@ -267,6 +265,31 @@ class BPSP_Roles {
                 $teachers[] = $admin->user_id;
         
         return $teachers;
+    }
+    
+    /**
+     * get_admins()
+     *
+     * A wrapper for WordPress 3.1 `get_users()` with backcompat
+     * @return Mixed, an array of objects
+     */
+    function get_admins() {
+        $admins = array();
+        
+        if( function_exists( 'get_users' ) ) {
+            $superadmins = get_users( array( 'role' => 'administrator' ) );
+            if( $superadmins )
+                foreach( $superadmins as $su )
+                    $admins[] = $su->ID;
+                
+        } else {
+            //required to search for superadmins
+            require_once ABSPATH . 'wp-admin/includes/user.php';
+            $users_search = new WP_User_Search( null, null, 'administrator' );
+            $admins = $users_search->get_results();
+        }
+        
+        return $admins;
     }
 }
 
