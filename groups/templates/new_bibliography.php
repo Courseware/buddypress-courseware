@@ -87,7 +87,8 @@
                 <input type="submit" value="<?php _e( 'Add', 'bpsp' ); ?>" />
                 <?php echo $bibs_nonce; ?>
             </div>
-        </form>
+        </div>
+     </form>
 </div>
 <?php
 if( isset( $has_bibs ) )
