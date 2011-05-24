@@ -51,7 +51,7 @@
                         <?php _e( 'Visit Assignment Forum', 'bpsp' ); ?>
                     </a>
                 </li>
-            <?php elseif( isset( $assignment_e_forum_permalink ) && bp_group_is_admin() ): ?>
+            <?php elseif( isset( $assignment_e_forum_permalink ) && is_teacher() ): ?>
                 <li id="assignment-enable-forum">
                     <form method="post" action="<?php echo $assignment_e_forum_permalink; ?>" class="standard-form" >
                         <input type="submit" class="safe" value="<?php _e( 'Enable Assignment Forum', 'bpsp' ); ?>" />
