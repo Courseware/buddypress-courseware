@@ -67,6 +67,7 @@ function bpsp_init() {
     new BPSP_WordPress();
     new BPSP_Roles();
     // Load Courseware behaviour
+    new BPSP_Groups();
     if( get_option( 'bpsp_curriculum' ) != 'eu' )
         new BPSP_USCourses();
     else
@@ -78,12 +79,11 @@ function bpsp_init() {
     new BPSP_Bibliography();
     new BPSP_Schedules();
     new BPSP_Dashboards();
-    new BPSP_Groups();
     new BPSP_Static();
     new BPSP_Activity();
     new BPSP_Notifications();
 }
-add_action( 'bp_init', 'bpsp_init' );
+add_action( 'bp_init', 'bpsp_init', 7 );
 
 /* Activate the components */
 function bpsp_activation() {
@@ -91,4 +91,25 @@ function bpsp_activation() {
 }
 register_activation_hook( 'buddypress-courseware/courseware.php', 'bpsp_activation' );
 
+/**
+ * _d( $arg, $die = false, $wp_die = false )
+ *
+ * My temporary shortcut for debugging stuff. Outputs the debugging for $arg
+ * @param Mixed $arg, to be outputted
+ * @param Boolean $die, if die() to be called
+ * @param Boolean $wp_die, if wp_die() to be called
+ */
+function _d( $arg, $die = false, $wp_die = false ) {
+    ob_start();
+        echo '<pre>' . var_dump( $arg ) . '</pre>';
+    $result = ob_get_clean();
+    
+    if( $die )
+        die( $result );
+    
+    if( $wp_die )
+        wp_die( $result );
+    
+    echo $result;
+}
 ?>
