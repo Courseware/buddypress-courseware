@@ -60,13 +60,7 @@ class BPSP_Groups {
         $global_status = get_option( 'bpsp_global_status' );
         $group_status = groups_get_groupmeta( $group_id, 'courseware' );
         
-        
-        // TODO: Simplify this
-        if( 'true' == $group_status )
-            return true;
-        elseif ( 'false' == $group_status )
-            return false;
-        elseif( !empty( $global_status ) )
+        if( 'true' == $group_status || !empty( $global_status ) )
             return true;
         else
             return false;
@@ -83,20 +77,10 @@ class BPSP_Groups {
         if( !$this->courseware_status( $bp->groups->current_group->id ) )
             return;
         
-        if( $bp->groups->current_group->slug ) {
-            $groups_link = implode( '/', array(
-                $bp->root_domain,
-                $bp->groups->slug,
-                $bp->groups->current_group->slug
-            ) );
-            $groups_link = trailingslashit ( $groups_link );
-        } else
-            return;
-        
         bp_core_new_subnav_item( array( 
             'name' => __( 'Courseware', 'bpsp' ),
             'slug' => $bp->courseware->slug,
-            'parent_url' => $groups_link, 
+            'parent_url' => bp_get_group_permalink( $bp->groups->current_group ), 
             'parent_slug' => $bp->groups->current_group->slug, 
             'screen_function' => array( &$this, 'screen_handler' ),
             'position' => 35, 
@@ -185,12 +169,11 @@ class BPSP_Groups {
             ob_start();
             extract( $vars );
             if( !empty( $die ) ) {
-            $error = $die;
-            include( $templates_path . '_message.php' ); // Template for errors
-            }
-            else {
-            include( $templates_path . '_message.php' ); // Template for messages    
-            include( $templates_path . $name . '.php' );
+                $error = $die;
+                include( $templates_path . '_message.php' ); // Template for errors
+            } else {
+                include( $templates_path . '_message.php' ); // Template for messages    
+                include( $templates_path . $name . '.php' );
             }
             $content = ob_get_clean();
         }
@@ -255,8 +238,7 @@ class BPSP_Groups {
         if ( 'courseware' == $current_tab )
             $tab_content .= 'class="current"';
         
-        $tab_content .= '><a href="' . $bp->root_domain . '/' . $bp->groups->slug;
-        $tab_content .= '/' . $group_slug . '/admin/courseware">';
+        $tab_content .= '><a href="' . bp_get_group_admin_permalink() . '/courseware">';
         $tab_content .= __( 'Courseware', 'buddypress' ) . '</a></li>';
         
         echo $tab_content;
@@ -304,7 +286,6 @@ class BPSP_Groups {
         }
         
         $vars['name'] = '_group_admin_screen';
-        $vars['form_action'] = $bp->root_domain . '/' . $bp->groups->slug . '/' . $group_slug . '/admin/courseware';
         $vars['form_nonce'] = wp_nonce_field( $nonce_name, '_wpnonce', true, false );
         $vars['current_status'] = groups_get_groupmeta( $bp->groups->current_group->id, 'courseware' );
         $vars['current_responses_status'] = groups_get_groupmeta( $bp->groups->current_group->id, 'courseware_responses' );
