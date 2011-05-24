@@ -334,7 +334,7 @@ class BPSP_Responses {
         if( !$this->has_student_caps( $bp->loggedin_user->id ) && !is_super_admin() ||
            !bp_group_is_member( $bp->current_group->id )
         ) {
-            $vars['die'] = __( 'BuddyPress Courseware Error while forbidden user tried to add a new response.' );
+            $vars['die'] = __( 'BuddyPress Courseware Error while forbidden user tried to add a new response.', 'bpsp' );
             return $vars;
         }
         

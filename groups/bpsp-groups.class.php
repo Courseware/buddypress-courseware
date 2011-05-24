@@ -77,10 +77,12 @@ class BPSP_Groups {
         if( !$this->courseware_status( $bp->groups->current_group->id ) )
             return;
         
+        $group_permalink = bp_get_group_permalink( $bp->groups->current_group );
+        
         bp_core_new_subnav_item( array( 
             'name' => __( 'Courseware', 'bpsp' ),
             'slug' => $bp->courseware->slug,
-            'parent_url' => bp_get_group_permalink( $bp->groups->current_group ), 
+            'parent_url' => $group_permalink, 
             'parent_slug' => $bp->groups->current_group->slug, 
             'screen_function' => array( &$this, 'screen_handler' ),
             'position' => 35, 
@@ -88,7 +90,7 @@ class BPSP_Groups {
             'item_css_id' => 'courseware-group'
         ) );
         
-        $this->nav_options[__( 'Home', 'bpsp' )] = $groups_link . $bp->courseware->slug;
+        $this->nav_options[__( 'Home', 'bpsp' )] = $group_permalink . $bp->courseware->slug;
         
         do_action( 'courseware_group_set_nav' );
     }
