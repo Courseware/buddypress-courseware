@@ -469,6 +469,7 @@ class BPSP_Courses {
         wp_enqueue_script( 'post' );
         wp_enqueue_script( 'editor' );
         wp_enqueue_script( 'utils' );
+        
         add_thickbox();
         $media_upload_js = '/wp-admin/js/media-upload.js';
         wp_enqueue_script('media-upload', get_bloginfo('wpurl') . $media_upload_js, array( 'thickbox' ), filemtime( ABSPATH . $media_upload_js) );

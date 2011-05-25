@@ -1,7 +1,5 @@
-<?php
-bpsp_load_editor_files();
-wp_tiny_mce();
-?>
+<?php bpsp_load_editor_files(); ?>
+
 <div id="assignment-response-form">
     <form action="" method="post" class="standard-form" id="new-response-form">
         <div id="new-response-content">
@@ -32,3 +30,5 @@ wp_tiny_mce();
 <script type="text/javascript" >
     var tb_closeImage = "/wp-includes/js/thickbox/tb-close.png";
 </script>
+
+<?php wp_tiny_mce(); ?>

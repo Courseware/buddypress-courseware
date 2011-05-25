@@ -13,15 +13,16 @@ class BPSP_Static {
             define( BPSP_VERSION, '' );
         
         // Scripts
-        // Custom jQuery UI
-        wp_register_script( 'jquery-ui-courseware-custom', BPSP_WEB_URI . '/static/js/jquery-ui-custom/jquery-ui-1.8.2.custom.min.js', array( 'jquery' ), '1.8.2' );
+        // Custom jQuery UI components
+        wp_register_script( 'jquery-ui-datepicker', BPSP_WEB_URI . '/static/js/jquery-ui/jquery.ui.datepicker.js', array( 'jquery-ui-mouse' ), '1.8.12', true );
+        wp_register_script( 'jquery-ui-slider', BPSP_WEB_URI . '/static/js/jquery-ui/jquery.ui.slider.js', array( 'jquery-ui-mouse' ), '1.8.12', true );
         
         // FullCalendar
-        wp_register_script( 'fullcalendar', BPSP_WEB_URI . '/static/js/fullcalendar/fullcalendar.min.js', array( 'jquery-ui-courseware-custom' ), '1.4.7' );        
+        wp_register_script( 'fullcalendar', BPSP_WEB_URI . '/static/js/fullcalendar/fullcalendar.min.js', array( 'jquery-ui-droppable', 'jquery-ui-resizable' ), '1.4.7' );
         wp_localize_script( 'fullcalendar', 'fcLanguage', $this->fullcalendar_l10n() );
         
         // jQuery UI Date & Time picker
-        wp_register_script( 'datetimepicker', BPSP_WEB_URI . '/static/js/datetimepicker/jquery-ui-timepicker-addon-0.7.min.js', array( 'jquery-ui-courseware-custom' ), '0.5' );
+        wp_register_script( 'datetimepicker', BPSP_WEB_URI . '/static/js/datetimepicker/jquery-ui-timepicker-addon-0.7.min.js', array( 'jquery-ui-datepicker', 'jquery-ui-slider' ), '0.7', true );
         wp_localize_script( 'datetimepicker', 'dtpLanguage', $this->datetimepicker_l10n() );
         
         // Flexselect
@@ -57,7 +58,7 @@ class BPSP_Static {
         // Styles
         wp_register_style( 'courseware', BPSP_WEB_URI . '/static/css/courseware.css', null, BPSP_VERSION );
         wp_register_style( 'courseware-editor', BPSP_WEB_URI . '/static/css/courseware-editor.css', null, BPSP_VERSION );
-        wp_register_style( 'jquery-ui-courseware-custom', BPSP_WEB_URI . '/static/css/jquery-ui-custom/theme/smoothness/jquery-ui-1.8.2.custom.css', '1.8.2' );
+        wp_register_style( 'jquery-ui-courseware-custom', BPSP_WEB_URI . '/static/css/jquery-ui-custom/theme/smoothness/jquery-ui-custom.css', '1.8.2' );
         wp_register_style( 'fullcalendar', BPSP_WEB_URI . '/static/css/fullcalendar/jquery.fullcalendar.css', null, '1.4.7' );
         wp_register_style( 'datatables', BPSP_WEB_URI . '/static/css/datatables/jquery.datatables.css', null, '1.6.2' );
         wp_register_style( 'datetimepicker', BPSP_WEB_URI . '/static/css/datetimepicker/jquery.timepicker.css', array( 'jquery-ui-courseware-custom' ), '0.5' );

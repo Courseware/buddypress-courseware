@@ -1,7 +1,5 @@
-<?php
-bpsp_load_editor_files();
-wp_tiny_mce();
-?>
+<?php bpsp_load_editor_files(); ?>
+
 <form action="<?php echo $current_option; ?>" method="post" class="standard-form" id="new-assignment-form">
     <div id="new-assignment-meta" class="courseware-sidebar">
         <h4 class="meta"><?php _e( 'Course &amp; Due Date', 'bpsp' ); ?></h4>
@@ -47,3 +45,5 @@ wp_tiny_mce();
 <script type="text/javascript" >
     var tb_closeImage = "/wp-includes/js/thickbox/tb-close.png";
 </script>
+
+<?php wp_tiny_mce(); ?>
