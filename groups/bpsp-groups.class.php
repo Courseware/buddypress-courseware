@@ -30,6 +30,7 @@ class BPSP_Groups {
         add_filter( 'groups_get_groups', array( &$this, 'extend_search' ), 10, 2 );
         add_action( 'groups_admin_tabs', array( &$this, 'group_admin_tab' ), 10, 2 );
         add_action( 'wp', array( &$this, 'group_admin_screen' ), 4 );
+        add_filter( 'media_upload_form_url', array( __CLASS__, 'bpsp_media_library_tab' ) );
     }
     
     /**
@@ -292,6 +293,33 @@ class BPSP_Groups {
         $vars['current_status'] = groups_get_groupmeta( $bp->groups->current_group->id, 'courseware' );
         $vars['current_responses_status'] = groups_get_groupmeta( $bp->groups->current_group->id, 'courseware_responses' );
         $this->load_template( $vars );
+    }
+    
+    /**
+     * Will hook into get_children() if the upload form media library is accessed,
+     * and will add to the current query currently logged in author ID
+     */
+    function bpsp_restrict_uploads( $wp_the_query ) {
+        // Check if current user is admin or sort of
+        if ( !current_user_can( 'manage_options' ) )
+            // If not, he will only see his own attachments
+            $wp_the_query->query_vars['author'] = get_current_user_id();
+    }
+    
+    /**
+     * Media library displays all the uploads,
+     * bpsp_media_library_tab() will do some checks and try to hide
+     * attachments that are not owned by current user
+     */
+    function bpsp_media_library_tab( $action_url ) {
+        // Try to catch Courseware uploads page
+        if ( isset( $_REQUEST['bpsp-upload'] ) && isset( $_REQUEST['tab'] ) )
+            // Check if the user is on the current tab
+            if ( $_REQUEST['tab'] == 'library' )
+                // Do some checks before displaying attachments
+                add_action( 'pre_get_posts', array( __CLASS__, 'bpsp_restrict_uploads' ) );
+        
+        return $action_url;
     }
 }
 ?>
