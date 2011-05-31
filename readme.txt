@@ -12,6 +12,8 @@ A LMS for BuddyPress.
 
 A BuddyPress GSoC 2010 project.
 
+**Warning**: _You will need [BuddyPress](http://coveredwebservices.com/wp-plugin-install/?plugin=buddypress) installed in order to use Courseware!_
+
 Here's the features list:
 
 * Class Dashboard
