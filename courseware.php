@@ -18,21 +18,21 @@ define( 'BPSP_WEB_URI', WP_PLUGIN_URL . '/' . basename( BPSP_PLUGIN_DIR ) );
 define( 'BPSP_PLUGIN_FILE', basename( BPSP_PLUGIN_DIR ) . '/' . basename( __FILE__ ) );
 
 /* Load the components */
-require_once BPSP_PLUGIN_DIR . '/wordpress/bpsp-wordpress.class.php';
-require_once BPSP_PLUGIN_DIR . '/roles/bpsp-roles.class.php';
-require_once BPSP_PLUGIN_DIR . '/courses/bpsp-courses.class.php';
-require_once BPSP_PLUGIN_DIR . '/courses/bpsp-courses.us.class.php';
-require_once BPSP_PLUGIN_DIR . '/assignments/bpsp-assignments.class.php';
-require_once BPSP_PLUGIN_DIR . '/responses/bpsp-responses.class.php';
-require_once BPSP_PLUGIN_DIR . '/gradebook/bpsp-gradebook.class.php';
-require_once BPSP_PLUGIN_DIR . '/bibliography/bpsp-bibliography.class.php';
-require_once BPSP_PLUGIN_DIR . '/bibliography/bpsp-bibliography-webapis.class.php';
-require_once BPSP_PLUGIN_DIR . '/schedules/bpsp-schedules.class.php';
-require_once BPSP_PLUGIN_DIR . '/groups/bpsp-groups.class.php';
-require_once BPSP_PLUGIN_DIR . '/dashboards/bpsp-dashboards.class.php';
-require_once BPSP_PLUGIN_DIR . '/static/bpsp-static.class.php';
-require_once BPSP_PLUGIN_DIR . '/activity/bpsp-activity.class.php';
-require_once BPSP_PLUGIN_DIR . '/notifications/bpsp-notifications.class.php';
+require_once BPSP_PLUGIN_DIR . '/wordpress/wordpress.class.php';
+require_once BPSP_PLUGIN_DIR . '/roles/roles.class.php';
+require_once BPSP_PLUGIN_DIR . '/courses/courses.class.php';
+require_once BPSP_PLUGIN_DIR . '/courses/courses.us.class.php';
+require_once BPSP_PLUGIN_DIR . '/assignments/assignments.class.php';
+require_once BPSP_PLUGIN_DIR . '/responses/responses.class.php';
+require_once BPSP_PLUGIN_DIR . '/gradebook/gradebook.class.php';
+require_once BPSP_PLUGIN_DIR . '/bibliography/bibliography.class.php';
+require_once BPSP_PLUGIN_DIR . '/bibliography/webapis.class.php';
+require_once BPSP_PLUGIN_DIR . '/schedules/schedules.class.php';
+require_once BPSP_PLUGIN_DIR . '/groups/groups.class.php';
+require_once BPSP_PLUGIN_DIR . '/dashboards/dashboards.class.php';
+require_once BPSP_PLUGIN_DIR . '/static/static.class.php';
+require_once BPSP_PLUGIN_DIR . '/activity/activity.class.php';
+require_once BPSP_PLUGIN_DIR . '/notifications/notifications.class.php';
 
 /**
  * i18n
