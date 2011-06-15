@@ -17,6 +17,10 @@ class BPSP_WordPress {
         
         // Help Screen
         add_action('admin_head', array( __CLASS__, 'screen_help'));
+        // Support link
+        add_filter( 'plugin_row_meta', array( __CLASS__, 'support_link' ), 10, 2 );
+        // Settings link
+        add_action( 'plugin_action_links_' . BPSP_PLUGIN_FILE, array( __CLASS__, 'action_link' ), 10, 4 );
         
         // Initialize our options
         add_option( 'bpsp_curriculum' );
@@ -147,6 +151,42 @@ class BPSP_WordPress {
         self::load_template( $vars );
     }
     
+    /**
+     * action_link( $links )
+     * Adds a new entry link under plugin description
+     *
+     * @param Mixed $links, initial links
+     * @param String $file, the plugin filename
+     * @return Mixed, modified set of $links
+     */
+    function support_link( $links, $file ) {
+        if ( $file == BPSP_PLUGIN_FILE ) {
+            $links[] = '<a href="http://buddypress.org/community/groups/buddypress-courseware/forum/">' . __( 'Support', 'bpsp' ) . '</a>';
+        }
+        return $links;
+    }
+    
+    /**
+     * action_link( $links )
+     * Adds a new action link to plugin entry
+     *
+     * @param Mixed $links, initial links
+     * @return Mixed, modified set of $links
+     */
+    function action_link( $links ) {
+        $action_link = '<a href="' . admin_url( 'admin.php?page=bp-courseware' ) . '">' . __( 'Settings', 'bpsp' ) .'</a>';
+        array_unshift( $links, $action_link );
+        return $links;
+    }
+    
+    /**
+     * load_template( $vars )
+     *
+     * Loads a template for displaying group screens
+     *
+     * @param Array $vars of options
+     * @return template $content if $vars['echo'] == false
+     */
     function load_template( $vars ) {
         ob_start();
         extract( $vars );

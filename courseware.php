@@ -15,6 +15,7 @@ define( 'BPSP_VERSION', '0.1.6' );
 define( 'BPSP_DEBUG', false ); // This will allow you to see post types in wp-admin
 define( 'BPSP_PLUGIN_DIR', dirname( __FILE__ ) );
 define( 'BPSP_WEB_URI', WP_PLUGIN_URL . '/' . basename( BPSP_PLUGIN_DIR ) );
+define( 'BPSP_PLUGIN_FILE', basename( BPSP_PLUGIN_DIR ) . '/' . basename( __FILE__ ) );
 
 /* Load the components */
 require_once BPSP_PLUGIN_DIR . '/wordpress/bpsp-wordpress.class.php';
@@ -89,7 +90,7 @@ add_action( 'bp_init', 'bpsp_init', 7 );
 function bpsp_activation() {
     BPSP_Roles::register_profile_fields();
 }
-register_activation_hook( 'buddypress-courseware/courseware.php', 'bpsp_activation' );
+register_activation_hook( BPSP_PLUGIN_FILE, 'bpsp_activation' );
 
 /**
  * _d( $arg, $die = false, $wp_die = false )
