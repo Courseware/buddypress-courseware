@@ -139,7 +139,7 @@ class BPSP_Roles {
                 field_group_id  => $bpsp_group_id,
                 name            => __( 'Role', 'bpsp' ),
                 can_delete      => false,
-                description     => __( 'You role when using Courseware. Every request requires moderation. Please be patient untill an administrator reviews it.', 'bpsp' ),
+                description     => __( 'Your role when using Courseware. Every request requires moderation. Please be patient until an administrator reviews it.', 'bpsp' ),
                 is_required     => false,
                 type            => 'radio'
             )
