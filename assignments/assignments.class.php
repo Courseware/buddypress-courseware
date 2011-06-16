@@ -242,7 +242,7 @@ class BPSP_Assignments {
      * Checks if a $group_id has assignments
      *
      * @param Int $group_id of the group to be checked
-     * @return Mixed Schedule objects if assignments exist and null if not.
+     * @return Mixed Assignment objects if assignments exist and null if not.
      */
     function has_assignments( $group_id = null ) {
         global $bp;
@@ -508,7 +508,7 @@ class BPSP_Assignments {
     /**
      * edit_assignment_screen( $vars )
      *
-     * Hooks into assignments_screen_handler
+     * Hooks into screen_handler
      * Edit assignment screen
      *
      * @param Array $vars a set of variables received for this screen template
@@ -522,8 +522,8 @@ class BPSP_Assignments {
         $old_assignment = $this->is_assignment( $this->current_assignment );
         
         if( !$this->has_assignment_caps( $bp->loggedin_user->id ) &&
-            $bp->loggedin_user->id != $old_course->post_author &&
-            $bp->groups->current_group->id != $old_course->group[0]->name &&
+            $bp->loggedin_user->id != $old_assignment->post_author &&
+            $bp->groups->current_group->id != $old_assignment->group[0]->name &&
             !is_super_admin()
         ) {
             $vars['die'] = __( 'BuddyPress Courseware Error while forbidden user tried to update the assignment.', 'bpsp' );
