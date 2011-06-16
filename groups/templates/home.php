@@ -3,28 +3,6 @@
     <div class="grid courseware-content">
         <div class="dp75">
             <ul class="details">
-                <?php if( $bpsp_curriculum == 'eu' ): ?>
-                <li>
-                    <strong><?php
-                        printf(
-                            __( 'Courseware started by %s and managed by %d teacher(s) with %d course(s) for class %s', 'bpsp' ),
-                            bp_core_get_userlink( $founder ),
-                            count( $teachers ),
-                            count( $courses ),
-                            bp_get_group_name()
-                        );
-                    ?></strong>
-                    <?php if( $is_teacher ): ?>
-                        <a href="<?php echo $nav_options[__( 'Home', 'bpsp' )] . '/new_course' ?>" class="alignright action safe">
-                            <?php _e( 'Create a course  &raquo;', 'bpsp' );?>
-                        </a>
-                    <?php else: ?>
-                        <a href="<?php echo $nav_options[__( 'Home', 'bpsp' )] . '/courses' ?>" class="alignright action">
-                            <?php _e( 'All courses  &raquo;', 'bpsp' );?>
-                        </a>
-                    <?php endif; ?>
-                </li>
-                <?php else: ?>
                 <li>
                     <?php
                         printf(
@@ -44,7 +22,6 @@
                         </a>
                     <?php endif; ?>
                 </li>
-                <?php endif;?>
                 <li>
                     <?php
                         printf(
@@ -123,36 +100,6 @@
         </div>
         <div class="clear"></div>
     </div>
-    
-    <?php if( $bpsp_curriculum == 'eu' && count( $courses ) > 0 ): ?>
-        <h4 class="meta padded">
-            <?php _e( 'Latest courses', 'bpsp' ); ?>
-            <a href="<?php echo $nav_options[__( 'Courses', 'bpsp' )] ?>" class="alignright action">
-                <?php _e( 'Latest courses  &raquo;', 'bpsp' );?>
-            </a>
-        </h4>
-        <div class="grid courseware-content">
-            <div class="dp100">
-                <ul class="details marked">
-                    <?php foreach ( array_slice( $courses, 0, $items_limit ) as $c ): ?>
-                        <li>
-                            <a href="<?php echo $c->permalink ?>"><?php echo get_the_title( $c->ID ); ?></a>
-                            <span class="alignright meta">
-                                <?php
-                                    printf(
-                                        __( 'By %s, on %s', 'bpsp' ),
-                                        bp_core_get_userlink( $c->post_author ),
-                                        bpsp_get_date( $c->post_date )
-                                    );
-                                ?>
-                            </span>
-                        </li>
-                    <?php endforeach; ?>
-                </ul>
-            </div>
-            <div class="clear"></div>
-        </div>
-    <?php endif; ?>
     
     <?php if( count( $assignments ) > 0 ): ?>
     <h4 class="meta padded">

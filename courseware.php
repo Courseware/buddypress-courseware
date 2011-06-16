@@ -21,7 +21,6 @@ define( 'BPSP_PLUGIN_FILE', basename( BPSP_PLUGIN_DIR ) . '/' . basename( __FILE
 require_once BPSP_PLUGIN_DIR . '/wordpress/wordpress.class.php';
 require_once BPSP_PLUGIN_DIR . '/roles/roles.class.php';
 require_once BPSP_PLUGIN_DIR . '/courses/courses.class.php';
-require_once BPSP_PLUGIN_DIR . '/courses/courses.us.class.php';
 require_once BPSP_PLUGIN_DIR . '/assignments/assignments.class.php';
 require_once BPSP_PLUGIN_DIR . '/responses/responses.class.php';
 require_once BPSP_PLUGIN_DIR . '/gradebook/gradebook.class.php';
@@ -69,11 +68,7 @@ function bpsp_init() {
     new BPSP_Roles();
     // Load Courseware behaviour
     new BPSP_Groups();
-    if( get_option( 'bpsp_curriculum' ) != 'eu' )
-        new BPSP_USCourses();
-    else
-        new BPSP_Courses();
-
+    new BPSP_Courses();
     new BPSP_Assignments();
     new BPSP_Responses();
     new BPSP_Gradebook();

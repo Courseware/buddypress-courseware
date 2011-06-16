@@ -23,7 +23,6 @@ class BPSP_WordPress {
         add_action( 'plugin_action_links_' . BPSP_PLUGIN_FILE, array( __CLASS__, 'action_link' ), 10, 4 );
         
         // Initialize our options
-        add_option( 'bpsp_curriculum' );
         add_option( 'bpsp_allow_only_admins' );
         add_option( 'bpsp_global_status' );
         add_option( 'bpsp_gradebook_format' );
@@ -80,11 +79,6 @@ class BPSP_WordPress {
         if( isset( $_POST['_wpnonce'] ) )
             check_admin_referer( $nonce_name );
         
-        // Courseware Learning Styles
-        if( isset( $_POST['bpsp_curriculum'] ) )
-            if( update_option( 'bpsp_curriculum', strtolower( $_POST['bpsp_curriculum'] ) ) )
-                $vars['flash'][] = __( 'Courseware option was updated.' );
-        
         // Courseware Global Status
         if( isset( $_POST['bpsp_global_status'] ) )
             if( update_option( 'bpsp_global_status', strtolower( $_POST['bpsp_global_status'] ) ) )
@@ -129,13 +123,6 @@ class BPSP_WordPress {
         if( isset( $_POST['bpsp_load_css_check'] ) && !isset( $_POST['bpsp_load_css'] ) )
             if( update_option( 'bpsp_load_css', '' ) )
                 $vars['flash'][] = __( 'Courseware customization options updated.' );
-        
-        
-        $current_option = get_option( 'bpsp_curriculum' );
-        if( $current_option == 'us' )
-            $vars['us'] = $current_option;
-        elseif ( $current_option == 'eu' )
-            $vars['eu'] = $current_option;
         
         $vars['name'] = 'admin';
         $vars['echo'] = 'true';

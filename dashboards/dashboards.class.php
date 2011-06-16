@@ -90,7 +90,6 @@ class BPSP_Dashboards {
         $vars['teachers'] = BPSP_Roles::get_teachers( $bp->groups->current_group->id );
         $vars['is_teacher'] = BPSP_Roles::can_teach( $bp->loggedin_user->id );
         $vars['group_course'] = reset( $group_data['courses'] );
-        $vars['bpsp_curriculum'] = get_option( 'bpsp_curriculum' );
         $vars = array_merge( $vars, $group_data );
         $vars['items_limit'] = 5;
         $vars['name'] = 'home';
