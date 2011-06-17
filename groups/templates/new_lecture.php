@@ -19,7 +19,7 @@
             </li>
             <li id="new-lecture-order">
                 <input type="text" name="lecture[order]" title="<?php _e( 'Order', 'bpsp' ); ?>"
-                    value="<?php echo $posted_data['order'] ? $posted_data['order'] : ''; ?>"/>
+                    value="<?php echo $posted_data['order'] ? $posted_data['order'] : '0'; ?>"/>
             </li>
         </ul>
     </div>

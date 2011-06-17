@@ -34,6 +34,9 @@ class BPSP_Lectures {
         add_action( 'courseware_new_teacher_removed', array( &$this, 'remove_caps' ) );
         add_action( 'courseware_group_screen_handler', array( &$this, 'screen_handler' ) );
         add_filter( 'courseware_group_nav_options', array( &$this, 'add_nav_options' ) );
+        add_filter( 'courseware_course', array( &$this, 'lectures_screen' ) );
+        add_filter( 'post_type_link', array( __CLASS__, 'get_permalink' ), 10, 2 );
+        add_filter( 'page_css_class', array( __CLASS__, 'css_class' ), 10, 2 );
    }
    
    /**
@@ -354,7 +357,7 @@ class BPSP_Lectures {
     }
     
     /**
-     * list_lectures_screen( $vars )
+     * lectures_screen( $vars )
      *
      * Hooks into screen_handler
      * Adds a UI to list lectures.
@@ -364,17 +367,16 @@ class BPSP_Lectures {
      */
     function lectures_screen( $vars ) {
         global $bp;
-        $lectures = get_posts( array(
+        $args = array(
             'numberposts'   => '-1',
             'post_type'     => 'lecture',
             'group_id'      => $bp->groups->current_group->id,
-            'orderby'       => 'menu_order',
-            'hierarchical'  => true
-        ));
+            'orderby'       => 'menu_order, post_title'
+        );
+        $lectures = get_pages( $args );
         
-        $vars['name'] = '_list_lectures';
         $vars['lectures_hanlder_uri'] = $vars['current_uri'] . '/lectures/';
-        $vars['lectures'] = $lectures;
+        $vars['lectures'] = walk_page_tree( $lectures, 0, 0, $args );
         return $vars;
     }
     
@@ -583,6 +585,42 @@ class BPSP_Lectures {
             return BPSP_Lectures::is_lecture( $prev );
         else
             return null;
+    }
+    
+    /**
+     * get_permalink( $permalink, $lecture )
+     * Permalink generator for courseware lectures
+     *
+     * @param String $permalink, the WordPress generated guid
+     * @param Mixed $lecture, WordPress post object
+     * @return String, the new courseware permalink
+     */
+    function get_permalink( $permalink, $lecture ) {
+        global $bp;
+        
+        if( is_object( $lecture ) && $lecture->post_type == 'lecture' ) {
+            $courseware_uri = bp_get_group_permalink( $bp->groups->current_group ) . 'courseware/lecture/' ;
+            return $courseware_uri . $lecture->post_name;
+        } else
+            return $permalink;
+    }
+    
+    /**
+     * css_class( $css_classes, $lecture )
+     * CSS classes generator to append menu order of the lecture, required for js sorting
+     *
+     * @param Mixed $css_classes, existing css classes array
+     * @param Mixed $lecture, the WordPress object
+     * @return Mixed, the extended $css_classes array
+     */
+    function css_class( $css_classes, $lecture ) {
+        global $bp;
+        
+        if( is_object( $lecture ) && $lecture->post_type == 'lecture' ) {
+            $css_classes[] = $lecture->menu_order . "-order";
+            return $css_classes;
+        } else
+            return $css_classes;
     }
     
     /**

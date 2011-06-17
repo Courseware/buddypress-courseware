@@ -190,6 +190,7 @@ class BPSP_Courses {
                 add_action( 'bp_head', array( &$this, 'load_editor' ) );
                 add_filter( 'courseware_group_template', array( &$this, 'edit_course_screen' ) );
             } else {
+                do_action( 'courseware_lectures_screen' );
                 do_action( 'courseware_bibliography_screen' );
                 add_filter( 'courseware_group_template', array( &$this, 'single_course_screen' ) );
             }

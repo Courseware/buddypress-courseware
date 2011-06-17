@@ -48,6 +48,10 @@
     </div>
 </div>
 <?php
+    // Load lectures tree
+    bpsp_partial( $templates_path, '_lectures', get_defined_vars() );
+?>
+<?php
     // Load bibs
     bpsp_partial( $templates_path, '_bibs', get_defined_vars() );
 ?>

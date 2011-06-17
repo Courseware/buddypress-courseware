@@ -40,9 +40,12 @@ class BPSP_Static {
         // Sprakline
         wp_register_script( 'sparkline', BPSP_WEB_URI . '/static/js/sparkline/jquery.sparkline.min.js', array( 'jquery' ), '1.5.1' );
         
+        // jsTree
+        wp_register_script( 'jstree', BPSP_WEB_URI . '/static/js/jstree/jquery.jstree.js', array( 'jquery' ), '1.0-rc3' );
+        wp_localize_script( 'jstree', 'jstreeArgs', $this->jstree_l10n() );
+        
         // Loaders
         wp_register_script( 'courseware-editor', BPSP_WEB_URI . '/static/js/courseware-editor.js', array( 'inputhint' ), BPSP_VERSION, true );
-        wp_register_script( 'list-courses', BPSP_WEB_URI . '/static/js/list-courses.js', array( 'datatables' ), BPSP_VERSION, true );
         wp_register_script( 'list-assignments', BPSP_WEB_URI . '/static/js/list-assignments.js', array( 'datatables' ), BPSP_VERSION, true );
         wp_register_script( 'single-assignment', BPSP_WEB_URI . '/static/js/single-assignment.js', array( 'jquery' ), BPSP_VERSION, true );
         wp_register_script( 'assignments', BPSP_WEB_URI . '/static/js/assignments.js', array( 'datetimepicker' ), BPSP_VERSION, true );
@@ -54,6 +57,7 @@ class BPSP_Static {
         wp_register_script( 'list-schedules', BPSP_WEB_URI . '/static/js/list-schedules.js', array( 'fullcalendar', 'datatables' ), BPSP_VERSION, true );
         wp_register_script( 'delete-schedule', BPSP_WEB_URI . '/static/js/delete-schedule.js', array( 'datatables' ), BPSP_VERSION, true );
         wp_register_script( 'group-dashboard', BPSP_WEB_URI . '/static/js/group-dashboard.js', array( 'sparkline' ), BPSP_VERSION, true );
+        wp_register_script( 'lectures', BPSP_WEB_URI . '/static/js/lectures.js', array( 'jstree' ), BPSP_VERSION, true );
         
         // Styles
         wp_register_style( 'courseware', BPSP_WEB_URI . '/static/css/courseware.css', null, BPSP_VERSION );
@@ -73,12 +77,12 @@ class BPSP_Static {
         add_action( 'courseware_bibliography_screen', array( &$this, 'bibs_enqueues' ) );
         add_action( 'courseware_new_bibliography_screen', array( &$this, 'new_bib_enqueues' ) );
         add_action( 'courseware_edit_bibliography_screen', array( &$this, 'edit_bib_enqueues' ) );
-        add_action( 'courseware_list_courses_screen', array( &$this, 'list_courses_enqueues' ) );
         add_action( 'courseware_new_schedule_screen', array( &$this, 'schedules_enqueues' ) );
         add_action( 'courseware_edit_schedule_screen', array( &$this, 'schedules_enqueues' ));
         add_action( 'courseware_delete_schedule_screen', array( &$this, 'delete_schedule_enqueues' ) );
         add_action( 'courseware_gradebook_screen', array( &$this, 'gradebook_enqueues' ) );
         add_action( 'courseware_group_dashboard', array( &$this, 'group_dashboard_enqueues' ) );
+        add_action( 'courseware_lectures_screen', array( &$this, 'lectures_enqueues' ) );
     }
     
     /**
@@ -120,6 +124,11 @@ class BPSP_Static {
         wp_enqueue_style( 'jquery-ui-courseware-custom' );
     }
     
+    function lectures_enqueues() {
+        wp_enqueue_script( 'lectures' );
+        wp_enqueue_style( 'jstree' );
+    }
+    
     function new_bib_enqueues() {
         wp_enqueue_script( 'new-bibliograpy' );
     }
@@ -149,12 +158,6 @@ class BPSP_Static {
         wp_enqueue_script( 'single-assignment' );
     }
     
-    function list_courses_enqueues() {
-        wp_enqueue_script( 'list-courses' );
-        wp_enqueue_style( 'datatables' );
-        wp_enqueue_style( 'jquery-ui-courseware-custom' );
-    }
-    
     function list_schedules_enqueues() {
         wp_enqueue_style( 'fullcalendar' );
         wp_enqueue_style( 'datatables' );
@@ -170,6 +173,17 @@ class BPSP_Static {
     
     function group_dashboard_enqueues() {
         wp_enqueue_script( 'group-dashboard' );
+    }
+    
+    /**
+     * jstree_l10n()
+     *
+     * Helper to get jstree messages localized/options set
+     */
+    function jstree_l10n() {
+        return array(
+            "themes_path"   => BPSP_WEB_URI . '/static/css/jstree/style.css'
+        );
     }
     
     /**
