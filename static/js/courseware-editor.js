@@ -7,11 +7,13 @@ jQuery('input[name="course[title]"]').inputHint();
 jQuery('input[name="assignment[title]"]').inputHint();
 jQuery('input[name="assignment[due_date]"]').inputHint();
 jQuery('input[name="response[title]"]').inputHint();
+jQuery('input[name="lecture[title]"]').inputHint();
+jQuery('input[name="lecture[order]"]').inputHint();
 
 // Distraction free writing compatibility
 jQuery(function($) {
     // Components that use editor
-    var components = [ 'course', 'assignment', 'response'];
+    var components = [ 'course', 'assignment', 'response', 'lecture'];
     
     // Cycle through all the components and try to find the editor IDs
     $(components).each( function(i,c) {

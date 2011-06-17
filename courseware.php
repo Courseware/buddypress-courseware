@@ -12,7 +12,7 @@ Author URI: http://github.com/scholarpress/
 */
 
 define( 'BPSP_VERSION', '0.9' );
-define( 'BPSP_DEBUG', false ); // This will allow you to see post types in wp-admin
+define( 'BPSP_DEBUG', true ); // This will allow you to see post types in wp-admin
 define( 'BPSP_PLUGIN_DIR', dirname( __FILE__ ) );
 define( 'BPSP_WEB_URI', WP_PLUGIN_URL . '/' . basename( BPSP_PLUGIN_DIR ) );
 define( 'BPSP_PLUGIN_FILE', basename( BPSP_PLUGIN_DIR ) . '/' . basename( __FILE__ ) );
@@ -21,6 +21,7 @@ define( 'BPSP_PLUGIN_FILE', basename( BPSP_PLUGIN_DIR ) . '/' . basename( __FILE
 require_once BPSP_PLUGIN_DIR . '/wordpress/wordpress.class.php';
 require_once BPSP_PLUGIN_DIR . '/roles/roles.class.php';
 require_once BPSP_PLUGIN_DIR . '/courses/courses.class.php';
+require_once BPSP_PLUGIN_DIR . '/lectures/lectures.class.php';
 require_once BPSP_PLUGIN_DIR . '/assignments/assignments.class.php';
 require_once BPSP_PLUGIN_DIR . '/responses/responses.class.php';
 require_once BPSP_PLUGIN_DIR . '/gradebook/gradebook.class.php';
@@ -46,6 +47,7 @@ add_action( 'init', 'bpsp_textdomain' );
  */
 function bpsp_registration() {
     BPSP_Courses::register_post_types();
+    BPSP_Lectures::register_post_types();
     BPSP_Assignments::register_post_types();
     BPSP_Responses::register_post_types();
     BPSP_Gradebook::register_post_types();
@@ -66,9 +68,9 @@ add_action( 'plugins_loaded', 'bpsp_on_plugins_load', 5 );
 function bpsp_init() {
     new BPSP_WordPress();
     new BPSP_Roles();
-    // Load Courseware behaviour
     new BPSP_Groups();
     new BPSP_Courses();
+    new BPSP_Lectures();
     new BPSP_Assignments();
     new BPSP_Responses();
     new BPSP_Gradebook();
