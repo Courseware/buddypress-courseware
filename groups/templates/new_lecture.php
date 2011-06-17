@@ -5,18 +5,17 @@
         <h4 class="meta"><?php _e( 'Lecture Parent &amp; Order', 'bpsp' ); ?></h4>
         <ul class="courseware-meta">
             <li id="new-lecture-parent">
-                    <select name="lecture[parent]">
-                        <?php
-                            // Dummy object to improve UI/UX
-                            array_unshift( $lectures, (object) array(
-                                'ID' => 0,
-                                'post_title' => __( 'No parent lecture', 'bpsp' )
-                            ) );
-                        ?>
-                        <?php foreach( $lectures as $l ): ?>
-                            <option value="<?php echo $l->ID; ?>"><?php echo $l->post_title; ?></option>
-                        <?php endforeach; ?>
-                    </select>
+                    <?php
+                        wp_dropdown_pages(
+                            array(
+                                'post_type' => 'lecture',
+                                'name' => 'lecture[parent]',
+                                'show_option_none' => __('(no parent)'),
+                                'sort_column'=> 'menu_order, post_title',
+                                'echo' => true
+                            )
+                        );
+                    ?>
             </li>
             <li id="new-lecture-order">
                 <input type="text" name="lecture[order]" title="<?php _e( 'Order', 'bpsp' ); ?>"
