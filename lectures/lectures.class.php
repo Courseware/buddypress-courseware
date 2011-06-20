@@ -197,7 +197,10 @@ class BPSP_Lectures {
         $courseware_uri = bp_get_group_permalink( $bp->groups->current_group ) . 'courseware/' ;
         
         if( is_object( $lecture_identifier ) && $lecture_identifier->post_type == "lecture" )
-            return $lecture_identifier;
+            if( $lecture_identifier->group[0]->name == $bp->groups->current_group->id )
+                return $lecture_identifier;
+            else
+                return null;
         
         if( !$lecture_identifier )
             $lecture_identifier = $this->current_lecture;
@@ -373,7 +376,7 @@ class BPSP_Lectures {
             'group_id'      => $bp->groups->current_group->id,
             'orderby'       => 'menu_order, post_title'
         );
-        $lectures = get_pages( $args );
+        $lectures = get_posts( $args );
         
         $vars['lectures_hanlder_uri'] = $vars['current_uri'] . '/lectures/';
         $vars['lectures'] = walk_page_tree( $lectures, 0, 0, $args );
@@ -399,6 +402,8 @@ class BPSP_Lectures {
         else
             $vars['show_edit'] = null;
         
+        if( !$lecture )
+            $vars['die'] = __( 'BuddyPress Courseware Error! Cheatin\' Uh?' );
         $vars['name'] = 'single_lecture';
         $vars['lecture_permalink'] = $vars['current_uri'] . '/lecture/' . $this->current_lecture->post_name;
         $vars['lecture_edit_uri'] = $vars['current_uri'] . '/lecture/' . $this->current_lecture->post_name . '/edit';

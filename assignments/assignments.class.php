@@ -208,7 +208,10 @@ class BPSP_Assignments {
         $courseware_uri = bp_get_group_permalink( $bp->groups->current_group ) . 'courseware/' ;
         
         if( is_object( $assignment_identifier ) && $assignment_identifier->post_type == "assignment" )
-            return $assignment_identifier;
+            if( $assignment_identifier->group[0]->name == $bp->groups->current_group->id )
+                return $assignment_identifier;
+            else
+                return null;
         
         if( !$assignment_identifier )
             $assignment_identifier = $this->current_assignment;
@@ -397,6 +400,8 @@ class BPSP_Assignments {
         else
             $vars['show_edit'] = null;
         
+        if( !$assignment )
+            $vars['die'] = __( 'BuddyPress Courseware Error! Cheatin\' Uh?' );
         $vars['name'] = 'single_assignment';
         $vars['assignment_permalink'] = $vars['current_uri'] . '/assignment/' . $this->current_assignment->post_name;
         $vars['assignment_edit_uri'] = $vars['current_uri'] . '/assignment/' . $this->current_assignment->post_name . '/edit';

@@ -210,7 +210,10 @@ class BPSP_Courses {
         $courseware_uri = bp_get_group_permalink( $bp->groups->current_group ) . 'courseware/' ;
         
         if( is_object( $course_identifier ) && $course_identifier->post_type == "course" )
-            return $course_identifier;
+            if( $course_identifier->group[0]->name == $bp->groups->current_group->id )
+                return $course_identifier;
+            else
+                return null;
         
         if( !$course_identifier )
             $this->current_course;
@@ -320,6 +323,8 @@ class BPSP_Courses {
         else
             $vars['show_edit'] = null;
         
+        if( !$course )
+            $vars['die'] = __( 'BuddyPress Courseware Error! Cheatin\' Uh?' );
         $vars['name'] = 'single_course';
         $vars['course_permalink'] = $vars['current_uri'] . '/course/';
         $vars['course_edit_uri'] = $vars['current_uri'] . '/course/edit';
