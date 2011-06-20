@@ -15,6 +15,7 @@
                 <input type="text" name="assignment[due_date]" title="<?php _e( 'Due date', 'bpsp' ); ?>"
                     value="<?php echo $posted_data['due_date'] ? $posted_data['due_date'] : ''; ?>"/>
             </li>
+            <li id="new-assignment-formbuilder-control-box"></li>
         </ul>
     </div>
     <div id="new-assignment-content" class="courseware-content-wrapper" >
@@ -32,6 +33,11 @@
                 <?php the_editor( $content, 'assignment[content]', 'assignment[title]', false ); ?>
             </div>
         </div>
+        <br />
+        
+        <h4 class="meta"><?php _e( 'Add a Quiz/Test', 'bpsp' ); ?></h4>
+        <div id="courseware-assignment-builder" class="hide-if-no-js"></div>
+        
         <div id="new-assignment-content-options">
             <input type="hidden" id="new-assignment-post-object" name="assignment[object]" value="group"/>
             <input type="hidden" id="new-assignment-post-in" name="assignment[group_id]" value="<?php echo $group_id; ?>">

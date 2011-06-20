@@ -158,6 +158,7 @@ class BPSP_Assignments {
             //Load editor
             add_action( 'bp_head', array( &$this, 'load_editor' ) );
             do_action( 'courseware_list_assignments_screen' );
+            do_action( 'courseware_new_assignment_screen' );
             add_filter( 'courseware_group_template', array( &$this, 'new_assignment_screen' ) );
         }
         elseif( $action_vars[0] == 'assignment' ) {

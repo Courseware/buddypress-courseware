@@ -44,6 +44,10 @@ class BPSP_Static {
         wp_register_script( 'jstree', BPSP_WEB_URI . '/static/js/jstree/jquery.jstree.js', array( 'jquery' ), '1.0-rc3' );
         wp_localize_script( 'jstree', 'jstreeArgs', $this->jstree_l10n() );
         
+        // formBuilder
+        wp_register_script( 'formbuilder', BPSP_WEB_URI . '/static/js/formbuilder/jquery.formbuilder.js', array( 'jquery', 'jquery-ui-sortable' ), '0.3-beta' );
+        wp_localize_script( 'formbuilder', 'fbLanguage', $this->formbuilder_l10n() );
+        
         // Loaders
         wp_register_script( 'courseware-editor', BPSP_WEB_URI . '/static/js/courseware-editor.js', array( 'inputhint' ), BPSP_VERSION, true );
         wp_register_script( 'list-assignments', BPSP_WEB_URI . '/static/js/list-assignments.js', array( 'datatables' ), BPSP_VERSION, true );
@@ -58,6 +62,7 @@ class BPSP_Static {
         wp_register_script( 'delete-schedule', BPSP_WEB_URI . '/static/js/delete-schedule.js', array( 'datatables' ), BPSP_VERSION, true );
         wp_register_script( 'group-dashboard', BPSP_WEB_URI . '/static/js/group-dashboard.js', array( 'sparkline' ), BPSP_VERSION, true );
         wp_register_script( 'lectures', BPSP_WEB_URI . '/static/js/lectures.js', array( 'jstree' ), BPSP_VERSION, true );
+        wp_register_script( 'new-assignment', BPSP_WEB_URI . '/static/js/new-assignment.js', array( 'courseware-editor', 'formbuilder' ), BPSP_VERSION, true );
         
         // Styles
         wp_register_style( 'courseware', BPSP_WEB_URI . '/static/css/courseware.css', null, BPSP_VERSION );
@@ -67,7 +72,8 @@ class BPSP_Static {
         wp_register_style( 'datatables', BPSP_WEB_URI . '/static/css/datatables/jquery.datatables.css', null, '1.6.2' );
         wp_register_style( 'datetimepicker', BPSP_WEB_URI . '/static/css/datetimepicker/jquery.timepicker.css', array( 'jquery-ui-courseware-custom' ), '0.5' );
         wp_register_style( 'flexselect', BPSP_WEB_URI . '/static/css/flexselect/jquery.flexselect.css', null, '0.2' );
-    
+        wp_register_style( 'formbuilder', BPSP_WEB_URI . '/static/css/formbuilder/jquery.formbuilder.css', null, '0.3-beta' );
+        
         // Hooks
         add_action( 'bp_head', array( &$this, 'load_courseware_css' ) );
         add_action( 'courseware_editor', array( &$this, 'courseware_editor_enqueues' ) );
@@ -83,6 +89,7 @@ class BPSP_Static {
         add_action( 'courseware_gradebook_screen', array( &$this, 'gradebook_enqueues' ) );
         add_action( 'courseware_group_dashboard', array( &$this, 'group_dashboard_enqueues' ) );
         add_action( 'courseware_lectures_screen', array( &$this, 'lectures_enqueues' ) );
+        add_action( 'courseware_new_assignment_screen', array( &$this, 'new_assignment_enqueues' ) );
     }
     
     /**
@@ -129,6 +136,11 @@ class BPSP_Static {
         wp_enqueue_style( 'jstree' );
     }
     
+    function new_assignment_enqueues() {
+        wp_enqueue_script( 'new-assignment' );
+        wp_enqueue_style( 'formbuilder' );
+    }
+    
     function new_bib_enqueues() {
         wp_enqueue_script( 'new-bibliograpy' );
     }
@@ -173,6 +185,37 @@ class BPSP_Static {
     
     function group_dashboard_enqueues() {
         wp_enqueue_script( 'group-dashboard' );
+    }
+    
+    /**
+     * formbuilder_l10n()
+     *
+     * Helper to get formbuilder messages localized/options set
+     */
+    function formbuilder_l10n() {
+        return array(
+            "save"              => "Save",
+            "add_new_field"     => "Add New Field...",
+            "text"              => "Text Field",
+            "title"             => "Title",
+            "paragraph"         => "Paragraph",
+            "checkboxes"        => "Checkboxes",
+            "radio"             => "Radio",
+            "select"            => "Select List",
+            "text_field"        => "Text Field",
+            "label"             => "Label",
+            "paragraph_field"   => "Paragraph Field",
+            "select_options"    => "Select Options",
+            "add"               => "Add",
+            "checkbox_group"    => "Checkbox Group",
+            "remove_message"    => "Are you sure you want to remove this element?",
+            "remove"            => "Remove",
+            "radio_group"       => "Radio Group",
+            "selections_message"=> "Allow Multiple Selections",
+            "hide"              => "Hide",
+            "required"          => "Required",
+            "show"              => "Show"
+        );
     }
     
     /**
