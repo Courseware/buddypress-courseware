@@ -2,6 +2,11 @@
  * Javascript calls for lectures screen
  */
 
+// Start expanded
+jQuery("#lectures-tree-container").bind('loaded.jstree', function() {
+    jQuery("#lectures-tree-container").jstree("open_all");
+});
+// Load the data
 jQuery("#lectures-tree-container").jstree(
     {
         "themes" : {
@@ -29,4 +34,19 @@ jQuery("#lectures-tree-container").jstree(
 jQuery("#lectures-tree-search-submit").click( function() {
     var search_string = jQuery("#lectures-tree-search-text").val();
     jQuery("#lectures-tree-container").jstree( "search", search_string );
+});
+// Expand All/Collapse All Toggle
+jQuery("#lectures-tree-toggle").click( function() {
+    var action = jQuery("#lectures-tree-toggle").attr('rel');
+    if( action === 'expand' ) {
+        jQuery("#lectures-tree-container").jstree("open_all");
+        jQuery("#lectures-tree-toggle").attr('rel', 'collapse');
+        jQuery("#lectures-tree-toggle .expand-all").toggle();
+        jQuery("#lectures-tree-toggle .collapse-all").toggle();
+    } else {
+        jQuery("#lectures-tree-container").jstree("close_all");
+        jQuery("#lectures-tree-toggle").attr('rel', 'expand');
+        jQuery("#lectures-tree-toggle .collapse-all").toggle();
+        jQuery("#lectures-tree-toggle .expand-all").toggle();
+    }
 });
