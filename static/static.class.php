@@ -63,6 +63,7 @@ class BPSP_Static {
         wp_register_script( 'group-dashboard', BPSP_WEB_URI . '/static/js/group-dashboard.js', array( 'sparkline' ), BPSP_VERSION, true );
         wp_register_script( 'lectures', BPSP_WEB_URI . '/static/js/lectures.js', array( 'jstree' ), BPSP_VERSION, true );
         wp_register_script( 'new-assignment', BPSP_WEB_URI . '/static/js/new-assignment.js', array( 'courseware-editor', 'formbuilder' ), BPSP_VERSION, true );
+        wp_register_script( 'edit-assignment', BPSP_WEB_URI . '/static/js/edit-assignment.js', array( 'courseware-editor', 'formbuilder' ), BPSP_VERSION, true );
         
         // Styles
         wp_register_style( 'courseware', BPSP_WEB_URI . '/static/css/courseware.css', null, BPSP_VERSION );
@@ -90,6 +91,7 @@ class BPSP_Static {
         add_action( 'courseware_group_dashboard', array( &$this, 'group_dashboard_enqueues' ) );
         add_action( 'courseware_lectures_screen', array( &$this, 'lectures_enqueues' ) );
         add_action( 'courseware_new_assignment_screen', array( &$this, 'new_assignment_enqueues' ) );
+        add_action( 'courseware_edit_assignment_screen', array( &$this, 'edit_assignment_enqueues' ) );
     }
     
     /**
@@ -134,6 +136,11 @@ class BPSP_Static {
     function lectures_enqueues() {
         wp_enqueue_script( 'lectures' );
         wp_enqueue_style( 'jstree' );
+    }
+    
+    function edit_assignment_enqueues() {
+        wp_enqueue_script( 'edit-assignment' );
+        wp_enqueue_style( 'formbuilder' );
     }
     
     function new_assignment_enqueues() {

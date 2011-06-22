@@ -114,6 +114,11 @@
         <div id="assignment-body" class="courseware-content">
             <?php the_content(); ?>
         </div>
+        <?php if( isset( $assignment_form ) ) : ?>
+            <?php foreach( $assignment_form as $form_lines ): ?>
+                <?php echo $form_lines; ?>
+            <?php endforeach; ?>
+        <?php endif; ?>
     </div>
 </div>
 <?php

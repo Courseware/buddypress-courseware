@@ -453,3 +453,7 @@
 .fade-trigger {
     opacity: 1;
 }
+
+/* Formbuilder things */
+.frmb-submit { display: none; }
+.frm-elements >.frm-fld { display: none; }

@@ -41,6 +41,7 @@
         <div id="new-assignment-content-options">
             <input type="hidden" id="new-assignment-post-object" name="assignment[object]" value="group"/>
             <input type="hidden" id="new-assignment-post-in" name="assignment[group_id]" value="<?php echo $group_id; ?>">
+            <input type="hidden" id="new-assignment-post-form" name="assignment[form]" value=""/>
             <?php echo $nonce ? $nonce: ''; ?>
             <div id="new-assignment-content-submit">
                 <input type="submit" name="assignment[submit]" id="new-assignment-submit" value="<?php _e( 'Add a new assignment', 'bpsp' ); ?>">

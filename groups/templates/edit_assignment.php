@@ -1,26 +1,27 @@
 <?php bpsp_load_editor_files(); ?>
 
-<form action="<?php echo $assignment_edit_uri; ?>" method="post" class="standard-form" id="new-assignment-form">
-    <div id="new-assignment-meta" class="courseware-sidebar">
+<form action="<?php echo $assignment_edit_uri; ?>" method="post" class="standard-form" id="edit-assignment-form">
+    <div id="edit-assignment-meta" class="courseware-sidebar">
         <h4 class="meta"><?php _e( 'Course &amp; Due Date', 'bpsp' ); ?></h4>
         <ul class="courseware-meta">
-            <li id="new-assignment-course">
+            <li id="edit-assignment-course">
                     <select name="assignment[course_id]">
                         <?php foreach( $courses as $c ): ?>
                             <option value="<?php echo $c->ID; ?>" <?php selected( $c->ID, $assignment->course->ID ); ?>><?php echo $c->post_title; ?></option>
                         <?php endforeach; ?>
                     </select>
             </li>
-            <li id="new-assignment-due-date">
+            <li id="edit-assignment-due-date">
                 <input type="text" name="assignment[due_date]" value="<?php echo $assignment->due_date; ?>" />
             </li>
+            <li id="edit-assignment-formbuilder-control-box"></li>
         </ul>
     </div>
-    <div id="new-assignment-content" class="courseware-content-wrapper">
-        <div id="new-assignment-content-title">
+    <div id="edit-assignment-content" class="courseware-content-wrapper">
+        <div id="edit-assignment-content-title">
             <input type="text" id="assignment-title" name="assignment[title]" class="long" value="<?php echo $assignment->post_title; ?>" />
         </div>
-        <div id="new-assignment-content-textarea">
+        <div id="edit-assignment-content-textarea">
             <div id="editor-toolbar">
                 <div id="media-toolbar">
                     <?php echo bpsp_media_buttons(); ?>
@@ -28,11 +29,17 @@
                 <?php the_editor( $assignment->post_content, 'assignment[content]', 'assignment[title]', false ); ?>
             </div>
         </div>
-        <div id="new-assignment-content-options">
-            <input type="hidden" id="new-assignment-post-object" name="assignment[object]" value="group"/>
-            <input type="hidden" id="new-assignment-post-in" name="assignment[group_id]" value="<?php echo $group_id; ?>">
+        <br />
+        
+        <h4 class="meta"><?php _e( 'Add a Quiz/Test', 'bpsp' ); ?></h4>
+        <div id="courseware-assignment-builder" class="hide-if-no-js"></div>
+        
+        <div id="edit-assignment-content-options">
+            <input type="hidden" id="edit-assignment-post-object" name="assignment[object]" value="group"/>
+            <input type="hidden" id="edit-assignment-post-in" name="assignment[group_id]" value="<?php echo $group_id; ?>">
+            <input type="hidden" id="edit-assignment-post-form" name="assignment[form]" value=""/>
             <?php echo $nonce ? $nonce: ''; ?>
-            <input type="submit" name="assignment[submit]" id="new-assignment-submit" value="<?php _e( 'Update assignment', 'bpsp' ); ?>">
+            <input type="submit" name="assignment[submit]" id="edit-assignment-submit" value="<?php _e( 'Update assignment', 'bpsp' ); ?>">
             <div class="alignright submits">
                 <?php if( $delete_nonce ): ?>
                     <a href="<?php echo $delete_nonce; ?>" class="action alert"><?php _e( 'Delete Assignment', 'bpsp' ); ?></a>
