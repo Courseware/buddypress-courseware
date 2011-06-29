@@ -457,3 +457,5 @@
 /* Formbuilder things */
 .frmb-submit { display: none; }
 .frm-elements >.frm-fld { display: none; }
+.formbuilder-control-box { margin-top: 10px; }
+.frm-elements .false-label { margin-left: 0; font-weight: bold; }

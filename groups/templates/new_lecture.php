@@ -5,21 +5,31 @@
         <h4 class="meta"><?php _e( 'Lecture Parent &amp; Order', 'bpsp' ); ?></h4>
         <ul class="courseware-meta">
             <li id="new-lecture-parent">
-                    <?php
-                        wp_dropdown_pages(
-                            array(
-                                'post_type' => 'lecture',
-                                'name' => 'lecture[parent]',
-                                'show_option_none' => __('(no parent)'),
-                                'sort_column'=> 'menu_order, post_title',
-                                'echo' => true
-                            )
-                        );
-                    ?>
+                <label for="lecture-parent"><?php _e( 'Parent Lecture', 'bpsp' ); ?></label>
+                <?php
+                    wp_dropdown_pages(
+                        array(
+                            'post_type' => 'lecture',
+                            'name' => 'lecture[parent]',
+                            'show_option_none' => __( '(no parent)' ),
+                            'sort_column'=> 'menu_order, post_title',
+                            'id' => 'lecture-parent'
+                        )
+                    );
+                ?>
             </li>
             <li id="new-lecture-order">
-                <input type="text" name="lecture[order]" title="<?php _e( 'Order', 'bpsp' ); ?>"
+                <label for="lecture-order"><?php _e( 'Lecture Order', 'bpsp' ); ?></label>
+                <input type="text" id="lecture-order" name="lecture[order]" class="number" title="<?php _e( 'Order', 'bpsp' ); ?>"
                     value="<?php echo $posted_data['order'] ? $posted_data['order'] : '0'; ?>"/>
+            </li>
+            <li id="new-lecture-content-options">
+                <input type="hidden" id="new-lecture-post-object" name="lecture[object]" value="group"/>
+                <input type="hidden" id="new-lecture-post-in" name="lecture[group_id]" value="<?php echo $group_id; ?>">
+                <?php echo $nonce ? $nonce: ''; ?>
+                <div id="new-lecture-content-submit">
+                    <input type="submit" name="lecture[submit]" id="new-lecture-submit" class="safe" value="<?php _e( 'Add a new lecture', 'bpsp' ); ?>">
+                </div>
             </li>
         </ul>
     </div>
@@ -36,14 +46,6 @@
                 </div>
                 <?php $content = $posted_data['content'] ? $posted_data['content'] : ''; ?>
                 <?php the_editor( $content, 'lecture[content]', 'lecture[title]', false ); ?>
-            </div>
-        </div>
-        <div id="new-lecture-content-options">
-            <input type="hidden" id="new-lecture-post-object" name="lecture[object]" value="group"/>
-            <input type="hidden" id="new-lecture-post-in" name="lecture[group_id]" value="<?php echo $group_id; ?>">
-            <?php echo $nonce ? $nonce: ''; ?>
-            <div id="new-lecture-content-submit">
-                <input type="submit" name="lecture[submit]" id="new-lecture-submit" value="<?php _e( 'Add a new lecture', 'bpsp' ); ?>">
             </div>
         </div>
     </div>

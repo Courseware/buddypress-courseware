@@ -18,9 +18,9 @@
             <input type="hidden" id="update-course-post-in" name="course[group_id]" value="<?php echo $group_id; ?>">
             <?php echo $nonce ? $nonce: ''; ?>
             <div id="update-course-submit">
-                <input type="submit" name="course[submit]" id="update-course-submit" value="<?php _e( 'Update course', 'bpsp' ); ?>">
+                <input type="submit" name="course[submit]" id="update-course-submit" class="safe" value="<?php _e( 'Update course', 'bpsp' ); ?>">
                 <div class="alignright submits">
-                    <a href="<?php echo $course_permalink ?>" class="action safe"><?php _e( 'Cancel/Go Back', 'bpsp' ); ?></a>
+                    <a href="<?php echo $course_permalink ?>" class="action"><?php _e( 'Cancel/Go Back', 'bpsp' ); ?></a>
                 </div>
             </div>
         </div>

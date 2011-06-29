@@ -15,10 +15,10 @@ h4.courseware-title { font-style: italic; margin-bottom: 5px; }
     border-radius: 3px; -webkit-border-radius: 3px;
     -moz-border-radius: 3px; border: 1px solid #DDD; padding: 10px; }
 .courseware-sidebar { float: right; width: 200px; margin: 0 0 20px 10px; padding: 0; text-align: right; }
-h4.meta {  border-bottom: 1px dotted #DDD; margin-bottom: 0; font-style: italic; font-weight: normal; }
+h4.meta { margin-bottom: 0; font-style: italic; font-weight: normal; }
 h4.meta.padded { margin-bottom: 10px; }
 ul.courseware-meta { list-style: none; }
-ul.courseware-meta li { border-bottom: 1px dotted #DDD; padding: 5px 0; }
+ul.courseware-meta li { padding: 5px 0; }
 .courseware-content ul { list-style: inside disc; }
 .courseware-content ol { list-style: inside decimal; }
 .courseware-content ul ul, .courseware-content ol ol { margin-left: 10px; }
@@ -66,8 +66,8 @@ ul.courseware-meta li { border-bottom: 1px dotted #DDD; padding: 5px 0; }
     border: 1px solid #DDD; text-decoration: none; color: #888; padding: 4px 10px;
     background: #FFF url('../../../buddypress/bp-themes/bp-default/_inc/images/white-grad.png') repeat-x;
     cursor: pointer; vertical-align: bottom; }
-.courseware a.alert, input.alert { color: #CC0000; }
-.courseware a.safe, input.safe { color: #1A9B00; }
+.courseware a.alert, input.alert { color: #CC0000 !important; }
+.courseware a.safe, input.safe { color: #1A9B00 !important; }
 ul.courseware-meta li a.action { display: block; width: 90%; }
 
 /* Group Dashboard */
@@ -112,6 +112,8 @@ input[type="submit"] { margin-top: 5px; }
 .submits { margin: 10px 0 2px; }
 .clearall { clear: both; height: 1px; }
 .clearall.fat { margin: 10px 0; }
+input.number { width: 30px !important; text-align: right; }
+.inline { display: inline !important; }
 
 /**
  * MALO CSS Grid
