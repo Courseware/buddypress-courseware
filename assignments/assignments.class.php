@@ -247,7 +247,8 @@ class BPSP_Assignments {
             $assignment[0]->due_date = get_post_meta( $assignment[0]->ID, 'due_date', true );
             $assignment[0]->group = wp_get_object_terms( $assignment[0]->ID, 'group_id' );
             $assignment_course = wp_get_object_terms( $assignment[0]->ID, 'course_id' );
-            $assignment[0]->course = BPSP_Courses::is_course($assignment_course[0]->name );
+            $assignment[0]->course = BPSP_Courses::is_course( $assignment_course[0]->name );
+            $assignment[0]->lecture = BPSP_Lectures::is_lecture( get_post_meta( $assignment[0]->ID, 'lecture_id', true ) );
             $assignment[0]->forum_link = get_post_meta( $assignment[0]->ID, 'topic_link', true );
             $assignment[0]->form_data = get_post_meta( $assignment[0]->ID, 'form_data', true );
             $assignment[0]->permalink = $courseware_uri . 'assignment/' . $assignment[0]->post_name;
@@ -299,8 +300,8 @@ class BPSP_Assignments {
         global $bp;
         
         if( $this->has_assignment_caps( $bp->loggedin_user->id ) || is_super_admin() ) {
-            // If there are no courses, there will be no assignments
-            if( BPSP_Courses::has_courses( $bp->groups->current_group->id ) )
+            // If there are no lectures, there will be no assignments
+            if( BPSP_Lectures::has_lectures( $bp->groups->current_group->id ) )
                 $options[__( 'New Assignment', 'bpsp' )] = $options[__( 'Home', 'bpsp' )] . '/new_assignment';
         }
         
@@ -329,7 +330,7 @@ class BPSP_Assignments {
         // Save new assignment
         if( isset( $_POST['assignment'] ) &&
             $_POST['assignment']['object'] == 'group' &&
-            BPSP_Courses::is_course( $_POST['assignment']['course_id'] ) &&
+            BPSP_Lectures::is_lecture( $_POST['assignment']['lecture_id'] ) &&
             isset( $_POST['_wpnonce'] )
         ) {
             $new_assignment = $_POST['assignment'];
@@ -353,6 +354,7 @@ class BPSP_Assignments {
                     if( $new_assignment_id ) {
                         wp_set_post_terms( $new_assignment_id, $new_assignment['group_id'], 'group_id' );
                         wp_set_post_terms( $new_assignment_id, $new_assignment['course_id'], 'course_id' );
+                        add_post_meta( $new_assignment_id, 'lecture_id', $new_assignment['lecture_id'] );
                         if( strtotime( $new_assignment['due_date'] ) )
                             add_post_meta( $new_assignment_id, 'due_date', $new_assignment['due_date'] );
                         // Save the formbuilder
@@ -371,7 +373,7 @@ class BPSP_Assignments {
         }
         
         $vars['posted_data'] = $_POST['assignment'];
-        $vars['courses'] = BPSP_Courses::has_courses( $bp->groups->current_group->id );
+        $vars['lectures'] = BPSP_Lectures::has_lectures( $bp->groups->current_group->id );
         $vars['name'] = 'new_assignment';
         $vars['group_id'] = $bp->groups->current_group->id;
         $vars['user_id'] = $bp->loggedin_user->id;
@@ -428,7 +430,7 @@ class BPSP_Assignments {
         $vars['assignment_permalink'] = $vars['current_uri'] . '/assignment/' . $this->current_assignment->post_name;
         $vars['assignment_edit_uri'] = $vars['current_uri'] . '/assignment/' . $this->current_assignment->post_name . '/edit';
         
-        $vars['course_permalink'] = $vars['current_uri'] . '/course/' . $assignment->course->ID;
+        $vars['lecture_permalink'] = $vars['current_uri'] . '/lecture/' . $assignment->lecture->ID;
         $vars['assignment'] = $assignment;
         
         //TODO: find why the forum_link is not showing up instantly
@@ -566,7 +568,7 @@ class BPSP_Assignments {
         // Update course
         if( isset( $_POST['assignment'] ) &&
             $_POST['assignment']['object'] == 'group' &&
-            BPSP_Courses::is_course( $_POST['assignment']['course_id'] ) &&
+            BPSP_Lectures::is_lecture( $_POST['assignment']['lecture_id'] ) &&
             isset( $_POST['_wpnonce'] )
         ) {
             $updated_assignment = $_POST['assignment'];
@@ -590,6 +592,7 @@ class BPSP_Assignments {
                         wp_set_post_terms( $updated_assignment_id, $updated_assignment['course_id'], 'course_id' );
                         if( strtotime( $updated_assignment['due_date'] ) )
                             update_post_meta( $updated_assignment_id, 'due_date', $updated_assignment['due_date'], $old_assignment->due_date );
+                        update_post_meta( $updated_assignment_id, 'lecture_id', $updated_assignment['lecture_id'], $old_assignment->lecture->ID );
                         // Save the formbuilder
                         if( $updated_assignment['form'] ) {
                             $this->frmb->load_serialized( $updated_assignment['form'] );
@@ -607,7 +610,7 @@ class BPSP_Assignments {
         $vars['name'] = 'edit_assignment';
         $vars['group_id'] = $bp->groups->current_group->id;
         $vars['user_id'] = $bp->loggedin_user->id;
-        $vars['courses'] = BPSP_Courses::has_courses( $bp->groups->current_group->id );
+        $vars['lectures'] = BPSP_Lectures::has_lectures( $bp->groups->current_group->id );
         $vars['assignment'] = $this->is_assignment( $updated_assignment_id );
         $vars['assignment_edit_uri'] = $vars['current_uri'] . '/assignment/' . $this->current_assignment->post_name . '/edit';
         $vars['assignment_delete_uri'] = $vars['current_uri'] . '/assignment/' . $this->current_assignment->post_name . '/delete';
