@@ -6,17 +6,21 @@
         <ul class="courseware-meta">
             <li id="new-lecture-parent">
                 <label for="lecture-parent"><?php _e( 'Parent Lecture', 'bpsp' ); ?></label>
-                <?php
-                    wp_dropdown_pages(
-                        array(
-                            'post_type' => 'lecture',
-                            'name' => 'lecture[parent]',
-                            'show_option_none' => __( '(no parent)' ),
-                            'sort_column'=> 'menu_order, post_title',
-                            'id' => 'lecture-parent'
-                        )
-                    );
-                ?>
+                <select id="lecture-parent" name="lecture[parent]">
+                    <option value=""><?php _e( '(no parent)' ); ?></option>
+                    <?php
+                        echo walk_page_dropdown_tree( $lectures, 0,
+                            array(
+                                'echo' => 1,
+                                'depth' => 0,
+                                'child_of' => 0,
+                                'selected' => 0,
+                                'post_type' => 'lecture',
+                                'sort_column'=> 'menu_order, post_title'
+                            )
+                        );
+                    ?>
+                </select>
             </li>
             <li id="new-lecture-order">
                 <label for="lecture-order"><?php _e( 'Lecture Order', 'bpsp' ); ?></label>
