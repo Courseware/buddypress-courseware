@@ -70,6 +70,10 @@ ul.courseware-meta li { padding: 5px 0; }
 .courseware a.safe, input.safe { color: #1A9B00 !important; }
 ul.courseware-meta li a.action { display: block; width: 90%; }
 
+/* Group Header Notification */
+#item-header #message.info { clear: both; margin-bottom: 15px; }
+#item-header #message.info p { padding-top: 15px; padding-bottom: 15px; }
+
 /* Group Dashboard */
 #group-dashboard { margin-bottom: 20px; }
 #group-dashboard h4.padded { margin-top: 20px; margin-bottom: 5px; border: none; }

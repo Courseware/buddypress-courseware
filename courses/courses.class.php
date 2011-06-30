@@ -88,12 +88,7 @@ class BPSP_Courses {
             return;
         
         $c = $this->has_courses();
-        if( !empty( $c[0] ) ) {
-            $this->current_course = $c[0]->ID;
-            $vars['name'] = '_course_group_header';
-            $vars['echo'] = false;
-            $vars['course'] = $c[0];
-        } else {
+        if( reset( $c ) ) {
             $vars['name'] = '_no_course_group_header';
             $vars['echo'] = false;
             $this->current_uri = bp_get_group_permalink( $bp->groups->current_group ) . $bp->courseware->slug;
