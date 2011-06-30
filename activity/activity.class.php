@@ -38,10 +38,10 @@ class BPSP_Activity {
      * Function adds filtering options for activity types for Courseware components
      */
     function register_filter_options() { ?>
-        <option value="course_add"><?php _e( 'Show New Courses', 'bpsp' ) ?></option>
-        <option value="assignment_add"><?php _e( 'Show New Assignments', 'bpsp' ) ?></option>
-        <option value="schedule_add"><?php _e( 'Show Schedule Updates', 'bpsp' ) ?></option>
-        <option value="response_add"><?php _e( 'Show New Responses', 'bpsp' ) ?></option>
+        <option value="course_add"><?php _e( 'New Courses', 'bpsp' ) ?></option>
+        <option value="assignment_add"><?php _e( 'New Assignments', 'bpsp' ) ?></option>
+        <option value="schedule_add"><?php _e( 'Schedule Updates', 'bpsp' ) ?></option>
+        <option value="response_add"><?php _e( 'New Responses', 'bpsp' ) ?></option>
     <?php }
     
     /**
