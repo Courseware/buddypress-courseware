@@ -10,12 +10,14 @@
 #courseware-course-header .course-meta { text-align: right; font-style: italic; }
 #new-course-content #course-title { margin-top: 10px; }
 .courseware-content-wrapper { overflow: hidden; margin-bottom: 20px; }
-h4.courseware-title { font-style: italic; margin-bottom: 5px; }
+h4.courseware-title { margin-bottom: 5px; font-weight: bold; }
 .courseware-content {
     border-radius: 3px; -webkit-border-radius: 3px;
     -moz-border-radius: 3px; border: 1px solid #DDD; padding: 10px; }
-.courseware-sidebar { float: right; width: 200px; margin: 0 0 20px 10px; padding: 0; text-align: right; }
-h4.meta { margin-bottom: 0; font-style: italic; font-weight: normal; }
+.courseware-sidebar { float: right; width: 200px; margin: 0 0 20px 10px; padding: 5px 10px; background: #EAEAEA; border: 1px solid #DDD; }
+.courseware-sidebar div:last-child { text-align: right; }
+.courseware-sidebar input[type="text"], .courseware-sidebar select { font-size: 13px !important; padding: 4px !important; }
+h4.meta { margin-bottom: 0; font-weight: bold; }
 h4.meta.padded { margin-bottom: 10px; }
 ul.courseware-meta { list-style: none; }
 ul.courseware-meta li { padding: 5px 0; }
