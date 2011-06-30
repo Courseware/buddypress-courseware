@@ -84,7 +84,7 @@
                     <label for="bib[desc]"><?php _e( 'Description', 'bpsp' ); ?></label>
                         <textarea name="bib[desc]" cols="60" rows="6" title="<?php _e( 'Description', 'bpsp' ); ?>"></textarea>
                 </div>
-                <input type="submit" value="<?php _e( 'Submit', 'bpsp' ); ?>" />
+                <input type="submit" value="<?php _e( 'Publish', 'bpsp' ); ?>" />
                 <?php echo $bibs_nonce; ?>
             </div>
         </div>

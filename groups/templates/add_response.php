@@ -18,7 +18,7 @@
                 <input type="hidden" name="response[parent_id]" value="<?php echo $parent_assignment->ID ?>" />
                 <?php echo $nonce ? $nonce: ''; ?>
                 <div id="new-response-content-submit">
-                    <input type="submit" name="response[submit]" id="new-response-submit" value="<?php _e( 'Submit my response', 'bpsp' ); ?>">
+                    <input type="submit" name="response[submit]" id="new-response-submit" value="<?php _e( 'Publish my response', 'bpsp' ); ?>">
                     <div class="alignright submits">
                         <a href="<?php echo $parent_assignment->permalink ?>" class="action"><?php _e( 'Cancel/Go back', 'bpsp' ); ?></a>
                     </div>
