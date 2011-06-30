@@ -109,7 +109,7 @@ input.long,
 textarea.long,
 select.long { width: 98% !important; }
 input[type="submit"] { margin-top: 5px; }
-.submits { margin: 10px 0 2px; }
+.submits { margin: 10px 0 2px 0 !important; }
 .clearall { clear: both; height: 1px; }
 .clearall.fat { margin: 10px 0; }
 input.number { width: 30px !important; text-align: right; }

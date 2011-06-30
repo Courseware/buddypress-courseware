@@ -40,8 +40,8 @@
             <li class="parent-course">
             <?php
                 printf(
-                    __( 'Course: %1$s', 'bpsp' ),
-                    '<a href="' . $course_permalink . '" >' . $assignment->course->post_title . '</a>'
+                    __( 'Lecture: %1$s', 'bpsp' ),
+                    '<a href="' . $assignment->lecture->permalink . '" >' . $assignment->lecture->post_title . '</a>'
                 );
             ?>
             </li>
@@ -51,7 +51,7 @@
                         <?php _e( 'Visit Assignment Forum', 'bpsp' ); ?>
                     </a>
                 </li>
-            <?php elseif( isset( $assignment_e_forum_permalink ) && is_teacher() ): ?>
+            <?php elseif( isset( $assignment_e_forum_permalink ) && BPSP_Roles::can_teach() ): ?>
                 <li id="assignment-enable-forum">
                     <form method="post" action="<?php echo $assignment_e_forum_permalink; ?>" class="standard-form" >
                         <input type="submit" class="safe" value="<?php _e( 'Enable Assignment Forum', 'bpsp' ); ?>" />
@@ -102,7 +102,7 @@
                     <a href="#courseware-bibs-form" class="action"><?php _e( 'Quick Add Webpage', 'bpsp' ); ?></a>
                 </li>
                 <li class="edit-link">
-                    <a href="<?php echo $assignment_edit_uri; ?>" class="action"><?php _e( 'Edit Assignment', 'bpsp' ); ?></a>
+                    <a href="<?php echo $assignment_edit_uri; ?>" class="action safe"><?php _e( 'Edit Assignment', 'bpsp' ); ?></a>
                 </li>
             <?php endif; ?>
         </ul>

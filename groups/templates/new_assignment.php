@@ -4,7 +4,7 @@
     <div id="new-assignment-meta" class="courseware-sidebar">
         <h4 class="meta"><?php _e( 'Course &amp; Due Date', 'bpsp' ); ?></h4>
         <ul class="courseware-meta">
-            <li id="new-assignment-course">
+            <li id="new-assignment-lecture">
                 <label for="new-assignment-lecture"><?php _e( 'Linked Lecture', 'bpsp' ); ?></label>
                 <select id="new-assignment-lecture" name="assignment[lecture_id]">
                     <?php foreach( $lectures as $l ): ?>
@@ -21,6 +21,7 @@
             <li id="new-assignment-content-options">
                 <input type="hidden" id="new-assignment-post-object" name="assignment[object]" value="group"/>
                 <input type="hidden" id="new-assignment-post-in" name="assignment[group_id]" value="<?php echo $group_id; ?>">
+                <input type="hidden" name="assignment[course_id]" value="<?php echo $course_id; ?>">
                 <input type="hidden" id="new-assignment-post-form" name="assignment[form]" value=""/>
                 <?php echo $nonce ? $nonce: ''; ?>
                 <div id="new-assignment-content-submit">

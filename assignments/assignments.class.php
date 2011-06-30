@@ -28,6 +28,11 @@ class BPSP_Assignments {
     var $current_assignment = null;
     
     /**
+     * Current course id
+     */
+    var $current_course = null;
+    
+    /**
      * FormBuilder instance
      */
     var $frmb = null;
@@ -166,6 +171,7 @@ class BPSP_Assignments {
     function screen_handler( $action_vars ) {
         
         if( $action_vars[0] == 'new_assignment' ) {
+            $this->current_course = BPSP_Courses::is_course();
             //Load editor
             add_action( 'bp_head', array( &$this, 'load_editor' ) );
             do_action( 'courseware_list_assignments_screen' );
@@ -376,6 +382,7 @@ class BPSP_Assignments {
         $vars['lectures'] = BPSP_Lectures::has_lectures( $bp->groups->current_group->id );
         $vars['name'] = 'new_assignment';
         $vars['group_id'] = $bp->groups->current_group->id;
+        $vars['course_id'] = $this->current_course->ID;
         $vars['user_id'] = $bp->loggedin_user->id;
         $vars['nonce'] = wp_nonce_field( $nonce_name, '_wpnonce', true, false );
         return $vars;
@@ -430,7 +437,6 @@ class BPSP_Assignments {
         $vars['assignment_permalink'] = $vars['current_uri'] . '/assignment/' . $this->current_assignment->post_name;
         $vars['assignment_edit_uri'] = $vars['current_uri'] . '/assignment/' . $this->current_assignment->post_name . '/edit';
         
-        $vars['lecture_permalink'] = $vars['current_uri'] . '/lecture/' . $assignment->lecture->ID;
         $vars['assignment'] = $assignment;
         
         //TODO: find why the forum_link is not showing up instantly
@@ -442,6 +448,8 @@ class BPSP_Assignments {
             $this->frmb->set_data( $assignment->form_data );
             $vars['assignment_form'] = $this->frmb->render();
         }
+        
+        // Check if forums are available and show the option
         if( bp_group_is_forum_enabled() ) {
             $vars['assignment_e_forum_permalink'] = $vars['assignment_permalink'] . '/enable_forum';
             $vars['assignment_e_forum_nonce'] = wp_nonce_field( $e_forum_nonce, '_wpnonce', true, false );
