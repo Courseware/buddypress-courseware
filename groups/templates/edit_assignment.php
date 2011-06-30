@@ -7,9 +7,19 @@
             <li id="edit-assignment-lecture">
                 <label for="edit-assignment-lecture"><?php _e( 'Linked Lecture', 'bpsp' ); ?></label>
                 <select id="edit-assignment-lecture" name="assignment[lecture_id]">
-                    <?php foreach( $lectures as $l ): ?>
-                        <option value="<?php echo $l->ID; ?>" <?php selected( $l->ID, $assignment->lecture->ID ); ?>><?php echo $l->post_title; ?></option>
-                    <?php endforeach; ?>
+                    <option value=""><?php _e( 'Select Lecture', 'bpsp' ) ?></option>
+                    <?php
+                        echo walk_page_dropdown_tree( $lectures, 0,
+                            array(
+                                'echo' => 1,
+                                'depth' => 0,
+                                'child_of' => 0,
+                                'selected' => $lecture_id,
+                                'post_type' => 'lecture',
+                                'sort_column'=> 'menu_order, post_title'
+                            )
+                        );
+                    ?>
                 </select>
             </li>
             <li id="edit-assignment-due-date">

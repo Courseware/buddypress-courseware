@@ -24,6 +24,11 @@ class BPSP_Schedules {
     var $current_schedule = null;
     
     /**
+     * Current course id
+     */
+    var $current_course = null;
+    
+    /**
      * BPSP_Courses()
      *
      * Constructor. Loads the hooks and actions.
@@ -138,6 +143,8 @@ class BPSP_Schedules {
      */
     function screen_handler( $action_vars ) {
         if( $action_vars[0] == 'new_schedule' ) {
+            $this->current_course = BPSP_Courses::is_course();
+            
             do_action( 'courseware_new_schedule_screen' );
             add_filter( 'courseware_group_template', array( &$this, 'new_schedule_screen' ) );
         }
@@ -206,19 +213,11 @@ class BPSP_Schedules {
         else
             return null;
         
-        // Backwards compatibility for <0.5 versions that use no title
-        if( empty( $schedule->post_title ) ) {
-            wp_update_post(
-                array(
-                        'ID'          => $schedule->ID,
-                        'post_title'  => bp_create_excerpt( $schedule->post_content )
-                    )
-            );
-        }
-        
         $schedule->start_date = get_post_meta( $schedule->ID, 'start_date', true );
         $schedule->end_date = get_post_meta( $schedule->ID, 'end_date', true );
         $schedule->location = get_post_meta( $schedule->ID, 'location', true );
+        $schedule_lecture = get_post_meta( $schedule->ID, 'lecture_id', true );
+        $schedule->lecture = $schedule_lecture ? BPSP_Lectures::is_lecture( $schedule_lecture ) : null;
         $schedule->permalink = $courseware_uri . 'schedule/' . $schedule->post_name;
         $course_id = wp_get_object_terms( $schedule->ID, 'course_id' );
         if( !empty( $course_id ) )
@@ -381,8 +380,12 @@ class BPSP_Schedules {
                         'cw_end_date'   => $new_schedule['end_date'],
                         'cw_location'   => sanitize_text_field( $new_schedule['location'] ),
                     );
+                    
                     if( BPSP_Courses::is_course( $new_schedule['course_id'] ) )
                         $first_schedule['cw_course_id'] = $new_schedule['course_id'];
+                    
+                    if( BPSP_Lectures::is_lecture( $new_schedule['lecture_id'] ) )
+                        $first_schedule['cw_lecture_id'] = $new_schedule['lecture_id'];
                     
                     // store first schedule
                     $new_schedules[] = array_filter( $first_schedule );
@@ -404,6 +407,7 @@ class BPSP_Schedules {
                             wp_set_post_terms( $newschedule_id, $newschedule['cw_group_id'], 'group_id' );
                             if( $newschedule['cw_course_id'] )
                                 wp_set_post_terms( $newschedule_id, $newschedule['cw_course_id'], 'course_id' );
+                            add_post_meta( $newschedule_id, 'lecture_id', $newschedule['cw_lecture_id'] );
                             add_post_meta( $newschedule_id, 'start_date', $newschedule['cw_start_date'] );
                             add_post_meta( $newschedule_id, 'end_date', $newschedule['cw_end_date'] );
                             if( $newschedule['cw_location'] )
@@ -420,8 +424,9 @@ class BPSP_Schedules {
         
         $vars['name'] = 'new_schedule';
         $vars['group_id'] = $bp->groups->current_group->id;
+        $vars['course_id'] = $this->current_course->ID;
         $vars['user_id'] = $bp->loggedin_user->id;
-        $vars['courses'] = BPSP_Courses::has_courses( $bp->groups->current_group->id );
+        $vars['lectures'] = BPSP_Lectures::has_lectures( $bp->groups->current_group->id );
         $vars['nonce'] = wp_nonce_field( $nonce_name, '_wpnonce', true, false );
         return $vars;
     }
@@ -548,7 +553,7 @@ class BPSP_Schedules {
                 if( !empty( $updated_schedule['group_id'] ) && $valid_dates ) {
                     $updated_schedule_id =  wp_update_post( array(
                         'ID'            => $old_schedule->ID,
-                        'post_title'  => sanitize_text_field( $updated_schedule['title'] ),
+                        'post_title'    => sanitize_text_field( $updated_schedule['title'] ),
                         'post_content'  => sanitize_text_field( $updated_schedule['desc'] ),
                     ));
                     
@@ -557,8 +562,13 @@ class BPSP_Schedules {
                             wp_set_post_terms( $updated_schedule_id, $updated_schedule['course_id'], 'course_id' );
                         elseif( empty( $updated_schedule['course_id'] ) )
                             wp_set_post_terms( $updated_schedule_id, '', 'course_id' );
+                        
                         update_post_meta( $updated_schedule_id, 'start_date', $updated_schedule['start_date'], $old_schedule->start_date );
                         update_post_meta( $updated_schedule_id, 'end_date', $updated_schedule['end_date'], $old_schedule->end_date );
+                        
+                        if( isset( $updated_schedule['lecture_id'] ) )
+                            update_post_meta( $updated_schedule_id, 'lecture_id', $updated_schedule['lecture_id'] );
+                        
                         if( !empty( $updated_schedule['location'] ) )
                             if( $old_schedule->location )
                                 update_post_meta( $updated_schedule_id, 'location', $updated_schedule['location'], $old_schedule->location );
@@ -573,8 +583,10 @@ class BPSP_Schedules {
         
         $vars['name'] = 'edit_schedule';
         $vars['group_id'] = $bp->groups->current_group->id;
+        $vars['course_id'] = $this->current_course->ID;
+        $vars['lecture_id'] = get_post_meta( $old_schedule->ID, 'lecture_id', true );
         $vars['user_id'] = $bp->loggedin_user->id;
-        $vars['courses'] = BPSP_Courses::has_courses( $bp->groups->current_group->id );
+        $vars['lectures'] = BPSP_Lectures::has_lectures( $bp->groups->current_group->id );
         $vars['schedule'] = $this->is_schedule( $old_schedule->ID );
         $vars['schedule_edit_uri'] = $vars['current_uri'] . '/schedule/' . $this->current_schedule . '/edit';
         $vars['schedule_delete_uri'] = $vars['current_uri'] . '/schedule/' . $this->current_schedule . '/delete';

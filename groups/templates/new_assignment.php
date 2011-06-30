@@ -7,9 +7,19 @@
             <li id="new-assignment-lecture">
                 <label for="new-assignment-lecture"><?php _e( 'Linked Lecture', 'bpsp' ); ?></label>
                 <select id="new-assignment-lecture" name="assignment[lecture_id]">
-                    <?php foreach( $lectures as $l ): ?>
-                        <option value="<?php echo $l->ID; ?>"><?php echo $l->post_title; ?></option>
-                    <?php endforeach; ?>
+                    <option value=""><?php _e( 'Select Lecture', 'bpsp' ) ?></option>
+                    <?php
+                        echo walk_page_dropdown_tree( $lectures, 0,
+                            array(
+                                'echo' => 1,
+                                'depth' => 0,
+                                'child_of' => 0,
+                                'selected' => 0,
+                                'post_type' => 'lecture',
+                                'sort_column'=> 'menu_order, post_title'
+                            )
+                        );
+                    ?>
                 </select>
             </li>
             

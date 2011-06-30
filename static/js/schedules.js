@@ -51,7 +51,6 @@ jQuery( "input[name$='schedule[start_date]']" )
     .bind( 'change', function() { courseware_toggle_datefields( true ) });
 
 /* Editor Screens */
-jQuery('#new-assignment-form label').hide();
 jQuery('#new-assignment-form input[type="text"]').inputHint();
 jQuery('#new-assignment-form textarea').inputHint();
 

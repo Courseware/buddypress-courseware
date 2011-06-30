@@ -37,12 +37,13 @@
                 );
             ?>
             </li>
-            <li class="parent-course">
+            <li class="parent-lecture">
             <?php
-                printf(
-                    __( 'Lecture: %1$s', 'bpsp' ),
-                    '<a href="' . $assignment->lecture->permalink . '" >' . $assignment->lecture->post_title . '</a>'
-                );
+                if( isset( $assignment->lecture ) )
+                    printf(
+                        __( 'Lecture: %1$s', 'bpsp' ),
+                        '<a href="' . $assignment->lecture->permalink . '" >' . $assignment->lecture->post_title . '</a>'
+                    );
             ?>
             </li>
             <?php if( !empty( $assignment->forum_link ) ): ?>

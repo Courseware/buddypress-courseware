@@ -47,11 +47,11 @@
                 );
             ?>
             </li>
-            <?php if( !empty( $schedule->course ) ): ?>
-                <li id="schedule-courseinfo">
-                    <?php _e( 'Course:', 'bpsp' ); ?>
-                    <a href="<?php echo $current_uri . '/course/' . $schedule->course->post_name; ?>">
-                        <?php echo $schedule->course->post_title; ?>
+            <?php if( isset( $schedule->lecture ) ): ?>
+                <li id="schedule-lecture">
+                    <?php _e( 'Linked Lecture:', 'bpsp' ); ?>
+                    <a href="<?php echo $schedule->lecture->permalink; ?>">
+                        <?php echo $schedule->lecture->post_title; ?>
                     </a>
                 </li>
             <?php endif; ?>
