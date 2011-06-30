@@ -57,7 +57,7 @@
             <?php endif; ?>
             <?php if( $show_edit ): ?>
                 <li class="edit-link">
-                    <a href="<?php echo $schedule_edit_uri; ?>" class="action safe"><?php _e( 'Edit Schedule', 'bpsp' ); ?></a>
+                    <a href="<?php echo $schedule_edit_uri; ?>" class="action"><?php _e( 'Edit Schedule', 'bpsp' ); ?></a>
                 </li>
             <?php endif; ?>
         </ul>

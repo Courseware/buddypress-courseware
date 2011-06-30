@@ -13,7 +13,7 @@
                         );
                     ?>
                     <?php if( $is_teacher ): ?>
-                        <a href="<?php echo $nav_options[__( 'Home', 'bpsp' )] . '/course/edit' ?>" class="alignright action safe">
+                        <a href="<?php echo $nav_options[__( 'Home', 'bpsp' )] . '/course/edit' ?>" class="alignright action">
                             <?php _e( 'Update Course  &raquo;', 'bpsp' );?>
                         </a>
                     <?php else: ?>
@@ -30,7 +30,7 @@
                         );
                     ?>
                     <?php if( $is_teacher ): ?>
-                        <a href="<?php echo $nav_options[__( 'Home', 'bpsp' )] . '/new_assignment' ?>" class="alignright action safe">
+                        <a href="<?php echo $nav_options[__( 'Home', 'bpsp' )] . '/new_assignment' ?>" class="alignright action">
                             <?php _e( 'Create an assignment &raquo;', 'bpsp' );?>
                         </a>
                     <?php else: ?>
@@ -58,7 +58,7 @@
                         );
                     ?>
                     <?php if( $is_teacher ): ?>
-                        <a href="<?php echo $nav_options[__( 'Home', 'bpsp' )] . '/new_schedule' ?>" class="alignright action safe">
+                        <a href="<?php echo $nav_options[__( 'Home', 'bpsp' )] . '/new_schedule' ?>" class="alignright action">
                             <?php _e( 'Add a schedule &raquo;', 'bpsp' );?>
                         </a>
                     <?php else: ?>
@@ -75,7 +75,7 @@
                         );
                     ?>
                     <?php if( $is_teacher ): ?>
-                        <a href="<?php echo $nav_options[__( 'Home', 'bpsp' )] . '/new_bibliography' ?>" class="alignright action safe">
+                        <a href="<?php echo $nav_options[__( 'Home', 'bpsp' )] . '/new_bibliography' ?>" class="alignright action">
                             <?php _e( 'Manage bibliography &raquo;', 'bpsp' );?>
                         </a>
                     <?php endif; ?>

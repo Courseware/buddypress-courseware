@@ -91,7 +91,7 @@
             <input type="submit" value="<?php _e( 'Update', 'bpsp' ); ?>" />
             <?php if( isset( $back_uri ) ): ?>
                 <div class="alignright submits">
-                    <a href="<?php echo $back_uri; ?>" class="safe action"><?php _e( 'Go back', 'bpsp' ); ?></a>
+                    <a href="<?php echo $back_uri; ?>" class="safe"><?php _e( 'Go back', 'bpsp' ); ?></a>
                 </div>
             <?php endif; ?>
         </div>

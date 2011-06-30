@@ -32,7 +32,7 @@
                 <input type="hidden" id="edit-assignment-post-form" name="assignment[form]" value=""/>
                 <input type="hidden" name="assignment[course_id]" value="<?php echo $assignment->course->ID; ?>">
                 <?php echo $nonce ? $nonce: ''; ?>
-                <input type="submit" name="assignment[submit]" class="safe" id="edit-assignment-submit" value="<?php _e( 'Update assignment', 'bpsp' ); ?>">
+                <input type="submit" name="assignment[submit]" id="edit-assignment-submit" value="<?php _e( 'Update assignment', 'bpsp' ); ?>">
                 <div class="alignright submits">
                     <a href="<?php echo $assignment_permalink ?>" ><?php _e( 'Cancel/Go back', 'bpsp' ); ?></a> |
                     <?php if( $delete_nonce ): ?>

@@ -33,7 +33,7 @@
                     <a href="#courseware-bibs-form" class="action"><?php _e( 'Quick Add Webpage', 'bpsp' ); ?></a>
                 </li>
                 <li class="edit-link">
-                    <a href="<?php echo $course_edit_uri; ?>" class="action safe"><?php _e( 'Edit Course', 'bpsp' ); ?></a>
+                    <a href="<?php echo $course_edit_uri; ?>" class="action"><?php _e( 'Edit Course', 'bpsp' ); ?></a>
                 </li>
             <?php endif; ?>
         </ul>

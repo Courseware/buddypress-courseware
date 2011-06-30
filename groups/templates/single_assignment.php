@@ -55,7 +55,7 @@
             <?php elseif( isset( $assignment_e_forum_permalink ) && BPSP_Roles::can_teach() ): ?>
                 <li id="assignment-enable-forum">
                     <form method="post" action="<?php echo $assignment_e_forum_permalink; ?>" class="standard-form" >
-                        <input type="submit" class="safe" value="<?php _e( 'Enable Assignment Forum', 'bpsp' ); ?>" />
+                        <input type="submit" value="<?php _e( 'Enable Assignment Forum', 'bpsp' ); ?>" />
                         <?php echo $assignment_e_forum_nonce; ?>
                     </form>
                 </li>
@@ -103,7 +103,7 @@
                     <a href="#courseware-bibs-form" class="action"><?php _e( 'Quick Add Webpage', 'bpsp' ); ?></a>
                 </li>
                 <li class="edit-link">
-                    <a href="<?php echo $assignment_edit_uri; ?>" class="action safe"><?php _e( 'Edit Assignment', 'bpsp' ); ?></a>
+                    <a href="<?php echo $assignment_edit_uri; ?>" class="action"><?php _e( 'Edit Assignment', 'bpsp' ); ?></a>
                 </li>
             <?php endif; ?>
         </ul>

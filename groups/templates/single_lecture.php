@@ -31,7 +31,7 @@
             <?php endif; ?>
             <?php if( $show_edit ): ?>
                 <li class="edit-link">
-                    <a href="<?php echo $lecture_edit_uri; ?>" class="action safe"><?php _e( 'Edit Lecture', 'bpsp' ); ?></a>
+                    <a href="<?php echo $lecture_edit_uri; ?>" class="action"><?php _e( 'Edit Lecture', 'bpsp' ); ?></a>
                 </li>
             <?php endif; ?>
         </ul>

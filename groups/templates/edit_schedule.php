@@ -38,7 +38,7 @@
                 <input type="hidden" name="schedule[course_id]" value="<?php echo $course_id; ?>" />
                 <?php echo $nonce ? $nonce: ''; ?>
                 <div id="chedule-content-submit">
-                    <input type="submit" name="schedule[submit]" class="safe" id="schedule-submit" value="<?php _e( 'Update schedule', 'bpsp' ); ?>">
+                    <input type="submit" name="schedule[submit]" id="schedule-submit" value="<?php _e( 'Update schedule', 'bpsp' ); ?>">
                     <div class="submits alignright">
                         <a href="<?php echo $schedule_permalink; ?>" ><?php _e( 'Cancel/Go back', 'bpsp' ); ?></a> |
                         <a href="<?php echo $delete_nonce; ?>" class="alert"><?php _e( 'Delete schedule', 'bpsp' ); ?></a>

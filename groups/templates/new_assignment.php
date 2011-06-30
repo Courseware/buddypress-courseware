@@ -35,7 +35,7 @@
                 <input type="hidden" id="new-assignment-post-form" name="assignment[form]" value=""/>
                 <?php echo $nonce ? $nonce: ''; ?>
                 <div id="new-assignment-content-submit">
-                    <input type="submit" name="assignment[submit]" id="new-assignment-submit" class="safe" value="<?php _e( 'Add a new assignment', 'bpsp' ); ?>">
+                    <input type="submit" name="assignment[submit]" id="new-assignment-submit" value="<?php _e( 'Add a new assignment', 'bpsp' ); ?>">
                 </div>
             </li>
         </ul>

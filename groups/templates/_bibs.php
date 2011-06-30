@@ -88,7 +88,7 @@
                     </td>
                     <?php if( $has_bib_caps ): ?>
                         <td class="actions nowrap">
-                            <a href="<?php echo add_query_arg( 'bhash', $b['hash'] . ',' . $post_id, $bibs_edit_uri ); ?>" class="action safe">
+                            <a href="<?php echo add_query_arg( 'bhash', $b['hash'] . ',' . $post_id, $bibs_edit_uri ); ?>" class="action">
                                 <?php _e( 'Edit', 'bpsp' ); ?>
                             </a>
                             <a href="<?php echo add_query_arg( 'bhash', $b['hash'] . ',' . $post_id, $bibs_delete_uri ); ?>" class="action alert">
