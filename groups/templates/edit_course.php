@@ -20,7 +20,7 @@
             <div id="update-course-submit">
                 <input type="submit" name="course[submit]" id="update-course-submit" value="<?php _e( 'Update course', 'bpsp' ); ?>">
                 <div class="alignright submits">
-                    <a href="<?php echo $course_permalink ?>" class="action"><?php _e( 'Cancel/Go Back', 'bpsp' ); ?></a>
+                    <a href="<?php echo $course_permalink ?>" class="action"><?php _e( 'Cancel/Go back', 'bpsp' ); ?></a>
                 </div>
             </div>
         </div>

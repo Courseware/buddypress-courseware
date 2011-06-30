@@ -50,7 +50,7 @@
                 <input type="hidden" name="schedule[course_id]" value="<?php echo $course_id; ?>" />
                 <?php echo $nonce ? $nonce: ''; ?>
                 <div id="new-schedule-content-submit">
-                    <input type="submit" name="schedule[submit]" id="new-schedule-submit" value="<?php _e( 'Add a new schedule', 'bpsp' ); ?>">
+                    <input type="submit" name="schedule[submit]" id="new-schedule-submit" value="<?php _e( 'Submit schedule', 'bpsp' ); ?>">
                 </div>
             </li>
         </ul>

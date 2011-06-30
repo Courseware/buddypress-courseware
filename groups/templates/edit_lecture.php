@@ -32,9 +32,9 @@
                 <input type="hidden" id="update-lecture-post-in" name="lecture[group_id]" value="<?php echo $group_id; ?>">
                 <?php echo $nonce ? $nonce: ''; ?>
                 <div id="update-lecture-content-submit">
-                    <input type="submit" name="lecture[submit]" id="update-lecture-submit" value="<?php _e( 'Update Lecture', 'bpsp' ); ?>">
+                    <input type="submit" name="lecture[submit]" id="update-lecture-submit" value="<?php _e( 'Update lecture', 'bpsp' ); ?>">
                     <div class="alignright submits">
-                        <a href="<?php echo $lecture_permalink ?>" ><?php _e( 'Cancel/Go Back', 'bpsp' ); ?></a> | 
+                        <a href="<?php echo $lecture_permalink ?>" ><?php _e( 'Cancel/Go back', 'bpsp' ); ?></a> | 
                         <?php if( $delete_nonce ): ?>
                             <a href="<?php echo $delete_nonce; ?>" class="alert"><?php _e( 'Delete Lecture', 'bpsp' ); ?></a>
                         <?php endif; ?>

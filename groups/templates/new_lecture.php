@@ -32,7 +32,7 @@
                 <input type="hidden" id="new-lecture-post-in" name="lecture[group_id]" value="<?php echo $group_id; ?>">
                 <?php echo $nonce ? $nonce: ''; ?>
                 <div id="new-lecture-content-submit">
-                    <input type="submit" name="lecture[submit]" id="new-lecture-submit" value="<?php _e( 'Add a new lecture', 'bpsp' ); ?>">
+                    <input type="submit" name="lecture[submit]" id="new-lecture-submit" value="<?php _e( 'Submit lecture', 'bpsp' ); ?>">
                 </div>
             </li>
         </ul>
