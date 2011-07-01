@@ -20,6 +20,11 @@ class FormBuilder {
     var $generated_form = null;
     
     /**
+     * The generated form names prefix
+     */
+    var $name_prefix = 'frmb';
+    
+    /**
      * FormBuilder()
      * Constructor, just creates an instance
      */
@@ -144,7 +149,7 @@ class FormBuilder {
         $html .= sprintf(
             '<input type="text" id="%s" name="%s" value="" />' . "\n",
             $field_id,
-            $field_id
+            $this->name_prefix . '[' . $field_id . ']'
         );
         $html .= '</li>' . "\n";
         
@@ -176,7 +181,7 @@ class FormBuilder {
         $html .= sprintf(
             '<textarea id="%s" name="%s" rows="5" cols="50"></textarea>' . "\n",
             $field_id,
-            $field_id
+            $this->name_prefix . '[' . $field_id . ']'
         );
         $html .= '</li>' . "\n";
         
@@ -193,38 +198,36 @@ class FormBuilder {
     function load_checkboxes( $field ){
         $field['required'] = $field['required'] == 'true' ? ' required' : false;
         $field_title = sanitize_title( $field['title'] );
-        $field_id = sanitize_title( $field['values'] );
         
         $html = sprintf(
-            '<li class="%s%s" id="fld-%s">' . "\n",
-            $field_id,
-            $field['required'],
-            $field_id
+            '<li class="%s" id="fld-%s">' . "\n",
+            sanitize_title( $field['class'] ),
+            $field_title
         );
         
         if( isset( $field['title'] ) && !empty( $field['title'] ) ) {
             $html .= sprintf(
-                '<span class="false_label">%s</span>' . "\n",
+                '<label>%s</label>' . "\n",
                 $field['title']
             );
         }
         
         if( isset( $field['values'] ) && is_array( $field['values'] ) ) {
-            $html .= '<span class="multi-row clearfix">' . "\n";
-            $field_id = $field_title . '-' . $field_id;
+            $html .= '<span class="multi-row clearall">' . "\n";
             
             foreach( $field['values'] as $item ){
                 // set the default checked value
                 $checked = $item['default'] == 'true' ? true : false;
+                $field_id = $field_title . '-' . sanitize_title( $item['value'] );
                 
-                $checkbox = '<span class="row clearfix">';
+                $checkbox = '<span class="row clearall">';
                 $checkbox .= '<input type="checkbox" id="%s" name="%s" value="%s" />';
                 $checkbox .= '<label for="%s">%s</label></span>' . "\n";
                 $html .= sprintf(
                     $checkbox,
+                    $this->name_prefix . '[' . $field_id . ']',
                     $field_id,
-                    $field_id,
-                    $item['value'],
+                    sanitize_title( $item['value'] ),
                     $field_id,
                     $item['value']
                 );
@@ -254,20 +257,22 @@ class FormBuilder {
         );
         
         if( isset( $field['title'] ) && !empty( $field['title'] ) ) {
-            $html .= sprintf( '<span class="false_label">%s</span>' . "\n", $field['title'] );
+            $html .= sprintf( '<label>%s</label>' . "\n", $field['title'] );
         }
         
         if( isset( $field['values'] ) && is_array( $field['values'] ) ) {
             $html .= '<span class="multi-row">' . "\n";
             
             foreach( $field['values'] as $item ) {
-                $radio = '<span class="row clearfix">';
-                $radio .= '<input type="radio" id="%s-%s" name="%1$s" value="%s" />';
-                $radio .= '<label for="%1$s-%2$s">%3$s</label>';
+                $field_id = sanitize_title( $field['title'] ) . '-' . sanitize_title( $item['value'] );
+                $radio = '<span class="row clearall">';
+                $radio .= '<input type="radio" id="%s" name="%s" value="%s" />';
+                $radio .= '<label for="%1$s">%s</label>';
                 $radio .= '</span>' . "\n";
                 $html .= sprintf(
                     $radio,
-                    sanitize_title( $field['title'] ),
+                    $field_id,
+                    $this->name_prefix . '[' . $field_id . ']',
                     sanitize_title( $item['value'] ),
                     $item['value']
                 );
@@ -310,7 +315,7 @@ class FormBuilder {
             $multiple = $field['multiple'] == "true" ? ' multiple="multiple"' : '';
             $html .= sprintf(
                 '<select name="%s" id="%s"%s>' . "\n",
-                $field_title,
+                $this->name_prefix . '[' . $field_title . ']',
                 $field_title,
                 $multiple
             );
@@ -319,7 +324,7 @@ class FormBuilder {
                 $option = '<option value="%s">%s</option>' . "\n";
                 $html .= sprintf(
                     $option,
-                    $item['value'],
+                    sanitize_title( $item['value'] ),
                     $item['value']
                 );
             }

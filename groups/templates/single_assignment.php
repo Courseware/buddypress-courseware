@@ -114,12 +114,21 @@
         </h4>
         <div id="assignment-body" class="courseware-content">
             <?php the_content(); ?>
+            <?php if( isset( $assignment_form ) ) : ?>
+                <div id="assignment-quiz">
+                    <form action="" method="post" class="standard-form">
+                        <ol>
+                            <?php foreach( $assignment_form as $form_lines ): ?>
+                                <?php echo $form_lines; ?>
+                            <?php endforeach; ?>
+                        </ol>
+                        <div id="assignment-quiz-submit">
+                            <input type="submit" value="<?php _e( 'Submit', 'bpsp' ); ?>" <?php disabled( true, $show_edit ); ?> />
+                        </div>
+                    </form>
+                </div>
+            <?php endif; ?>
         </div>
-        <?php if( isset( $assignment_form ) ) : ?>
-            <?php foreach( $assignment_form as $form_lines ): ?>
-                <?php echo $form_lines; ?>
-            <?php endforeach; ?>
-        <?php endif; ?>
     </div>
 </div>
 <?php

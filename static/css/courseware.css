@@ -60,6 +60,11 @@ ul.courseware-meta li { padding: 5px 0; }
 #new-assignment-course select,
 #schedule-course select,
 #new-schedule-course select { width: 190px; }
+#assignment-quiz { margin: 10px 0 10px; border-top: 1px solid #DDD; }
+#assignment-quiz ol { font-size: 20px; color: #999; font-style: italic; margin: 0 0 10px 30px; list-style: outside decimal; }
+#assignment-quiz ol li * { font-size: 12px; color: #444; font-style: normal; }
+#assignment-quiz .row label { display: inline !important; font-weight: normal; }
+#assignment-quiz-submit { text-align: right; }
 
 /* Courseware action buttons */
 .courseware a.action, #message a.action {
