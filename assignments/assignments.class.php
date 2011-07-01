@@ -258,6 +258,16 @@ class BPSP_Assignments {
             $assignment[0]->lecture = $assignment_lecture ? BPSP_Lectures::is_lecture( $assignment_lecture ) : null;
             $assignment[0]->forum_link = get_post_meta( $assignment[0]->ID, 'topic_link', true );
             $assignment[0]->form_data = get_post_meta( $assignment[0]->ID, 'form_data', true );
+            // If Assignment has form, render it first
+            if( !empty( $assignment[0]->form_data ) ) {
+                if( !isset( $this ) || !isset( $this->frmb ) )
+                    $frmb = new FormBuilder();
+                else
+                    $frmb = $this->frmb;
+                
+                $frmb->set_data( $assignment[0]->form_data );
+                $assignment[0]->form = $frmb->render();
+            }
             $assignment[0]->permalink = $courseware_uri . 'assignment/' . $assignment[0]->post_name;
             return $assignment[0];
         } else
@@ -446,12 +456,6 @@ class BPSP_Assignments {
         //TODO: find why the forum_link is not showing up instantly
         if( empty( $assignment->forum_link ) && isset( $vars['forum_link'] ) )
             $assignment->forum_link = $vars['forum_link'];
-        
-        // If Assignment has form, render it first
-        if( !empty( $assignment->form_data ) ) {
-            $this->frmb->set_data( $assignment->form_data );
-            $vars['assignment_form'] = $this->frmb->render();
-        }
         
         // Check if forums are available and show the option
         if( bp_group_is_forum_enabled() ) {

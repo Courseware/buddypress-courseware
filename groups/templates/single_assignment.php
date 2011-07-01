@@ -114,11 +114,11 @@
         </h4>
         <div id="assignment-body" class="courseware-content">
             <?php the_content(); ?>
-            <?php if( isset( $assignment_form ) && $show_edit ) : ?>
+            <?php if( isset( $assignment->form ) && $show_edit ) : ?>
                 <div id="assignment-quiz">
                     <form action="" method="post" class="standard-form">
                         <ol>
-                            <?php foreach( $assignment_form as $form_lines ): ?>
+                            <?php foreach( $assignment->form as $form_lines ): ?>
                                 <?php echo $form_lines; ?>
                             <?php endforeach; ?>
                         </ol>
