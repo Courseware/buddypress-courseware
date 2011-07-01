@@ -35,6 +35,9 @@
             <?php the_content(); ?>
             <?php if( isset( $response->form_values ) ) : ?>
                 <div id="response-quiz" class="standard-form disabled">
+                    <div class="response-quiz-result">
+                        <?php _e( 'Wrong answers', 'bpsp' ); ?>: <?php echo count( $response->form_values ); ?>
+                    </div>
                     <ol>
                         <?php foreach( $response->form as $form_lines ): ?>
                             <?php echo $form_lines; ?>

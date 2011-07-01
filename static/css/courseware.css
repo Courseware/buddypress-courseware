@@ -39,6 +39,7 @@ ul.courseware-meta li { padding: 5px 0; }
 /* Responses */
 #courseware-responses-list ul { list-style: decimal; list-style-position: inside; }
 #courseware-responses-list ul li { line-height: 30px; }
+.response-quiz-result { padding: 5px; text-align: center; font-weight: bold; font-style: italic; }
 
 /* Bibliography */
 #courseware-new-bibliography label { display: block; }
