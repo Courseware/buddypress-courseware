@@ -10,16 +10,16 @@
                 <?php the_content(); ?>
             </div>
             <div id="assignment-quiz">
-                <form action="" method="post" class="standard-form">
-                    <ol>
-                        <?php foreach( $parent_assignment->form as $form_lines ): ?>
-                            <?php echo $form_lines; ?>
-                        <?php endforeach; ?>
-                    </ol>
-                    <div id="assignment-quiz-submit">
-                        <input type="submit" value="<?php _e( 'Submit', 'bpsp' ); ?>" <?php disabled( true, false ); ?> />
-                    </div>
-                </form>
+                <ol>
+                    <?php foreach( $parent_assignment->form as $form_lines ): ?>
+                        <?php echo $form_lines; ?>
+                    <?php endforeach; ?>
+                </ol>
+                <div id="assignment-quiz-submit">
+                    <input type="hidden" name="response[parent_id]" value="<?php echo $parent_assignment->ID ?>" />
+                    <?php echo $nonce ? $nonce: ''; ?>
+                    <input type="submit" value="<?php _e( 'Publish my response', 'bpsp' ); ?>" <?php disabled( true, false ); ?> />
+                </div>
             </div>
         <?php else: ?>
             <div id="new-response-content">

@@ -272,9 +272,14 @@ class BPSP_Responses {
         $response = get_posts( $response_query );
         
         if( !empty( $response ) )
-            return reset( $response );
+            $response = reset( $response );
         else
             return null;
+        
+        if( isset( $this->current_assignment->form ) )
+        $response->form_values = get_post_meta( $this->current_assignment->ID, 'form_values', true );
+        $response->form = $this->current_assignment->form;
+        return $response;
     }
     
     /**
@@ -330,6 +335,7 @@ class BPSP_Responses {
     function new_response_screen( $vars ) {
         global $bp;
         $nonce_name = 'add_response';
+        $response_form_values = array();
         
         if( !$this->has_student_caps( $bp->loggedin_user->id ) && !is_super_admin() ||
            !bp_group_is_member( $bp->current_group->id )
@@ -344,6 +350,7 @@ class BPSP_Responses {
             isset( $_POST['_wpnonce'] )
         ) {
             $new_response = $_POST['response'];
+            $new_response_quiz = $_POST['frmb'] ? $_POST['frmb'] : null;
             $is_nonce = wp_verify_nonce( $_POST['_wpnonce'], $nonce_name );
             $response = $this->has_response();
             if( true != $is_nonce ) 
@@ -353,8 +360,37 @@ class BPSP_Responses {
                 $vars['response'] = $response;
                 $vars['error'] = __( 'You already sent your response.', 'bpsp' );
                 $this->single_response_screen( $vars );
-            }
-            else
+            } else {
+                if( $new_response_quiz ) {
+                    $new_response['title'] = $bp->loggedin_user->display_name . __( ' on ', 'bpsp' ) . $this->current_assignment->post_title;
+                    $new_response['content'] = __( 'Please look for the quiz data.', 'bpsp' );
+                    foreach( $this->current_assignment->form_data as $to_check ) {
+                        // Find the name of the input
+                        if( !is_array( $to_check['values'] ) )
+                            $name = sanitize_title( $to_check['values'] );
+                        else
+                            $name = sanitize_title( $to_check['title'] );
+                        // Find the value of the input and check if it's ok
+                        if( isset( $new_response_quiz[ $name ] ) ) {
+                            if( is_array( $to_check['values'] ) ) {
+                                foreach( $to_check['values'] as $v ) {
+                                    if( strtolower( $new_response_quiz[ $name ] ) == strtolower( $v['value'] ) ) {
+                                        // Save the wrong answers!
+                                        if( $v['default'] == 'undefined' )
+                                            $response_form_values[ $name ] = sanitize_text_field( $new_response_quiz[ $name ] );
+                                    }
+                                }
+                            } else {
+                                // The answer is always the last :?value
+                                $answer = explode( '?', $to_check['values'] );
+                                $answer = trim( end( $answer ) );
+                                // Save the wrong answers!
+                                if( strtolower( $new_response_quiz[ $name ] ) != strtolower( $answer ) )
+                                    $response_form_values[ $name ] = sanitize_text_field( $new_response_quiz[ $name ] );
+                            }
+                        }
+                    }
+                }
                 if( isset( $new_response['title'] ) && isset( $new_response['content'] ) ) {
                     $new_response['title'] = strip_tags( $new_response['title'] );
                     $new_response_id =  wp_insert_post( array(
@@ -368,7 +404,9 @@ class BPSP_Responses {
                     if( $new_response_id ) {
                         // Save author id in assignment post_meta so we don't have to query it all over
                         add_post_meta( $this->current_assignment->ID, 'responded_author', $bp->loggedin_user->id );
+                        add_post_meta( $this->current_assignment->ID, 'form_values', $response_form_values );
                         $vars = $this->single_response_screen( $vars );
+                        $vars['form_values'] = $response_form_values;
                         if( $this->group_responses_status() )
                             do_action( 'courseware_response_added', $vars );
                         $vars['message'] = __( 'New response was added.', 'bpsp' );
@@ -376,6 +414,7 @@ class BPSP_Responses {
                     } else
                         $vars['error'] = __( 'New response could not be added (fill the title/content).', 'bpsp' );
                 }
+            }
         }
         
         $vars['name'] = 'add_response';

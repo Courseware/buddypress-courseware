@@ -133,7 +133,8 @@ class FormBuilder {
      */
     function load_text( $field ) {
         $field['required'] = $field['required'] == 'true' ? ' required' : false;
-        $field_id = sanitize_title( $field['values'] );
+        $field_name = trim( preg_replace( "/\?.*/i", '?', $field['values'] ) );
+        $field_id = sanitize_title( $field_name );
         
         $html = sprintf(
             '<li class="%s%s" id="fld-%s">' . "\n",
@@ -144,7 +145,7 @@ class FormBuilder {
         $html .= sprintf(
             '<label for="%s">%s</label>' . "\n",
             $field_id,
-            $field['values']
+            $field_name
         );
         $html .= sprintf(
             '<input type="text" id="%s" name="%s" value="" />' . "\n",
@@ -165,7 +166,8 @@ class FormBuilder {
      */
     function load_textarea( $field ) {
         $field['required'] = $field['required'] == 'true' ? ' required' : false;
-        $field_id = sanitize_title( $field['values'] );
+        $field_name = trim( preg_replace( "/\?.*/i", '?', $field['values'] ) );
+        $field_id = sanitize_title( $field_name );
         
         $html = sprintf(
             '<li class="%s%s" id="fld-%s">' . "\n",
@@ -176,7 +178,7 @@ class FormBuilder {
         $html .= sprintf(
             '<label for="%s">%s</label>' . "\n",
             $field_id,
-            $field['values']
+            $field_name
         );
         $html .= sprintf(
             '<textarea id="%s" name="%s" rows="5" cols="50"></textarea>' . "\n",

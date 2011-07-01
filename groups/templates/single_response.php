@@ -33,6 +33,15 @@
         <h4 id="course-title" class="courseware-title"><?php echo get_the_title( $response->ID ); ?></h4>
         <div id="course-body" class="courseware-content">
             <?php the_content(); ?>
+            <?php if( isset( $response->form_values ) ) : ?>
+                <div id="response-quiz" class="standard-form disabled">
+                    <ol>
+                        <?php foreach( $response->form as $form_lines ): ?>
+                            <?php echo $form_lines; ?>
+                        <?php endforeach; ?>
+                    </ol>
+                </div>
+            <?php endif; ?>
         </div>
     </div>
 </div>
