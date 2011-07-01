@@ -455,6 +455,8 @@
 }
 
 /* Formbuilder things */
+.frmb .opt_group .fields > input,
+.frmb .opt_group .fields > label { display: none !important; }
 .frmb-submit { display: none; }
 .frm-elements >.frm-fld { display: none; }
 .formbuilder-control-box { margin-top: 10px; }
