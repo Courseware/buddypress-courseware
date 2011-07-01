@@ -63,6 +63,10 @@
             <span id="edit-assignment-formbuilder-control-box" class="formbuilder-control-box" class="hide-if-no-js"></span>
         </p>
         
+        <p class="alignright clearall">
+            <em><?php _e( "For Text and Paragraph fields, end the title with a question mark, the correct answer is what will follow after.", 'bpsp' ); ?></em>
+        </p>
+        
         <p class="clearall"></p>
         
         <div id="courseware-assignment-builder" class="hide-if-no-js"></div>
