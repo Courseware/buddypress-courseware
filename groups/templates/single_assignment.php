@@ -114,7 +114,7 @@
         </h4>
         <div id="assignment-body" class="courseware-content">
             <?php the_content(); ?>
-            <?php if( isset( $assignment_form ) ) : ?>
+            <?php if( isset( $assignment_form ) && $show_edit ) : ?>
                 <div id="assignment-quiz">
                     <form action="" method="post" class="standard-form">
                         <ol>
@@ -123,7 +123,7 @@
                             <?php endforeach; ?>
                         </ol>
                         <div id="assignment-quiz-submit">
-                            <input type="submit" value="<?php _e( 'Submit', 'bpsp' ); ?>" <?php disabled( true, $show_edit ); ?> />
+                            <input type="submit" value="<?php _e( 'Submit', 'bpsp' ); ?>" <?php disabled( true, true ); ?> />
                         </div>
                     </form>
                 </div>
