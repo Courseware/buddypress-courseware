@@ -316,12 +316,6 @@ class BPSP_Assignments {
     function add_nav_options( $options ) {
         global $bp;
         
-        if( $this->has_assignment_caps( $bp->loggedin_user->id ) || is_super_admin() ) {
-            // If there are no lectures, there will be no assignments
-            if( BPSP_Lectures::has_lectures( $bp->groups->current_group->id ) )
-                $options[__( 'New Assignment', 'bpsp' )] = $options[__( 'Home', 'bpsp' )] . '/new_assignment';
-        }
-        
         $options[__( 'Assignments', 'bpsp' )] = $options[__( 'Home', 'bpsp' )] . '/assignments';
         return $options;
     }

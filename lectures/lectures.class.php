@@ -33,7 +33,6 @@ class BPSP_Lectures {
         add_action( 'courseware_new_teacher_added', array( &$this, 'add_caps' ) );
         add_action( 'courseware_new_teacher_removed', array( &$this, 'remove_caps' ) );
         add_action( 'courseware_group_screen_handler', array( &$this, 'screen_handler' ) );
-        add_filter( 'courseware_group_nav_options', array( &$this, 'add_nav_options' ) );
         add_filter( 'courseware_course', array( &$this, 'lectures_screen' ) );
         add_filter( 'post_type_link', array( __CLASS__, 'get_permalink' ), 10, 2 );
         add_filter( 'page_css_class', array( __CLASS__, 'css_class' ), 10, 2 );
@@ -256,26 +255,6 @@ class BPSP_Lectures {
             $lectures[] = self::is_lecture( $aid );
         
         return array_filter( $lectures );
-    }
-    
-    /**
-     * add_nav_options()
-     *
-     * Adds lecture specific navigations options
-     *
-     * @param Array $options A set of current nav options
-     * @return Array containing new nav options
-     */
-    function add_nav_options( $options ) {
-        global $bp;
-        
-        if( $this->has_lecture_caps( $bp->loggedin_user->id ) || is_super_admin() ) {
-            // If there are no courses, there will be no lectures
-            if( BPSP_Courses::has_courses( $bp->groups->current_group->id ) )
-                $options[__( 'New Lecture', 'bpsp' )] = $options[__( 'Home', 'bpsp' )] . '/new_lecture';
-        }
-        
-        return $options;
     }
     
     /**

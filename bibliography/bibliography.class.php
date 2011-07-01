@@ -48,7 +48,6 @@ class BPSP_Bibliography {
         add_filter( 'courseware_course', array( &$this, 'bibs_screen' ) );
         add_filter( 'courseware_assignment', array( &$this, 'bibs_screen' ) );
         add_action( 'courseware_group_screen_handler', array( &$this, 'screen_handler' ) );
-        add_filter( 'courseware_group_nav_options', array( &$this, 'add_nav_options' ) );
         // Load api keys
         $this->worldcat_key = get_option( 'bpsp_worldcat_key' );
         $this->isbndb_key = get_option( 'bpsp_isbndb_key' );
@@ -404,26 +403,6 @@ class BPSP_Bibliography {
             do_action( 'courseware_new_bibliography_screen' );
             add_filter( 'courseware_group_template', array( &$this, 'delete_bib_screen' ) );
         }
-    }
-
-    /**
-     * add_nav_options()
-     *
-     * Adds bibliography specific navigations options
-     *
-     * @param Array $options A set of current nav options
-     * @return Array containing new nav options
-     */
-    function add_nav_options( $options ) {
-        global $bp;
-        
-        $this->home_uri = $options[__( 'Home', 'bpsp' )];
-        
-        if( $this->has_bib_caps( $bp->loggedin_user->id ) || is_super_admin() ) {
-            $options[__( 'Bibliography', 'bpsp' )] = $options[__( 'Home', 'bpsp' )] . '/new_bibliography';
-        }
-        
-        return $options;
     }
     
     /**

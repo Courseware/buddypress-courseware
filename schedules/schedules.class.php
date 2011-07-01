@@ -268,9 +268,6 @@ class BPSP_Schedules {
     function add_nav_options( $options ) {
         global $bp;
         
-        if( $this->has_schedule_caps( $bp->loggedin_user->id ) || is_super_admin() )
-            $options[__( 'New Schedule', 'bpsp' )] = $options[__( 'Home', 'bpsp' )] . '/new_schedule';
-        
         $options[__( 'Calendar', 'bpsp' )] = $options[__( 'Home', 'bpsp' )] . '/schedules';
         return $options;
     }
