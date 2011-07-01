@@ -201,27 +201,27 @@ class BPSP_Static {
      */
     function formbuilder_l10n() {
         return array(
-            "save"              => "Save",
-            "add_new_field"     => "Add New Field...",
-            "text"              => "Text Field",
-            "title"             => "Title",
-            "paragraph"         => "Paragraph",
-            "checkboxes"        => "Checkboxes",
-            "radio"             => "Radio",
-            "select"            => "Select List",
-            "text_field"        => "Text Field",
-            "label"             => "Label",
-            "paragraph_field"   => "Paragraph Field",
-            "select_options"    => "Select Options",
-            "add"               => "Add",
-            "checkbox_group"    => "Checkbox Group",
-            "remove_message"    => "Are you sure you want to remove this element?",
-            "remove"            => "Remove",
-            "radio_group"       => "Radio Group",
-            "selections_message"=> "Allow Multiple Selections",
-            "hide"              => "Hide",
-            "required"          => "Required",
-            "show"              => "Show"
+            "save"              => __( "Save", 'bpsp' ),
+            "add_new_field"     => __( "Add New Field...", 'bpsp' ),
+            "text"              => __( "Text Field", 'bpsp' ),
+            "title"             => __( "Title", 'bpsp' ),
+            "paragraph"         => __( "Paragraph", 'bpsp' ),
+            "checkboxes"        => __( "Checkboxes", 'bpsp' ),
+            "radio"             => __( "Radio", 'bpsp' ),
+            "select"            => __( "Select List", 'bpsp' ),
+            "text_field"        => __( "Text Field", 'bpsp' ),
+            "label"             => __( "Label", 'bpsp' ),
+            "paragraph_field"   => __( "Paragraph Field", 'bpsp' ),
+            "select_options"    => __( "Select Options", 'bpsp' ),
+            "add"               => __( "Add", 'bpsp' ),
+            "checkbox_group"    => __( "Checkbox Group", 'bpsp' ),
+            "remove_message"    => __( "Are you sure you want to remove this element?", 'bpsp' ),
+            "remove"            => __( "Remove", 'bpsp' ),
+            "radio_group"       => __( "Radio Group", 'bpsp' ),
+            "selections_message"=> __( "Allow Multiple Selections", 'bpsp' ),
+            "hide"              => __( "Hide", 'bpsp' ),
+            "required"          => __( "Required", 'bpsp' ),
+            "show"              => __( "Show", 'bpsp' )
         );
     }
     
