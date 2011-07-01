@@ -122,9 +122,6 @@
                                 <?php echo $form_lines; ?>
                             <?php endforeach; ?>
                         </ol>
-                        <div id="assignment-quiz-submit">
-                            <input type="submit" value="<?php _e( 'Submit', 'bpsp' ); ?>" <?php disabled( true, true ); ?> />
-                        </div>
                     </form>
                 </div>
             <?php endif; ?>

@@ -227,8 +227,8 @@ class FormBuilder {
                 $checkbox .= '<label for="%s">%s</label></span>' . "\n";
                 $html .= sprintf(
                     $checkbox,
-                    $this->name_prefix . '[' . $field_id . ']',
                     $field_id,
+                    $this->name_prefix . '[' . $field_id . ']',
                     sanitize_title( $item['value'] ),
                     $field_id,
                     $item['value']
