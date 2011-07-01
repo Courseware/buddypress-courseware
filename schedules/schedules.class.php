@@ -268,7 +268,7 @@ class BPSP_Schedules {
     function add_nav_options( $options ) {
         global $bp;
         
-        $options[__( 'Calendar', 'bpsp' )] = $options[__( 'Home', 'bpsp' )] . '/schedules';
+        $options[__( 'Schedule', 'bpsp' )] = $options[__( 'Home', 'bpsp' )] . '/schedules';
         return $options;
     }
     
