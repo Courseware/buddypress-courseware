@@ -257,6 +257,7 @@ class BPSP_Assignments {
             $assignment_lecture = get_post_meta( $assignment[0]->ID, 'lecture_id', true );
             $assignment[0]->lecture = $assignment_lecture ? BPSP_Lectures::is_lecture( $assignment_lecture ) : null;
             $assignment[0]->forum_link = get_post_meta( $assignment[0]->ID, 'topic_link', true );
+            $assignment[0]->responded_author = get_post_meta( $assignment[0]->ID, 'responded_author' );
             $assignment[0]->form_data = get_post_meta( $assignment[0]->ID, 'form_data', true );
             // If Assignment has form, render it first
             if( !empty( $assignment[0]->form_data ) ) {
@@ -406,12 +407,7 @@ class BPSP_Assignments {
      * @return Array $vars a set of variable passed to this screen template
      */
     function list_assignments_screen( $vars ) {
-        global $bp;
-        $assignments = get_posts( array(
-            'numberposts'   => '-1',
-            'post_type'     => 'assignment',
-            'group_id'      => $bp->groups->current_group->id,
-        ));
+        $assignments = $this->has_assignments();
         
         $vars['name'] = 'list_assignments';
         $vars['assignments_hanlder_uri'] = $vars['current_uri'] . '/assignment/';
