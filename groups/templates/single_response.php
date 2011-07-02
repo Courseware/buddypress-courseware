@@ -30,20 +30,26 @@
         </ul>
     </div>
     <div class="course-content courseware-content-wrapper">
-        <h4 id="course-title" class="courseware-title"><?php echo get_the_title( $response->ID ); ?></h4>
-        <div id="course-body" class="courseware-content">
+        <h4 id="response-title" class="courseware-title"><?php echo get_the_title( $response->ID ); ?></h4>
+        <div id="response-body" class="courseware-content">
             <?php the_content(); ?>
             <?php if( isset( $response->form_values ) ) : ?>
-                <div id="response-quiz" class="standard-form disabled">
-                    <div class="response-quiz-result">
-                        <?php _e( 'Wrong answers', 'bpsp' ); ?>: <?php echo count( $response->form_values ); ?>
-                    </div>
-                    <ol>
-                        <?php foreach( $response->form as $form_lines ): ?>
-                            <?php echo $form_lines; ?>
-                        <?php endforeach; ?>
-                    </ol>
-                </div>
+                <strong><?php _e( 'Wrong answers', 'bpsp' ); ?>:</strong>
+                <ol>
+                    <?php foreach( $response->form_values as $q => $a ): ?>
+                        <?php if( in_array( $q, array( 'total', 'correct' ) ) ) continue; ?>
+                        <li>
+                            <em><?php echo $q ?></em>
+                            <ul class="answers">
+                                <?php foreach ($a as $k => $e): ?>
+                                    <li class="<?php echo ( ( $k % 2 ) == 0 ) ? 'wrong' : 'correct'; ?>">
+                                        <?php echo $e; ?>
+                                    </li>
+                                <?php endforeach; ?>
+                            </ul>
+                        </li>
+                    <?php endforeach; ?>
+                </ol>
             <?php endif; ?>
         </div>
     </div>

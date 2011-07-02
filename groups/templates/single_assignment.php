@@ -127,7 +127,7 @@
                         </ol>
                     </form>
                 </div>
-            <?php elseif( !empty( $assignment->form ) && isset( $response_add_uri ) ): ?>
+            <?php elseif( empty( $response ) && !empty( $assignment->form ) && isset( $response_add_uri ) ): ?>
                 <a href="<?php echo $response_add_uri; ?>" class="action">
                     <?php _e( 'Take the assignment quiz now.', 'bpsp' ); ?>
                 </a>
