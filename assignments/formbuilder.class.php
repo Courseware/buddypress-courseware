@@ -266,7 +266,7 @@ class FormBuilder {
             $html .= '<span class="multi-row">' . "\n";
             
             foreach( $field['values'] as $item ) {
-                $field_id = sanitize_title( $field['title'] ) . '-' . sanitize_title( $item['value'] );
+                $field_id = sanitize_title( $field['title'] );
                 $radio = '<span class="row clearall">';
                 $radio .= '<input type="radio" id="%s" name="%s" value="%s" />';
                 $radio .= '<label for="%1$s">%s</label>';
