@@ -19,6 +19,9 @@
                     <input type="hidden" name="response[parent_id]" value="<?php echo $parent_assignment->ID ?>" />
                     <?php echo $nonce ? $nonce: ''; ?>
                     <input type="submit" value="<?php _e( 'Publish my response', 'bpsp' ); ?>" <?php disabled( true, false ); ?> />
+                    <div class="alignleft submits">
+                        <a href="<?php echo $parent_assignment->permalink ?>"><?php _e( 'Cancel/Go back', 'bpsp' ); ?></a>
+                    </div>
                 </div>
             </div>
         <?php else: ?>
@@ -40,7 +43,7 @@
                     <div id="new-response-content-submit">
                         <input type="submit" name="response[submit]" id="new-response-submit" value="<?php _e( 'Publish my response', 'bpsp' ); ?>">
                         <div class="alignright submits">
-                            <a href="<?php echo $parent_assignment->permalink ?>" class="action"><?php _e( 'Cancel/Go back', 'bpsp' ); ?></a>
+                            <a href="<?php echo $parent_assignment->permalink ?>" ><?php _e( 'Cancel/Go back', 'bpsp' ); ?></a>
                         </div>
                     </div>
                 </div>
