@@ -71,7 +71,7 @@
                     </a>
                 </li>
             <?php endif; ?>
-            <?php if( empty( $response ) && isset( $response_add_uri ) ): ?>
+            <?php if( empty( $response ) && isset( $response_add_uri ) && empty( $assignment->form ) ): ?>
                 <li id="assignment-response">
                     <a href="<?php echo $response_add_uri; ?>" class="action">
                         <?php _e( 'Add a Response', 'bpsp' ); ?>
@@ -127,6 +127,10 @@
                         </ol>
                     </form>
                 </div>
+            <?php elseif( !empty( $assignment->form ) && isset( $response_add_uri ) ): ?>
+                <a href="<?php echo $response_add_uri; ?>" class="action">
+                    <?php _e( 'Take the assignment quiz now.', 'bpsp' ); ?>
+                </a>
             <?php endif; ?>
         </div>
     </div>
