@@ -116,6 +116,9 @@
             <?php the_content(); ?>
             <?php if( isset( $assignment->form ) && $show_edit ) : ?>
                 <div id="assignment-quiz">
+                    <p class="alignright">
+                        <em><?php _e( 'Quiz/Test Preview' ); ?></em>
+                    </p>
                     <form action="" method="post" class="standard-form">
                         <ol>
                             <?php foreach( $assignment->form as $form_lines ): ?>
