@@ -225,13 +225,18 @@ class BPSP_Roles {
     }
     
     /**
-     * can_teach( $user_id )
+     * can_teach( $user_id = null )
      *
      * This will check if current user is allowed to manage courseware for current group
      * @param Int $user_id, the id of the user to check
      * @return Bool, true or false
      */
-    function can_teach( $user_id ) {
+    function can_teach( $user_id = null ) {
+        global $bp;
+        
+        if( !$user_id )
+            $user_id = $bp->loggedin_user->id;
+        
         $is_admin = false;
         
         if( !BPSP_Groups::courseware_status() )
