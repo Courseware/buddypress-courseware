@@ -485,7 +485,10 @@ class BPSP_Responses {
                         // Leave this for imediate results preview
                         $vars['response']->form_values = $form_results;
                         if( $this->group_responses_status() )
-                            do_action( 'courseware_response_added', $vars );
+                            $vars['public'] = true;
+                        
+                        do_action( 'courseware_response_added', $vars );
+                        
                         $vars['message'] = __( 'New response was added.', 'bpsp' );
                         return $vars;
                     } else

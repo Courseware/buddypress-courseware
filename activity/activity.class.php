@@ -114,6 +114,9 @@ class BPSP_Activity {
     function activity_for_response( $response_data, $type = "add" ){
         global $bp;
         
+        if( !isset( $response_data['public'] ) || !$response_data['public'] )
+            return;
+        
         $response = $response_data['response'];
         
         $activity_action = sprintf(
