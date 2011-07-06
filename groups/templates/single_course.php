@@ -1,7 +1,7 @@
 <?php setup_postdata( $course ); ?>
 <div id="courseware-course">
     <div id="course-meta" class="courseware-sidebar">
-        <h4 class="meta"><?php _e( 'Course Info', 'bpsp' ) ?></h4>
+        <h4 class="meta courses"><span class="icon"></span><?php _e( 'Course Info', 'bpsp' ) ?></h4>
         <ul class="courseware-meta">
             <li class="date">
             <?php
