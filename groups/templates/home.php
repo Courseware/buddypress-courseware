@@ -1,5 +1,5 @@
 <div id="group-dashboard">
-    <h4 class="meta padded"><?php _e( 'At a glance', 'bpsp' ); ?></h4>
+    <h4 class="meta padded general"><span class="icon"></span><?php _e( 'At a glance', 'bpsp' ); ?></h4>
     <div class="grid courseware-content">
         <div class="dp75">
             <ul class="details">
@@ -102,7 +102,8 @@
     </div>
     
     <?php if( count( $assignments ) > 0 ): ?>
-    <h4 class="meta padded">
+    <h4 class="meta padded assignments">
+        <span class="icon"></span>
         <?php _e( 'Latest assignments', 'bpsp' ); ?>
         <a href="<?php echo $nav_options[__( 'Assignments', 'bpsp' )] ?>" class="alignright action">
             <?php _e( 'All assignments  &raquo;', 'bpsp' );?>
@@ -132,7 +133,8 @@
     <?php endif; ?>
     
     <?php if( count( $schedules ) > 0 ): ?>
-    <h4 class="meta padded">
+    <h4 class="meta padded schedules">
+        <span class="icon"></span>
         <?php _e( ' Latest schedules', 'bpsp' ); ?>
         <a href="<?php echo $nav_options[__( 'Calendar', 'bpsp' )] ?>" class="alignright action">
             <?php _e( 'All schedules &raquo;', 'bpsp' );?>
@@ -161,7 +163,7 @@
     </div>
     <?php endif; ?>
     
-    <h4 class="meta padded"><?php _e( 'Latest responses', 'bpsp' ); ?></h4>
+    <h4 class="meta padded responses"><span class="icon"></span><?php _e( 'Latest responses', 'bpsp' ); ?></h4>
     <div class="grid courseware-content">
         <div class="dp100">
             <ul class="details marked">
@@ -199,7 +201,7 @@
     </div>
     
     <?php if( !empty( $grades ) ): ?>
-    <h4 class="meta padded"><?php _e( 'Your progress based on received grades', 'bpsp' ); ?></h4>
+    <h4 class="meta padded grades"><span class="icon"></span><?php _e( 'Your progress based on received grades', 'bpsp' ); ?></h4>
     <div class="grid courseware-content">
         <div id="user-grades" >
             <?php echo implode( ',', $grades ); ?>

@@ -135,6 +135,23 @@ input[type="submit"] { margin-top: 5px; }
 input.number { width: 30px !important; text-align: right; }
 .inline { display: inline !important; }
 
+/* Icons */
+h4 .icon {
+    background-image: url("../../../../../wp-admin/images/menu.png");
+    background-repeat: no-repeat;
+    background-position: 0 -39px;
+    width: 26px;
+    height: 24px;
+    display: block;
+    float: left;
+    overflow: hidden;
+}
+h4.general .icon { background-position: -60px -39px; }
+h4.assignments .icon { background-position: 0 -39px; }
+h4.schedules .icon { background-position: -270px -39px; }
+h4.responses .icon { background-position: -30px -39px; }
+h4.grades .icon { background-position: -240px -39px; }
+
 /**
  * MALO CSS Grid
  * @see: http://code.google.com/p/malo/
