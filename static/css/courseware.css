@@ -26,8 +26,32 @@ ul.courseware-meta li { padding: 5px 0; }
 .courseware-content ul ul, .courseware-content ol ol { margin-left: 10px; }
 .courseware-content ul ol, .courseware-content ol ul { margin-left: 10px; }
 
+/* Lectures */
+#lectures-tree h4 { border-bottom: 1px solid #DDD; clear: both; margin-bottom: 2px; }
+#lectures-search { float: right; margin-top: -35px; }
+#lectures-tree-toggle { line-height: 25px; }
+#lectures-tree-container ul, ol { margin: 0 1.5em 1.5em 0; padding-left: 1.5em; }
+#lectures-tree-container > ul { padding-left: 0 !important; border: none !important; }
+#lectures-tree-container ul { background: none; border-left: 1px dotted #DDD; }
+#lectures-tree-container li ul,
+#lectures-tree-container li ol { margin: 0 !important; }
+#lectures-tree-container ins { background: none; }
+#lectures-tree-container .jstree-closed > ul { display: none; }
+#lectures-tree-container .jstree-open > ul { display: block; }
+#lectures-tree-container li > ins {
+    width: 20px;
+    height: 20px;
+    display: block;
+    float: left;
+    background: transparent url("../../../../../wp-admin/images/arrows.png") no-repeat 0 10px;
+}
+#lectures-tree-container .jstree-leaf ins { background: transparent url("../../../../../wp-admin/images/press-this.png") no-repeat -50px 0px; }
+#lectures-tree-container .jstree-open > ins { background-position: 0 2px; }
+#lectures-tree-container .jstree-closed > ins { background-position: 0 -107px; }
+#lectures-tree-container .jstree-search { background-color: #FFF6A9; }
+
 /* Bibliography */
-#courseware-bibs h4 { font-style: italic; font-weight: normal; border-bottom: 1px dotted #DDD; clear: both; }
+#courseware-bibs h4 { border-bottom: 1px solid #DDD; clear: both; }
 #courseware-bibs-form,
 #courseware-responses-list { margin-right: 200px; overflow: hidden; margin: 10px 0; }
 #courseware-bibs-form .book .left-part { float: left; width: 45%; margin: 0; padding: 0; }
@@ -151,6 +175,9 @@ h4.assignments .icon { background-position: 0 -39px; }
 h4.schedules .icon { background-position: -270px -39px; }
 h4.responses .icon { background-position: -30px -39px; }
 h4.grades .icon { background-position: -240px -39px; }
+h4.courses .icon { background-position: -150px -39px; }
+h4.bibs .icon { background-position: -90px -39px; }
+h4.lectures .icon { background-position: -120px -39px; }
 
 /**
  * MALO CSS Grid

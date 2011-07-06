@@ -9,12 +9,6 @@ jQuery("#lectures-tree-container").bind('loaded.jstree', function() {
 // Load the data
 jQuery("#lectures-tree-container").jstree(
     {
-        "themes" : {
-            "url"   : jstreeArgs.themes_path,
-            "theme" : "default",
-            "dots"  : true,
-            "icons" : false
-        },
         "html_data" : {
             "data"  : jQuery("#lectures-tree-data")
         },
@@ -27,7 +21,7 @@ jQuery("#lectures-tree-container").jstree(
             // Compare those
             return ( arr.indexOf(a_class) > arr.indexOf(b_class) ) ? 1 : -1;
         },
-        "plugins"   : [ "themes", "html_data", "sort", "search" ]
+        "plugins"   : [ "html_data", "sort", "search" ]
     }
 );
 // Search for lectures
@@ -38,15 +32,15 @@ jQuery("#lectures-tree-search-submit").click( function() {
 // Expand All/Collapse All Toggle
 jQuery("#lectures-tree-toggle").click( function() {
     var action = jQuery("#lectures-tree-toggle").attr('rel');
+    var cur_title = jQuery("#lectures-tree-toggle").text();
+    var title = jQuery("#lectures-tree-toggle").attr('name');
     if( action === 'expand' ) {
         jQuery("#lectures-tree-container").jstree("open_all");
         jQuery("#lectures-tree-toggle").attr('rel', 'collapse');
-        jQuery("#lectures-tree-toggle .expand-all").toggle();
-        jQuery("#lectures-tree-toggle .collapse-all").toggle();
     } else {
         jQuery("#lectures-tree-container").jstree("close_all");
         jQuery("#lectures-tree-toggle").attr('rel', 'expand');
-        jQuery("#lectures-tree-toggle .collapse-all").toggle();
-        jQuery("#lectures-tree-toggle .expand-all").toggle();
     }
+    jQuery("#lectures-tree-toggle").attr('name', cur_title );
+    jQuery("#lectures-tree-toggle").text( title );
 });

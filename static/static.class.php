@@ -42,7 +42,6 @@ class BPSP_Static {
         
         // jsTree
         wp_register_script( 'jstree', BPSP_WEB_URI . '/static/js/jstree/jquery.jstree.js', array( 'jquery' ), '1.0-rc3' );
-        wp_localize_script( 'jstree', 'jstreeArgs', $this->jstree_l10n() );
         
         // formBuilder
         wp_register_script( 'formbuilder', BPSP_WEB_URI . '/static/js/formbuilder/jquery.formbuilder.js', array( 'jquery', 'jquery-ui-sortable' ), '0.3-beta' );
@@ -135,7 +134,6 @@ class BPSP_Static {
     
     function lectures_enqueues() {
         wp_enqueue_script( 'lectures' );
-        wp_enqueue_style( 'jstree' );
     }
     
     function edit_assignment_enqueues() {
@@ -222,17 +220,6 @@ class BPSP_Static {
             "hide"              => __( "Hide", 'bpsp' ),
             "required"          => __( "Required", 'bpsp' ),
             "show"              => __( "Show", 'bpsp' )
-        );
-    }
-    
-    /**
-     * jstree_l10n()
-     *
-     * Helper to get jstree messages localized/options set
-     */
-    function jstree_l10n() {
-        return array(
-            "themes_path"   => BPSP_WEB_URI . '/static/css/jstree/style.css'
         );
     }
     
