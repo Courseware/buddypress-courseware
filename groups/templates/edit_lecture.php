@@ -2,7 +2,7 @@
 
 <form action="<?php echo $lecture_edit_uri; ?>" method="post" class="standard-form" id="update-lecture-form">
     <div id="update-lecture-meta" class="courseware-sidebar">
-        <h4 class="meta"><?php _e( 'Lecture Parent &amp; Order', 'bpsp' ); ?></h4>
+        <h4 class="meta lectures"><span class="icon"></span><?php _e( 'Lecture parent &amp; Order', 'bpsp' ); ?></h4>
         <ul class="courseware-meta">
             <li id="update-lecture-parent">
                 <label for="update-lecture-parent"><?php _e( 'Parent Lecture', 'bpsp' ); ?></label>

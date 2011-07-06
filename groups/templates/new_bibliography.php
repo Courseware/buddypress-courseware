@@ -1,7 +1,7 @@
 <div id="courseware-new-bibliography" > 
     <form action="" method="post" class="standard-form add-bib" >
         <div class="courseware-sidebar">
-            <h4 class="meta"><?php _e( 'Bibliography Tools', 'bpsp' ); ?></h4>
+            <h4 class="meta bibs"><span class="icon"></span><?php _e( 'Bibliography Tools', 'bpsp' ); ?></h4>
             <ul class="courseware-meta">
                 <li class="bib-types-list">
                     <div class="courseware-form-section">

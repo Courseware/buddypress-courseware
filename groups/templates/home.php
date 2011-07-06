@@ -25,6 +25,23 @@
                 <li>
                     <?php
                         printf(
+                            __( '<em>%s</em> Lecture(s)', 'bpsp' ),
+                            count( $lectures )
+                        );
+                    ?>
+                    <?php if( $is_teacher ): ?>
+                        <a href="<?php echo $nav_options[__( 'Home', 'bpsp' )] . '/new_lecture' ?>" class="alignright action">
+                            <?php _e( 'Add a new lecture &raquo;', 'bpsp' );?>
+                        </a>
+                    <?php else: ?>
+                        <a href="<?php echo $nav_options[__( 'Home', 'bpsp' )] . '/course' ?>" class="alignright action">
+                            <?php _e( 'View course lectures  &raquo;', 'bpsp' );?>
+                        </a>
+                    <?php endif; ?>
+                </li>
+                <li>
+                    <?php
+                        printf(
                             __( '<em>%s</em> Assignment(s)', 'bpsp' ),
                             count( $assignments )
                         );

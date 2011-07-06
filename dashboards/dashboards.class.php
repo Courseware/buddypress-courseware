@@ -38,6 +38,7 @@ class BPSP_Dashboards {
         $group_data['user_grades'] = array();
         
         $group_data['courses'] = ( array )BPSP_Courses::has_courses( $group_id );
+        $group_data['lectures'] = ( array )BPSP_Lectures::has_lectures( $group_id );
         $group_data['assignments'] = ( array )BPSP_Assignments::has_assignments( $group_id );
         $group_data['schedules'] = BPSP_Schedules::has_schedules( $group_id );
         
