@@ -4,7 +4,7 @@
         <form action="" method="post" class="standard-form" >
             <?php if( !$hide_existing ): ?>
             <div class="add existing">
-                <h4><?php _e( 'Add an existing bibliography', 'bpsp'); ?></h4>
+                <h4 class="bibs"><span class="icon"></span><?php _e( 'Add an existing bibliography', 'bpsp'); ?></h4>
                 <select name="bib[existing]" class="long">
                     <option value=""><?php _e( 'Type something to search...', 'bpsp' ); ?></option>
                     <?php
@@ -22,7 +22,7 @@
             </div>
             <?php endif; ?>
             <div class="add www">
-                <h4><?php _e( 'Add a webpage', 'bpsp'); ?></h4>
+                <h4 class="bibs"><span class="icon"></span><?php _e( 'Add a webpage', 'bpsp'); ?></h4>
                 <label for="bib[www][title]"><?php _e( 'Entry title', 'bpsp'); ?></label>
                     <input type="text" name="bib[www][title]" />
                 <label for="bib[www][uri]"><?php _e( 'Webpage address', 'bpsp'); ?></label>
@@ -32,7 +32,7 @@
                 </p>
             </div>
             <div class="add book" >
-                <h4><?php _e( 'Add a book', 'bpsp'); ?></h4>
+                <h4 class="bibs"><span class="icon"></span><?php _e( 'Add a book', 'bpsp'); ?></h4>
                 <div class="left-part">
                     <label for="bib[book][title]"><?php _e( 'Book Title', 'bpsp'); ?></label>
                         <input type="text" name="bib[book][title]" />
@@ -59,7 +59,7 @@
     
     <?php if( count( $bibs ) > 0 ): ?>
     <div id="courseware-bibs-list" style="clear: both;">
-        <h4><?php _e( 'Bibliography listing', 'bpsp'); ?></h4>
+        <h4 class="bibs"><span class="icon"></span><?php _e( 'Bibliography listing', 'bpsp'); ?></h4>
         <table class="datatables">
             <thead>
                 <tr>
