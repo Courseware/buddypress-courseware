@@ -2,7 +2,7 @@
 
 <form action="<?php echo $current_option; ?>" method="post" class="standard-form" id="new-assignment-form">
     <div id="new-assignment-meta" class="courseware-sidebar">
-        <h4 class="meta"><?php _e( 'Course &amp; Due Date', 'bpsp' ); ?></h4>
+        <h4 class="meta assignments"><span class="icon"></span><?php _e( 'Lecture &amp; Due Date', 'bpsp' ); ?></h4>
         <ul class="courseware-meta">
             <li id="new-assignment-lecture">
                 <label for="new-assignment-lecture"><?php _e( 'Linked Lecture', 'bpsp' ); ?></label>

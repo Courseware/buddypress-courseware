@@ -1,7 +1,7 @@
 <?php setup_postdata( $assignment ); ?>
 <div id="courseware-assignment">
     <div id="assignment-meta" class="courseware-sidebar">
-        <h4 class="meta"><?php _e( 'Assignment Meta', 'bpsp' ); ?></h4>
+        <h4 class="meta assignments"><span class="icon"></span><?php _e( 'Assignment Meta', 'bpsp' ); ?></h4>
         <ul class="courseware-meta">
             <?php if( !empty( $assignment->due_date ) ): ?>
             <li id="assignment-due-date">

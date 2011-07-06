@@ -77,6 +77,7 @@ ul.courseware-meta li { padding: 5px 0; }
 #courseware-gradebook .dataTables_filter input { width: auto; padding: 0 2px; font-weight: normal; font-size: 12px; }
 
 /* Assignments & Schedules */
+#courseware-assignments-list h4.meta { border-bottom: 1px solid #DDD; clear: both; }
 .fc-state-default.ical a span { white-space: normal; }
 .fc-state-default.ical a span img { padding: 0 !important; margin-right: 5px; }
 .fc-header-title { font-style: italic; font-weight: normal; }

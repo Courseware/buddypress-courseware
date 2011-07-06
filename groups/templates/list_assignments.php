@@ -1,4 +1,5 @@
-<div id="courseware-courses-list">
+<div id="courseware-assignments-list">
+<h4 class="meta assignments"><span class="icon"></span><?php _e( 'Assignments', 'bpsp' ) ?></h4>
     <table class="datatables">
         <thead>
             <tr>
