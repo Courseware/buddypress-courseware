@@ -4,14 +4,6 @@
         <div class="dp75">
             <ul class="details">
                 <li>
-                    <?php
-                        printf(
-                            __( '<strong>%s</strong> course class started by %s and managed by %d teacher(s) for this group', 'bpsp' ),
-                            get_the_title( $group_course->ID ),
-                            bp_core_get_userlink( $group_course->post_author ),
-                            count( $teachers )
-                        );
-                    ?>
                     <?php if( $is_teacher ): ?>
                         <a href="<?php echo $nav_options[__( 'Home', 'bpsp' )] . '/course/edit' ?>" class="alignright action">
                             <?php _e( 'Update Course  &raquo;', 'bpsp' );?>
@@ -21,6 +13,14 @@
                             <?php _e( 'Course description  &raquo;', 'bpsp' );?>
                         </a>
                     <?php endif; ?>
+                    <?php
+                        printf(
+                            __( '<strong>%s</strong> course class started by %s and managed by %d teacher(s) for this group', 'bpsp' ),
+                            get_the_title( $group_course->ID ),
+                            bp_core_get_userlink( $group_course->post_author ),
+                            count( $teachers )
+                        );
+                    ?>
                 </li>
                 <li>
                     <?php

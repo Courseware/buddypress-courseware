@@ -106,6 +106,7 @@ ul.courseware-meta li { padding: 5px 0; }
 /* Responses */
 #response-body .answers .wrong { color: #CC0000 !important; }
 #response-body .answers .correct { color: #1A9B00 !important; }
+#courseware-responses-list h4.meta { border-bottom: 1px solid #DDD; clear: both; }
 
 /* Courseware action buttons */
 .courseware a.action, #message a.action {
@@ -175,9 +176,9 @@ input.number { width: 30px !important; text-align: right; }
 h4 .icon {
     background-image: url("../../../../../wp-admin/images/menu.png");
     background-repeat: no-repeat;
-    background-position: 0 -39px;
+    background-position: -330px -39px;
     width: 26px;
-    height: 24px;
+    height: 20px;
     display: block;
     float: left;
     overflow: hidden;

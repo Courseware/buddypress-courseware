@@ -52,7 +52,7 @@ class BPSP_Static {
         wp_register_script( 'list-assignments', BPSP_WEB_URI . '/static/js/list-assignments.js', array( 'datatables' ), BPSP_VERSION, true );
         wp_register_script( 'single-assignment', BPSP_WEB_URI . '/static/js/single-assignment.js', array( 'jquery' ), BPSP_VERSION, true );
         wp_register_script( 'assignments', BPSP_WEB_URI . '/static/js/assignments.js', array( 'datetimepicker' ), BPSP_VERSION, true );
-        wp_register_script( 'bibliographies', BPSP_WEB_URI . '/static/js/bibliographies.js', array( 'flexselect', 'datatables' ), BPSP_VERSION, true );
+        wp_register_script( 'bibliography', BPSP_WEB_URI . '/static/js/bibliography.js', array( 'flexselect', 'datatables' ), BPSP_VERSION, true );
         wp_register_script( 'new-bibliograpy', BPSP_WEB_URI . '/static/js/new-bibliograpy.js', array( 'inputhint' ), BPSP_VERSION, true );
         wp_register_script( 'edit-bibliograpy', BPSP_WEB_URI . '/static/js/edit-bibliograpy.js', array( 'inputhint' ), BPSP_VERSION, true );
         wp_register_script( 'gradebook', BPSP_WEB_URI . '/static/js/gradebook.js', array( 'datatables' ), BPSP_VERSION, true );
@@ -126,7 +126,7 @@ class BPSP_Static {
     }
     
     function bibs_enqueues() {
-        wp_enqueue_script( 'bibliographies' );
+        wp_enqueue_script( 'bibliography' );
         wp_enqueue_style( 'flexselect' );
         wp_enqueue_style( 'datatables' );
     }
