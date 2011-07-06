@@ -1,6 +1,6 @@
 <form action="<?php echo $current_option; ?>" method="post" class="standard-form" id="new-assignment-form">
     <div id="new-schedule-meta" class="courseware-sidebar">
-        <h4 class="meta"><?php _e( 'Schedule Meta', 'bpsp' ); ?></h4>
+        <h4 class="meta schedules"><span class="icon"></span><?php _e( 'Schedule Meta', 'bpsp' ); ?></h4>
         <ul class="courseware-meta">
             <li id="new-schedule-course">
                 <label for="schedule-lecture"><?php _e( 'Linked Lecture', 'bpsp' ); ?></label>

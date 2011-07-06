@@ -48,7 +48,7 @@ ul.courseware-meta li { padding: 5px 0; }
 #lectures-tree-container .jstree-leaf ins { background: transparent url("../../../../../wp-admin/images/press-this.png") no-repeat -50px 0px; }
 #lectures-tree-container .jstree-open > ins { background-position: 0 2px; }
 #lectures-tree-container .jstree-closed > ins { background-position: 0 -107px; }
-#lectures-tree-container .jstree-search { background-color: #FFF6A9; }
+#lectures-tree-container .jstree-search { background-color: #FFC; }
 
 /* Bibliography */
 #courseware-bibs h4 { border-bottom: 1px solid #DDD; clear: both; }
@@ -77,10 +77,16 @@ ul.courseware-meta li { padding: 5px 0; }
 #courseware-gradebook .dataTables_filter input { width: auto; padding: 0 2px; font-weight: normal; font-size: 12px; }
 
 /* Assignments & Schedules */
+#courseware-schedules-list h4.meta,
 #courseware-assignments-list h4.meta { border-bottom: 1px solid #DDD; clear: both; }
 .fc-state-default.ical a span { white-space: normal; }
 .fc-state-default.ical a span img { padding: 0 !important; margin-right: 5px; }
 .fc-header-title { font-style: italic; font-weight: normal; }
+.fc-event,
+.fc-agenda .fc-event-time,
+.fc-event a { border-color: #555 !important; background-color: #888 !important; }
+.fc-event a:hover { color: inherit; }
+.fc-event a:hover .fc-event-title { color: inherit; text-decoration: underline; }
 #new-assignment-form textarea { margin-top: 10px; }
 #new-assignment-form #repetition_times { width: 25px; font-size: 12px; }
 #new-assignment-course select,

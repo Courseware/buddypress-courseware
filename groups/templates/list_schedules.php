@@ -5,7 +5,7 @@
             <?php BPSP_Static::get_image( 'loader.gif' ); ?>
         </div>
     </div>
-    <h4 class="meta padded"><?php _e( 'Schedules', 'bpsp' ); ?></h4>
+    <h4 class="meta schedules"><span class="icon"></span><?php _e( 'Schedules', 'bpsp' ); ?></h4>
     <table class="datatables">
         <thead>
             <tr>

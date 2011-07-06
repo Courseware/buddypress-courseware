@@ -1,7 +1,7 @@
 <?php setup_postdata( $schedule ); ?>
 <div id="courseware-schedule">
     <div class="schedule-meta courseware-sidebar">
-        <h4 class="meta"><?php _e( 'Schedule Meta', 'bpsp' ); ?></h4>
+        <h4 class="meta schedules"><span class="icon"></span><?php _e( 'Schedule Meta', 'bpsp' ); ?></h4>
         <ul class="courseware-meta">
             <!-- Ponintless--li class="date">
             <?php
