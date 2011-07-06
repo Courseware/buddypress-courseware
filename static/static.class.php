@@ -129,7 +129,6 @@ class BPSP_Static {
         wp_enqueue_script( 'bibliographies' );
         wp_enqueue_style( 'flexselect' );
         wp_enqueue_style( 'datatables' );
-        wp_enqueue_style( 'jquery-ui-courseware-custom' );
     }
     
     function lectures_enqueues() {
@@ -157,7 +156,6 @@ class BPSP_Static {
     function gradebook_enqueues() {
         wp_enqueue_script( 'gradebook' );
         wp_enqueue_style( 'datatables' );
-        wp_enqueue_style( 'jquery-ui-courseware-custom' );
     }
     
     function schedules_enqueues() {
@@ -168,7 +166,6 @@ class BPSP_Static {
     function list_assignments_enqueues() {
         wp_enqueue_script( 'list-assignments' );
         wp_enqueue_style( 'datatables' );
-        wp_enqueue_style( 'jquery-ui-courseware-custom' );
     }
     
     function assignment_enqueues() {
@@ -179,13 +176,12 @@ class BPSP_Static {
         wp_enqueue_style( 'fullcalendar' );
         wp_enqueue_style( 'datatables' );
         wp_enqueue_script( 'list-schedules' );
-        wp_enqueue_style( 'jquery-ui-courseware-custom' );
     }
 
     function delete_schedule_enqueues() {
         wp_enqueue_style( 'datatables' );
         wp_enqueue_script( 'delete-schedule' );
-        wp_enqueue_style( 'jquery-ui-courseware-custom' );
+        wp_enqueue_style( 'datatables' );
     }
     
     function group_dashboard_enqueues() {

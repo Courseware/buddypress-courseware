@@ -1,7 +1,7 @@
 <div id="courseware-edit-bibliography" >
     <form action="<?php echo $bibs_form_uri; ?>" method="post" class="standard-form" >
     <div class="courseware-sidebar">
-        <h4 class="meta"><?php _e( 'Update Bibliography', 'bpsp' ); ?></h4>
+        <h4 class="meta bibs"><span class="icon"></span><?php _e( 'Update Bibliography', 'bpsp' ); ?></h4>
         <ul class="courseware-meta">
             <li>
                 <div class="courseware-form-section">
@@ -88,9 +88,9 @@
                     <textarea name="bib[desc]" cols="60" rows="6"  title="<?php _e( 'Description', 'bpsp' ); ?>"><?php echo $bib['desc'] ? $bib['desc'] : $bib['citation']; ?></textarea>
             </div>
             <?php echo $bibs_nonce; ?>
-            <input type="submit" value="<?php _e( 'Update', 'bpsp' ); ?>" />
+            <input type="submit" class="alignleft" value="<?php _e( 'Update', 'bpsp' ); ?>" />
             <?php if( isset( $back_uri ) ): ?>
-                <div class="alignright submits">
+                <div class="alignright dp50 submits">
                     <a href="<?php echo $back_uri; ?>" class="safe"><?php _e( 'Go back', 'bpsp' ); ?></a>
                 </div>
             <?php endif; ?>

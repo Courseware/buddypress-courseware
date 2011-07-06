@@ -76,6 +76,7 @@ ul.courseware-meta li { padding: 5px 0; }
 #courseware-gradebook .public_comment textarea { width: 90%; height: 20px; }
 #courseware-gradebook .dataTables_filter input { width: auto; padding: 0 2px; font-weight: normal; font-size: 12px; }
 
+
 /* Assignments & Schedules */
 #courseware-schedules-list h4.meta,
 #courseware-assignments-list h4.meta { border-bottom: 1px solid #DDD; clear: both; }
@@ -154,6 +155,10 @@ ul.courseware-meta li a.action { display: block; width: 90%; }
 .courseware table .schedule-meta,
 .courseware table .course-meta, .courseware table .assignment-meta { font-style: italic; }
 .courseware table .location { width: 300px; }
+.courseware table thead tr th { cursor: pointer; }
+.courseware .dataTables_info { margin-right: 5px; }
+.courseware .dataTables_wrapper table { border: 1px solid #DDD; }
+.courseware .dataTables_paginate { background-color: #DDD; }
 
 /* Helpers */
 input.long,

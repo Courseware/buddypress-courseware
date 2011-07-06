@@ -153,7 +153,7 @@
     <h4 class="meta padded schedules">
         <span class="icon"></span>
         <?php _e( ' Latest schedules', 'bpsp' ); ?>
-        <a href="<?php echo $nav_options[__( 'Calendar', 'bpsp' )] ?>" class="alignright action">
+        <a href="<?php echo $nav_options[__( 'Schedule', 'bpsp' )] ?>" class="alignright action">
             <?php _e( 'All schedules &raquo;', 'bpsp' );?>
         </a>
     </h4>
