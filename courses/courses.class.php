@@ -87,14 +87,10 @@ class BPSP_Courses {
         if( !$this->has_course_caps( $bp->loggedin_user->id ) || !BPSP_Roles::can_teach( $bp->loggedin_user->id ) )
             return;
         
-        $c = $this->has_courses();
-        if( reset( $c ) ) {
-            $vars['name'] = '_no_course_group_header';
-            $vars['echo'] = false;
-            $this->current_uri = bp_get_group_permalink( $bp->groups->current_group ) . $bp->courseware->slug;
-            $vars['init_course_link'] =  $this->current_uri . '/course/edit';
-        }
-        
+        $vars['name'] = '_no_course_group_header';
+        $vars['echo'] = false;
+        $this->current_uri = bp_get_group_permalink( $bp->groups->current_group ) . $bp->courseware->slug;
+        $vars['init_course_link'] =  $this->current_uri . '/course/edit';
         echo BPSP_Groups::load_template( $vars );
     }
     
