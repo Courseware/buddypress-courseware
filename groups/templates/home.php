@@ -6,11 +6,11 @@
                 <li>
                     <?php if( $is_teacher ): ?>
                         <a href="<?php echo $nav_options[__( 'Home', 'bpsp' )] . '/course/edit' ?>" class="alignright action">
-                            <?php _e( 'Update Course  &raquo;', 'bpsp' );?>
+                            <?php _e( 'Update Course', 'bpsp' );?>
                         </a>
                     <?php else: ?>
                         <a href="<?php echo $nav_options[__( 'Home', 'bpsp' )] . '/course' ?>" class="alignright action">
-                            <?php _e( 'Course description  &raquo;', 'bpsp' );?>
+                            <?php _e( 'Course description', 'bpsp' );?>
                         </a>
                     <?php endif; ?>
                     <?php
@@ -31,11 +31,11 @@
                     ?>
                     <?php if( $is_teacher ): ?>
                         <a href="<?php echo $nav_options[__( 'Home', 'bpsp' )] . '/new_lecture' ?>" class="alignright action">
-                            <?php _e( 'Add a new lecture &raquo;', 'bpsp' );?>
+                            <?php _e( 'Add a new lecture', 'bpsp' );?>
                         </a>
                     <?php else: ?>
                         <a href="<?php echo $nav_options[__( 'Home', 'bpsp' )] . '/course' ?>" class="alignright action">
-                            <?php _e( 'View course lectures  &raquo;', 'bpsp' );?>
+                            <?php _e( 'View course lectures', 'bpsp' );?>
                         </a>
                     <?php endif; ?>
                 </li>
@@ -48,11 +48,11 @@
                     ?>
                     <?php if( $is_teacher ): ?>
                         <a href="<?php echo $nav_options[__( 'Home', 'bpsp' )] . '/new_assignment' ?>" class="alignright action">
-                            <?php _e( 'Create an assignment &raquo;', 'bpsp' );?>
+                            <?php _e( 'Create an assignment', 'bpsp' );?>
                         </a>
                     <?php else: ?>
                         <a href="<?php echo $nav_options[__( 'Home', 'bpsp' )] . '/assignments' ?>" class="alignright action">
-                            <?php _e( 'All assignments  &raquo;', 'bpsp' );?>
+                            <?php _e( 'All assignments', 'bpsp' );?>
                         </a>
                     <?php endif; ?>
                 </li>
@@ -64,7 +64,7 @@
                         );
                     ?>
                     <a href="<?php echo $nav_options[__( 'Home', 'bpsp' )] . '/assignments' ?>" class="alignright action">
-                        <?php _e( 'All responses &raquo;', 'bpsp' );?>
+                        <?php _e( 'All responses', 'bpsp' );?>
                     </a>
                 </li>
                 <li>
@@ -76,11 +76,11 @@
                     ?>
                     <?php if( $is_teacher ): ?>
                         <a href="<?php echo $nav_options[__( 'Home', 'bpsp' )] . '/new_schedule' ?>" class="alignright action">
-                            <?php _e( 'Add a schedule &raquo;', 'bpsp' );?>
+                            <?php _e( 'Add a schedule', 'bpsp' );?>
                         </a>
                     <?php else: ?>
                         <a href="<?php echo $nav_options[__( 'Home', 'bpsp' )] . '/schedules' ?>" class="alignright action">
-                            <?php _e( 'All schedules  &raquo;', 'bpsp' );?>
+                            <?php _e( 'All schedules', 'bpsp' );?>
                         </a>
                     <?php endif; ?>
                 </li>
@@ -93,7 +93,7 @@
                     ?>
                     <?php if( $is_teacher ): ?>
                         <a href="<?php echo $nav_options[__( 'Home', 'bpsp' )] . '/new_bibliography' ?>" class="alignright action">
-                            <?php _e( 'Manage bibliography &raquo;', 'bpsp' );?>
+                            <?php _e( 'Manage bibliography', 'bpsp' );?>
                         </a>
                     <?php endif; ?>
                 </li>
@@ -106,7 +106,7 @@
                             );
                         ?>
                         <a href="<?php bp_group_forum_permalink(); ?>" class="alignright action">
-                            <?php _e( 'Visit forums &raquo;', 'bpsp' );?>
+                            <?php _e( 'Visit forums', 'bpsp' );?>
                         </a>
                     </li>
                 <?php endif;?>
@@ -123,7 +123,7 @@
         <span class="icon"></span>
         <?php _e( 'Latest assignments', 'bpsp' ); ?>
         <a href="<?php echo $nav_options[__( 'Assignments', 'bpsp' )] ?>" class="alignright action">
-            <?php _e( 'All assignments  &raquo;', 'bpsp' );?>
+            <?php _e( 'All assignments', 'bpsp' );?>
         </a>
     </h4>
     <div class="grid courseware-content">
@@ -154,7 +154,7 @@
         <span class="icon"></span>
         <?php _e( ' Latest schedules', 'bpsp' ); ?>
         <a href="<?php echo $nav_options[__( 'Schedule', 'bpsp' )] ?>" class="alignright action">
-            <?php _e( 'All schedules &raquo;', 'bpsp' );?>
+            <?php _e( 'All schedules', 'bpsp' );?>
         </a>
     </h4>
     <div class="grid courseware-content">
