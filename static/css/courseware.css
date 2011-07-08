@@ -121,6 +121,7 @@ ul.courseware-meta li a.action { display: block; width: 90%; }
 
 /* Group Header Notification */
 #item-header #message.info { clear: both; margin-bottom: 15px; }
+#item-header #message.help { clear: none; margin-bottom: 15px; }
 #item-header #message.info p { padding-top: 15px; padding-bottom: 15px; }
 
 /* Group Dashboard */

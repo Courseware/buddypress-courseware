@@ -7,7 +7,7 @@
         <div id="lectures-search">
             <input type="text" id="lectures-tree-search-text" class="hide-if-no-js" />
             <input type="submit" id="lectures-tree-search-submit" class="hide-if-no-js" value="<?php _e( "Search Lectures", "bpsp" ); ?>" />
-            <a href="#lectures-tree-toggle" id="lectures-tree-toggle" class="button" rel="collapse" name="Expand All"><?php _e( "Collapse All", "bpsp" ); ?></a>
+            <a href="#lectures-tree-toggle" id="lectures-tree-toggle" class="action" rel="collapse" name="Expand All"><?php _e( "Collapse All", "bpsp" ); ?></a>
         </div>
         
         <div id="lectures-tree-container"></div>
