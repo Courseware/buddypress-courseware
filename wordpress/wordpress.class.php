@@ -15,8 +15,10 @@ class BPSP_WordPress {
             array( __CLASS__, 'menus')
         );
         
+        // Ensure compatibility
+        add_action('admin_notices', 'bpsp_check' );
         // Help Screen
-        add_action('admin_head', array( __CLASS__, 'screen_help'));
+        add_action('admin_head', array( __CLASS__, 'screen_help') );
         // Support link
         add_filter( 'plugin_row_meta', array( __CLASS__, 'support_link' ), 10, 2 );
         // Settings link

@@ -16,7 +16,7 @@ h4.courseware-title { margin-bottom: 5px; font-weight: bold; }
     -moz-border-radius: 3px; border: 1px solid #DDD; padding: 10px; }
 .courseware-sidebar { float: right; width: 200px; margin: 0 0 20px 10px; padding: 5px 10px; background: #EAEAEA; border: 1px solid #DDD; }
 .courseware-sidebar div:last-child { text-align: right; }
-.courseware-sidebar input[type="text"], .courseware-sidebar select { font-size: 13px !important; padding: 4px !important; }
+.courseware-sidebar input[type="text"], .courseware-sidebar select { font-size: 13px !important; padding: 4px !important; max-width: 99%; }
 h4.meta { margin-bottom: 0; font-weight: bold; }
 h4.meta.padded { margin-bottom: 10px; }
 ul.courseware-meta { list-style: none; }

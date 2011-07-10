@@ -17,12 +17,6 @@ define( 'BPSP_PLUGIN_DIR', dirname( __FILE__ ) );
 define( 'BPSP_WEB_URI', WP_PLUGIN_URL . '/' . basename( BPSP_PLUGIN_DIR ) );
 define( 'BPSP_PLUGIN_FILE', basename( BPSP_PLUGIN_DIR ) . '/' . basename( __FILE__ ) );
 
-// Make sure everything works
-if( !bpsp_check( true ) ) {
-    add_action( 'admin_notices', 'bpsp_check' );
-    return false;
-}
-
 /* Load the components */
 require_once BPSP_PLUGIN_DIR . '/wordpress/wordpress.class.php';
 require_once BPSP_PLUGIN_DIR . '/roles/roles.class.php';
@@ -89,14 +83,6 @@ function bpsp_init() {
 }
 add_action( 'bp_init', 'bpsp_init', 7 );
 
-/* Activate the components */
-function bpsp_activation() {
-    if( !bpsp_check( true ) )
-        exit(1);
-    BPSP_Roles::register_profile_fields();
-}
-register_activation_hook( BPSP_PLUGIN_FILE, 'bpsp_activation' );
-
 /**
  * bpsp_check()
  * Will check for Courseware dependencies and active components
@@ -104,8 +90,9 @@ register_activation_hook( BPSP_PLUGIN_FILE, 'bpsp_activation' );
  * @return True on errors
  * @uses `admin_notices`
  */
-function bpsp_check( $no_echo = false ) {
+function bpsp_check() {
     $messages = array();
+    
     if ( defined( 'BP_VERSION' ) ) {
         foreach( array( 'groups', 'activity', 'xprofile', 'forums', 'messages' ) as $c )
             if( !bp_is_active( $c ) ) 
@@ -114,21 +101,29 @@ function bpsp_check( $no_echo = false ) {
                     admin_url( 'admin.php?page=bp-general-settings' ),
                     $c
                 );
-    } else
+    } else {
         $messages[] = sprintf(
             __( 'BuddyPress Courseware dependency error: Please <a href="%1$s">install BuddyPress</a>!', 'bpsp' ),
             admin_url( 'plugins.php' )
         );
+    }
     
     if( !empty( $messages ) ) {
-        if ( !$no_echo ) {
-            echo '<div id="message" class="error fade">';
-                foreach ( $messages as $m )
-                    echo "<p>{$m}</p>";
-            echo '</div>';
-        }
+        echo '<div id="message" class="error fade">';
+            foreach ( $messages as $m )
+                echo "<p>{$m}</p>";
+        echo '</div>';
         return false;
-    } else
-        return true;
+    }
+    
+    return true;
 }
+
+/* Activate the components */
+function bpsp_activation() {
+    if( !bpsp_check() )
+        exit(1);
+    BPSP_Roles::register_profile_fields();
+}
+register_activation_hook( BPSP_PLUGIN_FILE, 'bpsp_activation' );
 ?>
