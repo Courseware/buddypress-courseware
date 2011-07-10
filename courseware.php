@@ -17,6 +17,12 @@ define( 'BPSP_PLUGIN_DIR', dirname( __FILE__ ) );
 define( 'BPSP_WEB_URI', WP_PLUGIN_URL . '/' . basename( BPSP_PLUGIN_DIR ) );
 define( 'BPSP_PLUGIN_FILE', basename( BPSP_PLUGIN_DIR ) . '/' . basename( __FILE__ ) );
 
+// Make sure everything works
+if( !bpsp_check( true ) ) {
+    add_action( 'admin_notices', 'bpsp_check' );
+    return false;
+}
+
 /* Load the components */
 require_once BPSP_PLUGIN_DIR . '/wordpress/wordpress.class.php';
 require_once BPSP_PLUGIN_DIR . '/roles/roles.class.php';
@@ -85,29 +91,44 @@ add_action( 'bp_init', 'bpsp_init', 7 );
 
 /* Activate the components */
 function bpsp_activation() {
+    if( !bpsp_check( true ) )
+        exit(1);
     BPSP_Roles::register_profile_fields();
 }
 register_activation_hook( BPSP_PLUGIN_FILE, 'bpsp_activation' );
 
 /**
- * _d( $arg, $die = false, $wp_die = false )
+ * bpsp_check()
+ * Will check for Courseware dependencies and active components
  *
- * My temporary shortcut for debugging stuff. Outputs the debugging for $arg
- * @param Mixed $arg, to be outputted
- * @param Boolean $die, if die() to be called
- * @param Boolean $wp_die, if wp_die() to be called
+ * @return True on errors
+ * @uses `admin_notices`
  */
-function _d( $arg, $die = false, $wp_die = false ) {
-    ob_start();
-        echo '<pre>' . var_dump( $arg ) . '</pre>';
-    $result = ob_get_clean();
+function bpsp_check( $no_echo = false ) {
+    $messages = array();
+    if ( defined( 'BP_VERSION' ) ) {
+        foreach( array( 'groups', 'activity', 'xprofile', 'forums', 'messages' ) as $c )
+            if( !bp_is_active( $c ) ) 
+                $messages[] = sprintf(
+                    __( 'BuddyPress Courseware dependency error: <a href="%1$s">%2$s has to be activated</a>!', 'bpsp' ),
+                    admin_url( 'admin.php?page=bp-general-settings' ),
+                    $c
+                );
+    } else
+        $messages[] = sprintf(
+            __( 'BuddyPress Courseware dependency error: Please <a href="%1$s">install BuddyPress</a>!', 'bpsp' ),
+            admin_url( 'plugins.php' )
+        );
     
-    if( $die )
-        die( $result );
-    
-    if( $wp_die )
-        wp_die( $result );
-    
-    echo $result;
+    if( !empty( $messages ) ) {
+        if ( !$no_echo ) {
+            echo '<div id="message" class="error fade">';
+                foreach ( $messages as $m )
+                    echo "<p>{$m}</p>";
+            echo '</div>';
+        }
+        return false;
+    } else
+        return true;
 }
 ?>
