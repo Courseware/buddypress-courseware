@@ -38,7 +38,7 @@ class BPSP_Static {
         wp_register_script( 'inputhint', BPSP_WEB_URI . '/static/js/inputhint/jquery.inputhint.js', array( 'jquery' ), '1.0' );
         
         // Sprakline
-        wp_register_script( 'sparkline', BPSP_WEB_URI . '/static/js/sparkline/jquery.sparkline.min.js', array( 'jquery' ), '1.5.1' );
+        wp_register_script( 'sparkline', BPSP_WEB_URI . '/static/js/sparkline/jquery.sparkline.min.js', array( 'jquery' ), '1.6' );
         
         // jsTree
         wp_register_script( 'jstree', BPSP_WEB_URI . '/static/js/jstree/jquery.jstree.js', array( 'jquery' ), '1.0-rc3' );

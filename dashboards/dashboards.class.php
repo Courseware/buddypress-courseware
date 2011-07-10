@@ -33,15 +33,16 @@ class BPSP_Dashboards {
         }
         
         $group_data['bibliography'] = array();
+        $group_data['assignments_count'] = 0;
         $group_data['responses_count'] = 0;
+        $group_data['own_responses_count'] = 0;
         $group_data['assignment_topics_count'] = 0;
         $group_data['user_grades'] = array();
-        
+        $group_data['user_bookmark'] = null;
         $group_data['courses'] = ( array )BPSP_Courses::has_courses( $group_id );
         $group_data['lectures'] = ( array )BPSP_Lectures::has_lectures( $group_id );
         $group_data['assignments'] = ( array )BPSP_Assignments::has_assignments( $group_id );
         $group_data['schedules'] = BPSP_Schedules::has_schedules( $group_id );
-        
         $posts = array_merge( $group_data['courses'], $group_data['assignments'] );
         
         if( $posts )
@@ -58,12 +59,23 @@ class BPSP_Dashboards {
                     'post_parent' => $post->ID,
                     'post_type' => 'response'
                 ) );
-                $group_data['responses_count'] += count( $post->responses );
+                
+                foreach( $post->responses as $pr ) {
+                    if( $pr->post_author == get_current_user_id() )
+                        $group_data['own_responses_count']++;
+                    $group_data['responses_count'] ++;
+                }
+                
                 // Gradebook
                 $group_data['user_grades'][] = BPSP_Gradebook::load_grade_by_user_id( $post->ID, $bp->loggedin_user->id );
             }
         }
         
+        $bookmark = get_user_meta( get_current_user_id(), 'bookmark_' . bp_get_group_id(), true );
+        if( $bookmark )
+            $group_data['user_bookmark'] = BPSP_Lectures::is_lecture( $bookmark );
+        
+        $group_data['assignments_count'] = count( $group_data['assignments'] );
         $group_data['bibliography_count'] = count( $group_data['bibliography'] );
         
         return $group_data;

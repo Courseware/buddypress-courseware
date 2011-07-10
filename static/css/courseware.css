@@ -135,13 +135,10 @@ ul.courseware-meta li a.action { display: block; width: 90%; }
 #group-dashboard ul li { border-bottom: 1px solid #DDD; padding: 5px 0; }
 #group-dashboard ul li:last-child { border: none; }
 #group-dashboard #user-grades { width: 100%; height: 30px; }
-#group-dashboard #wp-calendar { margin-top: 10px; }
-#group-dashboard #wp-calendar #today { font-weight: bold; color: #CC0000; }
-#group-dashboard #wp-calendar caption { font-style: italic; font-weight: bold; }
-#group-dashboard #wp-calendar thead tr { background: none; border-bottom: 1px solid #DDD; }
-#group-dashboard #wp-calendar tfoot { display: none; }
-#group-dashboard #wp-calendar tr td,
-#group-dashboard #wp-calendar tr th { padding: 1px; text-align: center; }
+#group-dashboard #user-progress { float: left; margin: 10px 10px 0; }
+#group-dashboard #progress-title { margin-top: 10px; }
+#group-dashboard #progress-count { font-size: 20px; margin-top: -5px; }
+#group-dashboard hr { margin: 5px 0; }
 
 /* DataTables customization */
 .courseware .fg-toolbar{ color: #444; padding: 3px; }

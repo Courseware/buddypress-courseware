@@ -113,7 +113,19 @@
             </ul>
         </div>
         <div class="dp25">
-            <?php get_calendar(); ?>
+            <div id="user-progress">
+                <?php echo $assignments_count - $own_responses_count; ?>,<?php echo $own_responses_count; ?>
+            </div>
+            <div id="progress-title"><?php _e( 'Your progress so far:', 'bpsp' );?></div>
+            <div id="progress-count"><?php echo ( $own_responses_count / $assignments_count ) * 100; ?>%</div>
+            <hr />
+            <?php if( $user_bookmark ) : ?>
+                <a href="<?php echo $user_bookmark->permalink ?>" class="alignleft action"><?php _e( 'Your last bookmark &rarr;', 'bpsp' );?></a>
+            <?php else: ?>
+                <em><?php _e( "You didn't bookmark any lectures so far.", 'bpsp' );?></em>
+            <?php endif; ?>
+            <hr />
+            <em><?php _e( "Today is: ", 'bpsp' );?></em><code><?php echo bpsp_get_date( date( 'now' ) ); ?></code>
         </div>
         <div class="clear"></div>
     </div>
