@@ -307,6 +307,7 @@ class BPSP_Lectures {
                         
                         $vars['message'] = __( 'New lecture was added.', 'bpsp' );
                         do_action( 'courseware_lecture_added', $this->current_lecture );
+                        do_action( 'courseware_lecture_activity', $this->current_lecture, 'add' );
                         return $this->single_lecture_screen( $vars );
                     } else
                         $vars['error'] = __( 'New lecture could not be added.', 'bpsp' );

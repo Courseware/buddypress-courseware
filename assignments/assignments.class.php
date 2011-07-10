@@ -380,6 +380,7 @@ class BPSP_Assignments {
                         }
                         $vars['message'] = __( 'New assignment was added.', 'bpsp' );
                         do_action( 'courseware_assignment_added', $this->is_assignment( $new_assignment_id ) );
+                        do_action( 'courseware_assignment_activity', $this->is_assignment( $new_assignment_id ), 'add' );
                         return $this->list_assignments_screen( $vars );
                     } else
                         $vars['error'] = __( 'New assignment could not be added.', 'bpsp' );
@@ -571,7 +572,7 @@ class BPSP_Assignments {
             return $vars;
         }
         
-        // Update course
+        // Update assignment
         if( isset( $_POST['assignment'] ) &&
             $_POST['assignment']['object'] == 'group' &&
             BPSP_Lectures::is_lecture( $_POST['assignment']['lecture_id'] ) &&
