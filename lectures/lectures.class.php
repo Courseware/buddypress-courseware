@@ -374,8 +374,15 @@ class BPSP_Lectures {
      */
     function single_lecture_screen( $vars ) {
         global $bp;
+        $is_nonce = false;
+        
+        if( isset( $_GET['_wpnonce'] ) )
+            $is_nonce = wp_verify_nonce( $_GET['_wpnonce'], 'bookmark' );
         
         $lecture = $this->is_lecture( $this->current_lecture );
+        
+        if( $is_nonce )
+            update_user_meta( get_current_user_id(), 'bookmark_' . bp_get_group_id(), $lecture->ID );
         
         if(  $this->has_lecture_caps( $bp->loggedin_user->id ) || is_super_admin() )
             $vars['show_edit'] = true;
@@ -385,8 +392,10 @@ class BPSP_Lectures {
         if( !$lecture )
             $vars['die'] = __( 'BuddyPress Courseware Error! Cheatin\' Uh?' );
         $vars['name'] = 'single_lecture';
-        $vars['lecture_permalink'] = $vars['current_uri'] . '/lecture/' . $this->current_lecture->post_name;
-        $vars['lecture_edit_uri'] = $vars['current_uri'] . '/lecture/' . $this->current_lecture->post_name . '/edit';
+        $vars['lecture_permalink'] = $this->current_lecture->permalink;
+        $vars['lecture_edit_uri'] = $this->current_lecture->permalink . '/edit';
+        $vars['lecture_bookmark_uri'] = add_query_arg( '_wpnonce', wp_create_nonce( 'bookmark' ), $this->current_lecture->permalink );
+        $vars['bookmarked'] = get_user_meta( get_current_user_id(), 'bookmark_' . bp_get_group_id(), true );
         $vars['lecture'] = $lecture;
         $vars['next'] = $this->next_lecture( $lecture );
         $vars['prev'] = $this->prev_lecture( $lecture );

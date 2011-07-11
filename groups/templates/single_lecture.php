@@ -29,6 +29,11 @@
                 <a href="<?php echo $prev->permalink; ?>" class="action">&larr; <?php echo get_the_title( $prev->ID ); ?></a>
             </li>
             <?php endif; ?>
+            <?php if( $lecture_bookmark_uri && $bookmarked != $lecture->ID ): ?>
+                <li class="bookmark-link">
+                    <a href="<?php echo $lecture_bookmark_uri; ?>" class="action"><?php _e( 'Bookmark this lecture', 'bpsp' ); ?></a>
+                </li>
+            <?php endif; ?>
             <?php if( $show_edit ): ?>
                 <li class="edit-link">
                     <a href="<?php echo $lecture_edit_uri; ?>" class="action"><?php _e( 'Edit Lecture', 'bpsp' ); ?></a>

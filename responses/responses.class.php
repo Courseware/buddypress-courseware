@@ -380,10 +380,10 @@ class BPSP_Responses {
                         
                         $cb_name = $name . '-' . $a['value'];
                         if( isset( $answers[ $cb_name ] ) ) {
-                            if( strtolower( $a['value'] ) == strtolower( $answers[ $cb_name ] ) ) {
+                            if( trim( strtolower( $a['value'] ) ) == trim( strtolower( $answers[ $cb_name ] ) ) ) {
                                 // Save the wrong answer
                                 if( $a['default'] == 'undefined' ) {
-                                    $results[ $q ][] = sanitize_text_field( $answers[ $cb_name ] );
+                                    $results[ $q ][] = esc_attr( $answers[ $cb_name ] );
                                     $results[ $q ][] = $a['value'] . ' ' . __( '(wrong)', 'bpsp' );
                                 }
                                 else
@@ -409,9 +409,9 @@ class BPSP_Responses {
                         
                         // Save the wrong answer if any
                         if( $a['default'] != 'undefined' ) {
-                            if( strtolower( $a['value'] ) != strtolower( $r_a ) ) {
+                            if( trim( strtolower( $a['value'] ) ) != trim( strtolower( $r_a ) ) ) {
                                 $results[ $q ][] = isset( $r_a ) ? $r_a : __( '(No answer)', 'bpsp' );
-                                $results[ $q ][] = $a['value'];
+                                $results[ $q ][] = esc_attr( $a['value'] );
                             } else 
                                 $results['correct']++;
                         }

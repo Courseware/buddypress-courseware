@@ -229,7 +229,7 @@ class FormBuilder {
                     $checkbox,
                     $field_id,
                     $this->name_prefix . '[' . $field_id . ']',
-                    sanitize_title( $item['value'] ),
+                    esc_attr( $item['value'] ),
                     $field_id,
                     $item['value']
                 );
@@ -275,7 +275,7 @@ class FormBuilder {
                     $radio,
                     $field_id,
                     $this->name_prefix . '[' . $field_id . ']',
-                    sanitize_title( $item['value'] ),
+                    esc_attr( $item['value'] ),
                     $item['value']
                 );
             }
@@ -327,7 +327,7 @@ class FormBuilder {
                 $html .= sprintf(
                     $option,
                     sanitize_title( $item['value'] ),
-                    $item['value']
+                    esc_attr( $item['value'] )
                 );
             }
             

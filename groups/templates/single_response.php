@@ -15,7 +15,7 @@
                 <?php
                     printf(
                         __( 'Author: %1$s', 'bpsp' ),
-                        bp_core_get_userlink( get_the_author() )
+                        bp_core_get_userlink( $response->post_author )
                     );
                 ?>
             </li>

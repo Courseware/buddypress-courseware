@@ -121,6 +121,7 @@
             <hr />
             <?php if( $user_bookmark ) : ?>
                 <a href="<?php echo $user_bookmark->permalink ?>" class="alignleft action"><?php _e( 'Your last bookmark &rarr;', 'bpsp' );?></a>
+                <div class="clearall"></div>
             <?php else: ?>
                 <em><?php _e( "You didn't bookmark any lectures so far.", 'bpsp' );?></em>
             <?php endif; ?>

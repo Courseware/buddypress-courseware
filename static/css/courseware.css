@@ -138,7 +138,7 @@ ul.courseware-meta li a.action { display: block; width: 90%; }
 #group-dashboard #user-progress { float: left; margin: 10px 10px 0; }
 #group-dashboard #progress-title { margin-top: 10px; }
 #group-dashboard #progress-count { font-size: 20px; margin-top: -5px; }
-#group-dashboard hr { margin: 5px 0; }
+#group-dashboard hr { margin: 5px 0 5px; }
 
 /* DataTables customization */
 .courseware .fg-toolbar{ color: #444; padding: 3px; }
