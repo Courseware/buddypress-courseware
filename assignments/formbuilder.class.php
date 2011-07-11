@@ -150,7 +150,7 @@ class FormBuilder {
         $html .= sprintf(
             '<input type="text" id="%s" name="%s" value="" />' . "\n",
             $field_id,
-            $this->name_prefix . '[' . $field_id . ']'
+            $this->name_prefix . '[' . md5( $field['values'] ) . ']'
         );
         $html .= '</li>' . "\n";
         
@@ -183,7 +183,7 @@ class FormBuilder {
         $html .= sprintf(
             '<textarea id="%s" name="%s" rows="5" cols="50"></textarea>' . "\n",
             $field_id,
-            $this->name_prefix . '[' . $field_id . ']'
+            $this->name_prefix . '[' . md5( $field['values'] ) . ']'
         );
         $html .= '</li>' . "\n";
         
@@ -228,7 +228,7 @@ class FormBuilder {
                 $html .= sprintf(
                     $checkbox,
                     $field_id,
-                    $this->name_prefix . '[' . $field_id . ']',
+                    $this->name_prefix . '[' . md5( $field['title'] . $item['value'] ) . ']',
                     esc_attr( $item['value'] ),
                     $field_id,
                     $item['value']
@@ -250,10 +250,11 @@ class FormBuilder {
      */
     function load_radios( $field ) {
         $field['required'] = $field['required'] == 'true' ? ' required' : false;
+        $field_id = sanitize_title( $field['class'] );
         
         $html = sprintf(
             '<li class="%s%s" id="fld-%s">' . "\n",
-            sanitize_title( $field['values'] ),
+            $field_id,
             $field['required'],
             sanitize_title( $field['title'] )
         );
@@ -266,7 +267,7 @@ class FormBuilder {
             $html .= '<span class="multi-row">' . "\n";
             
             foreach( $field['values'] as $item ) {
-                $field_id = sanitize_title( $field['title'] );
+                $field_id = sanitize_title( $field['title'] . ' ' . $item['value'] );
                 $radio = '<span class="row clearall">';
                 $radio .= '<input type="radio" id="%s" name="%s" value="%s" />';
                 $radio .= '<label for="%1$s">%s</label>';
@@ -274,7 +275,7 @@ class FormBuilder {
                 $html .= sprintf(
                     $radio,
                     $field_id,
-                    $this->name_prefix . '[' . $field_id . ']',
+                    $this->name_prefix . '[' . md5( $field['title'] ) . ']',
                     esc_attr( $item['value'] ),
                     $item['value']
                 );
@@ -317,7 +318,7 @@ class FormBuilder {
             $multiple = $field['multiple'] == "true" ? ' multiple="multiple"' : '';
             $html .= sprintf(
                 '<select name="%s" id="%s"%s>' . "\n",
-                $this->name_prefix . '[' . $field_title . ']',
+                $this->name_prefix . '[' . md5( $field['title'] . $item['value'] ) . ']',
                 $field_title,
                 $multiple
             );
@@ -326,7 +327,7 @@ class FormBuilder {
                 $option = '<option value="%s">%s</option>' . "\n";
                 $html .= sprintf(
                     $option,
-                    sanitize_title( $item['value'] ),
+                    md5( $field['title'] . $item['value'] ),
                     esc_attr( $item['value'] )
                 );
             }

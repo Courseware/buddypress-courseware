@@ -33,7 +33,7 @@
         <h4 id="response-title" class="courseware-title"><?php echo get_the_title( $response->ID ); ?></h4>
         <div id="response-body" class="courseware-content">
             <?php the_content(); ?>
-            <?php if( isset( $response->form_values ) ) : ?>
+            <?php if( isset( $response->form_values ) && count( $response->form_values ) > 2 ) : ?>
                 <strong><?php _e( 'Wrong answers', 'bpsp' ); ?>:</strong>
                 <ol>
                     <?php foreach( $response->form_values as $q => $a ): ?>

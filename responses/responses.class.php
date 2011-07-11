@@ -347,15 +347,15 @@ class BPSP_Responses {
                 $q = prev( $q_and_a );
                 $results[ $q ] = array();
                 // Find the name of the form
-                $name = sanitize_title( $q );
+                $name = md5( $question['values'] );
                 // Correct answers should be counted
                 if( !empty( $a ) )
                     $results['total']++;
                 // Find the user answer and compare
                 if( isset( $answers[ $name ] ) ) {
                     // Save the wrong answers
-                    if( strtolower( $a ) != strtolower( $answers[ $name ] ) ) {
-                        $results[ $q ][] = sanitize_text_field( $answers[ $name ] );
+                    if( trim( strtolower( $a ) ) != trim( strtolower( $answers[ $name ] ) ) ) {
+                        $results[ $q ][] = esc_html( $answers[ $name ] );
                         $results[ $q ][] = $a;
                     }
                     else
@@ -364,36 +364,34 @@ class BPSP_Responses {
                     // Save the wrong answer even if no answer was given
                     if( $a['default'] != 'undefined' ) {
                         $results[ $q ][] = __( '(No answer)', 'bpsp' );
-                        $results[ $q ][] = $a['value'];
+                        $results[ $q ][] = $a;
                     }
                 }
             } else {
                 $q = $question['title'];
                 $results[ $q ] = array();
                 // Find the name of the form
-                $name = sanitize_title( $q );
+                $name = md5( $q );
                 if( $question['class'] == 'checkbox' ) {
                     foreach( $question['values'] as $a ) {
                         // Correct answers should be counted
                         if( $a['default'] != 'undefined' )
                             $results['total']++;
                         
-                        $cb_name = $name . '-' . $a['value'];
+                        $cb_name = md5( $q . $a['value'] );
                         if( isset( $answers[ $cb_name ] ) ) {
-                            if( trim( strtolower( $a['value'] ) ) == trim( strtolower( $answers[ $cb_name ] ) ) ) {
-                                // Save the wrong answer
-                                if( $a['default'] == 'undefined' ) {
-                                    $results[ $q ][] = esc_attr( $answers[ $cb_name ] );
-                                    $results[ $q ][] = $a['value'] . ' ' . __( '(wrong)', 'bpsp' );
-                                }
-                                else
-                                    $results['correct']++;
+                            // Save the wrong answer
+                            if( $a['default'] == 'undefined' ) {
+                                $results[ $q ][] = esc_html( $a['value'] );
+                                $results[ $q ][] = esc_html( $a['value'] ) . ' ' . __( '(wrong)', 'bpsp' );
                             }
+                            else
+                                $results['correct']++;
                         } else {
                             // Save the wrong answer even if no answer was given
                             if( $a['default'] != 'undefined' ) {
                                 $results[ $q ][] = __( '(No answer)', 'bpsp' );
-                                $results[ $q ][] = $a['value'];
+                                $results[ $q ][] = esc_html( $a['value'] );
                             }
                         }
                     }
@@ -408,9 +406,15 @@ class BPSP_Responses {
                             $r_a = $answers[ $name ];
                         
                         // Save the wrong answer if any
-                        if( $a['default'] != 'undefined' ) {
+                        if( $a['default'] != 'undefined' && $question['class'] == 'radio' ) {
                             if( trim( strtolower( $a['value'] ) ) != trim( strtolower( $r_a ) ) ) {
                                 $results[ $q ][] = isset( $r_a ) ? $r_a : __( '(No answer)', 'bpsp' );
+                                $results[ $q ][] = esc_attr( $a['value'] );
+                            } else 
+                                $results['correct']++;
+                        } elseif ( $a['default'] != 'undefined' ) { // Select
+                            if ( md5( $q . $a['value'] ) != $r_a ) {
+                                $results[ $q ][] = __( '(Correct answer below)', 'bpsp' );
                                 $results[ $q ][] = esc_attr( $a['value'] );
                             } else 
                                 $results['correct']++;
