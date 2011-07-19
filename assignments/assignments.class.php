@@ -225,7 +225,7 @@ class BPSP_Assignments {
      * @return Assignment object if assignment exists and null if not.
      */
     function is_assignment( $assignment_identifier = null ) {
-        global $bp;
+        global $bp, $post;
         $courseware_uri = bp_get_group_permalink( $bp->groups->current_group ) . 'courseware/' ;
         
         if( is_object( $assignment_identifier ) && $assignment_identifier->post_type == "assignment" )
@@ -250,6 +250,7 @@ class BPSP_Assignments {
         $assignment = get_posts( $assignment_query );
         
         if( !empty( $assignment[0] ) ) {
+            $post = $assignment[0];
             $assignment[0]->due_date = get_post_meta( $assignment[0]->ID, 'due_date', true );
             $assignment[0]->group = wp_get_object_terms( $assignment[0]->ID, 'group_id' );
             $assignment_course = wp_get_object_terms( $assignment[0]->ID, 'course_id' );
