@@ -42,6 +42,20 @@ class FormBuilder {
         if( !empty( $data ) )
             parse_str( $data, $this->unserialized );
         $this->unserialized = reset( $this->unserialized );
+        // Sanitization
+        foreach ( $this->unserialized as $q ) {
+            if ( !is_array( $q['values'] ) ) {
+                $q['values'] = urldecode( $q['values'] );
+                $q['values'] = apply_filters( 'content_save_pre', $q['values'] );
+            } else {
+                $q['title'] = urldecode( $q['title'] );
+                $q['title'] = apply_filters( 'content_save_pre', $q['title'] );
+                foreach ( $q['values'] as $a ) {
+                    $a['value'] = urldecode( $a['value'] );
+                    $a['value'] = apply_filters( 'content_save_pre', $a['value'] );
+                }
+            }
+        }
     }
     
     /**
@@ -52,7 +66,8 @@ class FormBuilder {
      * @return Mixed, the compiled json object
      */
     function get_json() {
-        return json_encode( $this->unserialized );
+        $data = $this->get_data();
+        return json_encode( $data );
     }
     
     /**
@@ -102,6 +117,15 @@ class FormBuilder {
      * @return String, rendered field data
      */
     function load_field( $field ) {
+        // Apply some filters
+        if ( !is_array( $field['values'] ) )
+            $field['values'] = apply_filters( 'the_content', $field['values'] );
+        else {
+            $field['title'] = apply_filters( 'the_content', $field['title'] );
+            foreach ( $field['values'] as $a )
+                $a['value'] = apply_filters( 'the_title', $a['value'] );
+        }
+        
         if( is_array( $field ) && isset( $field['class'] ) ) {
             switch( $field['class'] ) {
                 case 'input_text':
