@@ -1,0 +1,1028 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: BuddyPress ScholarPress Courseware\n"
+"Report-Msgid-Bugs-To: http://github.com/scholarpress/buddypress-courseware/issues\n"
+"POT-Creation-Date: 2010-11-30 12:45+0200\n"
+"PO-Revision-Date: \n"
+"Last-Translator: Albert Bruc <a.bruc@ab-ae.fr>\n"
+"Language-Team: ScholarPress Dev Crew <stas@nerd.ro>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+
+#: roles/bpsp-roles.class.php:27
+#: roles/bpsp-roles.class.php:94
+#: roles/bpsp-roles.class.php:181
+#: roles/bpsp-roles.class.php:190
+msgid "Apply for Teacher"
+msgstr "demande de l'enseignant"
+
+#: roles/bpsp-roles.class.php:41
+#: roles/bpsp-roles.class.php:45
+#: roles/bpsp-roles.class.php:49
+#: roles/bpsp-roles.class.php:93
+#: roles/bpsp-roles.class.php:108
+#: roles/bpsp-roles.class.php:109
+#: roles/bpsp-roles.class.php:158
+#: roles/bpsp-roles.class.php:188
+#: roles/bpsp-roles.class.php:223
+#: responses/bpsp-responses.class.php:87
+msgid "Teacher"
+msgstr "Professeur"
+
+#: roles/bpsp-roles.class.php:42
+msgid "BuddyPress Courseware error, you are not allowed to assign Teachers."
+msgstr "Erreur BuddyPress Courseware, vous n'êtes pas autorisé à affecter des Professeurs."
+
+#: roles/bpsp-roles.class.php:66
+#, php-format
+msgid "Please review %s application to become a teacher."
+msgstr "Veuillez étudier %s candidature pour devenir un professeur."
+
+#: roles/bpsp-roles.class.php:70
+#: roles/bpsp-roles.class.php:125
+#: roles/bpsp-roles.class.php:130
+#: groups/bpsp-groups.class.php:97
+#: groups/bpsp-groups.class.php:259
+msgid "Courseware"
+msgstr "Courseware"
+
+#: roles/bpsp-roles.class.php:73
+msgid " applied to become a teacher."
+msgstr "a posé sa candidature pour devenir un professeur."
+
+#: roles/bpsp-roles.class.php:75
+msgid "To review the profile, follow the link below."
+msgstr "Pour examiner le profil, cliquez sur le lien ci-dessous."
+
+#: roles/bpsp-roles.class.php:90
+#: roles/bpsp-roles.class.php:142
+#: roles/bpsp-roles.class.php:149
+#: roles/bpsp-roles.class.php:223
+#: responses/bpsp-responses.class.php:87
+#: responses/bpsp-responses.class.php:175
+msgid "Role"
+msgstr "Fonction"
+
+#: roles/bpsp-roles.class.php:131
+msgid "Students and Teachers fields. Do not delete as long as you use BuddyPress ScholarPress Courseware!"
+msgstr "Champs des Étudiants et des Professeurs. Ne pas supprimer tant que vous êtes en train d'utiliser BuddyPress ScholarPress Courseware!"
+
+#: roles/bpsp-roles.class.php:136
+msgid "BuddyPress Courseware error when saving xProfile group."
+msgstr "Erreur de l'application BuddyPress Courseware lors de l'enregistrement du groupe xProfile."
+
+#: roles/bpsp-roles.class.php:144
+msgid "You role when using Courseware. Every request requires moderation. Please be patient untill an administrator reviews it."
+msgstr "Chaque requête est soumise à la modération. Veuillez patienter pendant qu'un administrateur examine votre requête."
+
+#: roles/bpsp-roles.class.php:151
+msgid "BuddyPress Courseware error when saving xProfile field."
+msgstr "Erreur de l'application BuddyPress Courseware lors de l'enregistrement d'un champ xProfile."
+
+#: roles/bpsp-roles.class.php:169
+#: roles/bpsp-roles.class.php:189
+#: responses/bpsp-responses.class.php:177
+msgid "Student"
+msgstr "Étudiant"
+
+#: roles/bpsp-roles.class.php:192
+msgid "BuddyPress Courseware error when saving xProfile field options."
+msgstr "Erreur de l'application BuddyPress Courseware lors de l'enregistrement des options de champ xProfile."
+
+#: responses/bpsp-responses.class.php:59
+msgid "Responses"
+msgstr "Réponses"
+
+#: responses/bpsp-responses.class.php:60
+msgid "Response"
+msgstr "Réponse"
+
+#: responses/bpsp-responses.class.php:61
+msgid "BuddyPress ScholarPress Courseware Responses"
+msgstr "Réponses BuddyPress ScholarPress Courseware"
+
+#: responses/bpsp-responses.class.php:73
+msgid "BuddyPress Courseware error while registering response post type."
+msgstr "Erreur de l'application BuddyPress Courseware lors de l'enregistrement du type de message en réponse."
+
+#: responses/bpsp-responses.class.php:337
+msgid "BuddyPress Courseware Error while forbidden user tried to add a new response."
+msgstr "Erreur de l'application BuddyPress Courseware. Un utilisateur non autorisé a tenté d'ajouter une nouvelle réponse."
+
+#: responses/bpsp-responses.class.php:350
+msgid "Nonce Error while adding a response."
+msgstr "Erreur momentanée lors de l'ajout d'une réponse."
+
+#: responses/bpsp-responses.class.php:354
+msgid "You already sent your response."
+msgstr "Vous avez déjà envoyé votre réponse."
+
+#: responses/bpsp-responses.class.php:374
+msgid "New response was added."
+msgstr "Une nouvelle réponse a été ajoutée."
+
+#: responses/bpsp-responses.class.php:377
+msgid "New response could not be added (fill the title/content)."
+msgstr "La nouvelle réponse n'a pu être ajoutée (renseigne le titre/contenu)."
+
+#: responses/bpsp-responses.class.php:441
+msgid "BuddyPress Courseware Error while forbidden user tried to access a private response."
+msgstr "Erreur de l'application BuddyPress Courseware. Un utilisateur non autorisé a tenté d'accéder à une réponse privée."
+
+#: responses/bpsp-responses.class.php:479
+msgid "Nonce Error while deleting the response."
+msgstr "Erreur momentanée lors de la suppression de la réponse."
+
+#: responses/bpsp-responses.class.php:489
+msgid "BuddyPress Courseware Error while forbidden user tried to delete the response."
+msgstr "Erreur de l'application BuddyPress Courseware. Un utilisateur non autorisé a tenté de supprimer la réponse."
+
+#: responses/bpsp-responses.class.php:494
+msgid "Response deleted successfully."
+msgstr "Réponse supprimée avec succès."
+
+#: assignments/bpsp-assignments.class.php:46
+#: assignments/bpsp-assignments.class.php:287
+msgid "Assignments"
+msgstr "Devoirs"
+
+#: assignments/bpsp-assignments.class.php:47
+msgid "Assignment"
+msgstr "Devoir"
+
+#: assignments/bpsp-assignments.class.php:48
+msgid "BuddyPress ScholarPress Courseware Assignments"
+msgstr "Devoirs BuddyPress ScholarPress Courseware"
+
+#: assignments/bpsp-assignments.class.php:60
+msgid "BuddyPress Courseware error while registering assignment post type."
+msgstr "Erreur de l'application BuddyPress Courseware lors de l'enregistrement du type de message d'un devoir."
+
+#: assignments/bpsp-assignments.class.php:66
+msgid "Course ID"
+msgstr "N° Cours"
+
+#: assignments/bpsp-assignments.class.php:81
+msgid "BuddyPress Courseware error while registering assignment taxonomies."
+msgstr "Erreur de l'application BuddyPress Courseware lors de l'enregistrement des taxonomies de devoirs."
+
+#: assignments/bpsp-assignments.class.php:284
+msgid "New Assignment"
+msgstr "Nouveau Devoir"
+
+#: assignments/bpsp-assignments.class.php:284
+#: assignments/bpsp-assignments.class.php:287
+#: bibliographies/bpsp-bibliography.class.php:420
+#: bibliographies/bpsp-bibliography.class.php:423
+#: bibliographies/bpsp-bibliography.class.php:518
+#: bibliographies/bpsp-bibliography.class.php:521
+#: groups/bpsp-groups.class.php:106
+#: groups/bpsp-groups.class.php:123
+#: groups/bpsp-groups.class.php:164
+msgid "Home"
+msgstr "Accueil"
+
+#: assignments/bpsp-assignments.class.php:305
+msgid "BuddyPress Courseware Error while forbidden user tried to add a new assignment."
+msgstr "Erreur de l'application BuddyPress Courseware. Un utilisateur non autorisé a tenté d'ajouter un nouveau devoir."
+
+#: assignments/bpsp-assignments.class.php:318
+msgid "Nonce Error while adding an assignment."
+msgstr "Erreur momentanée lors de l'ajout d'un devoir."
+
+#: assignments/bpsp-assignments.class.php:338
+msgid "New assignment was added."
+msgstr "Le nouveau devoir a été ajouté."
+
+#: assignments/bpsp-assignments.class.php:342
+msgid "New assignment could not be added."
+msgstr "Le nouveau devoir n'a pas pu être ajouté."
+
+#: assignments/bpsp-assignments.class.php:344
+msgid "Please fill in all the fields."
+msgstr "Veuillez renseigner tous les champs."
+
+#: assignments/bpsp-assignments.class.php:445
+msgid "Courseware Assignment Link"
+msgstr "Lien vers les Devoirs Courseware"
+
+#: assignments/bpsp-assignments.class.php:448
+msgid ", assignment"
+msgstr ", devoir"
+
+#: assignments/bpsp-assignments.class.php:463
+msgid "Assignment forum created."
+msgstr "Le forum des devoirs a été créé."
+
+#: assignments/bpsp-assignments.class.php:469
+msgid "Forum was not created."
+msgstr "Le forum n'a pas été créé."
+
+#: assignments/bpsp-assignments.class.php:493
+msgid "Nonce Error while deleting the assignment."
+msgstr "Erreur momentanée lors de la suppression du devoir."
+
+#: assignments/bpsp-assignments.class.php:500
+msgid "BuddyPress Courseware Error while forbidden user tried to delete the assignment."
+msgstr "Erreur de l'application BuddyPress Courseware. Un utilisateur non autorisé a tenté de supprimer le devoir."
+
+#: assignments/bpsp-assignments.class.php:504
+msgid "Assignment deleted successfully."
+msgstr "Devoir supprimé avec succès."
+
+#: assignments/bpsp-assignments.class.php:529
+msgid "BuddyPress Courseware Error while forbidden user tried to update the assignment."
+msgstr "Erreur de l'application BuddyPress Courseware. Un utilisateur non autorisé a tenté de mettre à jour le devoir."
+
+#: assignments/bpsp-assignments.class.php:542
+msgid "Nonce Error while editing the assignment."
+msgstr "Erreur momentanée lors de l'édition du devoir."
+
+#: assignments/bpsp-assignments.class.php:560
+msgid "Assignment was updated."
+msgstr "Le devoir a été mis à jour."
+
+#: assignments/bpsp-assignments.class.php:564
+msgid "Assignment could not be updated."
+msgstr "Le devoir n'a pas pu être mis à jour."
+
+#: static/bpsp-static.class.php:181
+msgid "Processing..."
+msgstr "En cours..."
+
+#: static/bpsp-static.class.php:182
+msgid "Display _MENU_ records per page"
+msgstr "Afficher _MENU_ enregistrements par page"
+
+#: static/bpsp-static.class.php:183
+msgid "Nothing found - sorry"
+msgstr "Aucun résultat trouvé - désolé"
+
+#: static/bpsp-static.class.php:184
+msgid "Showing _START_ to _END_ of _TOTAL_ records"
+msgstr "Affiche _START_ to _END_ of _TOTAL_ enregistrements"
+
+#: static/bpsp-static.class.php:185
+msgid "Showing 0 to 0 of 0 records"
+msgstr "Affiche 0 à 0 de 0 enregistrements"
+
+#: static/bpsp-static.class.php:186
+msgid "(filtered from _MAX_ total records)"
+msgstr "(filtré de _MAX_ enregistrements au total)"
+
+#: static/bpsp-static.class.php:187
+msgid " "
+msgstr ""
+
+#: static/bpsp-static.class.php:188
+msgid "Search"
+msgstr "Recherche"
+
+#: static/bpsp-static.class.php:199
+msgid "today"
+msgstr "aujourd'hui"
+
+#: static/bpsp-static.class.php:200
+msgid "month"
+msgstr "mois"
+
+#: static/bpsp-static.class.php:201
+msgid "week"
+msgstr "semaine"
+
+#: static/bpsp-static.class.php:202
+msgid "day"
+msgstr "mois"
+
+#: static/bpsp-static.class.php:206
+msgid "H(:mm)"
+msgstr "H(:mm)"
+
+#: static/bpsp-static.class.php:213
+#: static/bpsp-static.class.php:231
+msgid "1"
+msgstr "1"
+
+#: static/bpsp-static.class.php:225
+msgid "Done"
+msgstr "Terminé"
+
+#: static/bpsp-static.class.php:226
+msgid "Prev"
+msgstr "Préc"
+
+#: static/bpsp-static.class.php:227
+msgid "Next"
+msgstr "Proc"
+
+#: static/bpsp-static.class.php:228
+msgid "Today"
+msgstr "Aujourd'hui"
+
+#: static/bpsp-static.class.php:232
+#: static/bpsp-static.class.php:233
+msgid "false"
+msgstr "faux"
+
+#: static/bpsp-static.class.php:238
+msgid "January"
+msgstr "Janvier"
+
+#: static/bpsp-static.class.php:239
+msgid "February"
+msgstr "Février"
+
+#: static/bpsp-static.class.php:240
+msgid "March"
+msgstr "Mars"
+
+#: static/bpsp-static.class.php:241
+msgid "April"
+msgstr "Avril"
+
+#: static/bpsp-static.class.php:242
+#: static/bpsp-static.class.php:258
+msgid "May"
+msgstr "Mai"
+
+#: static/bpsp-static.class.php:243
+msgid "June"
+msgstr "Juin"
+
+#: static/bpsp-static.class.php:244
+msgid "July"
+msgstr "Juillet"
+
+#: static/bpsp-static.class.php:245
+msgid "August"
+msgstr "Août"
+
+#: static/bpsp-static.class.php:246
+msgid "September"
+msgstr "Septembre"
+
+#: static/bpsp-static.class.php:247
+msgid "October"
+msgstr "Octobre"
+
+#: static/bpsp-static.class.php:248
+msgid "November"
+msgstr "Novembre"
+
+#: static/bpsp-static.class.php:249
+msgid "December"
+msgstr "Décembre"
+
+#: static/bpsp-static.class.php:254
+msgid "Jan"
+msgstr "Jan"
+
+#: static/bpsp-static.class.php:255
+msgid "Feb"
+msgstr "Fév"
+
+#: static/bpsp-static.class.php:256
+msgid "Mar"
+msgstr "Mar"
+
+#: static/bpsp-static.class.php:257
+msgid "Apr"
+msgstr "Avr"
+
+#: static/bpsp-static.class.php:259
+msgid "Jun"
+msgstr "Jun"
+
+#: static/bpsp-static.class.php:260
+msgid "Jul"
+msgstr "Jui"
+
+#: static/bpsp-static.class.php:261
+msgid "Aug"
+msgstr "Aou"
+
+#: static/bpsp-static.class.php:262
+msgid "Sep"
+msgstr "Sep"
+
+#: static/bpsp-static.class.php:263
+msgid "Oct"
+msgstr "Oct"
+
+#: static/bpsp-static.class.php:264
+msgid "Nov"
+msgstr "Nov"
+
+#: static/bpsp-static.class.php:265
+msgid "Dec"
+msgstr "Dec"
+
+#: static/bpsp-static.class.php:270
+msgid "Sunday"
+msgstr "Dimanche"
+
+#: static/bpsp-static.class.php:271
+msgid "Monday"
+msgstr "Lundi"
+
+#: static/bpsp-static.class.php:272
+msgid "Tuesday"
+msgstr "Mardi"
+
+#: static/bpsp-static.class.php:273
+msgid "Wednesday"
+msgstr "Mercredi"
+
+#: static/bpsp-static.class.php:274
+msgid "Thursday"
+msgstr "Jeudi"
+
+#: static/bpsp-static.class.php:275
+msgid "Friday"
+msgstr "Vendredi"
+
+#: static/bpsp-static.class.php:276
+msgid "Saturday"
+msgstr "Samedi"
+
+#: static/bpsp-static.class.php:281
+msgid "Sun"
+msgstr "Dim"
+
+#: static/bpsp-static.class.php:282
+msgid "Mon"
+msgstr "Lun"
+
+#: static/bpsp-static.class.php:283
+msgid "Tue"
+msgstr "Mar"
+
+#: static/bpsp-static.class.php:284
+msgid "Wed"
+msgstr "Mer"
+
+#: static/bpsp-static.class.php:285
+msgid "Thu"
+msgstr "Jeu"
+
+#: static/bpsp-static.class.php:286
+msgid "Fri"
+msgstr "Ven"
+
+#: static/bpsp-static.class.php:287
+msgid "Sat"
+msgstr "Sam"
+
+#: static/bpsp-static.class.php:292
+msgid "Su"
+msgstr "Di"
+
+#: static/bpsp-static.class.php:293
+msgid "Mo"
+msgstr "Lu"
+
+#: static/bpsp-static.class.php:294
+msgid "Tu"
+msgstr "Ma"
+
+#: static/bpsp-static.class.php:295
+msgid "We"
+msgstr "Me"
+
+#: static/bpsp-static.class.php:296
+msgid "Th"
+msgstr "Je"
+
+#: static/bpsp-static.class.php:297
+msgid "Fr"
+msgstr "Ve"
+
+#: static/bpsp-static.class.php:298
+msgid "Sa"
+msgstr "Sa"
+
+#: gradebook/bpsp-gradebook.class.php:45
+msgid "Gradebooks"
+msgstr "Carnets de notes"
+
+#: gradebook/bpsp-gradebook.class.php:46
+msgid "Gradebook"
+msgstr "Carnet de notes"
+
+#: gradebook/bpsp-gradebook.class.php:47
+msgid "BuddyPress ScholarPress Courseware Gradebook"
+msgstr "Carnet de notes BuddyPress ScholarPress Courseware"
+
+#: gradebook/bpsp-gradebook.class.php:59
+msgid "BuddyPress Courseware error while registering grade post type."
+msgstr "Erreur de l'application BuddyPress Courseware lors de l'enregistrement du type de message de notes."
+
+#: gradebook/bpsp-gradebook.class.php:65
+msgid "Assignment ID"
+msgstr "N° devoir"
+
+#: gradebook/bpsp-gradebook.class.php:80
+msgid "BuddyPress Courseware error while registering grade taxonomies."
+msgstr "Erreur de l'application BuddyPress Courseware lors de l'enregistrement de la taxonomie des notes."
+
+#: gradebook/bpsp-gradebook.class.php:363
+msgid "BuddyPress Courseware Error while forbidden user tried to manage gradebook."
+msgstr "Erreur de l'application BuddyPress Courseware. Un utilisateur non autorisé a tenté de gérer le carnet de notes."
+
+#: gradebook/bpsp-gradebook.class.php:373
+msgid "BuddyPress Courseware Nonce Error while updating gradebook."
+msgstr "Erreur de l'application BuddyPress Courseware. Un utilisateur non autorisé a tenté de mettre à jour le carnet de notes."
+
+#: gradebook/bpsp-gradebook.class.php:379
+msgid "BuddyPress Courseware Error while creating gradebook."
+msgstr "Erreur de l'application BuddyPress Courseware lors de la création du carnet de notes."
+
+#: gradebook/bpsp-gradebook.class.php:393
+msgid "Gradebook saved."
+msgstr "Carnet de notes enregistré."
+
+#: gradebook/bpsp-gradebook.class.php:422
+msgid "BuddyPress Courseware Nonce Error while clearing gradebook."
+msgstr "Erreur momentanée de l'application BuddyPress Courseware lors de la remise à zéro du carnet de notes. "
+
+#: gradebook/bpsp-gradebook.class.php:431
+msgid "Gradebook was cleared"
+msgstr "Le carnet de notes a été remis à zéro."
+
+#: gradebook/bpsp-gradebook.class.php:448
+msgid "BuddyPress Courseware Nonce Error while importing gradebook."
+msgstr "Erreur momentanée de l'application BuddyPress Courseware lors de l'importation du carnet de notes."
+
+#: gradebook/bpsp-gradebook.class.php:464
+msgid "Data imported successfully, but it is not saved yet! Save this form changes to keep the data."
+msgstr "Données importées avec succès, mais elles ne sont pas encore enregistrées ! Veuillez enregistrer les données de ce formulaire pour conserver vos données."
+
+#: bibliographies/bpsp-bibliography.class.php:64
+msgid "Bibliographies"
+msgstr "Bibliographies"
+
+#: bibliographies/bpsp-bibliography.class.php:65
+#: bibliographies/bpsp-bibliography.class.php:423
+msgid "Bibliography"
+msgstr "Bibliographie"
+
+#: bibliographies/bpsp-bibliography.class.php:66
+msgid "BuddyPress ScholarPress Courseware Bibliographies"
+msgstr "Bibliographies BuddyPress ScholarPress Courseware"
+
+#: bibliographies/bpsp-bibliography.class.php:78
+msgid "BuddyPress Courseware error while registering bibliography post type."
+msgstr "Erreur de l'application BuddyPress Courseware lors de l'enregistrement du type de message bibliographique."
+
+#: bibliographies/bpsp-bibliography.class.php:441
+msgid "BuddyPress Courseware Error while forbidden user tried to delete bibliography."
+msgstr "Erreur de l'application BuddyPress Courseware. Un utilisateur non autorisé a tenté de supprimer la bibliographie."
+
+#: bibliographies/bpsp-bibliography.class.php:447
+msgid "BuddyPress Courseware Nonce Error while deleting a post."
+msgstr "Erreur momentanée de l'application BuddyPress Courseware lors de la suppression d'un message."
+
+#: bibliographies/bpsp-bibliography.class.php:471
+msgid "Entry deleted."
+msgstr "Entrée supprimée."
+
+#: bibliographies/bpsp-bibliography.class.php:473
+msgid "Entry could not be deleted."
+msgstr "L'entrée n'a pas pu être supprimée."
+
+#: bibliographies/bpsp-bibliography.class.php:475
+#: bibliographies/bpsp-bibliography.class.php:545
+msgid "Entry could not be found."
+msgstr "L'entrée n'a pas pu être trouvée."
+
+#: bibliographies/bpsp-bibliography.class.php:478
+#: bibliographies/bpsp-bibliography.class.php:548
+msgid "No Bibliography database was created."
+msgstr "Aucune base de données bibliographique n'a été créée."
+
+#: bibliographies/bpsp-bibliography.class.php:499
+msgid "BuddyPress Courseware Error while forbidden user tried to edit bibliography."
+msgstr "Erreur de l'application Courseware. Un utilisateur non autorisé a tenté d'éditer la bibliographie."
+
+#: bibliographies/bpsp-bibliography.class.php:505
+msgid "BuddyPress Courseware Nonce Error while editing bibliography."
+msgstr "Erreur momentanée de l'application BuddyPress Courseware lors de l'édition de la bibliographie."
+
+#: bibliographies/bpsp-bibliography.class.php:539
+msgid "Entry updated."
+msgstr "Entrée mise à jour."
+
+#: bibliographies/bpsp-bibliography.class.php:542
+msgid "Entry could not be updated. Or nothing changed."
+msgstr "L'entrée n'a pas pu être mise à jour. Aucun changement."
+
+#: bibliographies/bpsp-bibliography.class.php:578
+#: bibliographies/bpsp-bibliography.class.php:636
+msgid "BuddyPress Courseware Error while forbidden user tried to add a new bibliography."
+msgstr "Erreur de l'application BuddyPress Courseware. Un utilisateur non autorisé a tenté d'ajouter une nouvelle bibliographe."
+
+#: bibliographies/bpsp-bibliography.class.php:584
+msgid "BuddyPress Courseware Nonce Error while adding bibliography."
+msgstr "Erreur momentanée de l'application BuddyPress Courseware lors de l'ajout d'une bibliographie."
+
+#: bibliographies/bpsp-bibliography.class.php:593
+msgid "Entry added."
+msgstr "Entrée ajoutée."
+
+#: bibliographies/bpsp-bibliography.class.php:595
+#: bibliographies/bpsp-bibliography.class.php:602
+#: bibliographies/bpsp-bibliography.class.php:743
+msgid "Entry could not be added"
+msgstr "L'entrée n'a pas pu être ajoutée"
+
+#: bibliographies/bpsp-bibliography.class.php:600
+#: bibliographies/bpsp-bibliography.class.php:741
+msgid "Entry added"
+msgstr "Entrée ajoutée"
+
+#: bibliographies/bpsp-bibliography.class.php:606
+#: bibliographies/bpsp-bibliography.class.php:747
+msgid "Book added"
+msgstr "Livre ajouté"
+
+#: bibliographies/bpsp-bibliography.class.php:608
+#: bibliographies/bpsp-bibliography.class.php:749
+msgid "Book could not be added"
+msgstr "Le livre n'a pas pu être ajouté"
+
+#: bibliographies/bpsp-bibliography.class.php:690
+msgid "entries were imported."
+msgstr "entrées ont été importées."
+
+#: bibliographies/bpsp-bibliography.class.php:693
+msgid "entries were not imported (caused by duplication or misformat)."
+msgstr "entrées n'ont pas été importées (doublons ou mauvais formatage)."
+
+#: bibliographies/bpsp-bibliography.class.php:726
+msgid "BuddyPress Courseware Error while forbidden user tried to add bibliography entries."
+msgstr "Erreur de l'application BuddyPress Courseware. Un utilisateur non autorisé a tenté d'ajouter des entrées bibliographiques."
+
+#: bibliographies/bpsp-bibliography.class.php:734
+msgid "Bibliography added"
+msgstr "Bibliographie ajoutée"
+
+#: bibliographies/bpsp-bibliography.class.php:736
+msgid "Bibliography could not be added"
+msgstr "La bibliographie n'a pas pu être ajoutée"
+
+#: bibliographies/bpsp-bibliography.class.php:751
+msgid "No bibliography entry could be added."
+msgstr "Aucune entrée bibliographique n'a pu être ajoutée."
+
+#: notifications/bpsp-notifications.class.php:58
+msgid "Your assignment was graded."
+msgstr "Votre devoir a été noté."
+
+#: notifications/bpsp-notifications.class.php:61
+msgid " graded your assignment: "
+msgstr "a noté votre devoir :"
+
+#: notifications/bpsp-notifications.class.php:65
+msgid "Follow the link above to see the grade."
+msgstr "Cliquez sur le lien ci-dessu pour voir la note."
+
+#: notifications/bpsp-notifications.class.php:83
+msgid "Student replied to your assignment."
+msgstr "Étudiant a répondu à votre devoir."
+
+#: notifications/bpsp-notifications.class.php:86
+msgid " added a response to: "
+msgstr "a ajouté une réponse à :"
+
+#: notifications/bpsp-notifications.class.php:90
+msgid "Follow the link above to see it."
+msgstr "Cliquez sur le lien ci-dessus pour l'afficher."
+
+#: activity/bpsp-activity.class.php:28
+msgid "New assignment"
+msgstr "Nouveau devoir"
+
+#: activity/bpsp-activity.class.php:29
+msgid "New course"
+msgstr "Nouveau cours"
+
+#: activity/bpsp-activity.class.php:30
+msgid "New response"
+msgstr "Nouvelle réponse"
+
+#: activity/bpsp-activity.class.php:31
+msgid "New Schedule"
+msgstr "Nouveau programme"
+
+#: activity/bpsp-activity.class.php:57
+#, php-format
+msgid "%s created assignment %s in %s Courseware:"
+msgstr "%s a créé un devoir %s dans %s Courseware :"
+
+#: activity/bpsp-activity.class.php:87
+#, php-format
+msgid "%s created course %s in %s Courseware:"
+msgstr "%s a créé un cours %s dans %s Courseware :"
+
+#: activity/bpsp-activity.class.php:119
+#, php-format
+msgid "%s added a response %s to %s Courseware Assignment:"
+msgstr "%s a ajouté une réponse %s à %s Devoir Courseware :"
+
+#: activity/bpsp-activity.class.php:149
+#, php-format
+msgid "%s added %s schedules to %s Courseware:"
+msgstr "%s a ajouté %s programmes à %s Courseware :"
+
+#: groups/bpsp-groups.class.php:294
+msgid "Group Courseware settings were successfully updated."
+msgstr "Les réglages de groupes Courseware on été mis à jour avec succès."
+
+#: groups/bpsp-groups.class.php:301
+msgid "Group Courseware responses settings were successfully updated."
+msgstr "Les réglages pour les réponses des groupes Courseware ont été mis à jour avec succès."
+
+#: groups/templates/list_schedules.php:32
+#, php-format
+msgid "added on %1$s by %2$s."
+msgstr "ajouté le %1$s par %2$s."
+
+#: groups/templates/home.php:10
+#, php-format
+msgid "Courseware started by %s and managed by %d teacher(s) with %d course(s) for class %s"
+msgstr "Courseware démarré par %s et géré par %d professeur(s) avec %d cours pour classe %s"
+
+#: groups/templates/home.php:31
+#, php-format
+msgid "<strong>%s</strong> course class started by %s and managed by %d teacher(s) for this group"
+msgstr "Classe de cours <strong>%s</strong> démarrée par %s et gérée par %d professeur(s) pour ce groupe"
+
+#: groups/templates/home.php:51
+#, php-format
+msgid "<em>%s</em> Assignment(s)"
+msgstr "<em>%s</em> devoir(s)"
+
+#: groups/templates/home.php:68
+#, php-format
+msgid "<em>%s</em> Response(s)"
+msgstr "<em>%s</em> réponse(s)"
+
+#: groups/templates/home.php:79
+#, php-format
+msgid "<em>%s</em> Schedule(s)"
+msgstr "<em>%s</em> programme(s)"
+
+#: groups/templates/home.php:96
+#, php-format
+msgid "<em>%s</em> Bibliography entries"
+msgstr "<em>%s</em> entrées bibliographiques"
+
+#: groups/templates/home.php:110
+#, php-format
+msgid "<em>%d</em> Assignment discussions started"
+msgstr "<em>%d</em> discussions de devoirs démarrées"
+
+#: groups/templates/home.php:130
+msgid "Courses"
+msgstr "Cours"
+
+#: groups/templates/home.php:143
+#: groups/templates/home.php:173
+#: groups/templates/home.php:203
+#: groups/templates/home.php:238
+#, php-format
+msgid "By %s, on %s"
+msgstr "Par %s, le %s"
+
+#: groups/templates/home.php:190
+msgid "Calendar"
+msgstr "Calendrier"
+
+#: groups/templates/single_assignment.php:27
+#, php-format
+msgid "Date: %1$s"
+msgstr "Date : %1$s"
+
+#: groups/templates/single_assignment.php:35
+#, php-format
+msgid "Author: %1$s"
+msgstr "Auteur : %1$s"
+
+#: groups/templates/single_assignment.php:43
+#, php-format
+msgid "Course: %1$s"
+msgstr "Cours : %1$s"
+
+#: groups/templates/_course_group_header.php:11
+#, php-format
+msgid "Course started on %1$s by %2$s."
+msgstr "Cours démarré le %1$s par %2$s."
+
+#: groups/templates/list_courses.php:29
+#, php-format
+msgid "added by %1$s."
+msgstr "ajouté par %1$s."
+
+#: groups/templates/single_schedule.php:17
+#, php-format
+msgid "Start Date: %1$s"
+msgstr "Date de début : %1$s"
+
+#: groups/templates/single_schedule.php:26
+#, php-format
+msgid "End Date: %1$s"
+msgstr "Date de fin : %1$s"
+
+#: groups/templates/single_schedule.php:36
+#, php-format
+msgid "Location: %1$s"
+msgstr "Lieu : %1$s"
+
+#: schedules/bpsp-schedules.class.php:45
+msgid "Schedules"
+msgstr "Programmes"
+
+#: schedules/bpsp-schedules.class.php:46
+msgid "Schedule"
+msgstr "Programme"
+
+#: schedules/bpsp-schedules.class.php:47
+msgid "BuddyPress ScholarPress Courseware Schedules"
+msgstr "Programmes BuddyPress ScholarPress Courseware"
+
+#: schedules/bpsp-schedules.class.php:59
+msgid "BuddyPress Courseware error while registering schedule post type."
+msgstr "Erreur de l'application BuddyPress Courseware lors de l'enregistrement du type de message de programme."
+
+#: schedules/bpsp-schedules.class.php:65
+msgid "BuddyPress Courseware error while registering schedule taxonomies."
+msgstr "Erreur de l'application BuddyPress Courseware lors de l'enregistrement des taxonomies de programmes."
+
+#: schedules/bpsp-schedules.class.php:337
+#: courses/bpsp-courses.class.php:282
+msgid "BuddyPress Courseware Error while forbidden user tried to add a new course."
+msgstr "Erreur de l'application BuddyPress Courseware. Un utilisateur non autorisé a tenté d'ajouter un nouveau cours."
+
+#: schedules/bpsp-schedules.class.php:344
+msgid "New schedule could not be added. Missing description/title and/or start date."
+msgstr "Le nouveau programme n'a pas pu être ajouté. Description/titre et/ou date de début manquante."
+
+#: schedules/bpsp-schedules.class.php:364
+msgid "Nonce Error while adding a schedule."
+msgstr "Erreur momentanée lors de l'ajout d'un programme."
+
+#: schedules/bpsp-schedules.class.php:414
+msgid "New schedule was added."
+msgstr "Le nouveau programme a été ajouté."
+
+#: schedules/bpsp-schedules.class.php:418
+msgid "New schedule could not be added."
+msgstr "Le nouveau programme n'a pas pu être ajouté."
+
+#: schedules/bpsp-schedules.class.php:443
+msgid "No schedules exist."
+msgstr "Aucun programme n'existe."
+
+#: schedules/bpsp-schedules.class.php:492
+msgid "BuddyPress Courseware Nonce Error while deleting a schedule."
+msgstr "Erreur momentanée de l'application BuddyPress Courseware lors de la suppression d'un programme."
+
+#: schedules/bpsp-schedules.class.php:499
+msgid "BuddyPress Courseware Error while forbidden user tried to delete a schedule."
+msgstr "Erreur de l'application BuddyPress Courseware. Un utilisateur non autorisé a tenté de supprimer un programme."
+
+#: schedules/bpsp-schedules.class.php:503
+msgid "Schedule deleted successfully."
+msgstr "Programme supprimé avec succès."
+
+#: schedules/bpsp-schedules.class.php:525
+msgid "BuddyPress Courseware Error while forbidden user tried to update the schedule."
+msgstr "Erreur de l'application BuddyPress Courseware. Un utilisateur non autorisé a tenté de dupliquer le programme."
+
+#: schedules/bpsp-schedules.class.php:532
+msgid "New schedule could not be added. Missing description and/or start date."
+msgstr "Le nouveau programme n'a pas pu être ajouté. Description et/ou date de début manquante."
+
+#: schedules/bpsp-schedules.class.php:546
+msgid "Nonce Error while editing a schedule."
+msgstr "Erreur momentanée lors de l'édition du programme."
+
+#: schedules/bpsp-schedules.class.php:567
+msgid "Schedule was updated."
+msgstr "Le Programme a été mis à jour."
+
+#: schedules/bpsp-schedules.class.php:570
+msgid "Schedule could not be updated."
+msgstr "Le Programme n'a pas pu être mis à jour."
+
+#: schedules/bpsp-schedules.class.php:581
+#: courses/bpsp-courses.class.php:455
+msgid "Delete Course"
+msgstr "Supprimer le cours"
+
+#: schedules/bpsp-schedules.class.php:641
+msgid "Calendar for: "
+msgstr "Calendrier pour :"
+
+#: wordpress/bpsp-wordpress.class.php:79
+#: wordpress/bpsp-wordpress.class.php:84
+#: wordpress/bpsp-wordpress.class.php:87
+#: wordpress/bpsp-wordpress.class.php:92
+#: wordpress/bpsp-wordpress.class.php:95
+#: wordpress/bpsp-wordpress.class.php:100
+#: wordpress/bpsp-wordpress.class.php:103
+msgid "Courseware option was updated."
+msgstr "L'option Courseware a été mise à jour."
+
+#: wordpress/bpsp-wordpress.class.php:108
+msgid "Courseware gradebook format option was updated."
+msgstr "L'option de format du carnet de notes a été mise à jour."
+
+#: wordpress/bpsp-wordpress.class.php:113
+msgid "WorldCat option was updated."
+msgstr "L'option WorldCat a été mise à jour."
+
+#: wordpress/bpsp-wordpress.class.php:116
+msgid "ISBNdb option was updated."
+msgstr "L'option ISBNdb a été mise à jour."
+
+#: wordpress/bpsp-wordpress.class.php:121
+#: wordpress/bpsp-wordpress.class.php:124
+msgid "Courseware customization options updated."
+msgstr "Options de personnalisation Courseware mises à jour."
+
+#: wordpress/templates/admin.php:79
+msgid "Save Changes"
+msgstr "Enregistrer les Modifications"
+
+#: courses/bpsp-courses.class.php:46
+msgid "Course"
+msgstr "Cours"
+
+#: courses/bpsp-courses.class.php:47
+msgid "BuddyPress ScholarPress Courseware Courses"
+msgstr "Cours BuddyPress ScholarPress Courseware"
+
+#: courses/bpsp-courses.class.php:59
+msgid "BuddyPress Courseware error while registering courses post type."
+msgstr "Erreur de l'application BuddyPress Courseware lors de l'enregistrement du type de messages de cours."
+
+#: courses/bpsp-courses.class.php:65
+msgid "Group ID"
+msgstr "N° groupe"
+
+#: courses/bpsp-courses.class.php:77
+msgid "BuddyPress Courseware error while registering courses taxonomies."
+msgstr "Erreur de l'application BuddyPress Courseware lors de l'enregistrement des taxonomies de cours."
+
+#: courses/bpsp-courses.class.php:262
+msgid "New Course"
+msgstr "Nouveau cours"
+
+#: courses/bpsp-courses.class.php:291
+msgid "Nonce Error while adding a course."
+msgstr "Erreur momentanée lors de l'ajout d'un cours."
+
+#: courses/bpsp-courses.class.php:304
+msgid "New course was added."
+msgstr "Le nouveau cours a été ajouté."
+
+#: courses/bpsp-courses.class.php:308
+msgid "New course could not be added."
+msgstr "Le nouveau cours n'a pas pu être ajouté."
+
+#: courses/bpsp-courses.class.php:386
+msgid "BuddyPress Courseware Nonce Error while deleting the course."
+msgstr "Erreur momentanée de l'application BuddyPress Courseware lors de la suppression du cours."
+
+#: courses/bpsp-courses.class.php:393
+msgid "BuddyPress Courseware Error while forbidden user tried to delete the course."
+msgstr "Erreur de l'application BuddyPress Courseware. Un utilisateur non autorisé a essayé de supprimer le cours."
+
+#: courses/bpsp-courses.class.php:397
+msgid "Course deleted successfully."
+msgstr "Cours supprimé avec succès."
+
+#: courses/bpsp-courses.class.php:420
+msgid "BuddyPress Courseware Error while forbidden user tried to update the course."
+msgstr "Erreur de l'application BuddyPress Courseware. Un utilisateur non autorisé a tenté de mettre à jour le cours."
+
+#: courses/bpsp-courses.class.php:429
+msgid "Nonce Error while editing a course."
+msgstr "Erreur momentanée lors de l'édition d'un cours."
+
+#: courses/bpsp-courses.class.php:443
+msgid "New course was updated."
+msgstr "Le nouveau cours a été mis à jour."
+
+#: courses/bpsp-courses.class.php:445
+msgid "New course could not be updated."
+msgstr "Le nouveau cours n'a pas pu être mis à jour."
+
+#: courses/bpsp-courses.us.class.php:87
+msgid "Course Description"
+msgstr "Description du Cours"
+
