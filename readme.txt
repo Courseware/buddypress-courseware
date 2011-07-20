@@ -42,6 +42,9 @@ Before asking questions, please check the [BuddyPress Courseware Handbook](http:
 
 == Changelog ==
 
+= 0.x-future  =
+* French localisation from [Albert Bruc](http://www.ab-ae.fr/)
+
 = 0.1.6 =
 * Updated wording, @props mrjarbenne. Closes [#27](https://github.com/scholarpress/buddypress-courseware/issues/issue/27)
 * Importer should work now with php5.1. Closes [#31](https://github.com/scholarpress/buddypress-courseware/issues/issue/31)
