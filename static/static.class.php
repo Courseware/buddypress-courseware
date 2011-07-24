@@ -44,7 +44,7 @@ class BPSP_Static {
         wp_register_script( 'jstree', BPSP_WEB_URI . '/static/js/jstree/jquery.jstree.js', array( 'jquery' ), '1.0-rc3' );
         
         // formBuilder
-        wp_register_script( 'formbuilder', BPSP_WEB_URI . '/static/js/formbuilder/jquery.formbuilder.js', array( 'jquery', 'jquery-ui-sortable' ), '0.3-beta' );
+        wp_register_script( 'formbuilder', BPSP_WEB_URI . '/static/js/formbuilder/jquery.formbuilder.js', array( 'jquery', 'jquery-ui-sortable' ), '0.3.1' );
         wp_localize_script( 'formbuilder', 'fbLanguage', $this->formbuilder_l10n() );
         
         // Loaders

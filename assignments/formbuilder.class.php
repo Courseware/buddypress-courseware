@@ -118,16 +118,18 @@ class FormBuilder {
      */
     function load_field( $field ) {
         // Apply some filters
-        if ( !is_array( $field['values'] ) )
-            $field['values'] = apply_filters( 'the_content', $field['values'] );
+        if ( !is_array( $field['values'] ) ) {
+            $field['values'] = reset( preg_split( "/\?(?!.*\?)/", $field['values'] ) );
+            $field['rendered_title'] = apply_filters( 'the_content', $field['values'] );
+        }
         else {
-            $field['title'] = apply_filters( 'the_content', $field['title'] );
-            foreach ( $field['values'] as $a )
-                $a['value'] = apply_filters( 'the_title', $a['value'] );
+            $field['rendered_title'] = apply_filters( 'the_content', $field['title'] );
+            foreach ( $field['values'] as $i => $a )
+                $field['values'][$i]['rendered_value'] = apply_filters( 'the_title', $a['value'] );
         }
         
-        if( is_array( $field ) && isset( $field['class'] ) ) {
-            switch( $field['class'] ) {
+        if( is_array( $field ) && isset( $field['cssClass'] ) ) {
+            switch( $field['cssClass'] ) {
                 case 'input_text':
                     return $this->load_text( $field );
                     break;
@@ -157,24 +159,23 @@ class FormBuilder {
      */
     function load_text( $field ) {
         $field['required'] = $field['required'] == 'true' ? ' required' : false;
-        $field_name = trim( reset( preg_split( "/\?(?!.*\?)/", $field['values'] ) ) );
+        $field_name = trim( $field['values'] );
         $field_id = sanitize_title( $field_name );
-        
         $html = sprintf(
             '<li class="%s%s" id="fld-%s">' . "\n",
-            sanitize_title( $field['class'] ),
+            sanitize_title( $field['cssClass'] ),
             $field['required'],
             $field_id
         );
         $html .= sprintf(
             '<label for="%s">%s</label>' . "\n",
             $field_id,
-            $field_name
+            $field['rendered_title']
         );
         $html .= sprintf(
             '<input type="text" id="%s" name="%s" value="" />' . "\n",
             $field_id,
-            $this->name_prefix . '[' . md5( $field['values'] ) . ']'
+            $this->name_prefix . '[' . md5( $field_name ) . ']'
         );
         $html .= '</li>' . "\n";
         
@@ -190,24 +191,24 @@ class FormBuilder {
      */
     function load_textarea( $field ) {
         $field['required'] = $field['required'] == 'true' ? ' required' : false;
-        $field_name = trim( reset( preg_split( "/\?(?!.*\?)/", $field['values'] ) ) );
+        $field_name = trim( $field['values'] );
         $field_id = sanitize_title( $field_name );
         
         $html = sprintf(
             '<li class="%s%s" id="fld-%s">' . "\n",
-            sanitize_title( $field['class'] ),
+            sanitize_title( $field['cssClass'] ),
             $field['required'],
             $field_id
         );
         $html .= sprintf(
             '<label for="%s">%s</label>' . "\n",
             $field_id,
-            $field_name
+            $field['rendered_title']
         );
         $html .= sprintf(
             '<textarea id="%s" name="%s" rows="5" cols="50"></textarea>' . "\n",
             $field_id,
-            $this->name_prefix . '[' . md5( $field['values'] ) . ']'
+            $this->name_prefix . '[' . md5( $field_name ) . ']'
         );
         $html .= '</li>' . "\n";
         
@@ -227,14 +228,14 @@ class FormBuilder {
         
         $html = sprintf(
             '<li class="%s" id="fld-%s">' . "\n",
-            sanitize_title( $field['class'] ),
+            sanitize_title( $field['cssClass'] ),
             $field_title
         );
         
         if( isset( $field['title'] ) && !empty( $field['title'] ) ) {
             $html .= sprintf(
                 '<label>%s</label>' . "\n",
-                $field['title']
+                $field['rendered_title']
             );
         }
         
@@ -248,14 +249,13 @@ class FormBuilder {
                 
                 $checkbox = '<span class="row clearall">';
                 $checkbox .= '<input type="checkbox" id="%s" name="%s" value="%s" />';
-                $checkbox .= '<label for="%s">%s</label></span>' . "\n";
+                $checkbox .= '<label for="%1$s">%s</label></span>' . "\n";
                 $html .= sprintf(
                     $checkbox,
                     $field_id,
                     $this->name_prefix . '[' . md5( $field['title'] . $item['value'] ) . ']',
-                    esc_attr( $item['value'] ),
-                    $field_id,
-                    $item['value']
+                    $item['value'],
+                    $item['rendered_value']
                 );
             }
             $html .= '</span>' . "\n";
@@ -274,7 +274,7 @@ class FormBuilder {
      */
     function load_radios( $field ) {
         $field['required'] = $field['required'] == 'true' ? ' required' : false;
-        $field_id = sanitize_title( $field['class'] );
+        $field_id = sanitize_title( $field['cssClass'] );
         
         $html = sprintf(
             '<li class="%s%s" id="fld-%s">' . "\n",
@@ -284,7 +284,7 @@ class FormBuilder {
         );
         
         if( isset( $field['title'] ) && !empty( $field['title'] ) ) {
-            $html .= sprintf( '<label>%s</label>' . "\n", $field['title'] );
+            $html .= sprintf( '<label>%s</label>' . "\n", $field['rendered_title'] );
         }
         
         if( isset( $field['values'] ) && is_array( $field['values'] ) ) {
@@ -300,8 +300,8 @@ class FormBuilder {
                     $radio,
                     $field_id,
                     $this->name_prefix . '[' . md5( $field['title'] ) . ']',
-                    esc_attr( $item['value'] ),
-                    $item['value']
+                    $item['value'],
+                    $item['rendered_value']
                 );
             }
             $html .= '</span>' . "\n";
@@ -320,7 +320,7 @@ class FormBuilder {
     */
     function load_select( $field ) {
         $field['required'] = $field['required'] == 'true' ? ' required' : false;
-        $field_id = sanitize_title( $field['class'] );
+        $field_id = sanitize_title( $field['cssClass'] );
         $field_title = sanitize_title( $field['title'] );
         
         $html = sprintf(
@@ -334,7 +334,7 @@ class FormBuilder {
             $html .= sprintf(
                 '<label for="%s">%s</label>' . "\n",
                 $field_title,
-                $field['title']
+                $field['rendered_title']
             );
         }
         
@@ -352,7 +352,7 @@ class FormBuilder {
                 $html .= sprintf(
                     $option,
                     md5( $field['title'] . $item['value'] ),
-                    esc_attr( $item['value'] )
+                    $item['rendered_value']
                 );
             }
             

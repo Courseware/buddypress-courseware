@@ -39,11 +39,11 @@
                     <?php foreach( $response->form_values as $q => $a ): ?>
                         <?php if( in_array( $q, array( 'total', 'correct' ) ) ) continue; ?>
                         <li>
-                            <em><?php echo $q ?></em>
+                            <em><?php echo apply_filters( 'the_content', $q ); ?></em>
                             <ul class="answers">
                                 <?php foreach ($a as $k => $e): ?>
                                     <li class="<?php echo ( ( $k % 2 ) == 0 ) ? 'wrong' : 'correct'; ?>">
-                                        <?php echo $e; ?>
+                                        <?php echo apply_filters( 'the_title', $e ); ?>
                                     </li>
                                 <?php endforeach; ?>
                             </ul>

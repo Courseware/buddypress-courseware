@@ -476,7 +476,7 @@ class BPSP_Gradebook {
     }
     
     /**
-     * gradebook_screen( $vars )
+     * student_screen( $vars )
      *
      * Hooks into courseware_assignment
      * If a student is visiting assignment screen, his grade will be shown
@@ -511,7 +511,7 @@ class BPSP_Gradebook {
             $grade = array(
                 'uid' => $results['response']->post_author,
                 // Generate a percentage
-                'value' => $quiz_data['correct'] / $quiz_data['total'] * 100,
+                'value' => round( $quiz_data['correct'] / $quiz_data['total'] * 100, 2 ),
                 'format' => 'percentage',
                 'prv_comment' => $results['response']->post_title,
                 'pub_comment' => $results['response']->post_content

@@ -337,24 +337,23 @@ class BPSP_Responses {
         $results = array();
         $results['total'] = 0;
         $results['correct'] = 0;
-        
         foreach( $questions as $question ) {
             // Find the initial correct question and answer
             if( !is_array( $question['values'] ) ) {
                 // The answer is after last ?
                 $q_and_a = preg_split( "/\?(?!.*\?)/", $question['values'] );
                 $a = trim( end( $q_and_a ) );
-                $q = prev( $q_and_a );
+                $q = trim( reset( $q_and_a ) );
                 $results[ $q ] = array();
                 // Find the name of the form
-                $name = md5( $question['values'] );
+                $name = md5( $q );
                 // Correct answers should be counted
                 if( !empty( $a ) )
                     $results['total']++;
                 // Find the user answer and compare
-                if( isset( $answers[ $name ] ) ) {
+                if( isset( $answers[ $name ] ) && !empty( $answers[ $name ] ) ) {
                     // Save the wrong answers
-                    if( trim( strtolower( $a ) ) != trim( strtolower( $answers[ $name ] ) ) ) {
+                    if( trim( strtolower( $a ) ) != strtolower( $answers[ $name ] ) ) {
                         $results[ $q ][] = esc_html( $answers[ $name ] );
                         $results[ $q ][] = $a;
                     }
@@ -362,7 +361,7 @@ class BPSP_Responses {
                         $results['correct']++;
                 } else {
                     // Save the wrong answer even if no answer was given
-                    if( $a['default'] != 'undefined' ) {
+                    if( !isset( $answers[ $name ] ) || empty( $answers[ $name ] ) ) {
                         $results[ $q ][] = __( '(No answer)', 'bpsp' );
                         $results[ $q ][] = $a;
                     }
@@ -372,16 +371,16 @@ class BPSP_Responses {
                 $results[ $q ] = array();
                 // Find the name of the form
                 $name = md5( $q );
-                if( $question['class'] == 'checkbox' ) {
+                if( $question['cssClass'] == 'checkbox' ) {
                     foreach( $question['values'] as $a ) {
                         // Correct answers should be counted
-                        if( $a['default'] != 'undefined' )
+                        if( $a['baseline'] != 'undefined' )
                             $results['total']++;
                         
                         $cb_name = md5( $q . $a['value'] );
                         if( isset( $answers[ $cb_name ] ) ) {
                             // Save the wrong answer
-                            if( $a['default'] == 'undefined' ) {
+                            if( $a['baseline'] == 'undefined' ) {
                                 $results[ $q ][] = esc_html( $a['value'] );
                                 $results[ $q ][] = esc_html( $a['value'] ) . ' ' . __( '(wrong)', 'bpsp' );
                             }
@@ -389,7 +388,7 @@ class BPSP_Responses {
                                 $results['correct']++;
                         } else {
                             // Save the wrong answer even if no answer was given
-                            if( $a['default'] != 'undefined' ) {
+                            if( $a['baseline'] != 'undefined' ) {
                                 $results[ $q ][] = __( '(No answer)', 'bpsp' );
                                 $results[ $q ][] = esc_html( $a['value'] );
                             }
@@ -398,7 +397,7 @@ class BPSP_Responses {
                 } else { // Radios | Select
                     foreach( $question['values'] as $a ) {
                         // Correct answers should be counted
-                        if( $a['default'] != 'undefined' )
+                        if( $a['baseline'] != 'undefined' )
                             $results['total']++;
                         // Check if the answer exists
                         $r_a = false;
@@ -406,16 +405,16 @@ class BPSP_Responses {
                             $r_a = $answers[ $name ];
                         
                         // Save the wrong answer if any
-                        if( $a['default'] != 'undefined' && $question['class'] == 'radio' ) {
+                        if( $a['baseline'] != 'undefined' && $question['cssClass'] == 'radio' ) {
                             if( trim( strtolower( $a['value'] ) ) != trim( strtolower( $r_a ) ) ) {
                                 $results[ $q ][] = isset( $r_a ) ? $r_a : __( '(No answer)', 'bpsp' );
-                                $results[ $q ][] = esc_attr( $a['value'] );
+                                $results[ $q ][] = esc_html( $a['value'] );
                             } else 
                                 $results['correct']++;
-                        } elseif ( $a['default'] != 'undefined' ) { // Select
+                        } elseif ( $a['baseline'] != 'undefined' ) { // Select
                             if ( md5( $q . $a['value'] ) != $r_a ) {
                                 $results[ $q ][] = __( '(Correct answer below)', 'bpsp' );
-                                $results[ $q ][] = esc_attr( $a['value'] );
+                                $results[ $q ][] = esc_html( $a['value'] );
                             } else 
                                 $results['correct']++;
                         }
@@ -454,7 +453,7 @@ class BPSP_Responses {
             isset( $_POST['_wpnonce'] )
         ) {
             $new_response = $_POST['response'];
-            $new_response_quiz = $_POST['frmb'] ? $_POST['frmb'] : null;
+            $new_response_quiz = !empty( $_POST['frmb'] ) ? $_POST['frmb'] : null;
             $is_nonce = wp_verify_nonce( $_POST['_wpnonce'], $nonce_name );
             $response = $this->has_response();
             if( true != $is_nonce ) 

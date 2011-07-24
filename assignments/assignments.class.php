@@ -596,6 +596,9 @@ class BPSP_Assignments {
                         'post_content'  => $updated_assignment['content'],
                     ));
                     
+                    if( is_object( $updated_assignment_id ) && isset( $updated_assignment_id->ID ) )
+                        $updated_assignment_id = $updated_assignment_id->ID;
+                    
                     if( $updated_assignment_id ) {
                         wp_set_post_terms( $updated_assignment_id, $updated_assignment['course_id'], 'course_id' );
                         if( strtotime( $updated_assignment['due_date'] ) )
@@ -621,7 +624,7 @@ class BPSP_Assignments {
         $vars['name'] = 'edit_assignment';
         $vars['group_id'] = $bp->groups->current_group->id;
         $vars['user_id'] = $bp->loggedin_user->id;
-        $vars['lecture_id'] = get_post_meta( $updated_assignment_id, 'lecture_id', true );
+        $vars['lecture_id'] = get_post_meta( $old_assignment->ID, 'lecture_id', true );
         $vars['lectures'] = BPSP_Lectures::has_lectures( $bp->groups->current_group->id );
         $vars['assignment'] = $this->is_assignment( $updated_assignment_id );
         $vars['assignment_edit_uri'] = $vars['current_uri'] . '/assignment/' . $this->current_assignment->post_name . '/edit';
