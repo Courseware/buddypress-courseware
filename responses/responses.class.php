@@ -342,7 +342,7 @@ class BPSP_Responses {
             // Find the initial correct question and answer
             if( !is_array( $question['values'] ) ) {
                 // The answer is after last ?
-                $q_and_a = preg_split( "/(?<=\?)/", $question['values'] );
+                $q_and_a = preg_split( "/\?(?!.*\?)/", $question['values'] );
                 $a = trim( end( $q_and_a ) );
                 $q = prev( $q_and_a );
                 $results[ $q ] = array();

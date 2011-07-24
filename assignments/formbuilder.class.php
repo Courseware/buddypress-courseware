@@ -157,7 +157,7 @@ class FormBuilder {
      */
     function load_text( $field ) {
         $field['required'] = $field['required'] == 'true' ? ' required' : false;
-        $field_name = trim( preg_replace( "/\?.*/i", '?', $field['values'] ) );
+        $field_name = trim( reset( preg_split( "/\?(?!.*\?)/", $field['values'] ) ) );
         $field_id = sanitize_title( $field_name );
         
         $html = sprintf(
@@ -190,7 +190,7 @@ class FormBuilder {
      */
     function load_textarea( $field ) {
         $field['required'] = $field['required'] == 'true' ? ' required' : false;
-        $field_name = trim( preg_replace( "/\?.*/i", '?', $field['values'] ) );
+        $field_name = trim( reset( preg_split( "/\?(?!.*\?)/", $field['values'] ) ) );
         $field_id = sanitize_title( $field_name );
         
         $html = sprintf(
