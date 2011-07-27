@@ -43,7 +43,7 @@
                             <ul class="answers">
                                 <?php foreach ($a as $k => $e): ?>
                                     <li class="<?php echo ( ( $k % 2 ) == 0 ) ? 'wrong' : 'correct'; ?>">
-                                        <?php echo apply_filters( 'the_title', $e ); ?>
+                                        <?php echo apply_filters( 'the_content', $e ); ?>
                                     </li>
                                 <?php endforeach; ?>
                             </ul>

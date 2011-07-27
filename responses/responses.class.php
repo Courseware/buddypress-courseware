@@ -339,6 +339,8 @@ class BPSP_Responses {
         $results = array();
         $results['total'] = 0;
         $results['correct'] = 0;
+        $answers = stripslashes_deep( $answers );
+        $answers = str_replace( '\\', "&#92;", $answers );
         foreach( $questions as $question ) {
             // Find the initial correct question and answer
             if( !is_array( $question['values'] ) ) {

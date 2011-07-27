@@ -43,13 +43,16 @@ class FormBuilder {
             parse_str( $data, $this->unserialized );
         $this->unserialized = reset( $this->unserialized );
         // Sanitization
-        foreach ( $this->unserialized as $q ) {
+        foreach ( $this->unserialized as $k => $q ) {
             if ( !is_array( $q['values'] ) ) {
-                $q['values'] = apply_filters( 'content_save_pre', $q['values'] );
+                $this->unserialized[$k]['values'] = apply_filters( 'content_save_pre', $q['values'] );
+                $this->unserialized[$k]['values'] = str_replace( '\\', "&#92;", $q['values'] );
             } else {
-                $q['title'] = apply_filters( 'content_save_pre', $q['title'] );
-                foreach ( $q['values'] as $a ) {
-                    $a['value'] = apply_filters( 'content_save_pre', $a['value'] );
+                $this->unserialized[$k]['title'] = apply_filters( 'content_save_pre', $q['title'] );
+                $this->unserialized[$k]['title'] = str_replace( '\\', "&#92;", $q['title'] );
+                foreach ( $this->unserialized[$k]['values'] as $i => $a ) {
+                    $this->unserialized[$k]['values'][$i]['value'] = apply_filters( 'content_save_pre', $a['value'] );
+                    $this->unserialized[$k]['values'][$i]['value'] = str_replace( '\\', "&#92;", $a['value'] );
                 }
             }
         }
@@ -122,7 +125,7 @@ class FormBuilder {
         else {
             $field['rendered_title'] = apply_filters( 'the_content', $field['title'] );
             foreach ( $field['values'] as $i => $a )
-                $field['values'][$i]['rendered_value'] = apply_filters( 'the_title', $a['value'] );
+                $field['values'][$i]['rendered_value'] = apply_filters( 'the_content', $a['value'] );
         }
         
         if( is_array( $field ) && isset( $field['cssClass'] ) ) {

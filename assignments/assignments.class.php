@@ -564,10 +564,8 @@ class BPSP_Assignments {
         
         $old_assignment = $this->is_assignment( $this->current_assignment );
         
-        if( !$this->has_assignment_caps( $bp->loggedin_user->id ) &&
-            $bp->loggedin_user->id != $old_assignment->post_author &&
-            $bp->groups->current_group->id != $old_assignment->group[0]->name &&
-            !is_super_admin()
+        if( ( !$this->has_assignment_caps( $bp->loggedin_user->id ) && !is_super_admin() ) ||
+            ( $bp->loggedin_user->id != $old_assignment->post_author )
         ) {
             $vars['die'] = __( 'BuddyPress Courseware Error while forbidden user tried to update the assignment.', 'bpsp' );
             return $vars;

@@ -108,6 +108,7 @@ ul.courseware-meta li { padding: 5px 0; }
 #response-body .answers .wrong { color: #CC0000 !important; }
 #response-body .answers .correct { color: #1A9B00 !important; }
 #courseware-responses-list h4.meta { border-bottom: 1px solid #DDD; clear: both; }
+#assignment-quiz li .row label p { display: inline !important; }
 
 /* Courseware action buttons */
 .courseware a.action, #message a.action {
