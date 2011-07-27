@@ -624,7 +624,7 @@ class BPSP_Assignments {
         $vars['name'] = 'edit_assignment';
         $vars['group_id'] = $bp->groups->current_group->id;
         $vars['user_id'] = $bp->loggedin_user->id;
-        $vars['lecture_id'] = get_post_meta( $old_assignment->ID, 'lecture_id', true );
+        $vars['lecture_id'] = get_post_meta( isset( $new_assignment_id ) ? $new_assignment_id : $old_assignment->ID, 'lecture_id', true );
         $vars['lectures'] = BPSP_Lectures::has_lectures( $bp->groups->current_group->id );
         $vars['assignment'] = $this->is_assignment( $updated_assignment_id );
         $vars['assignment_edit_uri'] = $vars['current_uri'] . '/assignment/' . $this->current_assignment->post_name . '/edit';
@@ -642,10 +642,22 @@ class BPSP_Assignments {
      */
     function get_form_data() {
         if( $this->has_assignment_caps( $bp->loggedin_user->id ) || is_super_admin() ) {
-            header('HTTP/1.1 200 OK');
+            header( 'HTTP/1.1 200 OK' );
             header( "Content-Type: application/json" );
             $this->frmb->set_data( $this->current_assignment->form_data );
-            echo $this->frmb->get_json();
+            $data = $this->frmb->get_data();
+            
+            foreach ( $data as $k => $q ) {
+                if ( !is_array( $data[$k]['values'] ) ) {
+                    $data[$k]['values'] = esc_textarea( $q['values'] );
+                } else {
+                    $data[$k]['title'] = esc_textarea( $data[$k]['title'] );
+                    foreach ( $data[$k]['values'] as $i => $v ) {
+                        $data[$k]['values'][$i]['value'] = esc_textarea( $v['value'] );
+                    }
+                }
+            }
+            echo json_encode( $data );
             exit( 0 );
         }
     }

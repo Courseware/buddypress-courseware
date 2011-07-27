@@ -227,6 +227,7 @@ class BPSP_Responses {
             wp_redirect( wp_redirect( get_option( 'siteurl' ) ) );
         
         if( $action_vars[2] == 'add_response' ) {
+            do_action( 'courseware_add_response' );
             //Load editor
             add_action( 'bp_head', array( &$this, 'load_editor' ) );
             add_filter( 'courseware_group_template', array( &$this, 'new_response_screen' ) );
@@ -241,6 +242,7 @@ class BPSP_Responses {
             if( isset ( $action_vars[4] ) && 'delete' == $action_vars[4] )
                 add_filter( 'courseware_group_template', array( &$this, 'delete_response_screen' ) );
             else {
+                do_action( 'courseware_single_response' );
                 add_filter( 'courseware_group_template', array( &$this, 'single_response_screen' ) );
             }
         }

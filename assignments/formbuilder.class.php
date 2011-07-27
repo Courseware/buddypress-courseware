@@ -45,13 +45,10 @@ class FormBuilder {
         // Sanitization
         foreach ( $this->unserialized as $q ) {
             if ( !is_array( $q['values'] ) ) {
-                $q['values'] = urldecode( $q['values'] );
                 $q['values'] = apply_filters( 'content_save_pre', $q['values'] );
             } else {
-                $q['title'] = urldecode( $q['title'] );
                 $q['title'] = apply_filters( 'content_save_pre', $q['title'] );
                 foreach ( $q['values'] as $a ) {
-                    $a['value'] = urldecode( $a['value'] );
                     $a['value'] = apply_filters( 'content_save_pre', $a['value'] );
                 }
             }
