@@ -276,15 +276,15 @@ class BPSP_Groups {
             if( isset( $_POST['group_courseware_status'] ) && !empty( $_POST['group_courseware_status'] ) ) {
                 $post_value = sanitize_key( $_POST['group_courseware_status'] );
             
-            if( groups_update_groupmeta( $bp->groups->current_group->id, 'courseware', $post_value ) )
-                $vars['message'] = __( 'Group Courseware settings were successfully updated.', 'bpsp' );
+                if( groups_update_groupmeta( $bp->groups->current_group->id, 'courseware', $post_value ) )
+                    $vars['message'] = __( 'Group Courseware settings were successfully updated.', 'bpsp' );
             }
             
             if( isset( $_POST['responses_courseware_status'] ) && !empty( $_POST['responses_courseware_status'] ) ) {
                 $post_value = sanitize_key( $_POST['responses_courseware_status'] );
             
-            if( groups_update_groupmeta( $bp->groups->current_group->id, 'courseware_responses', $post_value ) )
-                $vars['message'] = __( 'Group Courseware responses settings were successfully updated.', 'bpsp' );
+                if( groups_update_groupmeta( $bp->groups->current_group->id, 'courseware_responses', $post_value ) )
+                    $vars['message'] = __( 'Group Courseware responses settings were successfully updated.', 'bpsp' );
             }
         }
         
