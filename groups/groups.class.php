@@ -107,7 +107,7 @@ class BPSP_Groups {
         if( !$this->courseware_status( $bp->groups->current_group->id ) )
             return;
         
-        if ( $bp->current_component == $bp->groups->slug && $bp->current_action == $bp->courseware->slug ) {
+        if ( $bp->current_component == $bp->groups->id && $bp->current_action == $bp->courseware->slug ) {
             $this->current_nav_option =  $this->nav_options[__( 'Home', 'bpsp' )];
             
             if( $bp->action_variables[0] )
