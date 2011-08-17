@@ -114,7 +114,7 @@
         </div>
         <div class="dp25">
             <div id="user-progress">
-                <?php echo $assignments_count - $own_responses_count; ?>,<?php echo $own_responses_count; ?>
+                <?php echo ( $assignments_count ? $assignments_count : 1 ) - $own_responses_count; ?>,<?php echo $own_responses_count; ?>
             </div>
             <div id="progress-title"><?php _e( 'Your progress so far:', 'bpsp' );?></div>
             <div id="progress-count"><?php echo round( ( $own_responses_count / $assignments_count ) * 100, 2 ); ?>%</div>
