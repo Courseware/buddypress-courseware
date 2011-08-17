@@ -84,47 +84,47 @@ class BPSP_WordPress {
         // Courseware Global Status
         if( isset( $_POST['bpsp_global_status'] ) )
             if( update_option( 'bpsp_global_status', strtolower( $_POST['bpsp_global_status'] ) ) )
-                $vars['flash'][] = __( 'Courseware option was updated.' );
+                $vars['flash'][] = __( 'Courseware option was updated.', 'bpsp' );
         if( !isset( $_POST['bpsp_global_status'] ) && isset( $_POST['bpsp_global_status_check'] ) )
             if( update_option( 'bpsp_global_status', '' ) )
-                $vars['flash'][] = __( 'Courseware option was updated.' );
+                $vars['flash'][] = __( 'Courseware option was updated.', 'bpsp' );
         
         // Courseware Collaborative Settings
         if( isset( $_POST['bpsp_allow_only_admins'] ) )
             if( update_option( 'bpsp_allow_only_admins', strtolower( $_POST['bpsp_allow_only_admins'] ) ) )
-                $vars['flash'][] = __( 'Courseware option was updated.' );
+                $vars['flash'][] = __( 'Courseware option was updated.', 'bpsp' );
         if( !isset( $_POST['bpsp_allow_only_admins'] ) && isset( $_POST['bpsp_allow_only_admins_check'] ) )
             if( update_option( 'bpsp_allow_only_admins', '' ) )
-                $vars['flash'][] = __( 'Courseware option was updated.' );
+                $vars['flash'][] = __( 'Courseware option was updated.', 'bpsp' );
         
         // Courseware Private Responses
         if( isset( $_POST['bpsp_private_responses_check'] ) )
             if( update_option( 'bpsp_private_responses', strtolower( $_POST['bpsp_private_responses'] ) ) )
-                $vars['flash'][] = __( 'Courseware option was updated.' );
+                $vars['flash'][] = __( 'Courseware option was updated.', 'bpsp' );
         if( isset( $_POST['bpsp_private_responses_check'] ) && !isset( $_POST['bpsp_private_responses'] ) )
             if( update_option( 'bpsp_private_responses', '' ) )
-                $vars['flash'][] = __( 'Courseware option was updated.' );
+                $vars['flash'][] = __( 'Courseware option was updated.', 'bpsp' );
         
         // Courseware Default Gradebook Format
         if( isset( $_POST['bpsp_gradebook_format_check'] ) && isset( $_POST['bpsp_gradebook_format'] ) )
             if( update_option( 'bpsp_gradebook_format', strtolower( $_POST['bpsp_gradebook_format'] ) ) )
-                $vars['flash'][] = __( 'Courseware gradebook format option was updated.' );
+                $vars['flash'][] = __( 'Courseware gradebook format option was updated.', 'bpsp' );
         
         // Courseware Bibliography Webservices Integration
         if( isset( $_POST['worldcat_key'] ) && !empty( $_POST['worldcat_key'] ) )
             if( update_option( 'bpsp_worldcat_key', $_POST['worldcat_key'] ) )
-                $vars['flash'][] = __( 'WorldCat option was updated.' );
+                $vars['flash'][] = __( 'WorldCat option was updated.', 'bpsp' );
         if( isset( $_POST['isbndb_key'] ) && !empty( $_POST['isbndb_key'] ) )
             if( update_option( 'bpsp_isbndb_key', $_POST['isbndb_key'] ) )
-                $vars['flash'][] = __( 'ISBNdb option was updated.' );
+                $vars['flash'][] = __( 'ISBNdb option was updated.', 'bpsp' );
         
         // Courseware Custom CSS
         if( isset( $_POST['bpsp_load_css_check'] ) && isset( $_POST['bpsp_load_css'] ) )
             if( update_option( 'bpsp_load_css', strtolower( $_POST['bpsp_load_css'] ) ) )
-                $vars['flash'][] = __( 'Courseware customization options updated.' );
+                $vars['flash'][] = __( 'Courseware customization options updated.', 'bpsp' );
         if( isset( $_POST['bpsp_load_css_check'] ) && !isset( $_POST['bpsp_load_css'] ) )
             if( update_option( 'bpsp_load_css', '' ) )
-                $vars['flash'][] = __( 'Courseware customization options updated.' );
+                $vars['flash'][] = __( 'Courseware customization options updated.', 'bpsp' );
         
         $vars['name'] = 'admin';
         $vars['echo'] = 'true';

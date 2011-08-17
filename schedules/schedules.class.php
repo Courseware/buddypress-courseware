@@ -330,7 +330,7 @@ class BPSP_Schedules {
         $nonce_name = 'new_schedule';
         $repeats = null;
         if( !$this->has_schedule_caps( $bp->loggedin_user->id ) && !is_super_admin() ) {
-            $vars['die'] = __( 'BuddyPress Courseware Error while forbidden user tried to add a new course.' );
+            $vars['die'] = __( 'BuddyPress Courseware Error while forbidden user tried to add a new course.', 'bpsp' );
             return $vars;
         }
         

@@ -271,7 +271,7 @@ class BPSP_Lectures {
         $nonce_name = 'new_lecture';
         
         if( !$this->has_lecture_caps( $bp->loggedin_user->id ) && !is_super_admin() ) {
-            $vars['die'] = __( 'BuddyPress Courseware Error while forbidden user tried to add a new lecture.' );
+            $vars['die'] = __( 'BuddyPress Courseware Error while forbidden user tried to add a new lecture.', 'bpsp' );
             return $vars;
         }
         
@@ -390,7 +390,7 @@ class BPSP_Lectures {
             $vars['show_edit'] = null;
         
         if( !$lecture )
-            $vars['die'] = __( 'BuddyPress Courseware Error! Cheatin\' Uh?' );
+            $vars['die'] = __( 'BuddyPress Courseware Error! Cheatin\' Uh?', 'bpsp' );
         $vars['name'] = 'single_lecture';
         $vars['lecture_permalink'] = $this->current_lecture->permalink;
         $vars['lecture_edit_uri'] = $this->current_lecture->permalink . '/edit';

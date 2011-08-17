@@ -242,7 +242,7 @@ class BPSP_Groups {
             $tab_content .= 'class="current"';
         
         $tab_content .= '><a href="' . bp_get_group_admin_permalink() . '/courseware">';
-        $tab_content .= __( 'Courseware', 'buddypress' ) . '</a></li>';
+        $tab_content .= __( 'Courseware', 'bpsp' ) . '</a></li>';
         
         echo $tab_content;
     }

@@ -336,7 +336,7 @@ class BPSP_Assignments {
         $nonce_name = 'new_assignment';
         
         if( !$this->has_assignment_caps( $bp->loggedin_user->id ) && !is_super_admin() ) {
-            $vars['die'] = __( 'BuddyPress Courseware Error while forbidden user tried to add a new assignment.' );
+            $vars['die'] = __( 'BuddyPress Courseware Error while forbidden user tried to add a new assignment.', 'bpsp' );
             return $vars;
         }
         
@@ -438,7 +438,7 @@ class BPSP_Assignments {
             $vars['show_edit'] = null;
         
         if( !$assignment )
-            $vars['die'] = __( 'BuddyPress Courseware Error! Cheatin\' Uh?' );
+            $vars['die'] = __( 'BuddyPress Courseware Error! Cheatin\' Uh?', 'bpsp' );
         $vars['name'] = 'single_assignment';
         $vars['assignment_permalink'] = $vars['current_uri'] . '/assignment/' . $this->current_assignment->post_name;
         $vars['assignment_edit_uri'] = $vars['current_uri'] . '/assignment/' . $this->current_assignment->post_name . '/edit';

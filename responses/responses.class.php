@@ -84,7 +84,7 @@ class BPSP_Responses {
         global $bp;
         $is_teacher = false;
         
-        if( __( 'Teacher', 'bpsp') == xprofile_get_field_data( __( 'Role'), $bp->loggedin_user->id ) )
+        if( __( 'Teacher', 'bpsp') == xprofile_get_field_data( __( 'Role', 'bpsp' ), $bp->loggedin_user->id ) )
             $is_teacher = true;
         elseif ( is_super_admin( $user_id ) )
             $is_teacher = true;

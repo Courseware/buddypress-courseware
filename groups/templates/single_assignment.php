@@ -11,7 +11,7 @@
             <?php endif; ?>
             <?php if( isset( $user_grade ) ): ?>
             <li id="assignment-grade">
-                <?php _e( 'Your Grade:' ); ?>
+                <?php _e( 'Your Grade:', 'bpsp' ); ?>
                 <strong>
                     <?php if( !empty( $user_grade['format'] ) && 'percentage' == $user_grade['format'] ): ?>
                     <?php echo $user_grade['value']; ?>%
@@ -117,7 +117,7 @@
             <?php if( isset( $assignment->form ) && $show_edit ) : ?>
                 <div id="assignment-quiz">
                     <p class="alignright">
-                        <em><?php _e( 'Quiz/Test Preview' ); ?></em>
+                        <em><?php _e( 'Quiz/Test Preview', 'bpsp' ); ?></em>
                     </p>
                     <form action="" method="post" class="standard-form">
                         <ol>

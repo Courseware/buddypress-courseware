@@ -315,7 +315,7 @@ class BPSP_Courses {
             $vars['show_edit'] = null;
         
         if( !$course )
-            $vars['die'] = __( 'BuddyPress Courseware Error! Cheatin\' Uh?' );
+            $vars['die'] = __( 'BuddyPress Courseware Error! Cheatin\' Uh?', 'bpsp' );
         $vars['name'] = 'single_course';
         $vars['course_permalink'] = $vars['current_uri'] . '/course/';
         $vars['course_edit_uri'] = $vars['current_uri'] . '/course/edit';

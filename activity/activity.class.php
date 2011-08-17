@@ -55,7 +55,7 @@ class BPSP_Activity {
         global $bp;
         
         $activity_action = sprintf(
-            __( '%s changed the assignment %s in %s Courseware:', 'bp'),
+            __( '%s changed the assignment %s in %s Courseware:', 'bpsp' ),
             bp_core_get_userlink( $bp->loggedin_user->id ),
             '<a href="' . bp_get_group_permalink( $bp->groups->current_group ) . 'courseware/assignment/' . $assignment->post_name .'/">' . attribute_escape( $assignment->post_title ) . '</a>',
             '<a href="' . bp_get_group_permalink( $bp->groups->current_group ) . '">' . attribute_escape( $bp->groups->current_group->name ) . '</a>'
@@ -85,7 +85,7 @@ class BPSP_Activity {
         global $bp;
         
         $activity_action = sprintf(
-            __( '%s changed the lecture %s in %s Courseware:', 'bp'),
+            __( '%s changed the lecture %s in %s Courseware:', 'bpsp' ),
             bp_core_get_userlink( $bp->loggedin_user->id ),
             '<a href="' . $lecture->permalink .'/">' . attribute_escape( $lecture->post_title ) . '</a>',
             '<a href="' . bp_get_group_permalink( $bp->groups->current_group ) . '">' . attribute_escape( $bp->groups->current_group->name ) . '</a>'
@@ -120,7 +120,7 @@ class BPSP_Activity {
         $response = $response_data['response'];
         
         $activity_action = sprintf(
-            __( '%s added a response %s to %s Courseware Assignment:', 'bp'),
+            __( '%s added a response %s to %s Courseware Assignment:', 'bpsp' ),
             bp_core_get_userlink( $bp->loggedin_user->id ),
             '<a href="' . $response_data['assignment_permalink'] . '/response/' . $response->post_name .'/">' . attribute_escape( $response->post_title ) . '</a>',
             '<a href="' . bp_get_group_permalink( $bp->groups->current_group ) . '">' . attribute_escape( $bp->groups->current_group->name ) . '</a>'
@@ -150,7 +150,7 @@ class BPSP_Activity {
         global $bp;
         
         $activity_action = sprintf(
-            __( '%s updated %s Courseware schedule.', 'bp'),
+            __( '%s updated %s Courseware schedule.', 'bpsp' ),
             bp_core_get_userlink( $bp->loggedin_user->id ),
             '<a href="' . bp_get_group_permalink( $bp->groups->current_group ) . '">' . attribute_escape( $bp->groups->current_group->name ) . '</a>'
         );
