@@ -462,7 +462,7 @@ class BPSP_Assignments {
         }
         
         $vars['trail'] = array(
-            $assignment->course->post_title => $assignment->course->permalink,
+            $assignment->lecture->post_title => $assignment->lecture->permalink,
             $assignment->post_title => $assignment->permalink
         );
         
@@ -642,7 +642,7 @@ class BPSP_Assignments {
         $vars['nonce'] = wp_nonce_field( $nonce_name, '_wpnonce', true, false );
         $vars['delete_nonce'] = add_query_arg( '_wpnonce', wp_create_nonce( 'delete_assignment' ), $vars['assignment_delete_uri'] );
         $vars['trail'] = array(
-            $vars['assignment']->course->post_title => $vars['assignment']->course->permalink,
+            $vars['assignment']->lecture->post_title => $vars['assignment']->lecture->permalink,
             __( 'Editing Assignment: ' ) . $vars['assignment']->post_title => $vars['assignment']->permalink
         );
         return $vars;

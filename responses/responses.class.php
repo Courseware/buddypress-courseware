@@ -509,6 +509,7 @@ class BPSP_Responses {
         $vars['user_id'] = $bp->loggedin_user->id;
         $vars['nonce'] = wp_nonce_field( $nonce_name, '_wpnonce', true, false );
         $vars['trail'] = array(
+            $this->current_assignment->lecture->post_title => $this->current_assignment->lecture->permalink,
             $this->current_assignment->post_title => $this->current_assignment->permalink,
             __( 'New Response', 'bpsp' ) => ''
         );
@@ -582,6 +583,7 @@ class BPSP_Responses {
         }
         
         $vars['trail'] = array(
+            $this->current_assignment->lecture->post_title => $this->current_assignment->lecture->permalink,
             $this->current_assignment->post_title => $this->current_assignment->permalink,
             $response->post_title => ''
         );
