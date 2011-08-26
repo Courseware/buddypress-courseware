@@ -68,6 +68,7 @@ ul.courseware-meta li { padding: 5px 0; }
 /* Bibliography */
 #courseware-new-bibliography label { display: block; }
 .courseware-form-section input[type="text"] { margin: 5px 0; }
+#courseware-import-bibliography textarea { width: 73%; }
 
 /* Gradebook */
 #courseware-gradebook .import-gradebook-form textarea { height: 40px; width: 98%; margin-bottom: 10px; }
@@ -75,7 +76,6 @@ ul.courseware-meta li { padding: 5px 0; }
 #courseware-gradebook .private_comment textarea,
 #courseware-gradebook .public_comment textarea { width: 90%; height: 20px; }
 #courseware-gradebook .dataTables_filter input { width: auto; padding: 0 2px; font-weight: normal; font-size: 12px; }
-
 
 /* Assignments & Schedules */
 #courseware-schedules-list h4.meta,
@@ -140,6 +140,16 @@ ul.courseware-meta li a.action { display: block; width: 90%; }
 #group-dashboard #progress-title { margin-top: 10px; }
 #group-dashboard #progress-count { font-size: 20px; margin-top: -5px; }
 #group-dashboard hr { margin: 5px 0 5px; }
+
+/* Group Breadcrumbs ( Credits to Veerle Pieters aka veerle.duoh.com ) */
+#courseware-trail { margin-bottom: 15px; overflow: hidden; }
+#courseware-trail ul { list-style-type: none; padding: 0; margin: 0; border: 1px solid #dedede; height: 30px; }
+#courseware-trail li { float: left; line-height: 30px; padding-left: 10px; color: #777; }
+#courseware-trail li a { display: block; padding: 0 15px 0 0; background: url(../images/crumbs.gif) no-repeat right center; }
+#courseware-trail li a:link,
+#courseware-trail li a:visited { text-decoration: none; color: #777; }
+#courseware-trail li a:hover,
+#courseware-trail li a:focused { color: #dd2c0d; }
 
 /* DataTables customization */
 .courseware .fg-toolbar{ color: #444; padding: 3px; }

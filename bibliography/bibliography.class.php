@@ -28,11 +28,6 @@ class BPSP_Bibliography {
     var $current_parent = null;
     
     /**
-     * Courseware home uri
-     */
-    var $home_uri;
-    
-    /**
      * Post meta identifier
      */
     var $bid = 'bibliography';
@@ -537,6 +532,9 @@ class BPSP_Bibliography {
         $vars['bibs_edit_uri'] = $vars['current_uri'] . '/edit_bibliography';
         $vars['bibs_form_uri'] = add_query_arg( 'bhash', $bhash . ',' . $post_id, $vars['bibs_edit_uri'] );
         $vars['bibs_nonce'] = wp_nonce_field( $nonce_name, '_wpnonce', true, false );
+        $vars['trail'] = array(
+            __( 'Editing Bibliography: ', 'bpsp' ) . $vars['bib']['title'] => ''
+        );
         return $vars;
     }
     
@@ -587,7 +585,7 @@ class BPSP_Bibliography {
                 $vars['error'] = __( 'Book could not be added', 'bpsp' );
         
         $vars['name'] = 'new_bibliography';
-        $vars['import_uri'] = $this->home_uri . '/import_bibliographies';
+        $vars['import_uri'] = $vars['nav_options'][ __( 'Home', 'bpsp' ) ] . '/import_bibliographies';
         $vars['has_bibs'] = true;
         $vars['hide_existing'] = true;
         $vars['post_id'] = null;
@@ -597,6 +595,9 @@ class BPSP_Bibliography {
         $vars['bibs_delete_uri'] = add_query_arg( '_wpnonce', wp_create_nonce( $nonce_delete_name ), $vars['bibs_delete_permalink'] );
         $vars['bibs_edit_uri'] = $vars['current_uri'] . '/edit_bibliography';
         $vars['bibs_nonce'] = wp_nonce_field( $nonce_name, '_wpnonce', true, false );
+        $vars['trail'] = array(
+            __( 'Manage Bibliography Entries', 'bpsp' ) => ''
+        );
         return $vars;
     }
     
@@ -673,6 +674,9 @@ class BPSP_Bibliography {
         }
         
         $vars['name'] = 'import_bibliographies';
+        $vars['trail'] = array(
+            __( 'Import Bibliography Entries', 'bpsp' ) => ''
+        );
         return $vars;
     }
     

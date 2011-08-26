@@ -320,6 +320,9 @@ class BPSP_Courses {
         $vars['course_permalink'] = $vars['current_uri'] . '/course/';
         $vars['course_edit_uri'] = $vars['current_uri'] . '/course/edit';
         $vars['course'] = $course;
+        $vars['trail'] = array(
+            $course->post_title => $course->permalink
+        );
         return apply_filters( 'courseware_course', &$vars );
     }
     
@@ -378,6 +381,9 @@ class BPSP_Courses {
         $vars['course_edit_uri'] = $vars['current_uri'] . '/course/edit';
         $vars['course_permalink'] = $vars['current_uri'] . '/course';
         $vars['nonce'] = wp_nonce_field( $nonce_name, '_wpnonce', true, false );
+        $vars['trail'] = array(
+            __( 'Editing Course: ', 'bpsp' ) . $vars['course']->post_title => $vars['course']->permalink
+        );
         return $vars;
     }
     

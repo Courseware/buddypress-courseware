@@ -396,6 +396,9 @@ class BPSP_Assignments {
         $vars['course_id'] = $this->current_course->ID;
         $vars['user_id'] = $bp->loggedin_user->id;
         $vars['nonce'] = wp_nonce_field( $nonce_name, '_wpnonce', true, false );
+        $vars['trail'] = array(
+            __( 'New Assignment' ) => '',
+        );
         return $vars;
     }
     
@@ -414,6 +417,9 @@ class BPSP_Assignments {
         $vars['name'] = 'list_assignments';
         $vars['assignments_hanlder_uri'] = $vars['current_uri'] . '/assignment/';
         $vars['assignments'] = $assignments;
+        $vars['trail'] = array(
+            __( 'Available Assignments' ) => '',
+        );
         return $vars;
     }
     
@@ -454,6 +460,11 @@ class BPSP_Assignments {
             $vars['assignment_e_forum_permalink'] = $vars['assignment_permalink'] . '/enable_forum';
             $vars['assignment_e_forum_nonce'] = wp_nonce_field( $e_forum_nonce, '_wpnonce', true, false );
         }
+        
+        $vars['trail'] = array(
+            $assignment->course->post_title => $assignment->course->permalink,
+            $assignment->post_title => $assignment->permalink
+        );
         
         return apply_filters( 'courseware_assignment', $vars );
     }
@@ -630,6 +641,10 @@ class BPSP_Assignments {
         $vars['assignment_permalink'] = $vars['current_uri'] . '/assignment/' . $this->current_assignment->post_name;
         $vars['nonce'] = wp_nonce_field( $nonce_name, '_wpnonce', true, false );
         $vars['delete_nonce'] = add_query_arg( '_wpnonce', wp_create_nonce( 'delete_assignment' ), $vars['assignment_delete_uri'] );
+        $vars['trail'] = array(
+            $vars['assignment']->course->post_title => $vars['assignment']->course->permalink,
+            __( 'Editing Assignment: ' ) . $vars['assignment']->post_title => $vars['assignment']->permalink
+        );
         return $vars;
     }
     

@@ -167,6 +167,8 @@ class BPSP_Groups {
         //Exclude internal templates like navigation, starts with an underscore
         if(  substr( $vars['name'], 0, 1) != '_' )
             apply_filters( 'courseware_group_template', &$vars );
+        else
+            apply_filters( 'courseware_template_vars', &$vars );
         
         if( file_exists( $templates_path . $vars['name']. '.php' ) ) {
             ob_start();
@@ -175,9 +177,12 @@ class BPSP_Groups {
                 $error = $die;
                 include( $templates_path . '_message.php' ); // Template for errors
             } else {
-                include( $templates_path . '_message.php' ); // Template for messages    
+                if ( isset( $trail ) )
+                    include_once $templates_path . '_trail.php'; // Template for crumbs
+                include( $templates_path . '_message.php' ); // Template for messages
                 include( $templates_path . $name . '.php' );
             }
+            do_action( 'courseware_post_template', $vars );
             $content = ob_get_clean();
         }
         

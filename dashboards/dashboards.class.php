@@ -106,6 +106,9 @@ class BPSP_Dashboards {
         $vars = array_merge( $vars, $group_data );
         $vars['items_limit'] = 5;
         $vars['name'] = 'home';
+        $vars['trail'] = array(
+            ( $vars['is_teacher'] ) ? __( 'Welcome Teacher', 'bpsp' ) : __( 'Welcome Student', 'bpsp' ) => ''
+        );
         return $vars;
     }
 }

@@ -508,6 +508,10 @@ class BPSP_Responses {
         $vars['parent_assignment'] = $this->current_assignment;
         $vars['user_id'] = $bp->loggedin_user->id;
         $vars['nonce'] = wp_nonce_field( $nonce_name, '_wpnonce', true, false );
+        $vars['trail'] = array(
+            $this->current_assignment->post_title => $this->current_assignment->permalink,
+            __( 'New Response', 'bpsp' ) => ''
+        );
         return $vars;
     }
     
@@ -576,6 +580,11 @@ class BPSP_Responses {
             $vars['response_delete_permalink'] = $vars['assignment_permalink'] . '/response/' . $response->post_name . '/delete';
             $vars['response_delete_uri'] = add_query_arg( '_wpnonce', wp_create_nonce( $nonce_delete_name ), $vars['response_delete_permalink'] );
         }
+        
+        $vars['trail'] = array(
+            $this->current_assignment->post_title => $this->current_assignment->permalink,
+            $response->post_title => ''
+        );
         
         return apply_filters( 'courseware_response', $vars );
     }

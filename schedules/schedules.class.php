@@ -425,6 +425,9 @@ class BPSP_Schedules {
         $vars['user_id'] = $bp->loggedin_user->id;
         $vars['lectures'] = BPSP_Lectures::has_lectures( $bp->groups->current_group->id );
         $vars['nonce'] = wp_nonce_field( $nonce_name, '_wpnonce', true, false );
+        $vars['trail'] = array(
+            __( 'New Schedule', 'bpsp' ) => ''
+        );
         return $vars;
     }
     
@@ -445,6 +448,9 @@ class BPSP_Schedules {
             $vars['message'] = __( 'No schedules exist.', 'bpsp' );
         
         $vars['name'] = 'list_schedules';
+        $vars['trail'] = array(
+            __( 'Available Schedules', 'bpsp' ) => ''
+        );
         return $vars;
     }
     
@@ -469,6 +475,10 @@ class BPSP_Schedules {
         $vars['name'] = 'single_schedule';
         $vars['schedule_edit_uri'] = $schedule->permalink . '/edit';
         $vars['schedule'] = $schedule;
+        $vars['trail'] = array(
+            $schedule->lecture->post_title => $schedule->lecture->permalink,
+            $schedule->post_title => $schedule->permalink
+        );
         return $vars;
     }
     
@@ -591,6 +601,10 @@ class BPSP_Schedules {
         $vars['schedule_permalink'] = $vars['current_uri'] . '/schedule/' . $this->current_schedule;
         $vars['nonce'] = wp_nonce_field( $nonce_name, '_wpnonce', true, false );
         $vars['delete_nonce'] = add_query_arg( '_wpnonce', wp_create_nonce( 'delete_schedule' ), $vars['schedule_delete_uri'] );
+        $vars['trail'] = array(
+            $vars['schedule']->lecture->post_title => $vars['schedule']->lecture->permalink,
+            __( 'Editing Schedule: ', 'bpsp' ) . $vars['schedule']->post_title => $vars['schedule']->permalink
+        );
         return $vars;
     }
     

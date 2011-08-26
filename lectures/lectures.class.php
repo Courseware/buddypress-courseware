@@ -322,6 +322,10 @@ class BPSP_Lectures {
         $vars['group_id'] = $bp->groups->current_group->id;
         $vars['user_id'] = $bp->loggedin_user->id;
         $vars['nonce'] = wp_nonce_field( $nonce_name, '_wpnonce', true, false );
+        $vars['trail'] = array(
+            $vars['course']->post_title => $vars['course']->permalink,
+            __( 'New Lecture' ) => '',
+        );
         return $vars;
     }
     
@@ -399,7 +403,10 @@ class BPSP_Lectures {
         $vars['lecture'] = $lecture;
         $vars['next'] = $this->next_lecture( $lecture );
         $vars['prev'] = $this->prev_lecture( $lecture );
-        
+        $vars['trail'] = array(
+            $this->current_lecture->course->post_title => $this->current_lecture->course->permalink,
+            $this->current_lecture->post_title => $this->current_lecture->permalink,
+        );
         return apply_filters( 'courseware_lecture', $vars );
     }
     
@@ -504,6 +511,10 @@ class BPSP_Lectures {
         $vars['lecture_permalink'] = $vars['current_uri'] . '/lecture/' . $this->current_lecture->post_name;
         $vars['nonce'] = wp_nonce_field( $nonce_name, '_wpnonce', true, false );
         $vars['delete_nonce'] = add_query_arg( '_wpnonce', wp_create_nonce( 'delete_lecture' ), $vars['lecture_delete_uri'] );
+        $vars['trail'] = array(
+            $this->current_lecture->course->post_title => $this->current_lecture->course->permalink,
+            __( 'Editing Lecture: ', 'bpsp' ) . $this->current_lecture->post_title => $this->current_lecture->permalink,
+        );
         return $vars;
     }
     
