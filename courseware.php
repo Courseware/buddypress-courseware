@@ -4,10 +4,10 @@ Plugin Name: BuddyPress ScholarPress Courseware
 Plugin URI: http://scholarpress.github.com/buddypress-courseware/
 Description: A LMS for BuddyPress.
 Author: ScholarPress Dev Crew
-Version: 1.0-alfa
+Version: 0.9
 License: GNU/GPL 2
-Requires at least: WordPress 3.0, BuddyPress 1.3
-Tested up to: WordPress 3.2 / BuddyPress 1.3
+Requires at least: WordPress 3.2, BuddyPress 1.5
+Tested up to: WordPress 3.2.1 / BuddyPress 1.5
 Author URI: http://github.com/scholarpress/
 */
 

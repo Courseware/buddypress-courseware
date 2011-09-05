@@ -1,36 +1,49 @@
 === BuddyPress ScholarPress Courseware ===
-Contributors: sushkov, jeremyboggs, boonebgorges
-Tags: buddypress, lms, courseware, education, teaching
-Requires at least: WordPress 3.0, BuddyPress 1.2.5
-Tested up to: WordPress 3.1 / BuddyPress 1.2.8
-Stable tag: 0.1.6
+Contributors: sushkov, jeremyboggs, boonebgorges, johnjamesjacoby, chexee
+Tags: buddypress, lms, courseware, education, teaching, quizzes, tests, gradebook, courses, lectures, assignments
+Requires at least: WordPress 3.2, BuddyPress 1.5
+Tested up to: WordPress 3.2.1 / BuddyPress 1.5
+Stable tag: 0.9
 Donate link: http://stas.nerd.ro/pub/donate/
 
-A LMS for BuddyPress.
+A Learning Management System for BuddyPress
 
 == Description ==
 
-A BuddyPress GSoC 2010 project.
+A BuddyPress [GSoC](http://www.google-melange.com/) 2010/2011 project.
 
 Here's the features list:
 
 * Class Dashboard
-* Courses
-  * Works for both learning models: European/United States
+  * Progress Indicator
+  * Overall status
+  * Student evolution (based on received grates)
+* Courses / Curriculum
+* Lectures
+  * Handbook/Tree style for content organization
+  * Bookmarking of lectures
 * Bibliography
   * Web API's integration with WorldCat/ISBNdb
   * BibTex Import
 * Assignments
   * Responses
-  * Forum integration
+  * Quizzes/Tests form builder with automatic grading and response evaluation
+  * Forum/bbPress integration
   * Gradebook
     * CSV Import
 * Schedules
   * Calendar
     * Month, Week, Day view
-    * Integrates with Assignment due dates
-    * iCal export
+    * Integrates with Assignments due date
+    * iCal export/feed
 * Customization using an external CSS
+* Notifications/Emails
+* Activity Streams
+* Localizations
+    * French by [Albert Bruc](http://www.ab-ae.fr/)
+    * Italian by [Luca Camellini](http://buddypress.org/community/members/luccame/)
+
+[wpvideo AD4hdKWn]
 
 == Installation ==
 
