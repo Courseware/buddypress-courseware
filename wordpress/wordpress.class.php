@@ -11,7 +11,7 @@ class BPSP_WordPress {
     function BPSP_WordPress() {
         // Add our screen to BuddyPress menu
         add_action(
-            is_multisite() ? 'network_admin_menu' : 'admin_menu',
+            bp_core_admin_hook(),
             array( __CLASS__, 'menus')
         );
         
