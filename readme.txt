@@ -49,6 +49,11 @@ Here's the features list:
 
 Please follow the [standard installation procedure for WordPress plugins](http://codex.wordpress.org/Managing_Plugins#Installing_Plugins).
 
+== Upgrade Notice ==
+
+If you are updating from version 0.1.x please backup your database/files!
+Courseware 0.9 is not fully backwards compatible!!!
+
 == Frequently Asked Questions ==
 
 Before asking questions, please check the [BuddyPress Courseware Handbook](http://scholarpress.github.com/buddypress-courseware/handbook.html).
@@ -56,7 +61,7 @@ Before asking questions, please check the [BuddyPress Courseware Handbook](http:
 == Changelog ==
 
 = 0.x-future  =
-* French localisation from [Albert Bruc](http://www.ab-ae.fr/)
+* 
 
 = 0.1.6 =
 * Updated wording, @props mrjarbenne. Closes [#27](https://github.com/scholarpress/buddypress-courseware/issues/issue/27)
