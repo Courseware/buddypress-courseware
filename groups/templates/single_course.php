@@ -1,7 +1,7 @@
 <?php setup_postdata( $course ); ?>
 <div id="courseware-course">
     <div id="course-meta" class="courseware-sidebar">
-        <h4 class="meta"><?php _e( 'Course Info', 'bpsp' ) ?></h4>
+        <h4 class="meta courses"><span class="icon"></span><?php _e( 'Course Info', 'bpsp' ) ?></h4>
         <ul class="courseware-meta">
             <li class="date">
             <?php
@@ -33,7 +33,7 @@
                     <a href="#courseware-bibs-form" class="action"><?php _e( 'Quick Add Webpage', 'bpsp' ); ?></a>
                 </li>
                 <li class="edit-link">
-                    <a href="<?php echo $course_edit_uri; ?>" class="action safe"><?php _e( 'Edit Course', 'bpsp' ); ?></a>
+                    <a href="<?php echo $course_edit_uri; ?>" class="action"><?php _e( 'Edit Course', 'bpsp' ); ?></a>
                 </li>
             <?php endif; ?>
         </ul>
@@ -47,6 +47,10 @@
         </div>
     </div>
 </div>
+<?php
+    // Load lectures tree
+    bpsp_partial( $templates_path, '_lectures', get_defined_vars() );
+?>
 <?php
     // Load bibs
     bpsp_partial( $templates_path, '_bibs', get_defined_vars() );

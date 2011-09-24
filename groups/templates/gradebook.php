@@ -2,7 +2,10 @@
     <div id="message" class="info">
         <p><?php _e( 'There are no students in this class yet.', 'bpsp' ); ?></p>
     </div>
-<?php endif; ?>
+    <h5>
+        <a href="<?php echo $assignment_permalink; ?>"> <?php _e( 'Cancel/Go back', 'bpsp' ); ?></a>
+    </h5>
+<?php else: ?>
 <div id="courseware-gradebook">
     <a href="#import-gradebook-form" class="action alignright">
         <?php _e( 'Import from CSV', 'bpsp' ); ?>
@@ -29,7 +32,7 @@ test,10,numeric,\"Private comment text\",\"Public comment text\"", 'bpsp' ); ?><
                     <?php _e( 'Upload your file:', 'bpsp' ); ?>
                     <input type="file" name="csv_filename" />
                     <br />
-                    <input type="submit" class="safe" value="Import" />
+                    <input type="submit" value="Import" />
                     <?php echo $import_gradebook_nonce; ?>
                 </p>
             </form>
@@ -102,10 +105,11 @@ test,10,numeric,\"Private comment text\",\"Public comment text\"", 'bpsp' ); ?><
             <?php echo $nonce; ?>
             <input type="submit" name="grade[<?php echo $assignment->ID ?>][submit]" value="<?php _e( 'Save grades', 'bpsp' ); ?>" />
             <div class="submits alignright">
-                <a href="<?php echo $clear_gradebook_permalink; ?>" class="action alert"><?php _e( 'Clear Gradebook', 'bpsp' ); ?></a>
-                <a href="<?php echo $assignment_permalink; ?>" class="action safe"><?php _e( 'Cancel/Go back', 'bpsp' ); ?></a>
+                <a href="<?php echo $assignment_permalink; ?>"> <?php _e( 'Cancel/Go back', 'bpsp' ); ?></a> |
+                <a href="<?php echo $clear_gradebook_permalink; ?>" class="alert"><?php _e( 'Clear Gradebook', 'bpsp' ); ?></a>
             </div>
         </div>
         </form>
     <?php endif; ?>
 </div>
+<?php endif; ?>

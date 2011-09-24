@@ -1,7 +1,7 @@
 <div id="courseware-new-bibliography" > 
     <form action="" method="post" class="standard-form add-bib" >
         <div class="courseware-sidebar">
-            <h4 class="meta"><?php _e( 'Bibliography Tools', 'bpsp' ); ?></h4>
+            <h4 class="meta bibs"><span class="icon"></span><?php _e( 'Bibliography Tools', 'bpsp' ); ?></h4>
             <ul class="courseware-meta">
                 <li class="bib-types-list">
                     <div class="courseware-form-section">
@@ -84,10 +84,11 @@
                     <label for="bib[desc]"><?php _e( 'Description', 'bpsp' ); ?></label>
                         <textarea name="bib[desc]" cols="60" rows="6" title="<?php _e( 'Description', 'bpsp' ); ?>"></textarea>
                 </div>
-                <input type="submit" value="<?php _e( 'Add', 'bpsp' ); ?>" />
+                <input type="submit" value="<?php _e( 'Publish', 'bpsp' ); ?>" />
                 <?php echo $bibs_nonce; ?>
             </div>
-        </form>
+        </div>
+     </form>
 </div>
 <?php
 if( isset( $has_bibs ) )

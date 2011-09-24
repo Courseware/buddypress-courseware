@@ -28,11 +28,6 @@ class BPSP_Bibliography {
     var $current_parent = null;
     
     /**
-     * Courseware home uri
-     */
-    var $home_uri;
-    
-    /**
      * Post meta identifier
      */
     var $bid = 'bibliography';
@@ -48,7 +43,6 @@ class BPSP_Bibliography {
         add_filter( 'courseware_course', array( &$this, 'bibs_screen' ) );
         add_filter( 'courseware_assignment', array( &$this, 'bibs_screen' ) );
         add_action( 'courseware_group_screen_handler', array( &$this, 'screen_handler' ) );
-        add_filter( 'courseware_group_nav_options', array( &$this, 'add_nav_options' ) );
         // Load api keys
         $this->worldcat_key = get_option( 'bpsp_worldcat_key' );
         $this->isbndb_key = get_option( 'bpsp_isbndb_key' );
@@ -405,26 +399,6 @@ class BPSP_Bibliography {
             add_filter( 'courseware_group_template', array( &$this, 'delete_bib_screen' ) );
         }
     }
-
-    /**
-     * add_nav_options()
-     *
-     * Adds bibliography specific navigations options
-     *
-     * @param Array $options A set of current nav options
-     * @return Array containing new nav options
-     */
-    function add_nav_options( $options ) {
-        global $bp;
-        
-        $this->home_uri = $options[__( 'Home', 'bpsp' )];
-        
-        if( $this->has_bib_caps( $bp->loggedin_user->id ) || is_super_admin() ) {
-            $options[__( 'Bibliography', 'bpsp' )] = $options[__( 'Home', 'bpsp' )] . '/new_bibliography';
-        }
-        
-        return $options;
-    }
     
     /**
      * delete_bib_screen( $vars )
@@ -558,6 +532,9 @@ class BPSP_Bibliography {
         $vars['bibs_edit_uri'] = $vars['current_uri'] . '/edit_bibliography';
         $vars['bibs_form_uri'] = add_query_arg( 'bhash', $bhash . ',' . $post_id, $vars['bibs_edit_uri'] );
         $vars['bibs_nonce'] = wp_nonce_field( $nonce_name, '_wpnonce', true, false );
+        $vars['trail'] = array(
+            __( 'Editing Bibliography: ', 'bpsp' ) . $vars['bib']['title'] => ''
+        );
         return $vars;
     }
     
@@ -608,7 +585,7 @@ class BPSP_Bibliography {
                 $vars['error'] = __( 'Book could not be added', 'bpsp' );
         
         $vars['name'] = 'new_bibliography';
-        $vars['import_uri'] = $this->home_uri . '/import_bibliographies';
+        $vars['import_uri'] = $vars['nav_options'][ __( 'Home', 'bpsp' ) ] . '/import_bibliographies';
         $vars['has_bibs'] = true;
         $vars['hide_existing'] = true;
         $vars['post_id'] = null;
@@ -618,6 +595,9 @@ class BPSP_Bibliography {
         $vars['bibs_delete_uri'] = add_query_arg( '_wpnonce', wp_create_nonce( $nonce_delete_name ), $vars['bibs_delete_permalink'] );
         $vars['bibs_edit_uri'] = $vars['current_uri'] . '/edit_bibliography';
         $vars['bibs_nonce'] = wp_nonce_field( $nonce_name, '_wpnonce', true, false );
+        $vars['trail'] = array(
+            __( 'Manage Bibliography Entries', 'bpsp' ) => ''
+        );
         return $vars;
     }
     
@@ -694,6 +674,9 @@ class BPSP_Bibliography {
         }
         
         $vars['name'] = 'import_bibliographies';
+        $vars['trail'] = array(
+            __( 'Import Bibliography Entries', 'bpsp' ) => ''
+        );
         return $vars;
     }
     
@@ -719,7 +702,7 @@ class BPSP_Bibliography {
         if( $post_id )
             $this->current_parent = $post_id;
         
-        $is_nonce = wp_verify_nonce( $_POST['_wpnonce'], $nonce_name );
+        $is_nonce = isset( $_POST['_wpnonce'] ) ? wp_verify_nonce( $_POST['_wpnonce'], $nonce_name ) : false;
         if( $is_nonce && isset( $_POST['bib'] ) ) {
             
             if( !$this->has_bib_caps( $bp->loggedin_user->id ) && !is_super_admin() ) {

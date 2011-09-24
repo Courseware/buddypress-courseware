@@ -1,5 +1,5 @@
-<div id="courseware-import-bibliographies" >
-    <div id="new-assignment-meta" class="courseware-sidebar">
+<div id="courseware-import-bibliography" >
+    <div id="courseware-import-bibliography-meta" class="courseware-sidebar">
         <h4 class="meta"><?php _e( 'Import Your Bibliography', 'bpsp' );  ?></h4>
         <ul class="courseware-meta">
             <li>

@@ -33,6 +33,7 @@ class BPSP_Gradebook {
         add_action( 'courseware_new_teacher_removed', array( &$this, 'remove_grade_caps' ) );
         add_action( 'courseware_group_screen_handler', array( &$this, 'screen_handler' ) );
         add_action( 'courseware_assignment', array( &$this, 'student_screen' ) );
+        add_action( 'courseware_response_added', array( &$this, 'save_quiz_coverage' ) );
    }
     
     /**
@@ -152,7 +153,7 @@ class BPSP_Gradebook {
      * Handles uris like groups/ID/courseware/assignment/args/gradebook
      */
     function screen_handler( $action_vars ) {
-        if ( $action_vars[0] == 'assignment' ) {
+        if ( reset( $action_vars ) == 'assignment' ) {
             
             $current_assignment = BPSP_Assignments::is_assignment( $action_vars[1] );
             
@@ -161,9 +162,9 @@ class BPSP_Gradebook {
             else
                 wp_redirect( wp_redirect( get_option( 'siteurl' ) ) );
             
-            if( isset ( $action_vars[2] ) && 'gradebook' == $action_vars[2] && 'clear' == $action_vars[3] )
+            if( count ( $action_vars ) > 3 && 'gradebook' == $action_vars[2] && 'clear' == $action_vars[3] )
                 add_filter( 'courseware_group_template', array( &$this, 'clear_gradebook_screen' ) );
-            elseif( isset ( $action_vars[2] ) && 'gradebook' == $action_vars[2] && 'import' == $action_vars[3] )
+            elseif( count ( $action_vars ) > 3 && 'gradebook' == $action_vars[2] && 'import' == $action_vars[3] )
                 add_filter( 'courseware_group_template', array( &$this, 'import_gradebook_screen' ) );
             elseif( isset ( $action_vars[2] ) && 'gradebook' == $action_vars[2] ) {
                 do_action( 'courseware_gradebook_screen' );
@@ -207,10 +208,13 @@ class BPSP_Gradebook {
                     'post_title' => ' ',
                     'post_type' => 'gradebook',
                     'post_status' => 'publish',
-                    'post_parent' => $assignment->ID
+                    'post_parent' => $assignment->ID,
+                    'post_author' => $bp->groups->current_group->creator_id
             ) );
-            if( $gradebook_id )
+            if( $gradebook_id ) {
                 wp_set_post_terms( $gradebook_id, $bp->groups->current_group->id, 'group_id' );
+                wp_set_post_terms( $gradebook_id, $assignment->ID, 'assignment_id' );
+            }
         }
         
         return $gradebook_id;
@@ -316,13 +320,12 @@ class BPSP_Gradebook {
             return false;
         
         $grade_shortcode = $this->gen_grade_shortcode( $grade );
-        
         $grades = $this->load_grades( $gradebook_id );
+        
         if( empty( $grades ) ) {
             add_post_meta( $gradebook_id, 'grade', $grade_shortcode );
             $grade_saved = true;
-        }
-        else {
+        } else {
             foreach( $grades as $g ) {
                 $g_data = shortcode_parse_atts( $g );
                 // Check if we need to update an existing grade
@@ -473,7 +476,7 @@ class BPSP_Gradebook {
     }
     
     /**
-     * gradebook_screen( $vars )
+     * student_screen( $vars )
      *
      * Hooks into courseware_assignment
      * If a student is visiting assignment screen, his grade will be shown
@@ -485,7 +488,7 @@ class BPSP_Gradebook {
         global $bp;
         $user_id = null;
         
-        if( bp_group_is_member( $bp->current_group->id ) && !bp_group_is_admin() )
+        if( bp_group_is_member( $bp->groups->current_group->id ) && !bp_group_is_admin() )
             $user_id = $bp->loggedin_user->id;
         
         if( $user_id )
@@ -493,6 +496,39 @@ class BPSP_Gradebook {
         
         $vars['has_gradebook_caps'] = $this->has_gradebook_caps( $bp->loggedin_user->id );
         return $vars;
+    }
+    
+    /**
+     * save_quiz_coverage( $results )
+     * Hooks into `courseware_response_added` and saves a coverage result on quiz submission
+     *
+     * @param Mixed $results, the response data and quiz rezult
+     */
+    function save_quiz_coverage( $results ) {
+        if( isset( $results['response'] ) && isset( $results['response']->form_values ) ) {
+            $gradebook = $this->has_gradebook( $results['response']->post_parent );
+            $quiz_data = $results['response']->form_values;
+            $grade = array(
+                'uid' => $results['response']->post_author,
+                // Generate a percentage
+                'value' => round( $quiz_data['correct'] / $quiz_data['total'] * 100, 2 ),
+                'format' => 'percentage',
+                'prv_comment' => $results['response']->post_title,
+                'pub_comment' => $results['response']->post_content
+            );
+            
+            if( $gradebook ) {
+                $saved = $this->save_grade( $gradebook, $grade );
+                if( $saved ) {
+                    $data = array(
+                            'grade' => $grade,
+                            'teacher' => bp_core_get_core_userdata( $bp->groups->current_group->creator_id ),
+                            'assignment' => $this->current_assignment,
+                        );
+                    do_action( 'courseware_grade_updated', $data );
+                }
+            }
+        }
     }
 }
 ?>

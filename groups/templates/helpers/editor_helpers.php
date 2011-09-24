@@ -33,6 +33,7 @@ function bpsp_make_media_urls( $string ) {
 function bpsp_load_editor_files() {
     include_once ABSPATH . '/wp-admin/includes/media.php' ;
     require_once ABSPATH . '/wp-admin/includes/post.php' ;
+    require_once ABSPATH . '/wp-admin/includes/template.php' ;
 }
 
 ?>
