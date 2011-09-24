@@ -43,6 +43,7 @@ class BPSP_Dashboards {
         $group_data['lectures'] = ( array )BPSP_Lectures::has_lectures( $group_id );
         $group_data['assignments'] = ( array )BPSP_Assignments::has_assignments( $group_id );
         $group_data['schedules'] = BPSP_Schedules::has_schedules( $group_id );
+        $group_data['lectures'] = BPSP_Lectures::has_lectures( $group_id );
         $posts = array_merge( $group_data['courses'], $group_data['assignments'] );
         
         if( $posts )
@@ -105,7 +106,7 @@ class BPSP_Dashboards {
         $vars['group_course'] = reset( $group_data['courses'] );
         $vars = array_merge( $vars, $group_data );
         $vars['items_limit'] = 5;
-        $vars['name'] = 'home';
+        $vars['name'] = 'dashboard';
         $vars['trail'] = array(
             ( $vars['is_teacher'] ) ? __( 'Welcome Teacher', 'bpsp' ) : __( 'Welcome Student', 'bpsp' ) => ''
         );

@@ -131,6 +131,37 @@
         <div class="clear"></div>
     </div>
     
+    <?php if( count( $lectures ) > 0 ): ?>
+    <h4 class="meta padded lectures">
+        <span class="icon"></span>
+        <?php _e( 'Latest lectures', 'bpsp' ); ?>
+        <a href="<?php echo $nav_options[__( 'Course Description', 'bpsp' )] ?>" class="alignright action">
+            <?php _e( 'All lectures', 'bpsp' );?>
+        </a>
+    </h4>
+    <div class="grid courseware-content">
+        <div class="dp100">
+            <ul class="details marked">
+                <?php foreach ( array_slice( $lectures, 0, $items_limit ) as $l ): ?>
+                    <li>
+                        <a href="<?php echo $l->permalink ?>"><?php echo get_the_title( $l->ID ); ?></a>
+                        <span class="alignright meta">
+                            <?php
+                                printf(
+                                    __( 'By %s, on %s', 'bpsp' ),
+                                    bp_core_get_userlink( $l->post_author ),
+                                    bpsp_get_date( $l->post_date )
+                                );
+                            ?>
+                        </span>
+                    </li>
+                <?php endforeach; ?>
+            </ul>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <?php endif; ?>
+    
     <?php if( count( $assignments ) > 0 ): ?>
     <h4 class="meta padded assignments">
         <span class="icon"></span>
