@@ -27,10 +27,9 @@ class BPSP_Dashboards {
     }
     
     function get_group_courseware( $group_id = null ) {
-        if( !$group_id ) {
-            global $bp;
+        global $bp;
+        if( !$group_id )
             $group_id = $bp->groups->current_group->id;
-        }
         
         $group_data['bibliography'] = array();
         $group_data['assignments_count'] = 0;

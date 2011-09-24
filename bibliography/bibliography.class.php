@@ -702,7 +702,7 @@ class BPSP_Bibliography {
         if( $post_id )
             $this->current_parent = $post_id;
         
-        $is_nonce = wp_verify_nonce( $_POST['_wpnonce'], $nonce_name );
+        $is_nonce = isset( $_POST['_wpnonce'] ) ? wp_verify_nonce( $_POST['_wpnonce'], $nonce_name ) : false;
         if( $is_nonce && isset( $_POST['bib'] ) ) {
             
             if( !$this->has_bib_caps( $bp->loggedin_user->id ) && !is_super_admin() ) {

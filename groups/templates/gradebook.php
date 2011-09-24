@@ -2,7 +2,10 @@
     <div id="message" class="info">
         <p><?php _e( 'There are no students in this class yet.', 'bpsp' ); ?></p>
     </div>
-<?php endif; ?>
+    <h5>
+        <a href="<?php echo $assignment_permalink; ?>"> <?php _e( 'Cancel/Go back', 'bpsp' ); ?></a>
+    </h5>
+<?php else: ?>
 <div id="courseware-gradebook">
     <a href="#import-gradebook-form" class="action alignright">
         <?php _e( 'Import from CSV', 'bpsp' ); ?>
@@ -109,3 +112,4 @@ test,10,numeric,\"Private comment text\",\"Public comment text\"", 'bpsp' ); ?><
         </form>
     <?php endif; ?>
 </div>
+<?php endif; ?>

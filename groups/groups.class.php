@@ -26,6 +26,10 @@ class BPSP_Groups {
      * Constructor. Loads filters and actions.
      */
     function BPSP_Groups() {
+        global $bp;
+        if ( !$bp->groups->current_group )
+            return;
+        
         add_action( 'bp_setup_nav', array( &$this, 'set_nav' ) );
         add_filter( 'groups_get_groups', array( &$this, 'extend_search' ), 10, 2 );
         add_action( 'groups_admin_tabs', array( &$this, 'group_admin_tab' ), 10, 2 );
@@ -110,8 +114,8 @@ class BPSP_Groups {
         if ( $bp->current_component == $bp->groups->id && $bp->current_action == $bp->courseware->slug ) {
             $this->current_nav_option =  $this->nav_options[__( 'Home', 'bpsp' )];
             
-            if( $bp->action_variables[0] )
-                $this->current_nav_option .= '/' . $bp->action_variables[0];
+            if( reset( $bp->action_variables ) )
+                $this->current_nav_option .= '/' . reset( $bp->action_variables );
             
             add_action( 'bp_before_group_body', array( &$this, 'nav_options' ) );
             do_action( 'courseware_group_screen_handler', $bp->action_variables );

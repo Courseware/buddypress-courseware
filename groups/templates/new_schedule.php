@@ -57,11 +57,11 @@
     </div>
     <div id="new-schedule-content" class="courseware-content-wrapper">
         <div id="schedule-title">
-            <input type="text" name="schedule[title]" class="long" title="<?php _e( 'Title', 'bpsp' ); ?>" value="<?php echo $schedule->title ? $schedule->title : '' ; ?>" />
+            <input type="text" name="schedule[title]" class="long" title="<?php _e( 'Title', 'bpsp' ); ?>" value="<?php echo isset( $schedule->title ) ? $schedule->title : '' ; ?>" />
         </div>
         <div id="new-schedule-content-description">
             <textarea class="long" id="schedule-description" name="schedule[desc]"><?php
-                echo $schedule->desc;
+                echo isset( $schedule->desc ) ? $schedule->desc : '';
             ?></textarea>
         </div>
     </div>

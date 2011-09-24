@@ -75,23 +75,8 @@ class BPSP_Assignments {
         if( !register_post_type( 'assignment', $assignment_post_def ) )
             $this->error = __( 'BuddyPress Courseware error while registering assignment post type.', 'bpsp' );
         
-        $assignment_rel_def = array(
-            'public'        => BPSP_DEBUG,
-            'show_ui'       => BPSP_DEBUG,
-            'hierarchical'  => false,
-            'label'         => __( 'Course ID', 'bpsp'),
-            'query_var'     => true,
-            'rewrite'       => false,
-            'capabilities'  => array(
-                'manage_terms'  => 'manage_course_id',
-                'edit_terms'    => 'manage_course_id',
-                'delete_terms'  => 'manage_course_id',
-                'assign_terms'  => 'edit_assignments'
-                )
-        );
-        
-        register_taxonomy( 'course_id', array( 'assignment' ), $assignment_rel_def );
-        register_taxonomy_for_object_type( 'group_id', 'assignment' ); //append already registered group_id term
+        register_taxonomy_for_object_type( 'course_id', 'assignment' ); //append already registered course_id tax
+        register_taxonomy_for_object_type( 'group_id', 'assignment' ); //append already registered group_id tax
         
         if( !get_taxonomy( 'group_id' ) || !get_taxonomy( 'course_id' ) )
             wp_die( __( 'BuddyPress Courseware error while registering assignment taxonomies.', 'bpsp' ) );
@@ -170,7 +155,7 @@ class BPSP_Assignments {
      */
     function screen_handler( $action_vars ) {
         
-        if( $action_vars[0] == 'new_assignment' ) {
+        if( reset( $action_vars ) == 'new_assignment' ) {
             $this->current_course = BPSP_Courses::is_course();
             //Load editor
             add_action( 'bp_head', array( &$this, 'load_editor' ) );
@@ -178,7 +163,7 @@ class BPSP_Assignments {
             do_action( 'courseware_new_assignment_screen' );
             add_filter( 'courseware_group_template', array( &$this, 'new_assignment_screen' ) );
         }
-        elseif( $action_vars[0] == 'assignment' ) {
+        elseif( reset( $action_vars ) == 'assignment' ) {
             $current_assignment = BPSP_Assignments::is_assignment( $action_vars[1] );
             
             if( isset ( $action_vars[1] ) && null != $current_assignment )
@@ -210,7 +195,7 @@ class BPSP_Assignments {
             
             do_action( 'courseware_assignment_screen_handler', $action_vars );
         }
-        elseif ( $action_vars[0] == 'assignments' ) {
+        elseif ( reset( $action_vars ) == 'assignments' ) {
             do_action( 'courseware_list_assignments_screen' );
             add_filter( 'courseware_group_template', array( &$this, 'list_assignments_screen' ) );
         }

@@ -167,7 +167,7 @@ class BPSP_Courses {
      * Handles uris like groups/ID/courseware/action/args
      */
     function screen_handler( $action_vars ) {
-        if ( $action_vars[0] == 'course' ) {
+        if ( reset( $action_vars ) == 'course' ) {
             $course = $this->is_course( $this->current_course );
             
             if( !$course ) {
@@ -338,6 +338,7 @@ class BPSP_Courses {
     function edit_course_screen( $vars ) {
         global $bp;
         $nonce_name = 'edit_course';
+        $updated_course_id = false;
         
         $old_course = $this->is_course( $this->current_course );
         $old_course->terms = wp_get_object_terms($old_course->ID, 'group_id' );

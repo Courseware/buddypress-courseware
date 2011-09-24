@@ -8,11 +8,11 @@ Version: 0.9
 License: GNU/GPL 2
 Requires at least: WordPress 3.2, BuddyPress 1.5
 Tested up to: WordPress 3.2.1 / BuddyPress 1.5
-Author URI: http://github.com/scholarpress/
+Author URI: https://github.com/scholarpress/buddypress-courseware/contributors
 */
 
 define( 'BPSP_VERSION', '0.9' );
-define( 'BPSP_DEBUG', true ); // This will allow you to see post types in wp-admin
+define( 'BPSP_DEBUG', (bool) WP_DEBUG ); // This will allow you to see post types in wp-admin
 define( 'BPSP_PLUGIN_DIR', dirname( __FILE__ ) );
 define( 'BPSP_WEB_URI', WP_PLUGIN_URL . '/' . basename( BPSP_PLUGIN_DIR ) );
 define( 'BPSP_PLUGIN_FILE', basename( BPSP_PLUGIN_DIR ) . '/' . basename( __FILE__ ) );

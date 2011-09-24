@@ -72,7 +72,7 @@ class BPSP_Lectures {
                 'manage_terms'  => 'manage_course_id',
                 'edit_terms'    => 'manage_course_id',
                 'delete_terms'  => 'manage_course_id',
-                'assign_terms'  => 'edit_lectures'
+                'assign_terms'  => 'edit_courses'
                 )
         );
         
@@ -156,12 +156,12 @@ class BPSP_Lectures {
      */
     function screen_handler( $action_vars ) {
         
-        if( $action_vars[0] == 'new_lecture' ) {
+        if( reset( $action_vars ) == 'new_lecture' ) {
             //Load editor
             add_action( 'bp_head', array( &$this, 'load_editor' ) );
             add_filter( 'courseware_group_template', array( &$this, 'new_lecture_screen' ) );
         }
-        elseif( $action_vars[0] == 'lecture' ) {
+        elseif( reset( $action_vars ) == 'lecture' ) {
             $current_lecture = BPSP_Lectures::is_lecture( $action_vars[1] );
             
             if( isset ( $action_vars[1] ) && null != $current_lecture )
@@ -216,10 +216,10 @@ class BPSP_Lectures {
         
         $lecture = get_posts( $lecture_query );
         
-        if( !empty( $lecture[0] ) ) {
+        if( reset( $lecture ) ) {
             $lecture[0]->group = wp_get_object_terms( $lecture[0]->ID, 'group_id' );
             $lecture_course = wp_get_object_terms( $lecture[0]->ID, 'course_id' );
-            $lecture[0]->course = BPSP_Courses::is_course($lecture_course[0]->name );
+            $lecture[0]->course = !empty( $lecture_course ) ? BPSP_Courses::is_course( reset( $lecture_course )->name ) : null;
             $lecture[0]->permalink = $courseware_uri . 'lecture/' . $lecture[0]->post_name;
             return $lecture[0];
         } else
@@ -315,7 +315,7 @@ class BPSP_Lectures {
                     $vars['error'] = __( 'Please fill in all the fields.', 'bpsp' );
         }
         
-        $vars['posted_data'] = $_POST['lecture'];
+        $vars['posted_data'] = isset( $_POST['lecture'] ) ? $_POST['lecture'] : false;
         $vars['course'] = reset( BPSP_Courses::has_courses( $bp->groups->current_group->id ) );
         $vars['lectures'] = $this->has_lectures( $bp->groups->current_group->id );
         $vars['name'] = 'new_lecture';
@@ -358,7 +358,9 @@ class BPSP_Lectures {
             'numberposts'   => '-1',
             'post_type'     => 'lecture',
             'group_id'      => $bp->groups->current_group->id,
-            'orderby'       => 'menu_order, post_title'
+            'orderby'       => 'menu_order, post_title',
+            'link_before'   => '',
+            'link_after'   => ''
         );
         $lectures = get_posts( $args );
         
@@ -403,8 +405,10 @@ class BPSP_Lectures {
         $vars['lecture'] = $lecture;
         $vars['next'] = $this->next_lecture( $lecture );
         $vars['prev'] = $this->prev_lecture( $lecture );
+        
         $vars['trail'] = array(
-            $this->current_lecture->course->post_title => $this->current_lecture->course->permalink,
+            $this->current_lecture->course->post_title =>
+            $this->current_lecture->course->permalink,
             $this->current_lecture->post_title => $this->current_lecture->permalink,
         );
         return apply_filters( 'courseware_lecture', $vars );

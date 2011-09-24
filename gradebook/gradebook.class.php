@@ -153,7 +153,7 @@ class BPSP_Gradebook {
      * Handles uris like groups/ID/courseware/assignment/args/gradebook
      */
     function screen_handler( $action_vars ) {
-        if ( $action_vars[0] == 'assignment' ) {
+        if ( reset( $action_vars ) == 'assignment' ) {
             
             $current_assignment = BPSP_Assignments::is_assignment( $action_vars[1] );
             
@@ -162,9 +162,9 @@ class BPSP_Gradebook {
             else
                 wp_redirect( wp_redirect( get_option( 'siteurl' ) ) );
             
-            if( isset ( $action_vars[2] ) && 'gradebook' == $action_vars[2] && 'clear' == $action_vars[3] )
+            if( count ( $action_vars ) > 3 && 'gradebook' == $action_vars[2] && 'clear' == $action_vars[3] )
                 add_filter( 'courseware_group_template', array( &$this, 'clear_gradebook_screen' ) );
-            elseif( isset ( $action_vars[2] ) && 'gradebook' == $action_vars[2] && 'import' == $action_vars[3] )
+            elseif( count ( $action_vars ) > 3 && 'gradebook' == $action_vars[2] && 'import' == $action_vars[3] )
                 add_filter( 'courseware_group_template', array( &$this, 'import_gradebook_screen' ) );
             elseif( isset ( $action_vars[2] ) && 'gradebook' == $action_vars[2] ) {
                 do_action( 'courseware_gradebook_screen' );
@@ -488,7 +488,7 @@ class BPSP_Gradebook {
         global $bp;
         $user_id = null;
         
-        if( bp_group_is_member( $bp->current_group->id ) && !bp_group_is_admin() )
+        if( bp_group_is_member( $bp->groups->current_group->id ) && !bp_group_is_admin() )
             $user_id = $bp->loggedin_user->id;
         
         if( $user_id )

@@ -226,13 +226,13 @@ class BPSP_Responses {
         if( !$this->current_assignment )
             wp_redirect( wp_redirect( get_option( 'siteurl' ) ) );
         
-        if( $action_vars[2] == 'add_response' ) {
+        if( isset ( $action_vars[2] ) && $action_vars[2] == 'add_response' ) {
             do_action( 'courseware_add_response' );
             //Load editor
             add_action( 'bp_head', array( &$this, 'load_editor' ) );
             add_filter( 'courseware_group_template', array( &$this, 'new_response_screen' ) );
         }
-        elseif ( $action_vars[2] == 'response' ) {
+        elseif ( isset ( $action_vars[2] ) && $action_vars[2] == 'response' ) {
             $current_response = $this->is_response( $action_vars[3] );
             if( isset ( $action_vars[3] ) && !empty( $current_response ) )
                 $this->current_response = $current_response;
@@ -280,7 +280,7 @@ class BPSP_Responses {
         
         if( isset( $this->current_assignment->form ) )
             $response->form_values = get_post_meta( $response->ID, 'form_values', true );
-        $response->form = $this->current_assignment->form;
+        $response->form = isset( $this->current_assignment->form ) ? $this->current_assignment->form : false;
         return $response;
     }
     
@@ -528,7 +528,7 @@ class BPSP_Responses {
     function populate_responses( $vars ) {
         global $bp;
         
-        if( $this->has_student_caps() && bp_group_is_member( $bp->current_group->id ) )
+        if( $this->has_student_caps() && bp_group_is_member( $bp->groups->current_group->id ) )
             $vars['response_add_uri'] = $vars['assignment_permalink'] . '/add_response';
         
         $vars['response'] = $this->has_response();

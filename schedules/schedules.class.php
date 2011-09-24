@@ -142,14 +142,14 @@ class BPSP_Schedules {
      * Handles uris like groups/ID/courseware/schedule/args
      */
     function screen_handler( $action_vars ) {
-        if( $action_vars[0] == 'new_schedule' ) {
+        if( reset( $action_vars ) == 'new_schedule' ) {
             $this->current_course = BPSP_Courses::is_course();
             
             do_action( 'courseware_new_schedule_screen' );
             add_filter( 'courseware_group_template', array( &$this, 'new_schedule_screen' ) );
         }
         
-        elseif ( $action_vars[0] == 'schedule' ) {
+        elseif ( reset( $action_vars ) == 'schedule' ) {
             if( isset ( $action_vars[1] ) && null != $this->is_schedule( $action_vars[1] ) )
                 $this->current_schedule = $action_vars[1];
             else {
@@ -167,7 +167,7 @@ class BPSP_Schedules {
             else
                 add_filter( 'courseware_group_template', array( &$this, 'single_schedule_screen' ) );
         }
-        elseif ( $action_vars[0] == 'schedules' ) {
+        elseif ( reset( $action_vars ) == 'schedules' ) {
             // Output json
             if( isset( $_GET['json'] ) )
                 return $this->toJSON();
