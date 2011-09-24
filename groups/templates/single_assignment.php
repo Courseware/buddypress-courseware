@@ -1,7 +1,7 @@
 <?php setup_postdata( $assignment ); ?>
 <div id="courseware-assignment">
     <div id="assignment-meta" class="courseware-sidebar">
-        <h4 class="meta"><?php _e( 'Assignment Meta', 'bpsp' ); ?></h4>
+        <h4 class="meta assignments"><span class="icon"></span><?php _e( 'Assignment Meta', 'bpsp' ); ?></h4>
         <ul class="courseware-meta">
             <?php if( !empty( $assignment->due_date ) ): ?>
             <li id="assignment-due-date">
@@ -11,7 +11,7 @@
             <?php endif; ?>
             <?php if( isset( $user_grade ) ): ?>
             <li id="assignment-grade">
-                <?php _e( 'Your Grade:' ); ?>
+                <?php _e( 'Your Grade:', 'bpsp' ); ?>
                 <strong>
                     <?php if( !empty( $user_grade['format'] ) && 'percentage' == $user_grade['format'] ): ?>
                     <?php echo $user_grade['value']; ?>%
@@ -37,12 +37,13 @@
                 );
             ?>
             </li>
-            <li class="parent-course">
+            <li class="parent-lecture">
             <?php
-                printf(
-                    __( 'Course: %1$s', 'bpsp' ),
-                    '<a href="' . $course_permalink . '" >' . $assignment->course->post_title . '</a>'
-                );
+                if( isset( $assignment->lecture ) )
+                    printf(
+                        __( 'Lecture: %1$s', 'bpsp' ),
+                        '<a href="' . $assignment->lecture->permalink . '" >' . $assignment->lecture->post_title . '</a>'
+                    );
             ?>
             </li>
             <?php if( !empty( $assignment->forum_link ) ): ?>
@@ -51,10 +52,10 @@
                         <?php _e( 'Visit Assignment Forum', 'bpsp' ); ?>
                     </a>
                 </li>
-            <?php elseif( isset( $assignment_e_forum_permalink ) && bp_group_is_admin() ): ?>
+            <?php elseif( isset( $assignment_e_forum_permalink ) && BPSP_Roles::can_teach() ): ?>
                 <li id="assignment-enable-forum">
                     <form method="post" action="<?php echo $assignment_e_forum_permalink; ?>" class="standard-form" >
-                        <input type="submit" class="safe" value="<?php _e( 'Enable Assignment Forum', 'bpsp' ); ?>" />
+                        <input type="submit" value="<?php _e( 'Enable Assignment Forum', 'bpsp' ); ?>" />
                         <?php echo $assignment_e_forum_nonce; ?>
                     </form>
                 </li>
@@ -70,7 +71,7 @@
                     </a>
                 </li>
             <?php endif; ?>
-            <?php if( empty( $response ) && isset( $response_add_uri ) ): ?>
+            <?php if( empty( $response ) && isset( $response_add_uri ) && empty( $assignment->form ) ): ?>
                 <li id="assignment-response">
                     <a href="<?php echo $response_add_uri; ?>" class="action">
                         <?php _e( 'Add a Response', 'bpsp' ); ?>
@@ -113,6 +114,24 @@
         </h4>
         <div id="assignment-body" class="courseware-content">
             <?php the_content(); ?>
+            <?php if( isset( $assignment->form ) && $show_edit ) : ?>
+                <div id="assignment-quiz">
+                    <p class="alignright">
+                        <em><?php _e( 'Quiz/Test Preview', 'bpsp' ); ?></em>
+                    </p>
+                    <form action="" method="post" class="standard-form">
+                        <ol>
+                            <?php foreach( $assignment->form as $form_lines ): ?>
+                                <?php echo $form_lines; ?>
+                            <?php endforeach; ?>
+                        </ol>
+                    </form>
+                </div>
+            <?php elseif( empty( $response ) && !empty( $assignment->form ) && isset( $response_add_uri ) ): ?>
+                <a href="<?php echo $response_add_uri; ?>" class="action">
+                    <?php _e( 'Take the assignment quiz now.', 'bpsp' ); ?>
+                </a>
+            <?php endif; ?>
         </div>
     </div>
 </div>

@@ -10,22 +10,48 @@
 #courseware-course-header .course-meta { text-align: right; font-style: italic; }
 #new-course-content #course-title { margin-top: 10px; }
 .courseware-content-wrapper { overflow: hidden; margin-bottom: 20px; }
-h4.courseware-title { font-style: italic; margin-bottom: 5px; }
+h4.courseware-title { margin-bottom: 5px; font-weight: bold; }
 .courseware-content {
     border-radius: 3px; -webkit-border-radius: 3px;
     -moz-border-radius: 3px; border: 1px solid #DDD; padding: 10px; }
-.courseware-sidebar { float: right; width: 200px; margin: 0 0 20px 10px; padding: 0; text-align: right; }
-h4.meta {  border-bottom: 1px dotted #DDD; margin-bottom: 0; font-style: italic; font-weight: normal; }
+.courseware-sidebar { float: right; width: 200px; margin: 0 0 20px 10px; padding: 5px 10px; background: #EAEAEA; border: 1px solid #DDD; }
+.courseware-sidebar div:last-child { text-align: right; }
+.courseware-sidebar input[type="text"], .courseware-sidebar select { font-size: 13px !important; padding: 4px !important; max-width: 99%; }
+h4.meta { margin-bottom: 0; font-weight: bold; }
 h4.meta.padded { margin-bottom: 10px; }
 ul.courseware-meta { list-style: none; }
-ul.courseware-meta li { border-bottom: 1px dotted #DDD; padding: 5px 0; }
+ul.courseware-meta li { padding: 5px 0; }
 .courseware-content ul { list-style: inside disc; }
 .courseware-content ol { list-style: inside decimal; }
 .courseware-content ul ul, .courseware-content ol ol { margin-left: 10px; }
 .courseware-content ul ol, .courseware-content ol ul { margin-left: 10px; }
 
+/* Lectures */
+#lectures-tree h4 { border-bottom: 1px solid #DDD; clear: both; margin-bottom: 2px; }
+#lectures-search { float: right; margin-top: -35px; }
+#lectures-tree-toggle { line-height: 25px; }
+#lectures-tree-container ul, ol { margin: 0 1.5em 1.5em 0; padding-left: 1.5em; }
+#lectures-tree-container > ul { padding-left: 0 !important; border: none !important; }
+#lectures-tree-container ul { background: none; border-left: 1px dotted #DDD; }
+#lectures-tree-container li ul,
+#lectures-tree-container li ol { margin: 0 !important; }
+#lectures-tree-container ins { background: none; }
+#lectures-tree-container .jstree-closed > ul { display: none; }
+#lectures-tree-container .jstree-open > ul { display: block; }
+#lectures-tree-container li > ins {
+    width: 20px;
+    height: 20px;
+    display: block;
+    float: left;
+    background: transparent url("../../../../../wp-admin/images/arrows.png") no-repeat 0 10px;
+}
+#lectures-tree-container .jstree-leaf ins { background: transparent url("../../../../../wp-admin/images/press-this.png") no-repeat -50px 0px; }
+#lectures-tree-container .jstree-open > ins { background-position: 0 2px; }
+#lectures-tree-container .jstree-closed > ins { background-position: 0 -107px; }
+#lectures-tree-container .jstree-search { background-color: #FFC; }
+
 /* Bibliography */
-#courseware-bibs h4 { font-style: italic; font-weight: normal; border-bottom: 1px dotted #DDD; clear: both; }
+#courseware-bibs h4 { border-bottom: 1px solid #DDD; clear: both; }
 #courseware-bibs-form,
 #courseware-responses-list { margin-right: 200px; overflow: hidden; margin: 10px 0; }
 #courseware-bibs-form .book .left-part { float: left; width: 45%; margin: 0; padding: 0; }
@@ -37,10 +63,12 @@ ul.courseware-meta li { border-bottom: 1px dotted #DDD; padding: 5px 0; }
 /* Responses */
 #courseware-responses-list ul { list-style: decimal; list-style-position: inside; }
 #courseware-responses-list ul li { line-height: 30px; }
+.response-quiz-result { padding: 5px; text-align: center; font-weight: bold; font-style: italic; }
 
 /* Bibliography */
 #courseware-new-bibliography label { display: block; }
 .courseware-form-section input[type="text"] { margin: 5px 0; }
+#courseware-import-bibliography textarea { width: 73%; }
 
 /* Gradebook */
 #courseware-gradebook .import-gradebook-form textarea { height: 40px; width: 98%; margin-bottom: 10px; }
@@ -50,14 +78,37 @@ ul.courseware-meta li { border-bottom: 1px dotted #DDD; padding: 5px 0; }
 #courseware-gradebook .dataTables_filter input { width: auto; padding: 0 2px; font-weight: normal; font-size: 12px; }
 
 /* Assignments & Schedules */
+#courseware-schedules-list h4.meta,
+#courseware-assignments-list h4.meta { border-bottom: 1px solid #DDD; clear: both; }
 .fc-state-default.ical a span { white-space: normal; }
 .fc-state-default.ical a span img { padding: 0 !important; margin-right: 5px; }
 .fc-header-title { font-style: italic; font-weight: normal; }
+.fc-event,
+.fc-agenda .fc-event-time,
+.fc-event a { border-color: #555 !important; background-color: #888 !important; }
+.fc-event a:hover { color: inherit; }
+.fc-event a:hover .fc-event-title { color: inherit; text-decoration: underline; }
 #new-assignment-form textarea { margin-top: 10px; }
 #new-assignment-form #repetition_times { width: 25px; font-size: 12px; }
 #new-assignment-course select,
 #schedule-course select,
 #new-schedule-course select { width: 190px; }
+#assignment-quiz,
+#response-quiz { margin: 10px 0 10px; border-top: 1px solid #DDD; }
+#assignment-quiz ol,
+#response-quiz ol { font-size: 20px; color: #999; font-style: italic; margin: 0 0 10px 30px; list-style: outside decimal; }
+#assignment-quiz ol li *,
+#response-quiz ol li *{ font-size: 12px; color: #444; font-style: normal; }
+#assignment-quiz .row { clear: both; height: auto; display: block; }
+#assignment-quiz .row label,
+#response-quiz .row label{ display: inline !important; font-weight: normal; margin-left: 2px; }
+#assignment-quiz-submit { text-align: right; }
+
+/* Responses */
+#response-body .answers .wrong { color: #CC0000 !important; }
+#response-body .answers .correct { color: #1A9B00 !important; }
+#courseware-responses-list h4.meta { border-bottom: 1px solid #DDD; clear: both; }
+#assignment-quiz li .row label p { display: inline !important; }
 
 /* Courseware action buttons */
 .courseware a.action, #message a.action {
@@ -66,9 +117,14 @@ ul.courseware-meta li { border-bottom: 1px dotted #DDD; padding: 5px 0; }
     border: 1px solid #DDD; text-decoration: none; color: #888; padding: 4px 10px;
     background: #FFF url('../../../buddypress/bp-themes/bp-default/_inc/images/white-grad.png') repeat-x;
     cursor: pointer; vertical-align: bottom; }
-.courseware a.alert, input.alert { color: #CC0000; }
-.courseware a.safe, input.safe { color: #1A9B00; }
+.courseware a.alert, input.alert { color: #CC0000 !important; }
+.courseware a.safe, input.safe { color: #1A9B00 !important; }
 ul.courseware-meta li a.action { display: block; width: 90%; }
+
+/* Group Header Notification */
+#item-header #message.info { clear: both; margin-bottom: 15px; }
+#item-header #message.help { clear: none; margin-bottom: 15px; }
+#item-header #message.info p { padding-top: 15px; padding-bottom: 15px; }
 
 /* Group Dashboard */
 #group-dashboard { margin-bottom: 20px; }
@@ -80,13 +136,20 @@ ul.courseware-meta li a.action { display: block; width: 90%; }
 #group-dashboard ul li { border-bottom: 1px solid #DDD; padding: 5px 0; }
 #group-dashboard ul li:last-child { border: none; }
 #group-dashboard #user-grades { width: 100%; height: 30px; }
-#group-dashboard #wp-calendar { margin-top: 10px; }
-#group-dashboard #wp-calendar #today { font-weight: bold; color: #CC0000; }
-#group-dashboard #wp-calendar caption { font-style: italic; font-weight: bold; }
-#group-dashboard #wp-calendar thead tr { background: none; border-bottom: 1px solid #DDD; }
-#group-dashboard #wp-calendar tfoot { display: none; }
-#group-dashboard #wp-calendar tr td,
-#group-dashboard #wp-calendar tr th { padding: 1px; text-align: center; }
+#group-dashboard #user-progress { float: left; margin: 10px 10px 0; }
+#group-dashboard #progress-title { margin-top: 10px; }
+#group-dashboard #progress-count { font-size: 20px; margin-top: -5px; }
+#group-dashboard hr { margin: 5px 0 5px; }
+
+/* Group Breadcrumbs ( Credits to Veerle Pieters aka veerle.duoh.com ) */
+#courseware-trail { margin-bottom: 15px; overflow: hidden; }
+#courseware-trail ul { list-style-type: none; padding: 0; margin: 0; border: 1px solid #dedede; height: 30px; }
+#courseware-trail li { float: left; line-height: 30px; padding-left: 10px; color: #777; }
+#courseware-trail li a { display: block; padding: 0 15px 0 0; background: url(../images/crumbs.gif) no-repeat right center; }
+#courseware-trail li a:link,
+#courseware-trail li a:visited { text-decoration: none; color: #777; }
+#courseware-trail li a:hover,
+#courseware-trail li a:focused { color: #dd2c0d; }
 
 /* DataTables customization */
 .courseware .fg-toolbar{ color: #444; padding: 3px; }
@@ -103,15 +166,41 @@ ul.courseware-meta li a.action { display: block; width: 90%; }
 .courseware table .schedule-meta,
 .courseware table .course-meta, .courseware table .assignment-meta { font-style: italic; }
 .courseware table .location { width: 300px; }
+.courseware table thead tr th { cursor: pointer; }
+.courseware .dataTables_info { margin-right: 5px; }
+.courseware .dataTables_wrapper table { border: 1px solid #DDD; }
+.courseware .dataTables_paginate { background-color: #DDD; }
 
 /* Helpers */
 input.long,
 textarea.long,
 select.long { width: 98% !important; }
 input[type="submit"] { margin-top: 5px; }
-.submits { margin: 10px 0 2px; }
+.submits { margin: 10px 0 2px 0 !important; }
 .clearall { clear: both; height: 1px; }
 .clearall.fat { margin: 10px 0; }
+input.number { width: 30px !important; text-align: right; }
+.inline { display: inline !important; }
+
+/* Icons */
+h4 .icon {
+    background-image: url("../../../../../wp-admin/images/menu.png");
+    background-repeat: no-repeat;
+    background-position: -330px -39px;
+    width: 26px;
+    height: 20px;
+    display: block;
+    float: left;
+    overflow: hidden;
+}
+h4.general .icon { background-position: -60px -39px; }
+h4.assignments .icon { background-position: 0 -39px; }
+h4.schedules .icon { background-position: -270px -39px; }
+h4.responses .icon { background-position: -30px -39px; }
+h4.grades .icon { background-position: -240px -39px; }
+h4.courses .icon { background-position: -150px -39px; }
+h4.bibs .icon { background-position: -90px -39px; }
+h4.lectures .icon { background-position: -120px -39px; }
 
 /**
  * MALO CSS Grid

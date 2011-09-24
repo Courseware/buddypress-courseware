@@ -15,7 +15,7 @@
                 <?php
                     printf(
                         __( 'Author: %1$s', 'bpsp' ),
-                        bp_core_get_userlink( get_the_author() )
+                        bp_core_get_userlink( $response->post_author )
                     );
                 ?>
             </li>
@@ -30,9 +30,27 @@
         </ul>
     </div>
     <div class="course-content courseware-content-wrapper">
-        <h4 id="course-title" class="courseware-title"><?php echo get_the_title( $response->ID ); ?></h4>
-        <div id="course-body" class="courseware-content">
+        <h4 id="response-title" class="courseware-title"><?php echo get_the_title( $response->ID ); ?></h4>
+        <div id="response-body" class="courseware-content">
             <?php the_content(); ?>
+            <?php if( isset( $response->form_values ) && count( $response->form_values ) > 2 ) : ?>
+                <strong><?php _e( 'Wrong answers', 'bpsp' ); ?>:</strong>
+                <ol>
+                    <?php foreach( $response->form_values as $q => $a ): ?>
+                        <?php if( in_array( $q, array( 'total', 'correct' ) ) ) continue; ?>
+                        <li>
+                            <em><?php echo apply_filters( 'the_content', $q ); ?></em>
+                            <ul class="answers">
+                                <?php foreach ($a as $k => $e): ?>
+                                    <li class="<?php echo ( ( $k % 2 ) == 0 ) ? 'wrong' : 'correct'; ?>">
+                                        <?php echo apply_filters( 'the_content', $e ); ?>
+                                    </li>
+                                <?php endforeach; ?>
+                            </ul>
+                        </li>
+                    <?php endforeach; ?>
+                </ol>
+            <?php endif; ?>
         </div>
     </div>
 </div>

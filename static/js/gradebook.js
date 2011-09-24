@@ -16,7 +16,6 @@ oLanguage.oPaginate.sLast       = '&raquo;';
 
 // Load DataTables
 jQuery("#courseware-gradebook table").dataTable( {
-    "bJQueryUI": true,
     "oLanguage": oLanguage,
     "aoColumns": [
         { "bSortable": true },

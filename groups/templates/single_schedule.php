@@ -1,7 +1,7 @@
 <?php setup_postdata( $schedule ); ?>
 <div id="courseware-schedule">
     <div class="schedule-meta courseware-sidebar">
-        <h4 class="meta"><?php _e( 'Schedule Meta', 'bpsp' ); ?></h4>
+        <h4 class="meta schedules"><span class="icon"></span><?php _e( 'Schedule Meta', 'bpsp' ); ?></h4>
         <ul class="courseware-meta">
             <!-- Ponintless--li class="date">
             <?php
@@ -47,17 +47,17 @@
                 );
             ?>
             </li>
-            <?php if( !empty( $schedule->course ) ): ?>
-                <li id="schedule-courseinfo">
-                    <?php _e( 'Course:', 'bpsp' ); ?>
-                    <a href="<?php echo $current_uri . '/course/' . $schedule->course->post_name; ?>">
-                        <?php echo $schedule->course->post_title; ?>
+            <?php if( isset( $schedule->lecture ) ): ?>
+                <li id="schedule-lecture">
+                    <?php _e( 'Linked Lecture:', 'bpsp' ); ?>
+                    <a href="<?php echo $schedule->lecture->permalink; ?>">
+                        <?php echo $schedule->lecture->post_title; ?>
                     </a>
                 </li>
             <?php endif; ?>
             <?php if( $show_edit ): ?>
                 <li class="edit-link">
-                    <a href="<?php echo $schedule_edit_uri; ?>" class="action safe"><?php _e( 'Edit Schedule', 'bpsp' ); ?></a>
+                    <a href="<?php echo $schedule_edit_uri; ?>" class="action"><?php _e( 'Edit Schedule', 'bpsp' ); ?></a>
                 </li>
             <?php endif; ?>
         </ul>

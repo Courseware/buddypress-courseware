@@ -1,31 +1,18 @@
 <div id="group-dashboard">
-    <h4 class="meta padded"><?php _e( 'At a glance', 'bpsp' ); ?></h4>
+    <h4 class="meta padded general"><span class="icon"></span><?php _e( 'At a glance', 'bpsp' ); ?></h4>
     <div class="grid courseware-content">
         <div class="dp75">
             <ul class="details">
-                <?php if( $bpsp_curriculum == 'eu' ): ?>
                 <li>
-                    <strong><?php
-                        printf(
-                            __( 'Courseware started by %s and managed by %d teacher(s) with %d course(s) for class %s', 'bpsp' ),
-                            bp_core_get_userlink( $founder ),
-                            count( $teachers ),
-                            count( $courses ),
-                            bp_get_group_name()
-                        );
-                    ?></strong>
                     <?php if( $is_teacher ): ?>
-                        <a href="<?php echo $nav_options[__( 'Home', 'bpsp' )] . '/new_course' ?>" class="alignright action safe">
-                            <?php _e( 'Create a course  &raquo;', 'bpsp' );?>
+                        <a href="<?php echo $nav_options[__( 'Home', 'bpsp' )] . '/course/edit' ?>" class="alignright action">
+                            <?php _e( 'Update Course', 'bpsp' );?>
                         </a>
                     <?php else: ?>
-                        <a href="<?php echo $nav_options[__( 'Home', 'bpsp' )] . '/courses' ?>" class="alignright action">
-                            <?php _e( 'All courses  &raquo;', 'bpsp' );?>
+                        <a href="<?php echo $nav_options[__( 'Home', 'bpsp' )] . '/course' ?>" class="alignright action">
+                            <?php _e( 'Course description', 'bpsp' );?>
                         </a>
                     <?php endif; ?>
-                </li>
-                <?php else: ?>
-                <li>
                     <?php
                         printf(
                             __( '<strong>%s</strong> course class started by %s and managed by %d teacher(s) for this group', 'bpsp' ),
@@ -34,17 +21,24 @@
                             count( $teachers )
                         );
                     ?>
+                </li>
+                <li>
+                    <?php
+                        printf(
+                            __( '<em>%s</em> Lecture(s)', 'bpsp' ),
+                            count( $lectures )
+                        );
+                    ?>
                     <?php if( $is_teacher ): ?>
-                        <a href="<?php echo $nav_options[__( 'Home', 'bpsp' )] . '/course/edit' ?>" class="alignright action safe">
-                            <?php _e( 'Update Course  &raquo;', 'bpsp' );?>
+                        <a href="<?php echo $nav_options[__( 'Home', 'bpsp' )] . '/new_lecture' ?>" class="alignright action">
+                            <?php _e( 'Add a new lecture', 'bpsp' );?>
                         </a>
                     <?php else: ?>
                         <a href="<?php echo $nav_options[__( 'Home', 'bpsp' )] . '/course' ?>" class="alignright action">
-                            <?php _e( 'Course description  &raquo;', 'bpsp' );?>
+                            <?php _e( 'View course lectures', 'bpsp' );?>
                         </a>
                     <?php endif; ?>
                 </li>
-                <?php endif;?>
                 <li>
                     <?php
                         printf(
@@ -53,12 +47,12 @@
                         );
                     ?>
                     <?php if( $is_teacher ): ?>
-                        <a href="<?php echo $nav_options[__( 'Home', 'bpsp' )] . '/new_assignment' ?>" class="alignright action safe">
-                            <?php _e( 'Create an assignment &raquo;', 'bpsp' );?>
+                        <a href="<?php echo $nav_options[__( 'Home', 'bpsp' )] . '/new_assignment' ?>" class="alignright action">
+                            <?php _e( 'Create an assignment', 'bpsp' );?>
                         </a>
                     <?php else: ?>
                         <a href="<?php echo $nav_options[__( 'Home', 'bpsp' )] . '/assignments' ?>" class="alignright action">
-                            <?php _e( 'All assignments  &raquo;', 'bpsp' );?>
+                            <?php _e( 'All assignments', 'bpsp' );?>
                         </a>
                     <?php endif; ?>
                 </li>
@@ -70,7 +64,7 @@
                         );
                     ?>
                     <a href="<?php echo $nav_options[__( 'Home', 'bpsp' )] . '/assignments' ?>" class="alignright action">
-                        <?php _e( 'All responses &raquo;', 'bpsp' );?>
+                        <?php _e( 'All responses', 'bpsp' );?>
                     </a>
                 </li>
                 <li>
@@ -81,12 +75,12 @@
                         );
                     ?>
                     <?php if( $is_teacher ): ?>
-                        <a href="<?php echo $nav_options[__( 'Home', 'bpsp' )] . '/new_schedule' ?>" class="alignright action safe">
-                            <?php _e( 'Add a schedule &raquo;', 'bpsp' );?>
+                        <a href="<?php echo $nav_options[__( 'Home', 'bpsp' )] . '/new_schedule' ?>" class="alignright action">
+                            <?php _e( 'Add a schedule', 'bpsp' );?>
                         </a>
                     <?php else: ?>
                         <a href="<?php echo $nav_options[__( 'Home', 'bpsp' )] . '/schedules' ?>" class="alignright action">
-                            <?php _e( 'All schedules  &raquo;', 'bpsp' );?>
+                            <?php _e( 'All schedules', 'bpsp' );?>
                         </a>
                     <?php endif; ?>
                 </li>
@@ -98,8 +92,8 @@
                         );
                     ?>
                     <?php if( $is_teacher ): ?>
-                        <a href="<?php echo $nav_options[__( 'Home', 'bpsp' )] . '/new_bibliography' ?>" class="alignright action safe">
-                            <?php _e( 'Manage bibliography &raquo;', 'bpsp' );?>
+                        <a href="<?php echo $nav_options[__( 'Home', 'bpsp' )] . '/new_bibliography' ?>" class="alignright action">
+                            <?php _e( 'Manage bibliography', 'bpsp' );?>
                         </a>
                     <?php endif; ?>
                 </li>
@@ -112,53 +106,75 @@
                             );
                         ?>
                         <a href="<?php bp_group_forum_permalink(); ?>" class="alignright action">
-                            <?php _e( 'Visit forums &raquo;', 'bpsp' );?>
+                            <?php _e( 'Visit forums', 'bpsp' );?>
                         </a>
                     </li>
                 <?php endif;?>
             </ul>
         </div>
         <div class="dp25">
-            <?php get_calendar(); ?>
+            <div id="user-progress">
+                <?php echo ( $assignments_count ? $assignments_count : 1 ) - $own_responses_count; ?>,<?php echo $own_responses_count; ?>
+            </div>
+            <div id="progress-title"><?php _e( 'Your progress so far:', 'bpsp' );?></div>
+            <div id="progress-count">
+                <?php
+                    if ( $own_responses_count )
+                        echo round( ( $own_responses_count / $assignments_count ) * 100, 2 );
+                    else
+                        echo $own_responses_count;
+                ?>%
+            </div>
+            <hr />
+            <?php if( $user_bookmark ) : ?>
+                <a href="<?php echo $user_bookmark->permalink ?>" class="alignleft action"><?php _e( 'Your last bookmark &rarr;', 'bpsp' );?></a>
+                <div class="clearall"></div>
+            <?php else: ?>
+                <em><?php _e( "You didn't bookmark any lectures so far.", 'bpsp' );?></em>
+            <?php endif; ?>
+            <hr />
+            <em><?php _e( "Today is: ", 'bpsp' );?></em><code><?php echo bpsp_get_date( date( 'now' ) ); ?></code>
         </div>
         <div class="clear"></div>
     </div>
     
-    <?php if( $bpsp_curriculum == 'eu' && count( $courses ) > 0 ): ?>
-        <h4 class="meta padded">
-            <?php _e( 'Latest courses', 'bpsp' ); ?>
-            <a href="<?php echo $nav_options[__( 'Courses', 'bpsp' )] ?>" class="alignright action">
-                <?php _e( 'Latest courses  &raquo;', 'bpsp' );?>
-            </a>
-        </h4>
-        <div class="grid courseware-content">
-            <div class="dp100">
-                <ul class="details marked">
-                    <?php foreach ( array_slice( $courses, 0, $items_limit ) as $c ): ?>
-                        <li>
-                            <a href="<?php echo $c->permalink ?>"><?php echo get_the_title( $c->ID ); ?></a>
-                            <span class="alignright meta">
-                                <?php
-                                    printf(
-                                        __( 'By %s, on %s', 'bpsp' ),
-                                        bp_core_get_userlink( $c->post_author ),
-                                        bpsp_get_date( $c->post_date )
-                                    );
-                                ?>
-                            </span>
-                        </li>
-                    <?php endforeach; ?>
-                </ul>
-            </div>
-            <div class="clear"></div>
+    <?php if( count( $lectures ) > 0 ): ?>
+    <h4 class="meta padded lectures">
+        <span class="icon"></span>
+        <?php _e( 'Latest lectures', 'bpsp' ); ?>
+        <a href="<?php echo $nav_options[__( 'Course Description', 'bpsp' )] ?>" class="alignright action">
+            <?php _e( 'All lectures', 'bpsp' );?>
+        </a>
+    </h4>
+    <div class="grid courseware-content">
+        <div class="dp100">
+            <ul class="details marked">
+                <?php foreach ( array_slice( $lectures, 0, $items_limit ) as $l ): ?>
+                    <li>
+                        <a href="<?php echo $l->permalink ?>"><?php echo get_the_title( $l->ID ); ?></a>
+                        <span class="alignright meta">
+                            <?php
+                                printf(
+                                    __( 'By %s, on %s', 'bpsp' ),
+                                    bp_core_get_userlink( $l->post_author ),
+                                    bpsp_get_date( $l->post_date )
+                                );
+                            ?>
+                        </span>
+                    </li>
+                <?php endforeach; ?>
+            </ul>
         </div>
+        <div class="clear"></div>
+    </div>
     <?php endif; ?>
     
     <?php if( count( $assignments ) > 0 ): ?>
-    <h4 class="meta padded">
+    <h4 class="meta padded assignments">
+        <span class="icon"></span>
         <?php _e( 'Latest assignments', 'bpsp' ); ?>
         <a href="<?php echo $nav_options[__( 'Assignments', 'bpsp' )] ?>" class="alignright action">
-            <?php _e( 'All assignments  &raquo;', 'bpsp' );?>
+            <?php _e( 'All assignments', 'bpsp' );?>
         </a>
     </h4>
     <div class="grid courseware-content">
@@ -185,10 +201,11 @@
     <?php endif; ?>
     
     <?php if( count( $schedules ) > 0 ): ?>
-    <h4 class="meta padded">
+    <h4 class="meta padded schedules">
+        <span class="icon"></span>
         <?php _e( ' Latest schedules', 'bpsp' ); ?>
-        <a href="<?php echo $nav_options[__( 'Calendar', 'bpsp' )] ?>" class="alignright action">
-            <?php _e( 'All schedules &raquo;', 'bpsp' );?>
+        <a href="<?php echo $nav_options[__( 'Schedule', 'bpsp' )] ?>" class="alignright action">
+            <?php _e( 'All schedules', 'bpsp' );?>
         </a>
     </h4>
     <div class="grid courseware-content">
@@ -214,7 +231,7 @@
     </div>
     <?php endif; ?>
     
-    <h4 class="meta padded"><?php _e( 'Latest responses', 'bpsp' ); ?></h4>
+    <h4 class="meta padded responses"><span class="icon"></span><?php _e( 'Latest responses', 'bpsp' ); ?></h4>
     <div class="grid courseware-content">
         <div class="dp100">
             <ul class="details marked">
@@ -252,7 +269,7 @@
     </div>
     
     <?php if( !empty( $grades ) ): ?>
-    <h4 class="meta padded"><?php _e( 'Your progress based on received grades', 'bpsp' ); ?></h4>
+    <h4 class="meta padded grades"><span class="icon"></span><?php _e( 'Your progress based on received grades', 'bpsp' ); ?></h4>
     <div class="grid courseware-content">
         <div id="user-grades" >
             <?php echo implode( ',', $grades ); ?>

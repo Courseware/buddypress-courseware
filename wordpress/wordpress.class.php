@@ -11,15 +11,20 @@ class BPSP_WordPress {
     function BPSP_WordPress() {
         // Add our screen to BuddyPress menu
         add_action(
-            is_multisite() ? 'network_admin_menu' : 'admin_menu',
+            bp_core_admin_hook(),
             array( __CLASS__, 'menus')
         );
         
+        // Ensure compatibility
+        add_action('admin_notices', 'bpsp_check' );
         // Help Screen
-        add_action('admin_head', array( __CLASS__, 'screen_help'));
+        add_action('admin_head', array( __CLASS__, 'screen_help') );
+        // Support link
+        add_filter( 'plugin_row_meta', array( __CLASS__, 'support_link' ), 10, 2 );
+        // Settings link
+        add_action( 'plugin_action_links_' . BPSP_PLUGIN_FILE, array( __CLASS__, 'action_link' ), 10, 4 );
         
         // Initialize our options
-        add_option( 'bpsp_curriculum' );
         add_option( 'bpsp_allow_only_admins' );
         add_option( 'bpsp_global_status' );
         add_option( 'bpsp_gradebook_format' );
@@ -76,62 +81,50 @@ class BPSP_WordPress {
         if( isset( $_POST['_wpnonce'] ) )
             check_admin_referer( $nonce_name );
         
-        // Courseware Learning Styles
-        if( isset( $_POST['bpsp_curriculum'] ) )
-            if( update_option( 'bpsp_curriculum', strtolower( $_POST['bpsp_curriculum'] ) ) )
-                $vars['flash'][] = __( 'Courseware option was updated.' );
-        
         // Courseware Global Status
         if( isset( $_POST['bpsp_global_status'] ) )
             if( update_option( 'bpsp_global_status', strtolower( $_POST['bpsp_global_status'] ) ) )
-                $vars['flash'][] = __( 'Courseware option was updated.' );
+                $vars['flash'][] = __( 'Courseware option was updated.', 'bpsp' );
         if( !isset( $_POST['bpsp_global_status'] ) && isset( $_POST['bpsp_global_status_check'] ) )
             if( update_option( 'bpsp_global_status', '' ) )
-                $vars['flash'][] = __( 'Courseware option was updated.' );
+                $vars['flash'][] = __( 'Courseware option was updated.', 'bpsp' );
         
         // Courseware Collaborative Settings
         if( isset( $_POST['bpsp_allow_only_admins'] ) )
             if( update_option( 'bpsp_allow_only_admins', strtolower( $_POST['bpsp_allow_only_admins'] ) ) )
-                $vars['flash'][] = __( 'Courseware option was updated.' );
+                $vars['flash'][] = __( 'Courseware option was updated.', 'bpsp' );
         if( !isset( $_POST['bpsp_allow_only_admins'] ) && isset( $_POST['bpsp_allow_only_admins_check'] ) )
             if( update_option( 'bpsp_allow_only_admins', '' ) )
-                $vars['flash'][] = __( 'Courseware option was updated.' );
+                $vars['flash'][] = __( 'Courseware option was updated.', 'bpsp' );
         
         // Courseware Private Responses
         if( isset( $_POST['bpsp_private_responses_check'] ) )
             if( update_option( 'bpsp_private_responses', strtolower( $_POST['bpsp_private_responses'] ) ) )
-                $vars['flash'][] = __( 'Courseware option was updated.' );
+                $vars['flash'][] = __( 'Courseware option was updated.', 'bpsp' );
         if( isset( $_POST['bpsp_private_responses_check'] ) && !isset( $_POST['bpsp_private_responses'] ) )
             if( update_option( 'bpsp_private_responses', '' ) )
-                $vars['flash'][] = __( 'Courseware option was updated.' );
+                $vars['flash'][] = __( 'Courseware option was updated.', 'bpsp' );
         
         // Courseware Default Gradebook Format
         if( isset( $_POST['bpsp_gradebook_format_check'] ) && isset( $_POST['bpsp_gradebook_format'] ) )
             if( update_option( 'bpsp_gradebook_format', strtolower( $_POST['bpsp_gradebook_format'] ) ) )
-                $vars['flash'][] = __( 'Courseware gradebook format option was updated.' );
+                $vars['flash'][] = __( 'Courseware gradebook format option was updated.', 'bpsp' );
         
         // Courseware Bibliography Webservices Integration
         if( isset( $_POST['worldcat_key'] ) && !empty( $_POST['worldcat_key'] ) )
             if( update_option( 'bpsp_worldcat_key', $_POST['worldcat_key'] ) )
-                $vars['flash'][] = __( 'WorldCat option was updated.' );
+                $vars['flash'][] = __( 'WorldCat option was updated.', 'bpsp' );
         if( isset( $_POST['isbndb_key'] ) && !empty( $_POST['isbndb_key'] ) )
             if( update_option( 'bpsp_isbndb_key', $_POST['isbndb_key'] ) )
-                $vars['flash'][] = __( 'ISBNdb option was updated.' );
+                $vars['flash'][] = __( 'ISBNdb option was updated.', 'bpsp' );
         
         // Courseware Custom CSS
         if( isset( $_POST['bpsp_load_css_check'] ) && isset( $_POST['bpsp_load_css'] ) )
             if( update_option( 'bpsp_load_css', strtolower( $_POST['bpsp_load_css'] ) ) )
-                $vars['flash'][] = __( 'Courseware customization options updated.' );
+                $vars['flash'][] = __( 'Courseware customization options updated.', 'bpsp' );
         if( isset( $_POST['bpsp_load_css_check'] ) && !isset( $_POST['bpsp_load_css'] ) )
             if( update_option( 'bpsp_load_css', '' ) )
-                $vars['flash'][] = __( 'Courseware customization options updated.' );
-        
-        
-        $current_option = get_option( 'bpsp_curriculum' );
-        if( $current_option == 'us' )
-            $vars['us'] = $current_option;
-        elseif ( $current_option == 'eu' )
-            $vars['eu'] = $current_option;
+                $vars['flash'][] = __( 'Courseware customization options updated.', 'bpsp' );
         
         $vars['name'] = 'admin';
         $vars['echo'] = 'true';
@@ -147,6 +140,42 @@ class BPSP_WordPress {
         self::load_template( $vars );
     }
     
+    /**
+     * action_link( $links )
+     * Adds a new entry link under plugin description
+     *
+     * @param Mixed $links, initial links
+     * @param String $file, the plugin filename
+     * @return Mixed, modified set of $links
+     */
+    function support_link( $links, $file ) {
+        if ( $file == BPSP_PLUGIN_FILE ) {
+            $links[] = '<a href="http://buddypress.org/community/groups/buddypress-courseware/forum/">' . __( 'Support', 'bpsp' ) . '</a>';
+        }
+        return $links;
+    }
+    
+    /**
+     * action_link( $links )
+     * Adds a new action link to plugin entry
+     *
+     * @param Mixed $links, initial links
+     * @return Mixed, modified set of $links
+     */
+    function action_link( $links ) {
+        $action_link = '<a href="' . admin_url( 'admin.php?page=bp-courseware' ) . '">' . __( 'Settings', 'bpsp' ) .'</a>';
+        array_unshift( $links, $action_link );
+        return $links;
+    }
+    
+    /**
+     * load_template( $vars )
+     *
+     * Loads a template for displaying group screens
+     *
+     * @param Array $vars of options
+     * @return template $content if $vars['echo'] == false
+     */
     function load_template( $vars ) {
         ob_start();
         extract( $vars );

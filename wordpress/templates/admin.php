@@ -35,54 +35,6 @@
             </div>
         </div>
         <div class="postbox">
-            <h3 class="hndle" ><?php _e( 'Default behaviour for Courseware', 'bpsp' )?></h3>
-            <div class="inside">
-                <p>
-                    <?php _e( 'In short, this feature was added due to differences
-                    between how (for example) European and US academic institutions
-                    are managing curriculum and student participation along
-                    educational process.', 'bpsp' ); ?>
-                </p>
-                <p>
-                    <?php _e( 'In Europe, is more common the concept of classes,
-                    where students are grouped as <strong><em>students enrolled in
-                    a class</em></strong>. This means that BuddyPress groups will be
-                    treaten as classes. The main workflow difference is
-                    that teachers will be able to manage a set of courses
-                    within such a class.', 'bpsp' ); ?>
-                </p>
-                <p>
-                    <?php _e( 'In United States, is more common the concept of courses,
-                    where students are gourped as <strong><em>students enrolled on
-                    a course</em></strong>. This means that BuddyPress groups will be
-                    treaten as courses. The main workflow difference is
-                    that teachers will be able to manage one course
-                    per BuddyPress group and users will subscrie to each group.', 'bpsp' ); ?>
-                </p>
-                <form action="" method="post" >
-                    <label>
-                        <p>
-                            <input type="radio" name="bpsp_curriculum" value="eu" <?php checked( !empty( $eu ) ); ?> />
-                            <strong><?php _e( 'European style', 'bpsp' ); ?></strong> &mdash;
-                            <?php _e( 'Use this setting if a single roster of students
-                            is shared between multiple courses.', 'bpsp' ); ?>
-                        </p>
-                    </label>
-                    <label>
-                        <p>
-                            <input type="radio" name="bpsp_curriculum" value="us" <?php checked( !empty( $us ) ); ?> />
-                            <strong><?php _e( 'US style', 'bpsp' ); ?></strong> &mdash;
-                            <?php _e( 'Use this setting if each course will have its own roster.', 'bpsp' ); ?>
-                        </p>
-                    </label>
-                    <p>
-                        <input type="submit" class="button" value="<?=__( 'Save Changes', 'bpsp' )?>" />
-                        <?php echo $nonce; ?>
-                    </p>
-                </form>
-            </div>
-        </div>
-        <div class="postbox">
             <h3 class="hndle" ><?php _e( 'Collaboration settings', 'bpsp' )?></h3>
             <div class="inside">
                 <p>

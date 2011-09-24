@@ -13,15 +13,16 @@ class BPSP_Static {
             define( BPSP_VERSION, '' );
         
         // Scripts
-        // Custom jQuery UI
-        wp_register_script( 'jquery-ui-courseware-custom', BPSP_WEB_URI . '/static/js/jquery-ui-custom/jquery-ui-1.8.2.custom.min.js', array( 'jquery' ), '1.8.2' );
+        // Custom jQuery UI components
+        wp_register_script( 'jquery-ui-datepicker', BPSP_WEB_URI . '/static/js/jquery-ui/jquery.ui.datepicker.js', array( 'jquery-ui-mouse' ), '1.8.12', true );
+        wp_register_script( 'jquery-ui-slider', BPSP_WEB_URI . '/static/js/jquery-ui/jquery.ui.slider.js', array( 'jquery-ui-mouse' ), '1.8.12', true );
         
         // FullCalendar
-        wp_register_script( 'fullcalendar', BPSP_WEB_URI . '/static/js/fullcalendar/fullcalendar.min.js', array( 'jquery-ui-courseware-custom' ), '1.4.7' );        
+        wp_register_script( 'fullcalendar', BPSP_WEB_URI . '/static/js/fullcalendar/fullcalendar.min.js', array( 'jquery-ui-droppable', 'jquery-ui-resizable' ), '1.4.7' );
         wp_localize_script( 'fullcalendar', 'fcLanguage', $this->fullcalendar_l10n() );
         
         // jQuery UI Date & Time picker
-        wp_register_script( 'datetimepicker', BPSP_WEB_URI . '/static/js/datetimepicker/jquery-ui-timepicker-addon-0.7.min.js', array( 'jquery-ui-courseware-custom' ), '0.5' );
+        wp_register_script( 'datetimepicker', BPSP_WEB_URI . '/static/js/datetimepicker/jquery-ui-timepicker-addon-0.7.min.js', array( 'jquery-ui-datepicker', 'jquery-ui-slider' ), '0.7', true );
         wp_localize_script( 'datetimepicker', 'dtpLanguage', $this->datetimepicker_l10n() );
         
         // Flexselect
@@ -37,15 +38,24 @@ class BPSP_Static {
         wp_register_script( 'inputhint', BPSP_WEB_URI . '/static/js/inputhint/jquery.inputhint.js', array( 'jquery' ), '1.0' );
         
         // Sprakline
-        wp_register_script( 'sparkline', BPSP_WEB_URI . '/static/js/sparkline/jquery.sparkline.min.js', array( 'jquery' ), '1.5.1' );
+        wp_register_script( 'sparkline', BPSP_WEB_URI . '/static/js/sparkline/jquery.sparkline.min.js', array( 'jquery' ), '1.6' );
+        
+        // jsTree
+        wp_register_script( 'jstree', BPSP_WEB_URI . '/static/js/jstree/jquery.jstree.js', array( 'jquery' ), '1.0-rc3' );
+        
+        // formBuilder
+        wp_register_script( 'formbuilder', BPSP_WEB_URI . '/static/js/formbuilder/jquery.formbuilder.js', array( 'jquery', 'jquery-ui-sortable' ), '0.3.1' );
+        wp_localize_script( 'formbuilder', 'fbLanguage', $this->formbuilder_l10n() );
+        
+        // WordCounter
+        wp_register_script( 'word-counter', site_url() . '/wp-admin/js/word-count.js', array( 'jquery' ) );
         
         // Loaders
-        wp_register_script( 'courseware-editor', BPSP_WEB_URI . '/static/js/courseware-editor.js', array( 'inputhint' ), BPSP_VERSION, true );
-        wp_register_script( 'list-courses', BPSP_WEB_URI . '/static/js/list-courses.js', array( 'datatables' ), BPSP_VERSION, true );
+        wp_register_script( 'courseware-editor', BPSP_WEB_URI . '/static/js/courseware-editor.js', array( 'inputhint', 'word-counter' ), BPSP_VERSION, true );
         wp_register_script( 'list-assignments', BPSP_WEB_URI . '/static/js/list-assignments.js', array( 'datatables' ), BPSP_VERSION, true );
         wp_register_script( 'single-assignment', BPSP_WEB_URI . '/static/js/single-assignment.js', array( 'jquery' ), BPSP_VERSION, true );
         wp_register_script( 'assignments', BPSP_WEB_URI . '/static/js/assignments.js', array( 'datetimepicker' ), BPSP_VERSION, true );
-        wp_register_script( 'bibliographies', BPSP_WEB_URI . '/static/js/bibliographies.js', array( 'flexselect', 'datatables' ), BPSP_VERSION, true );
+        wp_register_script( 'bibliography', BPSP_WEB_URI . '/static/js/bibliography.js', array( 'flexselect', 'datatables' ), BPSP_VERSION, true );
         wp_register_script( 'new-bibliograpy', BPSP_WEB_URI . '/static/js/new-bibliograpy.js', array( 'inputhint' ), BPSP_VERSION, true );
         wp_register_script( 'edit-bibliograpy', BPSP_WEB_URI . '/static/js/edit-bibliograpy.js', array( 'inputhint' ), BPSP_VERSION, true );
         wp_register_script( 'gradebook', BPSP_WEB_URI . '/static/js/gradebook.js', array( 'datatables' ), BPSP_VERSION, true );
@@ -53,16 +63,20 @@ class BPSP_Static {
         wp_register_script( 'list-schedules', BPSP_WEB_URI . '/static/js/list-schedules.js', array( 'fullcalendar', 'datatables' ), BPSP_VERSION, true );
         wp_register_script( 'delete-schedule', BPSP_WEB_URI . '/static/js/delete-schedule.js', array( 'datatables' ), BPSP_VERSION, true );
         wp_register_script( 'group-dashboard', BPSP_WEB_URI . '/static/js/group-dashboard.js', array( 'sparkline' ), BPSP_VERSION, true );
+        wp_register_script( 'lectures', BPSP_WEB_URI . '/static/js/lectures.js', array( 'jstree' ), BPSP_VERSION, true );
+        wp_register_script( 'new-assignment', BPSP_WEB_URI . '/static/js/new-assignment.js', array( 'courseware-editor', 'formbuilder' ), BPSP_VERSION, true );
+        wp_register_script( 'edit-assignment', BPSP_WEB_URI . '/static/js/edit-assignment.js', array( 'courseware-editor', 'formbuilder' ), BPSP_VERSION, true );
         
         // Styles
         wp_register_style( 'courseware', BPSP_WEB_URI . '/static/css/courseware.css', null, BPSP_VERSION );
         wp_register_style( 'courseware-editor', BPSP_WEB_URI . '/static/css/courseware-editor.css', null, BPSP_VERSION );
-        wp_register_style( 'jquery-ui-courseware-custom', BPSP_WEB_URI . '/static/css/jquery-ui-custom/theme/smoothness/jquery-ui-1.8.2.custom.css', '1.8.2' );
+        wp_register_style( 'jquery-ui-courseware-custom', BPSP_WEB_URI . '/static/css/jquery-ui-custom/theme/smoothness/jquery-ui-custom.css', '1.8.2' );
         wp_register_style( 'fullcalendar', BPSP_WEB_URI . '/static/css/fullcalendar/jquery.fullcalendar.css', null, '1.4.7' );
         wp_register_style( 'datatables', BPSP_WEB_URI . '/static/css/datatables/jquery.datatables.css', null, '1.6.2' );
         wp_register_style( 'datetimepicker', BPSP_WEB_URI . '/static/css/datetimepicker/jquery.timepicker.css', array( 'jquery-ui-courseware-custom' ), '0.5' );
         wp_register_style( 'flexselect', BPSP_WEB_URI . '/static/css/flexselect/jquery.flexselect.css', null, '0.2' );
-    
+        wp_register_style( 'formbuilder', BPSP_WEB_URI . '/static/css/formbuilder/jquery.formbuilder.css', null, '0.3-beta' );
+        
         // Hooks
         add_action( 'bp_head', array( &$this, 'load_courseware_css' ) );
         add_action( 'courseware_editor', array( &$this, 'courseware_editor_enqueues' ) );
@@ -72,12 +86,14 @@ class BPSP_Static {
         add_action( 'courseware_bibliography_screen', array( &$this, 'bibs_enqueues' ) );
         add_action( 'courseware_new_bibliography_screen', array( &$this, 'new_bib_enqueues' ) );
         add_action( 'courseware_edit_bibliography_screen', array( &$this, 'edit_bib_enqueues' ) );
-        add_action( 'courseware_list_courses_screen', array( &$this, 'list_courses_enqueues' ) );
         add_action( 'courseware_new_schedule_screen', array( &$this, 'schedules_enqueues' ) );
         add_action( 'courseware_edit_schedule_screen', array( &$this, 'schedules_enqueues' ));
         add_action( 'courseware_delete_schedule_screen', array( &$this, 'delete_schedule_enqueues' ) );
         add_action( 'courseware_gradebook_screen', array( &$this, 'gradebook_enqueues' ) );
         add_action( 'courseware_group_dashboard', array( &$this, 'group_dashboard_enqueues' ) );
+        add_action( 'courseware_lectures_screen', array( &$this, 'lectures_enqueues' ) );
+        add_action( 'courseware_new_assignment_screen', array( &$this, 'new_assignment_enqueues' ) );
+        add_action( 'courseware_edit_assignment_screen', array( &$this, 'edit_assignment_enqueues' ) );
     }
     
     /**
@@ -113,10 +129,23 @@ class BPSP_Static {
     }
     
     function bibs_enqueues() {
-        wp_enqueue_script( 'bibliographies' );
+        wp_enqueue_script( 'bibliography' );
         wp_enqueue_style( 'flexselect' );
         wp_enqueue_style( 'datatables' );
-        wp_enqueue_style( 'jquery-ui-courseware-custom' );
+    }
+    
+    function lectures_enqueues() {
+        wp_enqueue_script( 'lectures' );
+    }
+    
+    function edit_assignment_enqueues() {
+        wp_enqueue_script( 'edit-assignment' );
+        wp_enqueue_style( 'formbuilder' );
+    }
+    
+    function new_assignment_enqueues() {
+        wp_enqueue_script( 'new-assignment' );
+        wp_enqueue_style( 'formbuilder' );
     }
     
     function new_bib_enqueues() {
@@ -130,7 +159,6 @@ class BPSP_Static {
     function gradebook_enqueues() {
         wp_enqueue_script( 'gradebook' );
         wp_enqueue_style( 'datatables' );
-        wp_enqueue_style( 'jquery-ui-courseware-custom' );
     }
     
     function schedules_enqueues() {
@@ -141,34 +169,57 @@ class BPSP_Static {
     function list_assignments_enqueues() {
         wp_enqueue_script( 'list-assignments' );
         wp_enqueue_style( 'datatables' );
-        wp_enqueue_style( 'jquery-ui-courseware-custom' );
     }
     
     function assignment_enqueues() {
         wp_enqueue_script( 'single-assignment' );
     }
     
-    function list_courses_enqueues() {
-        wp_enqueue_script( 'list-courses' );
-        wp_enqueue_style( 'datatables' );
-        wp_enqueue_style( 'jquery-ui-courseware-custom' );
-    }
-    
     function list_schedules_enqueues() {
         wp_enqueue_style( 'fullcalendar' );
         wp_enqueue_style( 'datatables' );
         wp_enqueue_script( 'list-schedules' );
-        wp_enqueue_style( 'jquery-ui-courseware-custom' );
     }
 
     function delete_schedule_enqueues() {
         wp_enqueue_style( 'datatables' );
         wp_enqueue_script( 'delete-schedule' );
-        wp_enqueue_style( 'jquery-ui-courseware-custom' );
+        wp_enqueue_style( 'datatables' );
     }
     
     function group_dashboard_enqueues() {
         wp_enqueue_script( 'group-dashboard' );
+    }
+    
+    /**
+     * formbuilder_l10n()
+     *
+     * Helper to get formbuilder messages localized/options set
+     */
+    function formbuilder_l10n() {
+        return array(
+            "save"              => __( "Save", 'bpsp' ),
+            "add_new_field"     => __( "Add New Field...", 'bpsp' ),
+            "text"              => __( "Text Field", 'bpsp' ),
+            "title"             => __( "Title", 'bpsp' ),
+            "paragraph"         => __( "Paragraph", 'bpsp' ),
+            "checkboxes"        => __( "Checkboxes", 'bpsp' ),
+            "radio"             => __( "Radio", 'bpsp' ),
+            "select"            => __( "Select List", 'bpsp' ),
+            "text_field"        => __( "Text Field", 'bpsp' ),
+            "label"             => __( "Label", 'bpsp' ),
+            "paragraph_field"   => __( "Paragraph Field", 'bpsp' ),
+            "select_options"    => __( "Select Options", 'bpsp' ),
+            "add"               => __( "Add", 'bpsp' ),
+            "checkbox_group"    => __( "Checkbox Group", 'bpsp' ),
+            "remove_message"    => __( "Are you sure you want to remove this element?", 'bpsp' ),
+            "remove"            => __( "Remove", 'bpsp' ),
+            "radio_group"       => __( "Radio Group", 'bpsp' ),
+            "selections_message"=> __( "Allow Multiple Selections", 'bpsp' ),
+            "hide"              => __( "Hide", 'bpsp' ),
+            "required"          => __( "Required", 'bpsp' ),
+            "show"              => __( "Show", 'bpsp' )
+        );
     }
     
     /**

@@ -1,6 +1,6 @@
 <?php if( empty( $responses ) ) return; ?>
 <div id="courseware-responses-list">
-    <h4 class="meta"><?php _e( 'List of responses', 'bpsp' ); ?></h4>
+    <h4 class="meta responses"><span class="icon"></span><?php _e( 'List of responses', 'bpsp' ); ?></h4>
     <ul>
         <?php foreach ( $responses as $r ): setup_postdata( $r ); ?>
             <li>

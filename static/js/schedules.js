@@ -51,7 +51,6 @@ jQuery( "input[name$='schedule[start_date]']" )
     .bind( 'change', function() { courseware_toggle_datefields( true ) });
 
 /* Editor Screens */
-jQuery('#new-assignment-form label').hide();
 jQuery('#new-assignment-form input[type="text"]').inputHint();
 jQuery('#new-assignment-form textarea').inputHint();
 
@@ -64,7 +63,12 @@ oLanguage.oPaginate.sLast       = '&raquo;';
 
 // Load DataTables
 jQuery("table.datatables").dataTable( {
-    "bJQueryUI": true,
+    "aoColumns": [
+        { "sWidth": "65%" },
+        { "sWidth": "15%" },
+        { "sWidth": "15%" },
+        { "sWidth": "5%" }
+    ],
     "oLanguage": oLanguage,
     "aaSorting": [[ 1, "desc" ]],
     "sPaginationType": "full_numbers"

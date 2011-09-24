@@ -1,8 +1,10 @@
-<div id="courseware-courses-list">
+<div id="courseware-assignments-list">
+<h4 class="meta assignments"><span class="icon"></span><?php _e( 'Assignments', 'bpsp' ) ?></h4>
     <table class="datatables">
         <thead>
             <tr>
                 <th><?php _e( 'Description', 'bpsp' ); ?></th>
+                <th><?php _e( 'Type', 'bpsp' ); ?></th>
                 <th><?php _e( 'Responses', 'bpsp' ); ?></th>
                 <th><?php _e( 'Due Date', 'bpsp' ); ?></th>
             </tr>
@@ -15,6 +17,7 @@
                 <td>
                     <?php _e( 'No assignments were added.', 'bpsp' ); ?>
                 </td>
+                <td></td>
                 <td></td>
                 <td></td>
             </tr>
@@ -37,7 +40,15 @@
                 </td>
                 <td>
                     <?php
-                        echo count( get_post_meta( $assignment->ID, 'responded_author' ) );
+                        if( !empty( $assignment->form_data ) )
+                            _e( 'Quiz', 'bpsp' );
+                        else
+                            _e( 'Task', 'bpsp' );
+                    ?>
+                </td>
+                <td>
+                    <?php
+                        echo count( $assignment->responded_author );
                     ?>
                 </td>
                 <td>

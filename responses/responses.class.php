@@ -84,7 +84,7 @@ class BPSP_Responses {
         global $bp;
         $is_teacher = false;
         
-        if( __( 'Teacher', 'bpsp') == xprofile_get_field_data( __( 'Role'), $bp->loggedin_user->id ) )
+        if( __( 'Teacher', 'bpsp') == xprofile_get_field_data( __( 'Role', 'bpsp' ), $bp->loggedin_user->id ) )
             $is_teacher = true;
         elseif ( is_super_admin( $user_id ) )
             $is_teacher = true;
@@ -226,12 +226,13 @@ class BPSP_Responses {
         if( !$this->current_assignment )
             wp_redirect( wp_redirect( get_option( 'siteurl' ) ) );
         
-        if( $action_vars[2] == 'add_response' ) {
+        if( isset ( $action_vars[2] ) && $action_vars[2] == 'add_response' ) {
+            do_action( 'courseware_add_response' );
             //Load editor
             add_action( 'bp_head', array( &$this, 'load_editor' ) );
             add_filter( 'courseware_group_template', array( &$this, 'new_response_screen' ) );
         }
-        elseif ( $action_vars[2] == 'response' ) {
+        elseif ( isset ( $action_vars[2] ) && $action_vars[2] == 'response' ) {
             $current_response = $this->is_response( $action_vars[3] );
             if( isset ( $action_vars[3] ) && !empty( $current_response ) )
                 $this->current_response = $current_response;
@@ -241,6 +242,7 @@ class BPSP_Responses {
             if( isset ( $action_vars[4] ) && 'delete' == $action_vars[4] )
                 add_filter( 'courseware_group_template', array( &$this, 'delete_response_screen' ) );
             else {
+                do_action( 'courseware_single_response' );
                 add_filter( 'courseware_group_template', array( &$this, 'single_response_screen' ) );
             }
         }
@@ -272,9 +274,14 @@ class BPSP_Responses {
         $response = get_posts( $response_query );
         
         if( !empty( $response ) )
-            return reset( $response );
+            $response = reset( $response );
         else
             return null;
+        
+        if( isset( $this->current_assignment->form ) )
+            $response->form_values = get_post_meta( $response->ID, 'form_values', true );
+        $response->form = isset( $this->current_assignment->form ) ? $this->current_assignment->form : false;
+        return $response;
     }
     
     /**
@@ -286,22 +293,22 @@ class BPSP_Responses {
      * @return Mixed, the response post object, or null on failure
      */
     function has_response( $assignment_id = null, $author_id = null ) {
+        global $bp;
         $has_responded = false;
+        $responses = null;
         
         if( empty( $assignment_id ) )
             $assignment_id = $this->current_assignment->ID;
         
-        if( empty( $author_id ) ) {
-            global $bp;
+        if( empty( $author_id ) )
             $author_id = $bp->loggedin_user->id;
-        }
         
         $response_authors = get_post_meta( $assignment_id, 'responded_author');
         if( in_array( $author_id, $response_authors ) )
             $has_responded = true;
         
         if( $has_responded ) {
-            $response = get_posts(
+            $responses = get_posts(
                 array(
                     'numberposts'   => '-1',
                     'post_parent' => $assignment_id,
@@ -311,11 +318,116 @@ class BPSP_Responses {
                 )
             );
             
-            if( empty( $response ) )
-                return false; // Should not be here ever
-            else
-                return reset( $response );
+            $response = reset( $responses );
+            if( !empty( $response ) ) {
+                $response->form_values = get_post_meta( $response->ID, 'form_values', true );
+                return $response;
+            }
         }
+        return false;
+    }
+    
+    /**
+     * check_quiz( $answers, $questions )
+     * Verifies user submitted form values and returns a set of wrong answers
+     *
+     * @param Mixed $answers, an array of form data
+     * @param Mixed $questions, an array of question to check
+     * @return Mixed, an array of wrong answers
+     */
+    function check_quiz( $answers, $questions ) {
+        $results = array();
+        $results['total'] = 0;
+        $results['correct'] = 0;
+        $answers = stripslashes_deep( $answers );
+        $answers = str_replace( '\\', "&#92;", $answers );
+        foreach( $questions as $question ) {
+            // Find the initial correct question and answer
+            if( !is_array( $question['values'] ) ) {
+                // The answer is after last ?
+                $q_and_a = preg_split( "/\?(?!.*\?)/", $question['values'] );
+                $a = trim( end( $q_and_a ) );
+                $q = trim( reset( $q_and_a ) );
+                $results[ $q ] = array();
+                // Find the name of the form
+                $name = md5( $q );
+                // Correct answers should be counted
+                if( !empty( $a ) )
+                    $results['total']++;
+                // Find the user answer and compare
+                if( isset( $answers[ $name ] ) && !empty( $answers[ $name ] ) ) {
+                    // Save the wrong answers
+                    if( trim( strtolower( $a ) ) != strtolower( $answers[ $name ] ) ) {
+                        $results[ $q ][] = esc_html( $answers[ $name ] );
+                        $results[ $q ][] = $a;
+                    }
+                    else
+                        $results['correct']++;
+                } else {
+                    // Save the wrong answer even if no answer was given
+                    if( !isset( $answers[ $name ] ) || empty( $answers[ $name ] ) ) {
+                        $results[ $q ][] = __( '(No answer)', 'bpsp' );
+                        $results[ $q ][] = $a;
+                    }
+                }
+            } else {
+                $q = $question['title'];
+                $results[ $q ] = array();
+                // Find the name of the form
+                $name = md5( $q );
+                if( $question['cssClass'] == 'checkbox' ) {
+                    foreach( $question['values'] as $a ) {
+                        // Correct answers should be counted
+                        if( $a['baseline'] != 'undefined' )
+                            $results['total']++;
+                        
+                        $cb_name = md5( $q . $a['value'] );
+                        if( isset( $answers[ $cb_name ] ) ) {
+                            // Save the wrong answer
+                            if( $a['baseline'] == 'undefined' ) {
+                                $results[ $q ][] = esc_html( $a['value'] );
+                                $results[ $q ][] = esc_html( $a['value'] ) . ' ' . __( '(wrong)', 'bpsp' );
+                            }
+                            else
+                                $results['correct']++;
+                        } else {
+                            // Save the wrong answer even if no answer was given
+                            if( $a['baseline'] != 'undefined' ) {
+                                $results[ $q ][] = __( '(No answer)', 'bpsp' );
+                                $results[ $q ][] = esc_html( $a['value'] );
+                            }
+                        }
+                    }
+                } else { // Radios | Select
+                    foreach( $question['values'] as $a ) {
+                        // Correct answers should be counted
+                        if( $a['baseline'] != 'undefined' )
+                            $results['total']++;
+                        // Check if the answer exists
+                        $r_a = false;
+                        if( isset( $answers[ $name ] ) )
+                            $r_a = $answers[ $name ];
+                        
+                        // Save the wrong answer if any
+                        if( $a['baseline'] != 'undefined' && $question['cssClass'] == 'radio' ) {
+                            if( trim( strtolower( $a['value'] ) ) != trim( strtolower( $r_a ) ) ) {
+                                $results[ $q ][] = isset( $r_a ) ? $r_a : __( '(No answer)', 'bpsp' );
+                                $results[ $q ][] = esc_html( $a['value'] );
+                            } else 
+                                $results['correct']++;
+                        } elseif ( $a['baseline'] != 'undefined' ) { // Select
+                            if ( md5( $q . $a['value'] ) != $r_a ) {
+                                $results[ $q ][] = __( '(Correct answer below)', 'bpsp' );
+                                $results[ $q ][] = esc_html( $a['value'] );
+                            } else 
+                                $results['correct']++;
+                        }
+                    }
+                }
+            }
+        }
+        $results = array_filter( $results );
+        return apply_filters( 'courseware_quiz_results', $results, $answers, $this->current_assignment );
     }
     
     /**
@@ -330,11 +442,12 @@ class BPSP_Responses {
     function new_response_screen( $vars ) {
         global $bp;
         $nonce_name = 'add_response';
+        $form_results = null;
         
         if( !$this->has_student_caps( $bp->loggedin_user->id ) && !is_super_admin() ||
            !bp_group_is_member( $bp->current_group->id )
         ) {
-            $vars['die'] = __( 'BuddyPress Courseware Error while forbidden user tried to add a new response.' );
+            $vars['die'] = __( 'BuddyPress Courseware Error while forbidden user tried to add a new response.', 'bpsp' );
             return $vars;
         }
         
@@ -344,6 +457,7 @@ class BPSP_Responses {
             isset( $_POST['_wpnonce'] )
         ) {
             $new_response = $_POST['response'];
+            $new_response_quiz = !empty( $_POST['frmb'] ) ? $_POST['frmb'] : null;
             $is_nonce = wp_verify_nonce( $_POST['_wpnonce'], $nonce_name );
             $response = $this->has_response();
             if( true != $is_nonce ) 
@@ -353,8 +467,13 @@ class BPSP_Responses {
                 $vars['response'] = $response;
                 $vars['error'] = __( 'You already sent your response.', 'bpsp' );
                 $this->single_response_screen( $vars );
-            }
-            else
+            } else {
+                if( $new_response_quiz ) {
+                    $new_response['title'] = bp_core_get_username( $bp->loggedin_user->id ) . __( ' on ', 'bpsp' ) . $this->current_assignment->post_title;
+                    $new_response['content'] = __( 'Your quiz results: ', 'bpsp' );
+                    $form_results = $this->check_quiz( $new_response_quiz, $this->current_assignment->form_data );
+                    $new_response['content'] .= $form_results['correct'] . '/' . $form_results['total'];
+                }
                 if( isset( $new_response['title'] ) && isset( $new_response['content'] ) ) {
                     $new_response['title'] = strip_tags( $new_response['title'] );
                     $new_response_id =  wp_insert_post( array(
@@ -368,20 +487,32 @@ class BPSP_Responses {
                     if( $new_response_id ) {
                         // Save author id in assignment post_meta so we don't have to query it all over
                         add_post_meta( $this->current_assignment->ID, 'responded_author', $bp->loggedin_user->id );
+                        add_post_meta( $new_response_id, 'form_values', $form_results );
                         $vars = $this->single_response_screen( $vars );
+                        // Leave this for imediate results preview
+                        $vars['response']->form_values = $form_results;
                         if( $this->group_responses_status() )
-                            do_action( 'courseware_response_added', $vars );
+                            $vars['public'] = true;
+                        
+                        do_action( 'courseware_response_added', $vars );
+                        
                         $vars['message'] = __( 'New response was added.', 'bpsp' );
                         return $vars;
                     } else
                         $vars['error'] = __( 'New response could not be added (fill the title/content).', 'bpsp' );
                 }
+            }
         }
         
         $vars['name'] = 'add_response';
         $vars['parent_assignment'] = $this->current_assignment;
         $vars['user_id'] = $bp->loggedin_user->id;
         $vars['nonce'] = wp_nonce_field( $nonce_name, '_wpnonce', true, false );
+        $vars['trail'] = array(
+            $this->current_assignment->lecture->post_title => $this->current_assignment->lecture->permalink,
+            $this->current_assignment->post_title => $this->current_assignment->permalink,
+            __( 'New Response', 'bpsp' ) => ''
+        );
         return $vars;
     }
     
@@ -397,7 +528,7 @@ class BPSP_Responses {
     function populate_responses( $vars ) {
         global $bp;
         
-        if( $this->has_student_caps() && bp_group_is_member( $bp->current_group->id ) )
+        if( $this->has_student_caps() && bp_group_is_member( $bp->groups->current_group->id ) )
             $vars['response_add_uri'] = $vars['assignment_permalink'] . '/add_response';
         
         $vars['response'] = $this->has_response();
@@ -433,7 +564,7 @@ class BPSP_Responses {
         if( !empty( $this->current_response ) )
             $response = $this->current_response;
         else
-            $response = $this->has_response();            
+            $response = $this->has_response();
         
         if( $this->group_responses_status() && !$this->has_response_caps() &&
            ( $bp->loggedin_user->id != $response->post_author )
@@ -450,6 +581,12 @@ class BPSP_Responses {
             $vars['response_delete_permalink'] = $vars['assignment_permalink'] . '/response/' . $response->post_name . '/delete';
             $vars['response_delete_uri'] = add_query_arg( '_wpnonce', wp_create_nonce( $nonce_delete_name ), $vars['response_delete_permalink'] );
         }
+        
+        $vars['trail'] = array(
+            $this->current_assignment->lecture->post_title => $this->current_assignment->lecture->permalink,
+            $this->current_assignment->post_title => $this->current_assignment->permalink,
+            $response->post_title => ''
+        );
         
         return apply_filters( 'courseware_response', $vars );
     }
