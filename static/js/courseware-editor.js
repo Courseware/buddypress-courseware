@@ -36,4 +36,7 @@ jQuery(function($) {
     
     // Delete the loader, it won't load anyway
     $('#wp-fullscreen-save img').remove();
+    
+    // Make word counts work
+    $(document).triggerHandler('wpcountwords', [ $(edCanvas).val() ] );
 });

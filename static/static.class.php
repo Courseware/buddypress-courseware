@@ -47,8 +47,11 @@ class BPSP_Static {
         wp_register_script( 'formbuilder', BPSP_WEB_URI . '/static/js/formbuilder/jquery.formbuilder.js', array( 'jquery', 'jquery-ui-sortable' ), '0.3.1' );
         wp_localize_script( 'formbuilder', 'fbLanguage', $this->formbuilder_l10n() );
         
+        // WordCounter
+        wp_register_script( 'word-counter', site_url() . '/wp-admin/js/word-count.js', array( 'jquery' ) );
+        
         // Loaders
-        wp_register_script( 'courseware-editor', BPSP_WEB_URI . '/static/js/courseware-editor.js', array( 'inputhint' ), BPSP_VERSION, true );
+        wp_register_script( 'courseware-editor', BPSP_WEB_URI . '/static/js/courseware-editor.js', array( 'inputhint', 'word-counter' ), BPSP_VERSION, true );
         wp_register_script( 'list-assignments', BPSP_WEB_URI . '/static/js/list-assignments.js', array( 'datatables' ), BPSP_VERSION, true );
         wp_register_script( 'single-assignment', BPSP_WEB_URI . '/static/js/single-assignment.js', array( 'jquery' ), BPSP_VERSION, true );
         wp_register_script( 'assignments', BPSP_WEB_URI . '/static/js/assignments.js', array( 'datetimepicker' ), BPSP_VERSION, true );

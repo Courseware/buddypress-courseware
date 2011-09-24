@@ -120,7 +120,9 @@
 .clearlooks2 .mceMiddle .mceLeft,
 .clearlooks2 .mceMiddle .mceRight { background: #EEE !important; }
 
-/* Distraction Free Editor - Overlay Styles */
+/* Distraction Free Writing mode
+ * =Overlay Styles
+-------------------------------------------------------------- */
 .fullscreen-overlay {
     z-index: 149999;
     display: none;
@@ -129,8 +131,8 @@
     bottom: 0;
     left: 0;
     right: 0;
-    background: #f9f9f9;
     filter: inherit;
+    background: #f9f9f9;
 }
 
 .fullscreen-active .fullscreen-overlay,
@@ -146,7 +148,12 @@
     display: none;
 }
 
-/* Distraction Free Editor - Overlay Body */
+.fullscreen-active #header {
+    display: none;
+}
+
+/* =Overlay Body
+-------------------------------------------------------------- */
 #wp-fullscreen-body {
     width: 100%;
     z-index: 150005;
@@ -172,7 +179,8 @@
 }
 
 #wp-fullscreen-container {
-    padding: 4px 10px 50px;
+    padding: 4px 5px 50px 10px;
+    width: 100%;
 }
 
 #wp-fullscreen-title,
@@ -199,6 +207,7 @@
     min-height: 300px;
     border: 0;
     background: transparent;
+    font-family: Consolas, Monaco, monospace;
     line-height: 1.6em;
     padding: 0;
     overflow-y: hidden;
@@ -213,7 +222,8 @@
     padding-top: 5px;
 }
 
-/* Distraction Free Editor - Top bar */
+/* =Top bar
+-------------------------------------------------------------- */
 #fullscreen-topbar {
     position: fixed;
     top: 0;
@@ -252,6 +262,10 @@
 }
 
 #wp-fullscreen-save {
+    float: right;
+}
+
+#wp-fullscreen-save {
     padding: 2px 2px 0 5px;
 }
 
@@ -263,6 +277,10 @@
 #wp-fullscreen-central-toolbar {
     margin: auto;
     padding: 0;
+}
+
+#wp-fullscreen-buttons > div {
+    float: left;
 }
 
 #wp-fullscreen-mode-bar {
@@ -326,12 +344,17 @@
 }
 
 #wp-fullscreen-buttons .hidden,
-.wp-html-mode #wp-fullscreen-buttons div {
+.wp-html-mode #wp-fullscreen-buttons div,
+#wp-fullscreen-buttons .hidden {
     display: none;
 }
 
 #wp-fullscreen-buttons .disabled {
     opacity: 0.5;
+}
+
+.wp-html-mode #wp-fullscreen-buttons div {
+    display: none;
 }
 
 .wp-html-mode #wp-fullscreen-buttons div.wp-fullscreen-both {
@@ -353,7 +376,6 @@
 }
 
 #wp-fullscreen-buttons .mce_image .mce_image {
-    /* I know, it won't work */
     background-image: url("/wp-admin/images/menu.png");
     background-position: -124px -38px;
 }
@@ -362,7 +384,8 @@
     background-position: -124px -6px;
 }
 
-/* Thickbox Adjustments */
+/* =Thickbox Adjustments
+-------------------------------------------------------------- */
 .fullscreen-active #TB_overlay {
     z-index: 150100;
 }
@@ -371,7 +394,8 @@
     z-index: 150102;
 }
 
-/* TinyMCE Adjustments */
+/* =TinyMCE Adjustments
+-------------------------------------------------------------- */
 #wp_mce_fullscreen_ifr {
     background: transparent;
 }
@@ -401,7 +425,8 @@
     background-color: #FFF;
 }
 
-/* CSS 3 transitions */
+/* =CSS 3 transitions
+-------------------------------------------------------------- */
 .fade-1000 {
     opacity: 0;
     -moz-transition-property: opacity;
