@@ -60,8 +60,20 @@ Before asking questions, please check the [BuddyPress Courseware Handbook](http:
 
 == Changelog ==
 
-= 0.x-future  =
-* 
+= 0.9 =
+* Major codebase changes!!!
+* Assignments reworked (including quizzes, automatic grading)
+* Lectures
+* Cleaner UI/UX
+* Progress indicator and bookmarking
+* 3.2, 1.5 compatibility including distraction free writing mode
+* Lots of security improvements
+* Bookmarking tool
+* Progress indicator tool
+* Breadcrumbs
+* Proper MS support
+* French localisation from [Albert Bruc](http://www.ab-ae.fr/)
+* [Full changelog](https://github.com/scholarpress/buddypress-courseware/issues?state=closed)
 
 = 0.1.6 =
 * Updated wording, @props mrjarbenne. Closes [#27](https://github.com/scholarpress/buddypress-courseware/issues/issue/27)
