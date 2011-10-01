@@ -200,7 +200,7 @@ class BPSP_Lectures {
             else
                 return null;
         
-        if( !$lecture_identifier && get_class( $this->current_lecture ) == __CLASS__ )
+        if( !$lecture_identifier && get_class( (object)$this->current_lecture ) == __CLASS__ )
             return $this->current_lecture;
         
         $lecture_query = array(

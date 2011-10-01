@@ -194,7 +194,7 @@ class BPSP_Schedules {
             else
                 return null;
         
-        if( !$schedule_identifier && get_class( $this->current_schedule ) == __CLASS__ )
+        if( !$schedule_identifier && get_class( (object)$this->current_schedule ) == __CLASS__ )
             return $this->current_schedule;
         
         $schedule_query = array(

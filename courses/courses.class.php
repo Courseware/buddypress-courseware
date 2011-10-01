@@ -206,7 +206,7 @@ class BPSP_Courses {
             else
                 return null;
         
-        if( !$course_identifier && get_class( $this->current_course ) == __CLASS__ )
+        if( !$course_identifier && get_class( (object)$this->current_course ) == __CLASS__ )
             return $this->current_course;
         
         $course_query = array(
