@@ -59,7 +59,7 @@ class BPSP_Lectures {
             'supports'              => array( 'title', 'editor', 'author', 'page-attributes' )
         );
         if( !register_post_type( 'lecture', $lecture_post_def ) )
-            $this->error = __( 'BuddyPress Courseware error while registering lecture post type.', 'bpsp' );
+            wp_die( __( 'BuddyPress Courseware error while registering lecture post type.', 'bpsp' ) );
         
         $lecture_rel_def = array(
             'public'        => BPSP_DEBUG,

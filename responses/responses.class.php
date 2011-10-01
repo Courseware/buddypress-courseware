@@ -70,7 +70,7 @@ class BPSP_Responses {
             'supports'              => array( 'title', 'editor', 'author' )
         );
         if( !register_post_type( 'response', $response_post_def ) )
-            $this->error = __( 'BuddyPress Courseware error while registering response post type.', 'bpsp' );
+            wp_die( __( 'BuddyPress Courseware error while registering response post type.', 'bpsp' ) );
     }
     
     /**

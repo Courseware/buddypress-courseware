@@ -68,7 +68,7 @@ class BPSP_Assignments {
             'supports'              => array( 'title', 'editor', 'author', 'custom-fields' )
         );
         if( !register_post_type( 'assignment', $assignment_post_def ) )
-            $this->error = __( 'BuddyPress Courseware error while registering assignment post type.', 'bpsp' );
+            wp_die( __( 'BuddyPress Courseware error while registering assignment post type.', 'bpsp' ) );
         
         register_taxonomy_for_object_type( 'course_id', 'assignment' ); //append already registered course_id tax
         register_taxonomy_for_object_type( 'group_id', 'assignment' ); //append already registered group_id tax
