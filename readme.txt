@@ -3,7 +3,7 @@ Contributors: sushkov, jeremyboggs, boonebgorges, johnjamesjacoby, chexee
 Tags: buddypress, lms, courseware, education, teaching, quizzes, tests, gradebook, courses, lectures, assignments
 Requires at least: WordPress 3.2, BuddyPress 1.5
 Tested up to: WordPress 3.2.1 / BuddyPress 1.5
-Stable tag: 0.9
+Stable tag: 0.9.1
 Donate link: http://stas.nerd.ro/pub/donate/
 
 A Learning Management System for BuddyPress
@@ -54,11 +54,23 @@ Please follow the [standard installation procedure for WordPress plugins](http:/
 If you are updating from version 0.1.x please backup your database/files!
 Courseware 0.9 is not fully backwards compatible!!!
 
+Also after upgrade|isntall if you are experiencing publishing problems (content is not published),
+make sure you updated your Courseware role in the Profile tab.
+
 == Frequently Asked Questions ==
 
 Before asking questions, please check the [BuddyPress Courseware Handbook](http://scholarpress.github.com/buddypress-courseware/handbook.html).
 
 == Changelog ==
+
+= 0.9.1 =
+* Updated query var for taxonomies
+* Make sure some objects are treated right.
+* cleanups for every BPSP_C=<COMPONENT>::is_<COMPONENT>
+* Cleanups in post types and taxonomies
+* Fixed another typo
+* Fixed soem typos, improved formbuilder loading
+* Fixed a typo not showing member take quiz button. Closes [#55](https://github.com/scholarpress/buddypress-courseware/issues/issue/55)
 
 = 0.9 =
 * Major codebase changes!!!
