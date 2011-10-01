@@ -210,19 +210,20 @@ class BPSP_Assignments {
             else
                 return null;
         
-        if( !$assignment_identifier )
-            $assignment_identifier = $this->current_assignment;
+        if( !$assignment_identifier && get_class( $this->current_assignment ) == __CLASS__ )
+            return $this->current_assignment;
         
         $assignment_query = array(
             'post_type' => 'assignment',
             'group_id' => $bp->groups->current_group->id,
         );
         
-        if( is_numeric( $assignment_identifier ) )
-            $assignment_query['p'] = $assignment_identifier;
-        else
-            $assignment_query['name'] = $assignment_identifier;
-        
+        if ( $assignment_identifier != null ) {
+            if( is_numeric( $assignment_identifier ) )
+                $assignment_query['p'] = $assignment_identifier;
+            else
+                $assignment_query['name'] = $assignment_identifier;
+        }
         $assignment = get_posts( $assignment_query );
         
         if( !empty( $assignment[0] ) ) {

@@ -200,19 +200,20 @@ class BPSP_Lectures {
             else
                 return null;
         
-        if( !$lecture_identifier )
-            $lecture_identifier = $this->current_lecture;
+        if( !$lecture_identifier && get_class( $this->current_lecture ) == __CLASS__ )
+            return $this->current_lecture;
         
         $lecture_query = array(
             'post_type' => 'lecture',
             'group_id' => $bp->groups->current_group->id,
         );
         
-        if( is_numeric( $lecture_identifier ) )
-            $lecture_query['p'] = $lecture_identifier;
-        else
-            $lecture_query['name'] = $lecture_identifier;
-        
+        if ( $lecture_identifier != null ) {
+            if( is_numeric( $lecture_identifier ) )
+                $lecture_query['p'] = $lecture_identifier;
+            else
+                $lecture_query['name'] = $lecture_identifier;
+        }
         $lecture = get_posts( $lecture_query );
         
         if( reset( $lecture ) ) {
