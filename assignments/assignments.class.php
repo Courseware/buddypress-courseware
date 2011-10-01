@@ -210,7 +210,7 @@ class BPSP_Assignments {
             else
                 return null;
         
-        if( !$assignment_identifier && get_class( $this->current_assignment ) == __CLASS__ )
+        if( !$assignment_identifier && get_class( (object)$this->current_assignment ) == __CLASS__ )
             return $this->current_assignment;
         
         $assignment_query = array(

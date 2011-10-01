@@ -263,7 +263,7 @@ class BPSP_Responses {
         else
             return null;
         
-        if( !$response_identifier && get_class( $this->current_response ) == __CLASS__ )
+        if( !$response_identifier && get_class( (object)$this->current_response ) == __CLASS__ )
             return $this->current_response;
         
         $response_query = array(
