@@ -244,7 +244,7 @@ class FormBuilder {
             
             foreach( $field['values'] as $item ){
                 // set the default checked value
-                $checked = $item['default'] == 'true' ? true : false;
+                $checked = $item['baseline'] == 'true' ? true : false;
                 $field_id = $field_title . '-' . sanitize_title( $item['value'] );
                 
                 $checkbox = '<span class="row clearall">';

@@ -1,7 +1,4 @@
 <?php
-// Load the formbuilder
-require_once( dirname(__FILE__) . '/formbuilder.class.php' );
-
 /**
  * BPSP Class for assignments management
  */
@@ -43,13 +40,11 @@ class BPSP_Assignments {
      * Constructor. Loads the hooks and actions.
      */
     function BPSP_Assignments() {
-        // Initialize our form builder
-        $this->frmb = new FormBuilder();
-        
         add_action( 'courseware_new_teacher_added', array( &$this, 'add_assignment_caps' ) );
         add_action( 'courseware_new_teacher_removed', array( &$this, 'remove_assignment_caps' ) );
         add_action( 'courseware_group_screen_handler', array( &$this, 'screen_handler' ) );
         add_filter( 'courseware_group_nav_options', array( &$this, 'add_nav_options' ) );
+        add_action( 'courseware_load_formbuilder', array( &$this, 'load_formbuilder' ) );
    }
     
     /**
@@ -166,8 +161,9 @@ class BPSP_Assignments {
         elseif( reset( $action_vars ) == 'assignment' ) {
             $current_assignment = BPSP_Assignments::is_assignment( $action_vars[1] );
             
-            if( isset ( $action_vars[1] ) && null != $current_assignment )
+            if( isset ( $action_vars[1] ) && null != $current_assignment ) {
                 $this->current_assignment = $current_assignment;
+            }
             else {
                 wp_redirect( wp_redirect( get_option( 'siteurl' ) ) );
             }
@@ -247,14 +243,13 @@ class BPSP_Assignments {
             $assignment[0]->form_data = get_post_meta( $assignment[0]->ID, 'form_data', true );
             // If Assignment has form, render it first
             if( !empty( $assignment[0]->form_data ) ) {
-                if( !isset( $this ) || !isset( $this->frmb ) )
+                    do_action('courseware_load_formbuilder');
                     $frmb = new FormBuilder();
-                else
-                    $frmb = $this->frmb;
-                
-                $frmb->set_data( $assignment[0]->form_data );
-                $assignment[0]->form = $frmb->render();
             }
+            
+            $frmb->set_data( $assignment[0]->form_data );
+            $assignment[0]->form = $frmb->render();
+            
             $assignment[0]->permalink = $courseware_uri . 'assignment/' . $assignment[0]->post_name;
             return $assignment[0];
         } else
@@ -639,9 +634,12 @@ class BPSP_Assignments {
      * @uses exit()
      */
     function get_form_data() {
+        global $bp;
+        
         if( $this->has_assignment_caps( $bp->loggedin_user->id ) || is_super_admin() ) {
             header( 'HTTP/1.1 200 OK' );
             header( "Content-Type: application/json" );
+            do_action('courseware_load_formbuilder');
             $this->frmb->set_data( $this->current_assignment->form_data );
             $data = $this->frmb->get_data();
             
@@ -675,6 +673,18 @@ class BPSP_Assignments {
         add_thickbox();
         $media_upload_js = '/wp-admin/js/media-upload.js';
         wp_enqueue_script('media-upload', get_bloginfo('wpurl') . $media_upload_js, array( 'thickbox' ), filemtime( ABSPATH . $media_upload_js) );
+    }
+    
+    /**
+     * load_formbuilder()
+     *
+     * Loads formbuilder class
+     */
+    function load_formbuilder() {
+        // Load the formbuilder
+        require_once( dirname(__FILE__) . '/formbuilder.class.php' );
+        // Initialize our form builder
+        $this->frmb = new FormBuilder();
     }
 }
 ?>

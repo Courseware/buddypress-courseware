@@ -505,13 +505,17 @@ class BPSP_Gradebook {
      * @param Mixed $results, the response data and quiz rezult
      */
     function save_quiz_coverage( $results ) {
+        global $bp;
+        
         if( isset( $results['response'] ) && isset( $results['response']->form_values ) ) {
             $gradebook = $this->has_gradebook( $results['response']->post_parent );
             $quiz_data = $results['response']->form_values;
             $grade = array(
                 'uid' => $results['response']->post_author,
                 // Generate a percentage
-                'value' => round( $quiz_data['correct'] / $quiz_data['total'] * 100, 2 ),
+                'value' => ( isset( $form_results['correct'] ) && $form_results['correct'] > 0 )
+                    ? round( $quiz_data['correct'] / $quiz_data['total'] * 100, 2 )
+                    : 0,
                 'format' => 'percentage',
                 'prv_comment' => $results['response']->post_title,
                 'pub_comment' => $results['response']->post_content
