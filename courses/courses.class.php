@@ -206,19 +206,20 @@ class BPSP_Courses {
             else
                 return null;
         
-        if( !$course_identifier )
-            $this->current_course;
+        if( !$course_identifier && get_class( $this->current_course ) == __CLASS__ )
+            return $this->current_course;
         
         $course_query = array(
             'post_type' => 'course',
             'group_id' => $bp->groups->current_group->id,
         );
         
-        if( is_numeric( $course_identifier ) )
-            $course_query['p'] = $course_identifier;
-        else
-            $course_query['name'] = $course_identifier;
-        
+        if ( $course_identifier != null ) {
+            if( is_numeric( $course_identifier ) )
+                $course_query['p'] = $course_identifier;
+            else
+                $course_query['name'] = $course_identifier;
+        }
         $course = get_posts( $course_query );
         
         if( !empty( $course[0] ) ) {

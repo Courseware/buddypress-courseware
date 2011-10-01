@@ -188,19 +188,26 @@ class BPSP_Schedules {
         global $bp;
         $courseware_uri = bp_get_group_permalink( $bp->groups->current_group ) . 'courseware/' ;
         
-        if( !$schedule_identifier )
-            $this->current_schedule;
+        if( is_object( $schedule_identifier ) && $schedule_identifier->post_type == "assignment" )
+            if( $schedule_identifier->group[0]->name == $bp->groups->current_group->id )
+                return $schedule_identifier;
+            else
+                return null;
+        
+        if( !$schedule_identifier && get_class( $this->current_schedule ) == __CLASS__ )
+            return $this->current_schedule;
         
         $schedule_query = array(
             'post_type' => 'schedule',
             'group_id' => $bp->groups->current_group->id,
         );
         
-        if( is_numeric( $schedule_identifier ) )
-            $schedule_query['p'] = $schedule_identifier;
-        else
-            $schedule_query['name'] = $schedule_identifier;
-        
+        if ( $schedule_identifier != null ) {
+            if( is_numeric( $schedule_identifier ) )
+                $schedule_query['p'] = $schedule_identifier;
+            else
+                $schedule_query['name'] = $schedule_identifier;
+        }
         $schedule = get_posts( $schedule_query );
         
         if( !empty( $schedule[0] ) )

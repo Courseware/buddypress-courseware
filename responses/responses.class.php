@@ -257,8 +257,14 @@ class BPSP_Responses {
      * @return Response object if response exists and null if not.
      */
     function is_response( $response_identifier = null ) {
-        if( !$response_identifier )
-            $response_identifier = $this->current_response;
+        
+        if( is_object( $response_identifier ) && $response_identifier->post_type == "response" )
+            return $response_identifier;
+        else
+            return null;
+        
+        if( !$response_identifier && get_class( $this->current_response ) == __CLASS__ )
+            return $this->current_response;
         
         $response_query = array(
             'post_status' => 'publish',
@@ -266,11 +272,12 @@ class BPSP_Responses {
             'post_parent' => $this->current_assignment->ID,
         );
         
-        if( is_numeric( $response_identifier ) )
-            $response_query['p'] = $response_identifier;
-        else
-            $response_query['name'] = $response_identifier;
-        
+        if ( $response_identifier != null ) {
+            if( is_numeric( $response_identifier ) )
+                $response_query['p'] = $response_identifier;
+            else
+                $response_query['name'] = $response_identifier;
+        }
         $response = get_posts( $response_query );
         
         if( !empty( $response ) )
