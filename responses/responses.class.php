@@ -445,7 +445,7 @@ class BPSP_Responses {
         $form_results = null;
         
         if( !$this->has_student_caps( $bp->loggedin_user->id ) && !is_super_admin() ||
-           !bp_group_is_member( $bp->current_group->id )
+           !bp_group_is_member( $bp->groups->current_group )
         ) {
             $vars['die'] = __( 'BuddyPress Courseware Error while forbidden user tried to add a new response.', 'bpsp' );
             return $vars;
@@ -469,10 +469,12 @@ class BPSP_Responses {
                 $this->single_response_screen( $vars );
             } else {
                 if( $new_response_quiz ) {
-                    $new_response['title'] = bp_core_get_username( $bp->loggedin_user->id ) . __( ' on ', 'bpsp' ) . $this->current_assignment->post_title;
+                    $new_response['title'] = bp_core_get_username( $bp->loggedin_user->id )
+                        . __( ' on ', 'bpsp' ) . $this->current_assignment->post_title;
                     $new_response['content'] = __( 'Your quiz results: ', 'bpsp' );
                     $form_results = $this->check_quiz( $new_response_quiz, $this->current_assignment->form_data );
-                    $new_response['content'] .= $form_results['correct'] . '/' . $form_results['total'];
+                    $new_response['content'] .= ( isset( $form_results['correct'] ) ? $form_results['correct'] : 0 )
+                        . '/' . $form_results['total'];
                 }
                 if( isset( $new_response['title'] ) && isset( $new_response['content'] ) ) {
                     $new_response['title'] = strip_tags( $new_response['title'] );
