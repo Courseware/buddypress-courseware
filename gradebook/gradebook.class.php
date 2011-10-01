@@ -54,12 +54,13 @@ class BPSP_Gradebook {
             'hierarchical'          => false,
             'rewrite'               => false,
             'query_var'             => false,
-            'supports'              => array( 'author', 'custom-fields' )
+            'supports'              => array( 'author', 'custom-fields' ),
+            'taxonomies'            => array( 'group_id' )
         );
         if( !register_post_type( 'gradebook', $grade_post_def ) )
             wp_die( __( 'BuddyPress Courseware error while registering grade post type.', 'bpsp' ) );
         
-        $grade_rel_def = array(
+        $assignment_rel_def = array(
             'public'        => BPSP_DEBUG,
             'show_ui'       => BPSP_DEBUG,
             'hierarchical'  => false,
@@ -73,12 +74,10 @@ class BPSP_Gradebook {
                 'assign_terms'  => 'edit_gradebooks'
                 )
         );
+        register_taxonomy( 'assignment_id', array( 'gradebook' ), $assignment_rel_def );
         
-        register_taxonomy( 'assignment_id', array( 'gradebook' ), $grade_rel_def );
-        register_taxonomy_for_object_type( 'group_id', 'gradebook' ); //append already registered group_id term
-        
-        if( !get_taxonomy( 'group_id' ) || !get_taxonomy( 'assignment_id' ) )
-            wp_die( __( 'BuddyPress Courseware error while registering grade taxonomies.', 'bpsp' ) );
+        if( !get_taxonomy( 'assignment_id' ) )
+            wp_die( __( 'BuddyPress Courseware error while registering assignment taxonomy.', 'bpsp' ) );
     }
     
     /**

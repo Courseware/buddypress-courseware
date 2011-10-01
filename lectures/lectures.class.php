@@ -56,12 +56,13 @@ class BPSP_Lectures {
             'hierarchical'          => true,
             'rewrite'               => false,
             'query_var'             => false,
-            'supports'              => array( 'title', 'editor', 'author', 'page-attributes' )
+            'supports'              => array( 'title', 'editor', 'author', 'page-attributes' ),
+            'taxonomies'            => array( 'group_id' )
         );
         if( !register_post_type( 'lecture', $lecture_post_def ) )
             wp_die( __( 'BuddyPress Courseware error while registering lecture post type.', 'bpsp' ) );
         
-        $lecture_rel_def = array(
+        $course_rel_def = array(
             'public'        => BPSP_DEBUG,
             'show_ui'       => BPSP_DEBUG,
             'hierarchical'  => false,
@@ -75,12 +76,10 @@ class BPSP_Lectures {
                 'assign_terms'  => 'edit_courses'
                 )
         );
+        register_taxonomy( 'course_id', array( 'lecture' ), $course_rel_def );
         
-        register_taxonomy( 'course_id', array( 'lecture' ), $lecture_rel_def );
-        register_taxonomy_for_object_type( 'group_id', 'lecture' ); //append already registered group_id term
-        
-        if( !get_taxonomy( 'group_id' ) || !get_taxonomy( 'course_id' ) )
-            wp_die( __( 'BuddyPress Courseware error while registering lecture taxonomies.', 'bpsp' ) );
+        if( !get_taxonomy( 'course_id' ) )
+            wp_die( __( 'BuddyPress Courseware error while registering course taxonomy.', 'bpsp' ) );
     }
     
     /**

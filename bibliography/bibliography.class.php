@@ -48,16 +48,16 @@ class BPSP_Bibliography {
         $this->isbndb_key = get_option( 'bpsp_isbndb_key' );
     }
     
-/**
+    /**
      * register_post_types()
      *
      * Static function to register the bibliography post types and capabilities.
      */
     function register_post_types() {
         $bib_post_def = array(
-            'label'                 => __( 'Bibliographies', 'bpsp' ),
+            'label'                 => __( 'Bibliography', 'bpsp' ),
             'singular_label'        => __( 'Bibliography', 'bpsp' ),
-            'description'           => __( 'BuddyPress ScholarPress Courseware Bibliographies', 'bpsp' ),
+            'description'           => __( 'BuddyPress ScholarPress Courseware Bibliography', 'bpsp' ),
             'public'                => BPSP_DEBUG,
             'publicly_queryable'    => false,
             'exclude_from_search'   => false,

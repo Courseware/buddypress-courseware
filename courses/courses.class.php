@@ -59,7 +59,7 @@ class BPSP_Courses {
         if( !register_post_type( 'course', $course_post_def ) )
             wp_die( __( 'BuddyPress Courseware error while registering courses post type.', 'bpsp' ) );
         
-        $course_rel_def = array(
+        $groups_rel_def = array(
             'public'        => BPSP_DEBUG,
             'show_ui'       => BPSP_DEBUG,
             'hierarchical'  => false,
@@ -73,9 +73,9 @@ class BPSP_Courses {
                 'assign_terms'  => 'edit_courses'
                 )
         );
-        register_taxonomy( 'group_id', array( 'course' ), $course_rel_def );
+        register_taxonomy( 'group_id', array( 'course' ), $groups_rel_def );
         if( !get_taxonomy( 'group_id' ) )
-            wp_die( __( 'BuddyPress Courseware error while registering courses taxonomies.', 'bpsp' ) );
+            wp_die( __( 'BuddyPress Courseware error while registering group taxonomy.', 'bpsp' ) );
     }
     
     /**
