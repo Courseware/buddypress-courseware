@@ -528,7 +528,7 @@ class BPSP_Responses {
     function populate_responses( $vars ) {
         global $bp;
         
-        if( $this->has_student_caps() && bp_group_is_member( $bp->groups->current_group->id ) )
+        if( $this->has_student_caps() && bp_group_is_member( $bp->groups->current_group ) )
             $vars['response_add_uri'] = $vars['assignment_permalink'] . '/add_response';
         
         $vars['response'] = $this->has_response();
