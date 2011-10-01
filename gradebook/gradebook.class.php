@@ -65,7 +65,7 @@ class BPSP_Gradebook {
             'show_ui'       => BPSP_DEBUG,
             'hierarchical'  => false,
             'label'         => __( 'Assignment ID', 'bpsp'),
-            'query_var'     => true,
+            'query_var'     => 'assignment_id',
             'rewrite'       => false,
             'capabilities'  => array(
                 'manage_terms'  => 'manage_assignment_id',

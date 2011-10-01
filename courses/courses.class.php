@@ -64,7 +64,7 @@ class BPSP_Courses {
             'show_ui'       => BPSP_DEBUG,
             'hierarchical'  => false,
             'label'         => __( 'Group ID', 'bpsp'),
-            'query_var'     => true,
+            'query_var'     => 'group_id',
             'rewrite'       => false,
             'capabilities'  => array(
                 'manage_terms'  => 'manage_group_id',

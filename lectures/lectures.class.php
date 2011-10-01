@@ -67,7 +67,7 @@ class BPSP_Lectures {
             'show_ui'       => BPSP_DEBUG,
             'hierarchical'  => false,
             'label'         => __( 'Course ID', 'bpsp'),
-            'query_var'     => true,
+            'query_var'     => 'course_id',
             'rewrite'       => false,
             'capabilities'  => array(
                 'manage_terms'  => 'manage_course_id',
