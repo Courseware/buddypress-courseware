@@ -65,16 +65,11 @@ class BPSP_Assignments {
             'hierarchical'          => false,
             'rewrite'               => false,
             'query_var'             => false,
-            'supports'              => array( 'title', 'editor', 'author', 'custom-fields' )
+            'supports'              => array( 'title', 'editor', 'author', 'custom-fields' ),
+            'taxonomies'            => array( 'course_id', 'group_id')
         );
         if( !register_post_type( 'assignment', $assignment_post_def ) )
             wp_die( __( 'BuddyPress Courseware error while registering assignment post type.', 'bpsp' ) );
-        
-        register_taxonomy_for_object_type( 'course_id', 'assignment' ); //append already registered course_id tax
-        register_taxonomy_for_object_type( 'group_id', 'assignment' ); //append already registered group_id tax
-        
-        if( !get_taxonomy( 'group_id' ) || !get_taxonomy( 'course_id' ) )
-            wp_die( __( 'BuddyPress Courseware error while registering assignment taxonomies.', 'bpsp' ) );
     }
     
     /**

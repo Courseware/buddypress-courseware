@@ -58,16 +58,11 @@ class BPSP_Schedules {
             'hierarchical'          => false,
             'rewrite'               => false,
             'query_var'             => false,
-            'supports'              => array( 'title', 'editor', 'excerpt', 'author', 'custom-fields' )
+            'supports'              => array( 'title', 'editor', 'excerpt', 'author', 'custom-fields' ),
+            'taxonomies'            => array( 'group_id', 'course_id' )
         );
         if( !register_post_type( 'schedule', $schedule_post_def ) )
             wp_die( __( 'BuddyPress Courseware error while registering schedule post type.', 'bpsp' ) );
-        
-        register_taxonomy_for_object_type( 'group_id', 'schedule' ); //append already registered group_id term
-        register_taxonomy_for_object_type( 'course_id', 'schedule' ); //append already registered course_id term
-        
-        if( !get_taxonomy( 'group_id' ) || !get_taxonomy( 'course_id' ) )
-            wp_die( __( 'BuddyPress Courseware error while registering schedule taxonomies.', 'bpsp' ) );
     }
     
     /**
