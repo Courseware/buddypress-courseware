@@ -260,8 +260,6 @@ class BPSP_Responses {
         
         if( is_object( $response_identifier ) && $response_identifier->post_type == "response" )
             return $response_identifier;
-        else
-            return null;
         
         if( !$response_identifier && get_class( (object)$this->current_response ) == __CLASS__ )
             return $this->current_response;
@@ -287,7 +285,9 @@ class BPSP_Responses {
         
         if( isset( $this->current_assignment->form ) )
             $response->form_values = get_post_meta( $response->ID, 'form_values', true );
+        
         $response->form = isset( $this->current_assignment->form ) ? $this->current_assignment->form : false;
+        
         return $response;
     }
     
