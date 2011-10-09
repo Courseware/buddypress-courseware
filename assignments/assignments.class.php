@@ -381,6 +381,11 @@ class BPSP_Assignments {
         $vars['trail'] = array(
             __( 'New Assignment' ) => '',
         );
+        
+        if ( count( $vars['lectures'] ) == 0 && empty( $vars['error'] ) )
+            $vars['error'] = __( 'No lectures were created. ', 'bpsp') .
+                __( 'It is recommended to create lectures first and link assignments to those.', 'bpsp' );
+        
         return $vars;
     }
     
