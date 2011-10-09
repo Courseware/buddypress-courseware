@@ -3,7 +3,7 @@ Contributors: sushkov, jeremyboggs, boonebgorges, johnjamesjacoby, chexee
 Tags: buddypress, lms, courseware, education, teaching, quizzes, tests, gradebook, courses, lectures, assignments
 Requires at least: WordPress 3.2, BuddyPress 1.5
 Tested up to: WordPress 3.2.1 / BuddyPress 1.5
-Stable tag: 0.9.2
+Stable tag: 0.9.3
 Donate link: http://stas.nerd.ro/pub/donate/
 
 A Learning Management System for BuddyPress
@@ -62,6 +62,11 @@ make sure you updated your Courseware role in the Profile tab.
 Before asking questions, please check the [BuddyPress Courseware Handbook](http://scholarpress.github.com/buddypress-courseware/handbook.html).
 
 == Changelog ==
+
+= 0.9.3 =
+* Another maintenance release
+* Fixed `::is_response()` regression. Closes [#56](https://github.com/scholarpress/buddypress-courseware/issues/issue/56). Props @enkerli
+* New assignment screen now alerts if no lectures are available
 
 = 0.9.2 =
 * Fixed formbuilder regression. Props @enkerli
