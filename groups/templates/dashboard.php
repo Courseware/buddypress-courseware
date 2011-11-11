@@ -133,7 +133,7 @@
                 <em><?php _e( "You didn't bookmark any lectures so far.", 'bpsp' );?></em>
             <?php endif; ?>
             <hr />
-            <em><?php _e( "Today is: ", 'bpsp' );?></em><code><?php echo bpsp_get_date( date( 'now' ) ); ?></code>
+            <em><?php _e( "Today is: ", 'bpsp' );?></em><code><?php echo bpsp_get_date( current_time( 'timestamp' ) ); ?></code>
         </div>
         <div class="clear"></div>
     </div>
