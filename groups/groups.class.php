@@ -264,7 +264,7 @@ class BPSP_Groups {
     function group_admin_screen() {
         global $bp;
         
-        if ( $bp->current_component == $bp->groups->id && 'courseware' == $bp->action_variables[0] ) {
+        if ( $bp->current_component == $bp->groups->id && 'courseware' == reset($bp->action_variables) ) {
             if ( $bp->is_item_admin || $bp->is_item_mod  ) {
                 add_action( 'bp_before_group_admin_content', array( &$this, 'group_admin_content' ) );
                 bp_core_load_template( apply_filters( 'groups_template_group_admin', 'groups/single/home' ) );
