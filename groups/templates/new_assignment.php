@@ -1,6 +1,4 @@
-<?php bpsp_load_editor_files(); ?>
-
-<form action="<?php echo $current_option; ?>" method="post" class="standard-form" id="new-assignment-form">
+<form action="" method="post" class="standard-form" id="new-assignment-form">
     <div id="new-assignment-meta" class="courseware-sidebar">
         <h4 class="meta assignments"><span class="icon"></span><?php _e( 'Lecture &amp; Due Date', 'bpsp' ); ?></h4>
         <ul class="courseware-meta">
@@ -42,18 +40,13 @@
     </div>
     <div id="new-assignment-content" class="courseware-content-wrapper" >
         <div id="new-assignment-content-title">
-            <input type="text" id="assignment-title" name="assignment[title]"
+            <input type="text" id="assignment-editor-title" name="assignment[title]"
                    value="<?php echo $posted_data['title'] ? $posted_data['title'] : ''; ?>"
                    class="long" title="<?php _e( 'Assignment Title', 'bpsp' ); ?>"/>
         </div>
         <div id="new-assignment-content-textarea">
-            <div id="editor-toolbar">
-                <div id="media-toolbar">
-                    <?php echo bpsp_media_buttons(); ?>
-                </div>
-                <?php $content = $posted_data['content'] ? $posted_data['content'] : ''; ?>
-                <?php the_editor( $content, 'assignment[content]', 'assignment[title]', false ); ?>
-            </div>
+            <?php $content = $posted_data['content'] ? $posted_data['content'] : ''; ?>
+            <?php courseware_editor( $content, 'assignment-editor', array('textarea_name' => 'assignment[content]') ); ?>
         </div>
         
         <p class="clearall fat"></p>
@@ -72,8 +65,3 @@
         <div id="courseware-assignment-builder" class="hide-if-no-js"></div>
     </div>
 </form>
-<script type="text/javascript" >
-    var tb_closeImage = "/wp-includes/js/thickbox/tb-close.png";
-</script>
-
-<?php wp_tiny_mce(); ?>

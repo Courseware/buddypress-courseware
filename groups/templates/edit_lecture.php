@@ -1,5 +1,3 @@
-<?php bpsp_load_editor_files(); ?>
-
 <form action="<?php echo $lecture_edit_uri; ?>" method="post" class="standard-form" id="update-lecture-form">
     <div id="update-lecture-meta" class="courseware-sidebar">
         <h4 class="meta lectures"><span class="icon"></span><?php _e( 'Lecture parent &amp; Order', 'bpsp' ); ?></h4>
@@ -45,22 +43,12 @@
     </div>
     <div id="update-lecture-content" class="courseware-content-wrapper" >
         <div id="update-lecture-content-title">
-            <input type="text" id="lecture-title" name="lecture[title]"
+            <input type="text" id="lecture-editor-title" name="lecture[title]"
                    value="<?php echo get_the_title( $lecture->ID ); ?>"
                    class="long" title="<?php _e( 'Lecture Title', 'bpsp' ); ?>"/>
         </div>
         <div id="update-lecture-content-textarea">
-            <div id="editor-toolbar">
-                <div id="media-toolbar">
-                    <?php echo bpsp_media_buttons(); ?>
-                </div>
-                <?php the_editor( $lecture->post_content, 'lecture[content]', 'lecture[title]', false ); ?>
-            </div>
+            <?php courseware_editor( $lecture->post_content, 'lecture-editor', array('textarea_name' => 'lecture[content]') ); ?>
         </div>
     </div>
 </form>
-<script type="text/javascript" >
-    var tb_closeImage = "/wp-includes/js/thickbox/tb-close.png";
-</script>
-
-<?php wp_tiny_mce(); ?>
