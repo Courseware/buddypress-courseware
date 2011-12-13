@@ -26,11 +26,7 @@ class BPSP_Groups {
      * Constructor. Loads filters and actions.
      */
     function BPSP_Groups() {
-        global $bp;
-        if ( !$bp->groups->current_group )
-            return;
-        
-        add_action( 'bp_setup_nav', array( &$this, 'set_nav' ) );
+        add_action( 'bp_groups_setup_nav', array( &$this, 'set_nav' ) );
         add_filter( 'groups_get_groups', array( &$this, 'extend_search' ), 10, 2 );
         add_action( 'groups_admin_tabs', array( &$this, 'group_admin_tab' ), 10, 2 );
         add_action( 'wp', array( &$this, 'group_admin_screen' ), 4 );
@@ -57,10 +53,9 @@ class BPSP_Groups {
      * @return Bool, true on success, and false on failure.
      */
     function courseware_status( $group_id = null ) {
-        if( !$group_id ) {
-            global $bp;
+        global $bp;
+        if( !$group_id && $bp->groups->current_group )
             $group_id = $bp->groups->current_group->id;
-        }
         
         $global_status = get_option( 'bpsp_global_status' );
         $group_status = groups_get_groupmeta( $group_id, 'courseware' );
@@ -79,7 +74,7 @@ class BPSP_Groups {
     function set_nav() {
         global $bp;
         
-        if( !$this->courseware_status( $bp->groups->current_group->id ) )
+        if( !$bp->groups->current_group || !$this->courseware_status( $bp->groups->current_group->id ) )
             return;
         
         $group_permalink = bp_get_group_permalink( $bp->groups->current_group );
@@ -111,7 +106,7 @@ class BPSP_Groups {
         if( !$this->courseware_status( $bp->groups->current_group->id ) )
             return;
         
-        if ( $bp->current_component == $bp->groups->id && $bp->current_action == $bp->courseware->slug ) {
+        if ( $bp->current_action == $bp->courseware->slug ) {
             $this->current_nav_option =  $this->nav_options[__( 'Home', 'bpsp' )];
             
             if( reset( $bp->action_variables ) )
@@ -212,7 +207,7 @@ class BPSP_Groups {
             $wp_taxonomies['group_id'] = '';
         }
         
-        $all_groups = BP_Groups_Group::get_alphabetically();
+        $all_groups = groups_get_groups( array( 'type' => 'alphabetical' ) );
         foreach( $all_groups['groups'] as $group ) {
             // Search posts from current $group
             $results = BPSP_WordPress::get_posts(
