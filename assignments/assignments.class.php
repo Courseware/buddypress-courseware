@@ -623,8 +623,8 @@ class BPSP_Assignments {
         $vars['lecture_id'] = get_post_meta( isset( $new_assignment_id ) ? $new_assignment_id : $old_assignment->ID, 'lecture_id', true );
         $vars['lectures'] = BPSP_Lectures::has_lectures( $bp->groups->current_group->id );
         $vars['assignment'] = $this->is_assignment( $updated_assignment_id );
-        $vars['assignment_edit_uri'] = $vars['current_uri'] . '/assignment/' . $this->current_assignment->post_name . '/edit';
-        $vars['assignment_delete_uri'] = $vars['current_uri'] . '/assignment/' . $this->current_assignment->post_name . '/delete';
+        $vars['assignment_edit_uri'] = $vars['current_uri'] . '/assignment/' . $this->current_assignment->post_name . '/edit/';
+        $vars['assignment_delete_uri'] = $vars['current_uri'] . '/assignment/' . $this->current_assignment->post_name . '/delete/';
         $vars['assignment_permalink'] = $vars['current_uri'] . '/assignment/' . $this->current_assignment->post_name;
         $vars['nonce'] = wp_nonce_field( $nonce_name, '_wpnonce', true, false );
         $vars['delete_nonce'] = add_query_arg( '_wpnonce', wp_create_nonce( 'delete_assignment' ), $vars['assignment_delete_uri'] );
@@ -673,12 +673,6 @@ class BPSP_Assignments {
         do_action( 'courseware_editor' );
         wp_enqueue_script( 'assignments' );
         wp_enqueue_style( 'datetimepicker' );
-        wp_enqueue_script( 'post' );
-        wp_enqueue_script( 'editor' );
-        wp_enqueue_script( 'utils' );
-        add_thickbox();
-        $media_upload_js = '/wp-admin/js/media-upload.js';
-        wp_enqueue_script('media-upload', get_bloginfo('wpurl') . $media_upload_js, array( 'thickbox' ), filemtime( ABSPATH . $media_upload_js) );
     }
 }
 ?>

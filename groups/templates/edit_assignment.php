@@ -1,5 +1,3 @@
-<?php bpsp_load_editor_files(); ?>
-
 <form action="<?php echo $assignment_edit_uri; ?>" method="post" class="standard-form" id="edit-assignment-form">
     <div id="edit-assignment-meta" class="courseware-sidebar">
         <h4 class="meta assignments"><span class="icon"></span><?php _e( 'Lecture &amp; Due Date', 'bpsp' ); ?></h4>
@@ -51,15 +49,10 @@
     </div>
     <div id="edit-assignment-content" class="courseware-content-wrapper">
         <div id="edit-assignment-content-title">
-            <input type="text" id="assignment-title" name="assignment[title]" class="long" value="<?php echo $assignment->post_title; ?>" />
+            <input type="text" id="assignment-editor-title" name="assignment[title]" class="long" value="<?php echo $assignment->post_title; ?>" />
         </div>
         <div id="edit-assignment-content-textarea">
-            <div id="editor-toolbar">
-                <div id="media-toolbar">
-                    <?php echo bpsp_media_buttons(); ?>
-                </div>
-                <?php the_editor( $assignment->post_content, 'assignment[content]', 'assignment[title]', false ); ?>
-            </div>
+            <?php courseware_editor( $assignment->post_content, 'assignment-editor', array('textarea_name' => 'assignment[content]') ); ?>
         </div>
         <br />
         
@@ -80,8 +73,3 @@
         
     </div>
 </form>
-<script type="text/javascript" >
-    var tb_closeImage = "/wp-includes/js/thickbox/tb-close.png";
-</script>
-
-<?php wp_tiny_mce(); ?>

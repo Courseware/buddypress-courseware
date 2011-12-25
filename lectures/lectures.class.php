@@ -510,8 +510,8 @@ class BPSP_Lectures {
         $vars['user_id'] = $bp->loggedin_user->id;
         $vars['lecture'] = $this->is_lecture( $updated_lecture_id );
         $vars['lectures'] = $this->has_lectures( $bp->groups->current_group->id );
-        $vars['lecture_edit_uri'] = $vars['current_uri'] . '/lecture/' . $this->current_lecture->post_name . '/edit';
-        $vars['lecture_delete_uri'] = $vars['current_uri'] . '/lecture/' . $this->current_lecture->post_name . '/delete';
+        $vars['lecture_edit_uri'] = $vars['current_uri'] . '/lecture/' . $this->current_lecture->post_name . '/edit/';
+        $vars['lecture_delete_uri'] = $vars['current_uri'] . '/lecture/' . $this->current_lecture->post_name . '/delete/';
         $vars['lecture_permalink'] = $vars['current_uri'] . '/lecture/' . $this->current_lecture->post_name;
         $vars['nonce'] = wp_nonce_field( $nonce_name, '_wpnonce', true, false );
         $vars['delete_nonce'] = add_query_arg( '_wpnonce', wp_create_nonce( 'delete_lecture' ), $vars['lecture_delete_uri'] );
@@ -640,12 +640,6 @@ class BPSP_Lectures {
     function load_editor() {
         do_action( 'courseware_editor' );
         wp_enqueue_style( 'datetimepicker' );
-        wp_enqueue_script( 'post' );
-        wp_enqueue_script( 'editor' );
-        wp_enqueue_script( 'utils' );
-        add_thickbox();
-        $media_upload_js = '/wp-admin/js/media-upload.js';
-        wp_enqueue_script('media-upload', get_bloginfo('wpurl') . $media_upload_js, array( 'thickbox' ), filemtime( ABSPATH . $media_upload_js) );
     }
 }
 ?>

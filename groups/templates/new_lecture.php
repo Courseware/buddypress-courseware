@@ -1,6 +1,4 @@
-<?php bpsp_load_editor_files(); ?>
-
-<form action="<?php echo $current_option; ?>" method="post" class="standard-form" id="new-lecture-form">
+<form action="" method="post" class="standard-form" id="new-lecture-form">
     <div id="new-lecture-meta" class="courseware-sidebar">
         <h4 class="meta lectures"><span class="icon"></span><?php _e( 'Lecture parent &amp; Order', 'bpsp' ); ?></h4>
         <ul class="courseware-meta">
@@ -39,23 +37,13 @@
     </div>
     <div id="new-lecture-content" class="courseware-content-wrapper" >
         <div id="new-lecture-content-title">
-            <input type="text" id="lecture-title" name="lecture[title]"
+            <input type="text" id="lecture-editor-title" name="lecture[title]"
                    value="<?php echo $posted_data['title'] ? $posted_data['title'] : ''; ?>"
                    class="long" title="<?php _e( 'Lecture Title', 'bpsp' ); ?>"/>
         </div>
         <div id="new-lecture-content-textarea">
-            <div id="editor-toolbar">
-                <div id="media-toolbar">
-                    <?php echo bpsp_media_buttons(); ?>
-                </div>
-                <?php $content = $posted_data['content'] ? $posted_data['content'] : ''; ?>
-                <?php the_editor( $content, 'lecture[content]', 'lecture[title]', false ); ?>
-            </div>
+            <?php $content = $posted_data['content'] ? $posted_data['content'] : ''; ?>
+            <?php courseware_editor( $content, 'lecture-editor', array('textarea_name' => 'lecture[content]') ); ?>
         </div>
     </div>
 </form>
-<script type="text/javascript" >
-    var tb_closeImage = "/wp-includes/js/thickbox/tb-close.png";
-</script>
-
-<?php wp_tiny_mce(); ?>

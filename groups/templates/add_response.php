@@ -1,4 +1,3 @@
-<?php bpsp_load_editor_files(); ?>
 <?php setup_postdata( $parent_assignment ); ?>
 <div id="assignment-response-form">
     <form action="" method="post" class="standard-form" id="new-response-form">
@@ -27,15 +26,10 @@
         <?php else: ?>
             <div id="new-response-content">
                 <div id="new-response-content-title">
-                    <input type="text" id="response-title" name="response[title]" class="long" value="<?php _e( 'My response for: ', 'bpsp' ); echo get_the_title( $parent_assignment->ID ); ?>" />
+                    <input type="text" id="response-editor-title" name="response[title]" class="long" value="<?php _e( 'My response for: ', 'bpsp' ); echo get_the_title( $parent_assignment->ID ); ?>" />
                 </div>
                 <div id="new-response-content-textarea">
-                    <div id="editor-toolbar">
-                        <div id="media-toolbar">
-                            <?php echo bpsp_media_buttons(); ?>
-                        </div>
-                        <?php the_editor( '', 'response[content]', 'response[title]', false ); ?>
-                    </div>
+                    <?php courseware_editor( '', 'response-editor', array('textarea_name' => 'response[content]') ); ?>
                 </div>
                 <div id="new-response-content-options">
                     <input type="hidden" name="response[parent_id]" value="<?php echo $parent_assignment->ID ?>" />
@@ -51,8 +45,3 @@
         <?php endif; ?>
     </form>
 </div>
-<script type="text/javascript" >
-    var tb_closeImage = "/wp-includes/js/thickbox/tb-close.png";
-</script>
-
-<?php wp_tiny_mce(); ?>

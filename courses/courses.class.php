@@ -380,7 +380,7 @@ class BPSP_Courses {
         $vars['group_id'] = $bp->groups->current_group->id;
         $vars['user_id'] = $bp->loggedin_user->id;
         $vars['course'] = $this->is_course( $updated_course_id );
-        $vars['course_edit_uri'] = $vars['current_uri'] . '/course/edit';
+        $vars['course_edit_uri'] = $vars['current_uri'] . '/course/edit/';
         $vars['course_permalink'] = $vars['current_uri'] . '/course';
         $vars['nonce'] = wp_nonce_field( $nonce_name, '_wpnonce', true, false );
         $vars['trail'] = array(
@@ -396,13 +396,6 @@ class BPSP_Courses {
      */
     function load_editor() {
         do_action( 'courseware_editor' );
-        wp_enqueue_script( 'post' );
-        wp_enqueue_script( 'editor' );
-        wp_enqueue_script( 'utils' );
-        
-        add_thickbox();
-        $media_upload_js = '/wp-admin/js/media-upload.js';
-        wp_enqueue_script('media-upload', get_bloginfo('wpurl') . $media_upload_js, array( 'thickbox' ), filemtime( ABSPATH . $media_upload_js) );
     }
 }
 ?>
