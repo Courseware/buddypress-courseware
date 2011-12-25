@@ -276,11 +276,8 @@ class BPSP_Lectures {
         }
         
         // Save new lecture
-        if( isset( $_POST['lecture'] ) &&
-            $_POST['lecture']['object'] == 'group' &&
-            BPSP_Courses::is_course( $_POST['lecture']['course_id'] ) &&
-            isset( $_POST['_wpnonce'] )
-        ) {
+        $course = reset( BPSP_Courses::has_courses( $bp->groups->current_group->id ) );
+        if( isset( $_POST['lecture'] ) && $_POST['lecture']['object'] == 'group' && isset( $_POST['_wpnonce'] ) ) {
             $new_lecture = $_POST['lecture'];
             $is_nonce = wp_verify_nonce( $_POST['_wpnonce'], $nonce_name );
             if( true != $is_nonce ) 
@@ -302,7 +299,7 @@ class BPSP_Lectures {
                     ));
                     if( $new_lecture_id ) {
                         wp_set_post_terms( $new_lecture_id, $new_lecture['group_id'], 'group_id' );
-                        wp_set_post_terms( $new_lecture_id, $new_lecture['course_id'], 'course_id' );
+                        wp_set_post_terms( $new_lecture_id, $course->ID, 'course_id' );
                         $this->current_lecture = $this->is_lecture( $new_lecture_id );
                         
                         $vars['message'] = __( 'New lecture was added.', 'bpsp' );
@@ -316,7 +313,7 @@ class BPSP_Lectures {
         }
         
         $vars['posted_data'] = isset( $_POST['lecture'] ) ? $_POST['lecture'] : false;
-        $vars['course'] = reset( BPSP_Courses::has_courses( $bp->groups->current_group->id ) );
+        $vars['course'] = $course;
         $vars['lectures'] = $this->has_lectures( $bp->groups->current_group->id );
         $vars['name'] = 'new_lecture';
         $vars['group_id'] = $bp->groups->current_group->id;
