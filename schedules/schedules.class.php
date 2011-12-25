@@ -52,7 +52,7 @@ class BPSP_Schedules {
             'description'           => __( 'BuddyPress ScholarPress Courseware Schedules', 'bpsp' ),
             'public'                => BPSP_DEBUG,
             'publicly_queryable'    => false,
-            'exclude_from_search'   => false,
+            'exclude_from_search'   => true,
             'show_ui'               => BPSP_DEBUG,
             'capability_type'       => 'schedule',
             'hierarchical'          => false,
