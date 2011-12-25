@@ -2,8 +2,8 @@
 Contributors: sushkov, jeremyboggs, boonebgorges, johnjamesjacoby, chexee
 Tags: buddypress, lms, courseware, education, teaching, quizzes, tests, gradebook, courses, lectures, assignments
 Requires at least: WordPress 3.2, BuddyPress 1.5
-Tested up to: WordPress 3.2.1 / BuddyPress 1.5
-Stable tag: 0.9.3
+Tested up to: WordPress 3.3 / BuddyPress 1.6
+Stable tag: 0.9.4
 Donate link: http://stas.nerd.ro/pub/donate/
 
 A Learning Management System for BuddyPress
@@ -62,6 +62,16 @@ make sure you updated your Courseware role in the Profile tab.
 Before asking questions, please check the [BuddyPress Courseware Handbook](http://scholarpress.github.com/buddypress-courseware/handbook.html).
 
 == Changelog ==
+
+= 0.9.4 =
+* WordPress 3.3 BuddyPress 1.5(six-ish) compatibility
+* Fixed dashboard date/time issue
+* Fixed a some warnings, code cleanups 
+* Switched to `wp_editor()`
+* Pot file updated, translations welcome
+* Group course pre-creation [#61](https://github.com/scholarpress/buddypress-courseware/issues/issue/61).Props @imjjss
+* Search now checks through lectures too
+* X-mas release! Happy past birthday to the WordPress core guys and galz!
 
 = 0.9.3 =
 * Another maintenance release
