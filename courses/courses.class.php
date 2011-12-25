@@ -33,6 +33,7 @@ class BPSP_Courses {
         add_action( 'courseware_new_teacher_added', array( &$this, 'add_course_caps' ) );
         add_action( 'courseware_new_teacher_removed', array( &$this, 'remove_course_caps' ) );
         add_action( 'courseware_group_screen_handler', array( &$this, 'screen_handler' ) );
+        add_action( 'groups_created_group', array( &$this, 'init_course' ) );
         add_filter( 'courseware_group_nav_options', array( &$this, 'add_nav_options' ) );
    }
     
@@ -171,7 +172,6 @@ class BPSP_Courses {
             $course = $this->is_course( $this->current_course );
             
             if( !$course ) {
-                bp_core_add_message( $this->init_course() );
                 $course = $this->is_course( $this->current_course );
             }
             
@@ -277,9 +277,9 @@ class BPSP_Courses {
      * init_course()
      * 
      * On initial group creation, assign a course to it
-     * @return String a message with creation results
+     * @param Int $group_id, the id of the created group
      */
-    function init_course() {
+    function init_course( $group_id ) {
         global $bp;
         $new_course_id =  wp_insert_post( array(
             'post_author'   => $bp->loggedin_user->id,
@@ -292,9 +292,10 @@ class BPSP_Courses {
         if( $new_course_id ) {
             wp_set_post_terms( $new_course_id, $bp->groups->current_group->id, 'group_id' );
             $this->current_course = $new_course_id;
-            return __( 'New course was added.', 'bpsp' );
+            do_action( 'courseware_course_added', $new_course_id );
+            bp_core_add_message( __( 'New course was added.', 'bpsp' ) );
         } else
-            return __( 'New course could not be added.', 'bpsp' );
+            bp_core_add_message( __( 'New course could not be added.', 'bpsp' ) );
     }
     
     /**
