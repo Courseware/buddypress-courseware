@@ -50,7 +50,7 @@ class BPSP_Lectures {
             'description'           => __( 'BuddyPress ScholarPress Courseware Lectures', 'bpsp' ),
             'public'                => BPSP_DEBUG,
             'publicly_queryable'    => false,
-            'exclude_from_search'   => false,
+            'exclude_from_search'   => true,
             'show_ui'               => BPSP_DEBUG,
             'capability_type'       => 'lecture',
             'hierarchical'          => true,

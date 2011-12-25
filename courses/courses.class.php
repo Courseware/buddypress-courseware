@@ -49,7 +49,7 @@ class BPSP_Courses {
             'description'           => __( 'BuddyPress ScholarPress Courseware Courses', 'bpsp' ),
             'public'                => BPSP_DEBUG,
             'publicly_queryable'    => false,
-            'exclude_from_search'   => false,
+            'exclude_from_search'   => true,
             'show_ui'               => BPSP_DEBUG,
             'capability_type'       => 'course',
             'hierarchical'          => false,

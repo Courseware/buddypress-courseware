@@ -61,7 +61,7 @@ class BPSP_Responses {
             'description'           => __( 'BuddyPress ScholarPress Courseware Responses', 'bpsp' ),
             'public'                => BPSP_DEBUG,
             'publicly_queryable'    => false,
-            'exclude_from_search'   => false,
+            'exclude_from_search'   => true,
             'show_ui'               => BPSP_DEBUG,
             'capability_type'       => 'response',
             'hierarchical'          => false,

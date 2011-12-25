@@ -210,18 +210,18 @@ class BPSP_Groups {
         $all_groups = groups_get_groups( array( 'type' => 'alphabetical' ) );
         foreach( $all_groups['groups'] as $group ) {
             // Search posts from current $group
-            $results = BPSP_WordPress::get_posts(
+            $results = get_posts(
                 array(
-                    'group_id' => $group->id
-                ),
-                array(
-                    'assignment',
-                    'course',
-                    'schedule',
-                ),
-                $params['search_terms']
+                    'group_id' => $group->id,
+                    'post_type' => array(
+                        'assignment',
+                        'course',
+                        'schedule',
+                        'lecture'
+                    ),
+                    's' => $params['search_terms']
+                  ) 
             );
-            
             // Merge posts to $groups if new found
             if( !empty( $results ) ) {
                 if( !in_array( $group, $groups['groups'] ) ) {
