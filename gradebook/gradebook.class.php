@@ -487,7 +487,7 @@ class BPSP_Gradebook {
         global $bp;
         $user_id = null;
         
-        if( bp_group_is_member( $bp->groups->current_group->id ) && !bp_group_is_admin() )
+        if( bp_group_is_member( $bp->groups->current_group ) && !bp_group_is_admin() )
             $user_id = $bp->loggedin_user->id;
         
         if( $user_id )
