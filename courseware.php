@@ -81,7 +81,7 @@ function bpsp_init() {
     new BPSP_Activity();
     new BPSP_Notifications();
 }
-add_action( 'bp_init', 'bpsp_init', 7 );
+add_action( 'bp_init', 'bpsp_init', 6 );
 
 /**
  * bpsp_check()
