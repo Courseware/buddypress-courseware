@@ -64,7 +64,7 @@ class BPSP_Static {
         wp_register_script( 'delete-schedule', BPSP_WEB_URI . '/static/js/delete-schedule.js', array( 'datatables' ), BPSP_VERSION, true );
         wp_register_script( 'group-dashboard', BPSP_WEB_URI . '/static/js/group-dashboard.js', array( 'sparkline' ), BPSP_VERSION, true );
         wp_register_script( 'lectures', BPSP_WEB_URI . '/static/js/lectures.js', array( 'jstree' ), BPSP_VERSION, true );
-        wp_register_script( 'new-assignment', BPSP_WEB_URI . '/static/js/new-assignment.js', array( 'courseware-editor', 'formbuilder' ), BPSP_VERSION, true );
+        wp_register_script( 'new-assignment', BPSP_WEB_URI . '/static/js/new-assignment.js', array( 'courseware-editor', 'formbuilder', 'jquery-ui-sortable' ), BPSP_VERSION, true );
         wp_register_script( 'edit-assignment', BPSP_WEB_URI . '/static/js/edit-assignment.js', array( 'courseware-editor', 'formbuilder', 'jquery-ui-sortable' ), BPSP_VERSION, true );
         
         // Styles
