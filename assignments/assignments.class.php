@@ -576,6 +576,7 @@ class BPSP_Assignments {
             isset( $_POST['_wpnonce'] )
         ) {
             $updated_assignment = $_POST['assignment'];
+            var_dump($updated_assignment);
             $is_nonce = wp_verify_nonce( $_POST['_wpnonce'], $nonce_name );
             if( true != $is_nonce )
                 $vars['error'] = __( 'Nonce Error while editing the assignment.', 'bpsp' );
