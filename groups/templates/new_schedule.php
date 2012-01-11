@@ -1,4 +1,4 @@
-<form action="<?php echo $current_option; ?>" method="post" class="standard-form" id="new-assignment-form">
+<form action="" method="post" class="standard-form" id="new-schedule-form">
     <div id="new-schedule-meta" class="courseware-sidebar">
         <h4 class="meta schedules"><span class="icon"></span><?php _e( 'Schedule Meta', 'bpsp' ); ?></h4>
         <ul class="courseware-meta">
