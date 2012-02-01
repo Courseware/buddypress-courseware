@@ -267,9 +267,9 @@ class BPSP_Gradebook {
     }
     
     /**
-     * load_grades_by_user_id( $assignment, $user_id )
+     * load_grade_by_user_id( $assignment, $user_id )
      *
-     * Loads all the grades for a given assignment by user id
+     * Loads all the grade for a given assignment by user id
      *
      * @param Int $assignment the ID of the assignment gradeboodk to load
      * @param Int $user_id, the id of the user
