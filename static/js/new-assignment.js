@@ -8,7 +8,7 @@ jQuery('#courseware-assignment-builder').formbuilder({
 });
 
 jQuery("#courseware-assignment-builder ul").sortable({ opacity: 0.6, cursor: 'move'});
-jQuery("#new-assignment-submit").live( 'click', function() {
+jQuery("#new-assignment-submit").on( 'click', function() {
     var form_data = jQuery("#courseware-assignment-builder ul").serializeFormList({'prepend': 'assignment-frmb'});
     jQuery("#new-assignment-post-form").val(form_data);
 });
