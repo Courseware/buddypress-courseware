@@ -10,16 +10,24 @@
             </li>
             <?php endif; ?>
             <?php if( isset( $user_grade ) ): ?>
-            <li id="assignment-grade">
-                <?php _e( 'Your Grade:', 'bpsp' ); ?>
-                <strong>
-                    <?php if( !empty( $user_grade['format'] ) && 'percentage' == $user_grade['format'] ): ?>
-                    <?php echo $user_grade['value']; ?>%
-                    <?php else: ?>
-                    <?php echo $user_grade['value']; ?>
-                    <?php endif; ?>
-                </strong>
-            </li>
+                <li id="assignment-grade">
+                    <?php _e( 'Your Grade:', 'bpsp' ); ?>
+                    <strong>
+                        <?php if( !empty( $user_grade['format'] ) && 'percentage' == $user_grade['format'] ): ?>
+                        <?php echo $user_grade['value']; ?>%
+                        <?php else: ?>
+                        <?php echo $user_grade['value']; ?>
+                        <?php endif; ?>
+                    </strong>
+                </li>
+                <?php if ( !empty( $user_grade['pub_comment'] ) ): ?>
+                <li id="assignment-comment">
+                    <?php _e( 'Teacher Comment:', 'bpsp' ); ?>
+                    <strong>
+                        <?php echo $user_grade['pub_comment']; ?>
+                    </strong>
+                </li>
+                <?php endif; ?>
             <?php endif; ?>
             <li class="date">
             <?php
