@@ -126,7 +126,7 @@ class BPSP_Groups {
      * Courseware action to manage group navigation options
      */
     function nav_options() {
-        apply_filters( 'courseware_group_nav_options', &$this->nav_options );
+        $this->nav_options = apply_filters( 'courseware_group_nav_options', $this->nav_options );
         $this->load_template( array(
             'name' => '_nav',
             'nav_options' => $this->nav_options,
@@ -165,9 +165,9 @@ class BPSP_Groups {
         
         //Exclude internal templates like navigation, starts with an underscore
         if(  substr( $vars['name'], 0, 1) != '_' )
-            apply_filters( 'courseware_group_template', &$vars );
+            $vars = apply_filters( 'courseware_group_template', $vars );
         else
-            apply_filters( 'courseware_template_vars', &$vars );
+            $vars = apply_filters( 'courseware_template_vars', $vars );
         
         if( file_exists( $templates_path . $vars['name']. '.php' ) ) {
             ob_start();
