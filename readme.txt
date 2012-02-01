@@ -3,7 +3,7 @@ Contributors: sushkov, jeremyboggs, boonebgorges, johnjamesjacoby, chexee
 Tags: buddypress, lms, courseware, education, teaching, quizzes, tests, gradebook, courses, lectures, assignments
 Requires at least: WordPress 3.2, BuddyPress 1.5
 Tested up to: WordPress 3.3 / BuddyPress 1.6
-Stable tag: 0.9.4
+Stable tag: 0.9.5
 Donate link: http://stas.nerd.ro/pub/donate/
 
 A Learning Management System for BuddyPress
@@ -62,6 +62,18 @@ make sure you updated your Courseware role in the Profile tab.
 Before asking questions, please check the [BuddyPress Courseware Handbook](http://scholarpress.github.com/buddypress-courseware/handbook.html).
 
 == Changelog ==
+
+= 0.9.5 =
+* Removed pass-by-reference calls. Props @mercime closes [#69](https://github.com/scholarpress/buddypress-courseware/issues/69).
+* Fixed the js issue on schedule pages. Closes [#71](https://github.com/scholarpress/buddypress-courseware/issues/71).
+* Public comments are now visible in assignment pages.
+* Append the private message wit the grade notification.
+* Skip notifications when grade is not updated. Closes [#72](https://github.com/scholarpress/buddypress-courseware/issues/72).
+* Cleaned-up the schedule forms.
+* Updated to latest jquery.formbuilder, minified version.
+* Fixed jquery ui sortable regression.
+* Celebrating new home: [coursewa.re](http://coursewa.re)
+
 
 = 0.9.4 =
 * WordPress 3.3 BuddyPress 1.5(six-ish) compatibility
