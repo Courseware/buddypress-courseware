@@ -63,7 +63,10 @@ class BPSP_Notifications {
             $content.= "\n";
             $content.= '<a href="' . $data['assignment']->permalink . '">' . attribute_escape( $data['assignment']->post_title ) . '</a>';
             $content.= "\n";
-            $content.= __( "Follow the link above to see the grade.", 'bpsp' );
+            $content.= __( "Follow the link above to see the grade.\n", 'bpsp' );
+            if ( !empty( $data['grade']['prv_comment'] ) )
+                $content.= __( "Teacher also left a message for you: \n", 'bpsp' ) . 
+                    '<blockquote>' . $data['grade']['prv_comment'] . "</blockquote>.\n";
         }
         return $content;
     }
