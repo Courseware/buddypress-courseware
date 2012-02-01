@@ -44,7 +44,7 @@ class BPSP_Static {
         wp_register_script( 'jstree', BPSP_WEB_URI . '/static/js/jstree/jquery.jstree.js', array( 'jquery' ), '1.0-rc3' );
         
         // formBuilder
-        wp_register_script( 'formbuilder', BPSP_WEB_URI . '/static/js/formbuilder/jquery.formbuilder.js', array( 'jquery', 'jquery-ui-sortable' ), '0.3.1' );
+        wp_register_script( 'formbuilder', BPSP_WEB_URI . '/static/js/formbuilder/jquery.formbuilder.js', array( 'jquery' ), '0.3.1' );
         wp_localize_script( 'formbuilder', 'fbLanguage', $this->formbuilder_l10n() );
         
         // WordCounter
@@ -65,7 +65,7 @@ class BPSP_Static {
         wp_register_script( 'group-dashboard', BPSP_WEB_URI . '/static/js/group-dashboard.js', array( 'sparkline' ), BPSP_VERSION, true );
         wp_register_script( 'lectures', BPSP_WEB_URI . '/static/js/lectures.js', array( 'jstree' ), BPSP_VERSION, true );
         wp_register_script( 'new-assignment', BPSP_WEB_URI . '/static/js/new-assignment.js', array( 'courseware-editor', 'formbuilder' ), BPSP_VERSION, true );
-        wp_register_script( 'edit-assignment', BPSP_WEB_URI . '/static/js/edit-assignment.js', array( 'courseware-editor', 'formbuilder' ), BPSP_VERSION, true );
+        wp_register_script( 'edit-assignment', BPSP_WEB_URI . '/static/js/edit-assignment.js', array( 'courseware-editor', 'formbuilder', 'jquery-ui-sortable' ), BPSP_VERSION, true );
         
         // Styles
         wp_register_style( 'courseware', BPSP_WEB_URI . '/static/css/courseware.css', null, BPSP_VERSION );
