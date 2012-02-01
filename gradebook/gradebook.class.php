@@ -310,40 +310,45 @@ class BPSP_Gradebook {
      *
      * @param Int $gradebook_id, the ID of the gradebook
      * @param Mixed $grade, information about grade
-     * @return True on success and false on failure.
+     * @return True when entry is added, False when is updated
      */
     function save_grade( $gradebook_id, $grade ) {
-        $grade_saved = false;
+        $grade_saved = null;
         
         if( empty( $gradebook_id ) )
-            return false;
+            return null;
         
         $grade_shortcode = $this->gen_grade_shortcode( $grade );
         $grades = $this->load_grades( $gradebook_id );
-        
-        if( empty( $grades ) ) {
+
+        // If this is the first grade, just add it!
+        if( count( $grades ) == 0 ) {
             add_post_meta( $gradebook_id, 'grade', $grade_shortcode );
-            $grade_saved = true;
-        } else {
-            foreach( $grades as $g ) {
-                $g_data = shortcode_parse_atts( $g );
-                // Check if we need to update an existing grade
-                if( $g_data['uid'] == $grade['uid'] ) {
+            return true;
+        }
+
+        // Cycle to find the user grade
+        foreach( $grades as $g ) {
+            $g_data = shortcode_parse_atts( $g );
+            // Check if we need to update an existing grade
+            if( $g_data['uid'] == $grade['uid'] ) {
+                // If the grade changed, update it 
+                if ( $g_data['value'] != $grade['value'] ) {
                     $new_grade = array_merge( $g_data, $grade );
                     $new_grade = array_unique( $new_grade );
                     unset( $new_grade[0] ); // start of shortcode
                     unset( $new_grade[1] ); // end of shortcode
                     $new_grade_shortcode = $this->gen_grade_shortcode( $new_grade );
                     update_post_meta( $gradebook_id, 'grade', $new_grade_shortcode, $g );
-                    $grade_saved = true;
+                    return false;
                 }
+                return;
             }
-            // If no previous entry was found, just add a new one
-            if( !$grade_saved )
-                add_post_meta( $gradebook_id, 'grade', $grade_shortcode );
         }
-        
-        return $grade_saved;
+
+        // If no previous entry was found, just add a new one
+        add_post_meta( $gradebook_id, 'grade', $grade_shortcode );
+        return true;
     }
     
     /**
@@ -383,17 +388,24 @@ class BPSP_Gradebook {
         }
         
         if( !empty( $_POST['grade'] ) ){
-            foreach( $_POST['grade'] as $grade )
-                if( !empty( $grade ) && !empty( $grade['uid'] ) && !empty( $grade['value'] ) )
-                    if( $this->save_grade( $gradebook_id, $grade ) ) {
+            foreach( $_POST['grade'] as $grade ) {
+                if( !empty( $grade ) && !empty( $grade['uid'] ) && !empty( $grade['value'] ) ) {
+                    # If grade was added or updated!
+                    $status = $this->save_grade( $gradebook_id, $grade );
+                    if( $status !== null ) {
                         $data = array(
                             'grade' => $grade,
                             'teacher' => $bp->loggedin_user->userdata,
                             'assignment' => $this->current_assignment,
                         );
-                        do_action( 'courseware_grade_updated', $data );
-                        $vars['message'] = __( 'Gradebook saved.', 'bpsp' );
+                        if ( $status == true )
+                            do_action( 'courseware_grade_added', $data );
+                        else
+                            do_action( 'courseware_grade_updated', $data );
                     }
+                }
+            }
+            $vars['message'] = __( 'Gradebook saved.', 'bpsp' );
         }
         
         $vars['name'] = 'gradebook';
@@ -521,15 +533,17 @@ class BPSP_Gradebook {
             );
             
             if( $gradebook ) {
-                $saved = $this->save_grade( $gradebook, $grade );
-                if( $saved ) {
-                    $data = array(
-                            'grade' => $grade,
-                            'teacher' => bp_core_get_core_userdata( $bp->groups->current_group->creator_id ),
-                            'assignment' => $this->current_assignment,
-                        );
+                $status = $this->save_grade( $gradebook, $grade );
+                $data = array(
+                    'grade' => $grade,
+                    'teacher' => bp_core_get_core_userdata( $bp->groups->current_group->creator_id ),
+                    'assignment' => $this->current_assignment,
+                );
+                if( $status == true )
+                    do_action( 'courseware_grade_added', $data );
+                else
                     do_action( 'courseware_grade_updated', $data );
-                }
+                
             }
         }
     }
