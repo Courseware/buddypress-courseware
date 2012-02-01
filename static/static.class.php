@@ -22,7 +22,7 @@ class BPSP_Static {
         wp_localize_script( 'fullcalendar', 'fcLanguage', $this->fullcalendar_l10n() );
         
         // jQuery UI Date & Time picker
-        wp_register_script( 'datetimepicker', BPSP_WEB_URI . '/static/js/datetimepicker/jquery-ui-timepicker-addon-0.7.min.js', array( 'jquery-ui-datepicker', 'jquery-ui-slider' ), '0.7', true );
+        wp_register_script( 'datetimepicker', BPSP_WEB_URI . '/static/js/datetimepicker/jquery-ui-timepicker-addon.js', array( 'jquery-ui-datepicker', 'jquery-ui-slider' ), '0.9.8', true );
         wp_localize_script( 'datetimepicker', 'dtpLanguage', $this->datetimepicker_l10n() );
         
         // Flexselect
