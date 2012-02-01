@@ -240,7 +240,7 @@ class BPSP_Gradebook {
     }
     
     /**
-     * load_grades( $gradebook_id )
+     * load_grades( $gradebook_id, $parse )
      *
      * Loads all the grades for a given gradebook
      *
@@ -267,12 +267,12 @@ class BPSP_Gradebook {
     }
     
     /**
-     * load_grades( $gradebook_id )
+     * load_grades_by_user_id( $assignment, $user_id )
      *
-     * Loads all the grades for a given gradebook
+     * Loads all the grades for a given assignment by user id
      *
-     * @param Int $gradebook_id the ID of the gradebook to load
-     * @param Bool $parse, if the results should be parsed using shortcode_parse_atts()
+     * @param Int $assignment the ID of the assignment gradeboodk to load
+     * @param Int $user_id, the id of the user
      * @return Mixed, $user_id grade or null on failure
      */
     function load_grade_by_user_id( $assignment = null, $user_id = null ) {
