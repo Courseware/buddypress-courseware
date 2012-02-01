@@ -7,3 +7,4 @@
 .ui-timepicker-div .ui_tpicker_minute div { padding-right: 6px; }
 .ui-timepicker-div .ui_tpicker_second div { padding-right: 6px; }
 .ui-timepicker-div td { font-size: 90%; }
+.ui-datepicker-buttonpane { margin-top: 40px !important; }

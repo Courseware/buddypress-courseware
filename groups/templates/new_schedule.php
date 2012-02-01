@@ -1,4 +1,4 @@
-<form action="" method="post" class="standard-form" id="new-schedule-form">
+<form action="" method="post" class="standard-form schedule-form" id="new-schedule-form" >
     <div id="new-schedule-meta" class="courseware-sidebar">
         <h4 class="meta schedules"><span class="icon"></span><?php _e( 'Schedule Meta', 'bpsp' ); ?></h4>
         <ul class="courseware-meta">
@@ -20,11 +20,11 @@
                     ?>
                 </select>
             </li>
-            <li id="new-schedule-start-date">
+            <li id="schedule-start-date">
                 <label for="schedule-startdate"><?php _e( 'Start date', 'bpsp' ); ?></label>
                     <input type="text" id="schedule-startdate" name="schedule[start_date]" title="<?php _e( 'Start date', 'bpsp' ); ?>" />
             </li>
-            <li id="new-schedule-end-date">
+            <li id="schedule-end-date">
                 <label for="schedule-enddate"><?php _e( 'End date', 'bpsp' ); ?></label>
                     <input type="text" id="schedule-enddate" name="schedule[end_date]" title="<?php _e( 'End date', 'bpsp' ); ?>" />
             </li>

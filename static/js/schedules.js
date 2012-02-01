@@ -11,7 +11,7 @@ dtpLanguage['showMonthAfterYear'] = eval( dtpLanguage['showMonthAfterYear'] );
 jQuery.datepicker.setDefaults( dtpLanguage );
 
 // This will enable the calendar for start date field
-jQuery( "input[name$='schedule[start_date]']" ).datetimepicker({
+jQuery( "#schedule-startdate" ).datetimepicker({
     holdDatepickerOpen: true,
     showButtonPanel: true,
     timeFormat: 'hh:mm:ss',
@@ -21,38 +21,39 @@ jQuery( "input[name$='schedule[start_date]']" ).datetimepicker({
 // Function will check the start date field and ensure the end date will not be older
 function courseware_toggle_datefields( reset ) {
     if( reset == true ) {
-        var title = jQuery( "input[name$='schedule[end_date]']" ).attr('title');
-        jQuery( "input[name$='schedule[end_date]']" ).val(title);
+        var title = jQuery( "#schedule-enddate" ).attr('title');
+        jQuery( "#schedule-enddate" ).val(title);
     }
     
-    jQuery( "input[name$='schedule[end_date]']" ).datepicker('destroy');
-    var start_date = jQuery( "input[name$='schedule[start_date]']" ).datepicker('getDate');
+    jQuery( "#schedule-enddate" ).datepicker('destroy');
+    var start_date = jQuery( "#schedule-startdate" ).datepicker('getDate');
     if( start_date != null ) {
-        jQuery( "input[name$='schedule[end_date]']" ).datetimepicker({
+        jQuery( "#schedule-enddate" ).datetimepicker({
             holdDatepickerOpen: true,
             showButtonPanel: true,
             timeFormat: 'hh:mm:ss',
             dateFormat: 'yy-mm-dd',
             minDate: start_date
         });
-        jQuery( "form #new-schedule-end-date" ).show();
+        jQuery( "#schedule-end-date" ).show();
     }
 }
 
 // This will enable calendar for end date field on edit screen
-var cw_start_date = jQuery( "input[name$='schedule[start_date]']" ).val();
+var cw_start_date = jQuery( "#schedule-startdate" ).val();
 if( cw_start_date != null )
     courseware_toggle_datefields( false );
 
 // This will enable the calendar for end date field
 // but only if start date field is populated
-jQuery( "form #new-schedule-end-date" ).hide();
-jQuery( "input[name$='schedule[start_date]']" )
-    .bind( 'change', function() { courseware_toggle_datefields( true ) });
+jQuery( "#new-schedule-form #schedule-end-date" ).hide();
+jQuery( "#schedule-startdate" )
+    .change( function() { courseware_toggle_datefields( true ) });
+jQuery( ".schedule-form" ).submit( function() { jQuery('#schedule-startdate').unbind('change'); } );
 
 /* Editor Screens */
-jQuery('#new-assignment-form input[type="text"]').inputHint();
-jQuery('#new-assignment-form textarea').inputHint();
+jQuery('.schedule-form input[type="text"]').inputHint();
+jQuery('.schedule-form textarea').inputHint();
 
 // Didn't find another way to 'localize' this
 oLanguage.oPaginate             = [];
