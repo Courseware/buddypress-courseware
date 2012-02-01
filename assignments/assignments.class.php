@@ -659,7 +659,7 @@ class BPSP_Assignments {
                     }
                 }
             }
-            echo json_encode( $data );
+            echo json_encode( Array( 'form_structure' => $data ) );
             exit( 0 );
         }
     }
