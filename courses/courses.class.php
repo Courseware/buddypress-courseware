@@ -325,7 +325,8 @@ class BPSP_Courses {
         $vars['trail'] = array(
             $course->post_title => $course->permalink
         );
-        return apply_filters( 'courseware_course', &$vars );
+        $vars = apply_filters( 'courseware_course', $vars );
+        return $vars;
     }
     
     /**

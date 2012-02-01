@@ -65,8 +65,8 @@ class BPSP_Activity {
         
         groups_record_activity(
             array(
-                'action' => apply_filters( 'courseware_assignment_activity_action', $activity_action, $assignment->ID, $assignment->post_content, &$assignment ),
-                'content' => apply_filters( 'courseware_assignment_activity_content', $activity_content, $assignment->ID, $assignment->post_content, &$assignment ),
+                'action' => apply_filters( 'courseware_assignment_activity_action', $activity_action, $assignment->ID, $assignment->post_content, $assignment ),
+                'content' => apply_filters( 'courseware_assignment_activity_content', $activity_content, $assignment->ID, $assignment->post_content, $assignment ),
                 'primary_link' => apply_filters( 'courseware_assignment_activity_primary_link', "{$primary_link}#post-{$assignment->ID}" ),
                 'type' => "assignment_$type",
                 'item_id' => $bp->groups->current_group->id
@@ -95,8 +95,8 @@ class BPSP_Activity {
         
         groups_record_activity(
             array(
-                'action' => apply_filters( 'courseware_course_activity_action', $activity_action, $lecture->ID, $lecture->post_content, &$lecture ),
-                'content' => apply_filters( 'courseware_course_activity_content', $activity_content, $lecture->ID, $lecture->post_content, &$lecture ),
+                'action' => apply_filters( 'courseware_course_activity_action', $activity_action, $lecture->ID, $lecture->post_content, $lecture ),
+                'content' => apply_filters( 'courseware_course_activity_content', $activity_content, $lecture->ID, $lecture->post_content, $lecture ),
                 'primary_link' => apply_filters( 'courseware_course_activity_primary_link', "{$primary_link}#post-{$lecture->ID}" ),
                 'type' => "lecture_$type",
                 'item_id' => $bp->groups->current_group->id
@@ -130,8 +130,8 @@ class BPSP_Activity {
         
         groups_record_activity(
             array(
-                'action' => apply_filters( 'courseware_response_activity_action', $activity_action, $response->ID, $response->post_content, &$response ),
-                'content' => apply_filters( 'courseware_response_activity_content', $activity_content, $response->ID, $response->post_content, &$response ),
+                'action' => apply_filters( 'courseware_response_activity_action', $activity_action, $response->ID, $response->post_content, $response ),
+                'content' => apply_filters( 'courseware_response_activity_content', $activity_content, $response->ID, $response->post_content, $response ),
                 'primary_link' => apply_filters( 'courseware_response_activity_primary_link', "{$primary_link}#post-{$response->ID}" ),
                 'type' => "response_$type",
                 'item_id' => $bp->groups->current_group->id
