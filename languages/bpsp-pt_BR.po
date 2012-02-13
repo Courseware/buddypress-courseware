@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: BP Courseware v1.0 - 0.9.5\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-12-17 18:09+0200\n"
-"PO-Revision-Date: 2012-02-09 17:53-0300\n"
-"Last-Translator: Ruan Barbosa <contato@ruanbarbosa.com.br>\n"
+"PO-Revision-Date: 2012-02-12 00:13-0300\n"
+"Last-Translator: Ruan <ruan@sobreeducar.com.br>\n"
 "Language-Team: Ruan Barbosa <ruan@sobreeducar.com.br>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
@@ -365,7 +365,7 @@ msgstr "Aguarde..."
 #: static/bpsp-static.class.php:182
 #: static/static.class.php:233
 msgid "Display _MENU_ records per page"
-msgstr "Exibir registro do _MENU_ por página"
+msgstr "Exibir _MENU_ registros por página"
 
 #: static/bpsp-static.class.php:183
 #: static/static.class.php:234
@@ -998,19 +998,19 @@ msgstr "Courseware criado por %s e ministrado pelo(a) professor(a) %d com o(s) c
 #: groups/templates/dashboard.php:18
 #, php-format
 msgid "<strong>%s</strong> course class started by %s and managed by %d teacher(s) for this group"
-msgstr "<strong>%s</strong> curso criado por %s e ministrado pelo(a) professor(a) %d para este grupo"
+msgstr "<strong>%s</strong>: curso criado por %s e ministrado pelo(a) professor(a) %d para este grupo"
 
 #: groups/templates/home.php:51
 #: groups/templates/dashboard.php:45
 #, php-format
 msgid "<em>%s</em> Assignment(s)"
-msgstr "<em>%s</em> Tarefas(s)"
+msgstr "<em>%s</em> Tarefa(s)"
 
 #: groups/templates/home.php:68
 #: groups/templates/dashboard.php:62
 #, php-format
 msgid "<em>%s</em> Response(s)"
-msgstr "<em>%s</em> Respostas(s)"
+msgstr "<em>%s</em> Resposta(s)"
 
 #: groups/templates/home.php:79
 #: groups/templates/dashboard.php:73
@@ -1022,7 +1022,7 @@ msgstr "<em>%s</em> Evento(s)"
 #: groups/templates/dashboard.php:90
 #, php-format
 msgid "<em>%s</em> Bibliography entries"
-msgstr "<em>%s</em> registros de Bibliografia"
+msgstr "<em>%s</em> Registro(s) de Bibliografia"
 
 #: groups/templates/home.php:110
 #: groups/templates/dashboard.php:104
@@ -1110,7 +1110,7 @@ msgstr "Eventos"
 #: schedules/schedules.class.php:51
 #: schedules/schedules.class.php:273
 msgid "Schedule"
-msgstr "Evento"
+msgstr "Calendário"
 
 #: schedules/bpsp-schedules.class.php:47
 #: schedules/schedules.class.php:52
@@ -1323,7 +1323,7 @@ msgstr "Ocorreu um erro ao editar o curso."
 #: courses/bpsp-courses.class.php:443
 #: courses/courses.class.php:373
 msgid "New course was updated."
-msgstr "Um novo curso atualizado."
+msgstr "O curso foi atualizado."
 
 #: courses/bpsp-courses.class.php:445
 #: courses/courses.class.php:375
@@ -1618,7 +1618,7 @@ msgstr "Apagar aula"
 #: groups/templates/edit_lecture.php:48
 #: groups/templates/new_lecture.php:42
 msgid "Lecture Title"
-msgstr "Título da Palestra"
+msgstr "Título da Aula"
 
 #: groups/templates/list_schedules.php:12
 #: groups/templates/edit_schedule.php:55
@@ -1682,7 +1682,7 @@ msgstr "Editar Curso"
 
 #: groups/templates/dashboard.php:2
 msgid "At a glance"
-msgstr "Num relance"
+msgstr "Visão Geral"
 
 #: groups/templates/dashboard.php:9
 msgid "Update Course"
@@ -1699,7 +1699,7 @@ msgstr "<em>%s</em> Aula(s)"
 
 #: groups/templates/dashboard.php:34
 msgid "Add a new lecture"
-msgstr "Adicionar uma nova Palestra"
+msgstr "Adicionar uma nova Aula"
 
 #: groups/templates/dashboard.php:38
 msgid "View course lectures"
@@ -1745,7 +1745,7 @@ msgstr "Seu último favorito &rarr;"
 
 #: groups/templates/dashboard.php:133
 msgid "You didn't bookmark any lectures so far."
-msgstr "Você não marcou palestra até agora."
+msgstr "Você não favoritou nenhuma aula até agora."
 
 #: groups/templates/dashboard.php:136
 msgid "Today is: "
@@ -1753,15 +1753,15 @@ msgstr "Hoje é: "
 
 #: groups/templates/dashboard.php:144
 msgid "Latest lectures"
-msgstr "Últimas palestras"
+msgstr "Últimas Aulas"
 
 #: groups/templates/dashboard.php:146
 msgid "All lectures"
-msgstr "Todas palestras"
+msgstr "Todas as aulas"
 
 #: groups/templates/dashboard.php:175
 msgid "Latest assignments"
-msgstr "Últimas tarefas"
+msgstr "Últimas Tarefas"
 
 #: groups/templates/dashboard.php:206
 msgid " Latest schedules"
@@ -1769,7 +1769,7 @@ msgstr " Últimos eventos"
 
 #: groups/templates/dashboard.php:234
 msgid "Latest responses"
-msgstr "Últimas respotas"
+msgstr "Últimas Respostas"
 
 #: groups/templates/dashboard.php:264
 msgid "No responses yet."
@@ -1952,7 +1952,7 @@ msgstr "Respostas erradas"
 
 #: groups/templates/new_lecture.php:33
 msgid "Publish lecture"
-msgstr "Publicar palestra"
+msgstr "Publicar aula"
 
 #: groups/templates/list_assignments.php:7
 msgid "Type"
@@ -2327,7 +2327,7 @@ msgstr "Favoritar esta aula"
 
 #: groups/templates/single_lecture.php:39
 msgid "Edit Lecture"
-msgstr "Editar Palestra"
+msgstr "Editar Aula"
 
 #: groups/templates/_trail.php:4
 msgid "Courseware Dashboard"
@@ -2581,8 +2581,8 @@ msgid ""
 "Enabling this, will enable Courseware component for\n"
 "                    every existing group."
 msgstr ""
-"Isto permite habilitar um componenete Courseware\n"
-"                    cada grupo existente."
+"Ao ativar esta opção você habilitará o componente Courseware\n"
+"                    para cada grupo existente."
 
 #: wordpress/templates/admin.php:20
 msgid "A per group option is available in group Admin screen."
@@ -2601,8 +2601,8 @@ msgid ""
 "Enabling this, will allow any teacher to contribute to\n"
 "                    group Courseware by editing/adding new courses, schedules and assignments."
 msgstr ""
-"Ao habilitar esta opção qualquer professor colaborar com\n"
-"                    o conteúdo Courseware editando/adicionando novos cursos, eventos e tarefas."
+"Ao habilitar esta opção qualquer professor pode colaborar com\n"
+"                    o conteúdo do Courseware editando/adicionando novos cursos, eventos e tarefas."
 
 #: wordpress/templates/admin.php:45
 msgid "By default only group admins can manage Courseware."
@@ -2614,7 +2614,7 @@ msgstr "Permitir que qualquer professor possa contribuir com o conteúdo das aul
 
 #: wordpress/templates/admin.php:63
 msgid "Make assignment responses private"
-msgstr "Faças as respostas das tarefas privadas"
+msgstr "Respostas privadas para as tarefas"
 
 #: wordpress/templates/admin.php:66
 msgid ""
@@ -2634,7 +2634,7 @@ msgstr "Habilitar respostas privadas."
 
 #: wordpress/templates/admin.php:88
 msgid "Gradebook default grade format"
-msgstr "Notas no formato de grade padrão"
+msgstr "Formato das Notas"
 
 #: wordpress/templates/admin.php:91
 msgid ""
@@ -2652,15 +2652,15 @@ msgstr "Formato do arquivo das notas"
 
 #: wordpress/templates/admin.php:115
 msgid "Webservices API Integration"
-msgstr "API de Integração para Webserviços"
+msgstr "Serviços de Integração (API) para as Bibliografias"
 
 #: wordpress/templates/admin.php:118
 msgid ""
 "This will allow you to use webservices to query\n"
 "                    books and articles easily."
 msgstr ""
-"Isto permite que você criar dúvidas sobre\n"
-"                    livros e artigos facilmente."
+"Isto permite que você criar as bibliografias para os\n"
+"                    livros e artigos de forma mais fácil."
 
 #: wordpress/templates/admin.php:124
 msgid "WorldCat Webservices Key"
@@ -2668,7 +2668,7 @@ msgstr "Chave WorldCat"
 
 #: wordpress/templates/admin.php:126
 msgid "Free registration for Basic API"
-msgstr "Registro gratuito para API Básica"
+msgstr "Faça o registro gratuito para o sistema WorldCat"
 
 #: wordpress/templates/admin.php:135
 msgid "ISBNdb Webservices Key"
@@ -2676,11 +2676,11 @@ msgstr "Chave ISBNdb"
 
 #: wordpress/templates/admin.php:137
 msgid "Free Registration"
-msgstr "Registro Gratuito"
+msgstr "Faça o registro gratuito para o sistema ISBNdb"
 
 #: wordpress/templates/admin.php:152
 msgid "Customization"
-msgstr "Customização"
+msgstr "Customização CSS"
 
 #: wordpress/templates/admin.php:155
 msgid ""
