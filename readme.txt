@@ -45,6 +45,8 @@ Here's the features list:
 
 [wpvideo AD4hdKWn]
 
+Plugin page header banner stolen from [SMBC#1092](http://www.smbc-comics.com/index.php?db=comics&id=1092)
+
 == Installation ==
 
 Please follow the [standard installation procedure for WordPress plugins](http://codex.wordpress.org/Managing_Plugins#Installing_Plugins).
