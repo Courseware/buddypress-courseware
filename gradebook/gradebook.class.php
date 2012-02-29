@@ -524,7 +524,7 @@ class BPSP_Gradebook {
             $grade = array(
                 'uid' => $results['response']->post_author,
                 // Generate a percentage
-                'value' => ( isset( $form_results['correct'] ) && $form_results['correct'] > 0 )
+                'value' => ( isset( $quiz_data['correct'] ) && $quiz_data['correct'] > 0 )
                     ? round( $quiz_data['correct'] / $quiz_data['total'] * 100, 2 )
                     : 0,
                 'format' => 'percentage',
