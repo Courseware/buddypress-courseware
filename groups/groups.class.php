@@ -30,7 +30,7 @@ class BPSP_Groups {
         add_filter( 'groups_get_groups', array( &$this, 'extend_search' ), 10, 2 );
         add_action( 'groups_admin_tabs', array( &$this, 'group_admin_tab' ), 10, 2 );
         add_action( 'wp', array( &$this, 'group_admin_screen' ), 4 );
-        add_filter( 'media_upload_form_url', array( __CLASS__, 'bpsp_media_library_tab' ) );
+        add_filter( 'media_upload_form_url', array( __CLASS__, 'media_library_tab' ) );
     }
     
     /**
@@ -303,7 +303,7 @@ class BPSP_Groups {
      * Will hook into get_children() if the upload form media library is accessed,
      * and will add to the current query currently logged in author ID
      */
-    function bpsp_restrict_uploads( $wp_the_query ) {
+    function restrict_uploads( $wp_the_query ) {
         // Check if current user is admin or sort of
         if ( !current_user_can( 'manage_options' ) )
             // If not, he will only see his own attachments
@@ -312,16 +312,18 @@ class BPSP_Groups {
     
     /**
      * Media library displays all the uploads,
-     * bpsp_media_library_tab() will do some checks and try to hide
+     * media_library_tab() will do some checks and try to hide
      * attachments that are not owned by current user
      */
-    function bpsp_media_library_tab( $action_url ) {
-        // Try to catch Courseware uploads page
-        if ( isset( $_REQUEST['bpsp-upload'] ) && isset( $_REQUEST['tab'] ) )
-            // Check if the user is on the current tab
-            if ( $_REQUEST['tab'] == 'library' )
-                // Do some checks before displaying attachments
-                add_action( 'pre_get_posts', array( __CLASS__, 'bpsp_restrict_uploads' ) );
+    function media_library_tab( $action_url ) {
+        // Check if private uploads are disabled
+        if ( defined( 'COURSEWARE_PRIVATE_UPLOADS' ) && !COURSEWARE_PRIVATE_UPLOADS ) 
+          return;
+
+        // Check if the user is on the current tab
+        if ( $_REQUEST['tab'] == 'library' )
+            // Do some checks before displaying attachments
+            add_action( 'pre_get_posts', array( __CLASS__, 'restrict_uploads' ) );
         
         return $action_url;
     }
