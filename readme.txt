@@ -65,6 +65,9 @@ Before asking questions, please check the [BuddyPress Courseware Handbook](http:
 
 == Changelog ==
 
+= 0.9.6 =
+
+
 = 0.9.5 =
 * Removed pass-by-reference calls. Props @mercime closes [#69](https://github.com/scholarpress/buddypress-courseware/issues/69).
 * Fixed the js issue on schedule pages. Closes [#71](https://github.com/scholarpress/buddypress-courseware/issues/71).
