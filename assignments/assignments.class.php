@@ -405,7 +405,7 @@ class BPSP_Assignments {
         $vars['assignments_hanlder_uri'] = $vars['current_uri'] . '/assignment/';
         $vars['assignments'] = $assignments;
         $vars['trail'] = array(
-            __( 'Available Assignments' ) => '',
+            __( 'Available Assignments', 'bpsp' ) => '',
         );
         return $vars;
     }
