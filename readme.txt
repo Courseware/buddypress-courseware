@@ -3,8 +3,7 @@ Contributors: sushkov, jeremyboggs, boonebgorges, johnjamesjacoby, chexee
 Tags: buddypress, lms, courseware, education, teaching, quizzes, tests, gradebook, courses, lectures, assignments
 Requires at least: WordPress 3.2, BuddyPress 1.5
 Tested up to: WordPress 3.3 / BuddyPress 1.6
-Stable tag: 0.9.5
-Donate link: http://stas.nerd.ro/pub/donate/
+Stable tag: 0.9.6
 
 A Learning Management System for BuddyPress
 
@@ -66,7 +65,13 @@ Before asking questions, please check the [BuddyPress Courseware Handbook](http:
 == Changelog ==
 
 = 0.9.6 =
-
+* Added pt_BR translation, huge thanks to Ruan Barbosa.
+* Added banner image.
+* Introducing `COURSEWARE_PRIVATE_UPLOADS` constant for disabling private uploads.
+* Fixed a couple of typos.
+* Added German localization. Huge thanks to @chaoti
+* Fix a typo with inversed check of return in new response screen. Props @mattvogt.
+* Add jquery-ui datetimepicker. Fixed the regression.
 
 = 0.9.5 =
 * Removed pass-by-reference calls. Props @mercime closes [#69](https://github.com/scholarpress/buddypress-courseware/issues/69).
