@@ -73,7 +73,7 @@ class BPSP_Groups {
      */
     function set_nav() {
         global $bp;
-        
+
         if( !$bp->groups->current_group || !$this->courseware_status( $bp->groups->current_group->id ) )
             return;
         
@@ -102,7 +102,7 @@ class BPSP_Groups {
      */
     function screen_handler() {
         global $bp;
-        
+
         if( !$this->courseware_status( $bp->groups->current_group->id ) )
             return;
         
@@ -245,7 +245,7 @@ class BPSP_Groups {
         if ( 'courseware' == $current_tab )
             $tab_content .= 'class="current"';
         
-        $tab_content .= '><a href="' . bp_get_group_admin_permalink() . '/courseware">';
+        $tab_content .= '><a href="' . bp_get_group_admin_permalink() . 'courseware">';
         $tab_content .= __( 'Courseware', 'bpsp' ) . '</a></li>';
         
         echo $tab_content;
