@@ -207,10 +207,11 @@ class BPSP_Responses {
         
         if( 'true' == $group_status )
             return true;
-        else if( $global_status )
+
+        if( $global_status != '' )
             return true;
-        else
-            return false;
+        
+        return false;
     }
     
     /**
@@ -500,7 +501,7 @@ class BPSP_Responses {
                         $vars = $this->single_response_screen( $vars );
                         // Leave this for imediate results preview
                         $vars['response']->form_values = $form_results;
-                        if( $this->group_responses_status() )
+                        if( !$this->group_responses_status() )
                             $vars['public'] = true;
                         
                         do_action( 'courseware_response_added', $vars );
