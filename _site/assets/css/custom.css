@@ -1,0 +1,138 @@
+/**
+ * Custom stuff
+ */
+
+@import url(http://fonts.googleapis.com/css?family=Tenor+Sans&subset=latin,cyrillic);
+
+body {
+  padding: 50px;
+  font: 14px/1.5 "Tenor Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: #777;
+}
+
+a, h1, h2, h3, h4, h5, h6, .links strong {
+  color: #CC6600;
+}
+
+a:hover {
+  color: #CC8E00;
+}
+
+.face {
+  border: 0;
+  -webkit-border-radius: 100px;
+  -moz-border-radius: 100px;
+  border-radius: 100px;
+  float: left;
+  margin-right: 15px;
+}
+
+.alignleft {
+  display: inline;
+  float: left;
+  margin-right: 1.625em;
+}
+
+.alignright {
+  display: inline;
+  float: right;
+  margin-left: 1.625em;
+}
+
+.aligncenter {
+  clear: both;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+header > h1 {
+  letter-spacing: -2px;
+  font-size: 25px;
+}
+
+ul.columns, ul.columns ul {
+  margin: 0;
+  padding: 0;
+}
+
+ul.columns > li {
+  float: left;
+  width: 48%;
+  overflow: hidden;
+  list-style: none;
+  margin-right: 10px;
+}
+
+ul.columns > li:last-child {
+  margin-right: 0;
+}
+
+ul.columns li > h3 {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.rssBody ul {
+  margin-left: 0;
+  font-size: 12px;
+}
+
+.rssRow {
+  list-style: none !important;
+}
+
+.rssRow h4 {
+  margin: 5px 0;
+  line-height: 100%;
+}
+
+.rssRow h4 a {
+  font-size: 100%;
+  font-weight: normal;
+}
+
+.rssRow div {
+  font-size: 80%;
+  color: #888;
+  text-align: right;
+  border-bottom: 1px dotted #DDD;
+  padding-bottom: 5px;
+}
+
+.twtr-hd, .twtr-ft {
+  display: none !important;
+}
+
+.twtr-img img {
+  max-width: none;
+}
+
+.twtr-doc {
+  font: 12px/1.5 "Tenor Sans", "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+  width: 100% !important;
+}
+
+.book {
+  float: right;
+  padding: 0 0 15px 5px;
+  border-left: 1px dotted #DDD;
+  margin-left: 5px;
+}
+
+.book img {
+  width: 70px;
+}
+
+.book a {
+  width: 70px;
+  font-size: 10px;
+  display: block;
+  text-align: center;
+}
+
+@media print, screen and (max-width: 480px) {
+  ul.columns > li {
+    width: 100%;
+  }
+}

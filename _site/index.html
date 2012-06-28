@@ -1,0 +1,144 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Project Homepage &bull; BuddyPress Courseware</title>
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/custom.css">
+
+    <link rel="openid.server" href="https://login.launchpad.net/+openid"/>
+    <link rel="openid.delegate" href="https://login.launchpad.net/+id/HDnmz4T"/>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1><a href="http://buddypress.coursewa.re">BuddyPress Courseware</a></h1>
+        <h4>Social LMS</h4>
+        <p class="view">
+          <img class="face" src="https://secure.gravatar.com/avatar/73dac6784c6ff5bb07614eed34226e32?s=70" alt="BuddyPress Logo">
+          <a href="http://buddypress.org/">BuddyPress</a> 
+is an open source social network project.
+<br>
+<a href="http://wordpress.org/extend/plugins/buddypress-courseware/">
+BuddyPress Courseware</a> is a learning management system
+built to make teaching social again.
+<hr>
+<div class="book">
+  <img src="https://www.packtpub.com/sites/default/files/imagecache/productview/8208OS_1.jpg" alt="WordPress for Education cover" class="aligncenter">
+  <a href="http://www.packtpub.com/wordpress-interactive-engaging-elearning-education-websites/book">Buy the book from Packt Pub.</a>
+</div>
+BuddyPress Courseware is maintained by <a href="http://coursewa.re">
+Coursewa.re</a> after being part of
+<a href="http://google-melange.appspot.com/">
+Google Summer of Code</a> programme in 2010 and 2011 (accepted and mentored 
+by <a href="http://wordpress.org/">WordPress</a>
+and <a href="http://scholarpress.net/">ScholarPress</a> mentors).
+
+        </p>
+        <ul class="links">
+          <li><a href="http://wordpress.org/extend/plugins/buddypress-courseware/">
+WordPress.org <strong>Project</strong></a>
+</li>
+          <li><a href="http://buddypress.org/community/groups/buddypress-courseware/forum/">
+Support <strong>Forums</strong></a>
+</li>
+          <li><a href="/handbook.html">Project <strong>Handbook</strong></a></li>
+        </ul>
+      </header>
+      <section>
+
+        <script src="http://widgets.twimg.com/j/2/widget.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.0/jquery.min.js" ></script>
+<script src="/assets/js/jquery.zrssfeed.min.js"></script>
+
+<embed type="application/x-shockwave-flash" src="http://s0.videopress.com/player.swf?v=1.03" width="100%" height="350" wmode="direct" seamlesstabbing="true" allowfullscreen="true" allowscriptaccess="always" overstretch="true" flashvars="guid=AD4hdKWn&amp;isDynamicSeeking=true"></embed>
+
+<hr>
+
+<ul class="columns">
+  <li>
+    <h3>Twitter Stream</h3>
+    <script>
+      new TWTR.Widget({
+        version: 2,
+        type: 'search',
+        search: 'buddypress courseware',
+        interval: 6000,
+        title: 'About Courseware on Twitter',
+        subject: 'BuddyPress Courseware',
+        width: 220,
+        height: 200,
+        theme: {
+          shell: {
+            background: 'transparent',
+            color: '#ffffff'
+          },
+          tweets: {
+            background: '#ffffff',
+            color: '#777777',
+            links: '#CC6600'
+          }
+        },
+        features: {
+          scrollbar: false,
+          loop: true,
+          live: true,
+          hashtags: true,
+          timestamp: true,
+          avatars: true,
+          toptweets: true,
+          behavior: 'default'
+        }
+      }).render().start();
+    </script>
+  </li>
+  <li>
+    <h3>Latest Commits</h3>
+    <div id="commits"></div>
+  </li>
+</ul>
+
+<script type="text/javascript">
+  var commits_feed = 'https://github.com/scholarpress/buddypress-courseware/commits/master.atom';
+  jQuery('#commits').rssfeed(commits_feed, {
+    header: false,
+    content: false,
+    limit: 3,
+    titletag: 'span'
+  });
+</script>
+
+
+      </section>
+      <footer>
+      <p>
+        <small>Most of the content is under
+<a href="http://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA 3.0</a>
+license.
+</small>
+        <br>
+        <small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small>.
+      </p>
+      </footer>
+    </div>
+    <a href="https://github.com/Courseware/buddypress"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png" alt="Fork me on GitHub"></a>
+    <script src="/assets/js/scale.fix.js"></script>
+    <script type="text/javascript">
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-28875212-1']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+       var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+       ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+       })();
+     </script>
+  </body>
+</html>

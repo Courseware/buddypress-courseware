@@ -1,0 +1,423 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Project Handbook &bull; BuddyPress Courseware</title>
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/custom.css">
+
+    <link rel="openid.server" href="https://login.launchpad.net/+openid"/>
+    <link rel="openid.delegate" href="https://login.launchpad.net/+id/HDnmz4T"/>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1><a href="http://buddypress.coursewa.re">BuddyPress Courseware</a></h1>
+        <h4>Social LMS</h4>
+        <p class="view">
+          <img class="face" src="https://secure.gravatar.com/avatar/73dac6784c6ff5bb07614eed34226e32?s=70" alt="BuddyPress Logo">
+          <a href="http://buddypress.org/">BuddyPress</a> 
+is an open source social network project.
+<br>
+<a href="http://wordpress.org/extend/plugins/buddypress-courseware/">
+BuddyPress Courseware</a> is a learning management system
+built to make teaching social again.
+<hr>
+<div class="book">
+  <img src="https://www.packtpub.com/sites/default/files/imagecache/productview/8208OS_1.jpg" alt="WordPress for Education cover" class="aligncenter">
+  <a href="http://www.packtpub.com/wordpress-interactive-engaging-elearning-education-websites/book">Buy the book from Packt Pub.</a>
+</div>
+BuddyPress Courseware is maintained by <a href="http://coursewa.re">
+Coursewa.re</a> after being part of
+<a href="http://google-melange.appspot.com/">
+Google Summer of Code</a> programme in 2010 and 2011 (accepted and mentored 
+by <a href="http://wordpress.org/">WordPress</a>
+and <a href="http://scholarpress.net/">ScholarPress</a> mentors).
+
+        </p>
+        <ul class="links">
+          <li><a href="http://wordpress.org/extend/plugins/buddypress-courseware/">
+WordPress.org <strong>Project</strong></a>
+</li>
+          <li><a href="http://buddypress.org/community/groups/buddypress-courseware/forum/">
+Support <strong>Forums</strong></a>
+</li>
+          <li><a href="/handbook.html">Project <strong>Handbook</strong></a></li>
+        </ul>
+      </header>
+      <section>
+
+        <div class="handbook">
+<p>
+    This guide was written for helping new users get familiar with
+    BuddyPress Courseware LMS. If you are a developer, you will need to wait,
+    a guide for developers is not done yet.
+</p>
+
+<p>
+    The following list should cover all the features and functionalities of
+    this component.
+</p>
+<ul>
+    <li><a href="#installation">Installation</a></li>
+    <li><a href="#configuration">Configuration</a></li>
+    <li>Principles and workflow
+        <ul>
+            <li><a href="#roles">Roles: Students and Teachers/Professors</a></li>
+            <li><a href="#dashboard">Dashboard</a></li>
+            <li><a href="#courses">Courses</a></li>
+            <li><a href="#assignments">Assignments</a>
+                <ul>
+                    <li><a href="#responses">Responses</a></li>
+                    <li><a href="#gradebook">Gradebook</a></li>
+                    <li><a href="#forum">Forum integration</a></li>
+                </ul>
+            </li>
+            <li><a href="#schedules">Schedules</a></li>
+            <li><a href="#calendar">Calendar</a></li>
+            <li><a href="#bibliography">Bibliography</a></li>
+            <li><a href="#streams">Activity streams</a></li>
+        </ul>
+    </li>
+    <li><a href="#support">Support and Feedback resourses</a></li>
+</ul>
+<hr />
+<h2 id="installation">Installation</h2>
+<p>
+    BuddyPress Courseware can be downloaded and installed manually
+    <a href="http://wordpress.org/extend/plugins/buddypress-courseware/">from
+    official WordPress plugins directory</a>, or using plugin installation
+    utility from <em>WordPress &rarr; Plugins &rarr; Add New</em> and search
+    for it's name, after what just follow the standard installation procedure.
+</p>
+<p>
+    If you are installing it manually, you need to extract the <tt>zip</tt>
+    file contents and then upload the resulted directory (should be named
+    buddypress-courseware) into <tt>wp-content/plugins/</tt> using your
+    <acronym title="File Transfer Protocol">FTP</acronym> or
+    <acronym title="Secure File Transfer Protocol">SFTP</acronym> client.
+</p>
+<img src="/assets/img/screens/plugins.png" alt="Plugins Screen" />
+<p>
+    Once you got it installed, go to <em>WordPress &rarr; Plugins</em> and
+    activate the plugin.
+</p>
+<hr />
+<h2 id="configuration">Configuration</h2>
+<p>
+    Once installed and activated, BuddyPress Courseware offers some configuration
+    options, which are useful if you want to tweak the system's behaviour.
+    These settings are not required, I mean Courseware will work out-of-the-box
+    anyway, but enabling some of them can offer you features like:
+</p>
+<img src="/assets/img/screens/options.png" alt="Options Screen" />
+<ul>
+    <li>Globally enable courseware</li>
+    <li>Switch between European and US learning models</li>
+    <li>Collaboration settings</li>
+    <li>Gradebook default grade format</li>
+    <li>Webservices for bibliography fetching and formating</li>
+    <li>Customization options</li>
+</ul>
+<p>
+    All these options are well documented and can be accessed by going to
+    <em>WordPress &rarr; BuddyPress &rarr; Courseware</em>.
+</p>
+<img src="/assets/img/screens/per_group.png" alt="Per Group Option" />
+<p>
+    BuddyPress Courseware can be enabled globally or per group. This allows you to
+    turn on and off courseware component for every group.
+</p>
+<hr />
+<h2 id="roles">Roles: Students and Teachers</h2>
+<p>
+    Courseware uses custom roles to differentiate students from teachers.
+</p>
+<p>
+    While existing users are easily treated as students after Courseware
+    installation, teachers, must be defined. We designed a special moderation
+    tool for that, that allows both: manual roles definition and by sending a
+    request.
+</p>
+<p>
+    An ordinary user can send a request to become a teacher by going to
+    <em>Profile &rarr; Edit Profile &rarr; Courseware Tab</em>.
+    There, he will find 2 options:
+</p>
+<img src="/assets/img/screens/role_choices.png" alt="Roles Screen" />
+<ol>
+    <li>Student</li>
+    <li>Apply for Teacher</li>
+</ol>
+<p>
+    By selecting 2nd option, this will autmatically send a request containing
+    your username and profile link to the site admin. This will review both,
+    and using the link in the message, will be able to set you a different role.
+</p>
+<p>
+    Site admin, can also visit manually every profile, and edit user's role.
+</p>
+<p>
+    Once you get the Teacher's role, this will allow you managing the groups
+    where you are admin as your own classes. The whole BuddyPress Courseware
+    is built on BuddyPress Groups concept, in fact once you installed it,
+    a BuddyPress Group can be named now a Class of students. All the Courseware
+    features will use per group settings, each group will has its own data,
+    though, some informations like <a href="#bibliography">Bibliography</a>
+    are globally shared.
+</p>
+<h4 id="roles-warning">Important!</h4>
+<p>
+    By default Courseware will require both, a user to have teacher role and
+    to be group admin to be able to manage a class/group courseware.
+    To disable this (meaning a teacher will be able to manage courseware
+    immediately he gets the teacher role), check the 
+    <em>Allow any teacher to contribute to class Courseware content</em> option
+    available on the Courseware settings under <em>Collaboration settings</em>
+    section.
+</p>
+<hr />
+<h2 id="dashboard">Dashboard</h2>
+<p>
+    Dashboard is the homepage for students and teachers when they visit the
+    <em>Courseware</em> Tab on group page. The Dashboard concept is stolen
+    from WordPress.
+</p>
+<img src="/assets/img/screens/dashboard_student.png" alt="Student Dashboard Screen" />
+<p>
+    For students it will reflect all
+    the group activity, and some of their progress (the grades they obtained
+    will generate a small chart at the bottom of the page).
+</p>
+<img src="/assets/img/screens/dashboard.png" alt="Teacher Dashboard Screen" />
+<p>
+    For teachers the dashboard will serve also the latest information about
+    students activity and class content and will add quick links to add new
+    content to the group.
+</p>
+<hr />
+<h2 id="courses">Courses</h2>
+<p>
+    Courses or Course (depends on EU/US Courseware settings), is the main
+    content type, on group creation, adding/updating a course is the first
+    step a teacher has to do. The Course content should reflect the most
+    important informations and details for futher class activity.
+</p>
+<img src="/assets/img/screens/course_info.png" alt="Course Screen" />
+<img src="/assets/img/screens/edit_course.png" alt="Edit Course Screen" />
+<p>
+    Courses are integrated with Bibliography, so you won't need to add
+    bibliography notes to it's content, since it can be added later by using
+    <em><a href="#bibliography">Bibliography</a></em> button.
+</p>
+<hr />
+<h2 id="assignments">Assignments</h2>
+<p>
+    Assignments should reflect teacher's interest from students/courseware
+    participants. These should contain homework tasks, course exercises,
+    todo's and other notes a teacher want's students to get aware of.
+</p>
+<img src="/assets/img/screens/assignment_info.png" alt="Assignment Screen" />
+<img src="/assets/img/screens/assignments_list.png" alt="Assignments List Screen" />
+<p>
+    Assignments are integrated with Bibliography, so you won't need to add
+    bibliography notes to it's content, since it can be added later by using
+    <em><a href="#bibliography">Bibliography</a></em> button.
+</p>
+    <h4 id="responses">Responses</h4>
+    <p>
+        Assignments will automatically enable responses for students. Responses
+        get listed below assignment content by using <em>Responses</em>
+        button on an assignment page. A student will find one of the
+        <em>Add a Response</em> or <em>Your Response</em> buttons on assignment
+        page. First if he didn't add a response yet, and the button will bring him
+        to the editor screen. And the second if he already added a response
+        and now he can review his response.
+    </p>
+    <img src="/assets/img/screens/add_response.png" alt="Add Response Screen" />
+    <p>
+        Responses are a way of students involvement in courseware processes.
+        By responding to an assignment, student's answer can be used as a
+        possible solution that will result into a grade a teacher can add
+        later.
+    </p>
+    <p>
+        Responses are a one way functionality. (Currently), a student
+        can add only <em>one</em> response per assignment. He's not allowed
+        to edit or delete it, all he gets is a public permalink to his response.
+        His response now will serve as a proof.
+    </p>
+    <p>
+        Assignment teacher/author, gets a notification once a student responded.
+        Teachers are not allowed to edit student responses, but they can delete
+        them, by this allowing a student to make a new response to current
+        assignment. Teachers as students can later review anytime the existing
+        responses.
+    </p>
+    <h4 id="gradebook">Gradebook</h4>
+    <p>
+        Every assignment gets a gradebook. A gradebook will contain all the
+        group/class users/students and offer controls to add grade, grade format,
+        public and private comment to each one.
+    </p>
+    <img src="/assets/img/screens/gradebook.png" alt="Gradebook Screen" />
+    <p>
+        Gradebook can also be imported from a
+        <acronym title="Comma Separated Value">CSV</acronym> file. Such a file
+        must look like the example below for username <tt>test</tt>:
+    </p>
+        <pre>
+uid,value,format,prv_comment,pub_comment
+test,10,numeric,"Private comment text","Public comment text"
+        </pre>
+    <p>
+        To import the gradebook from a file, use the <em>Import from CSV</em>
+        button. <strong>Remember</strong>, the data from CSV,
+        will not be stored until you click <em>Save grades</em> button.
+    </p>
+    <p>
+        Every time a student grade is being changed, he will receive a
+        notification with the assignment link. Assignment page will contain
+        his grade information.
+    </p>
+    <h4 id="forum">Forum integration</h4>
+    <p>
+        <strong>Warning</strong>: this option requires group forums enabled.
+        To do that, you will need to visit
+        <em>Group page &rarr; Admin &rarr; Group Settings</em>
+        and check the <em>Enable discussion forum</em> checkbox.
+    </p>
+    <p>
+        Assignments might require additional information or questions from
+        students, so we added an option to allow teachers and students exchange
+        such informations by using BuddyPress Forums.
+        A teacher will find on assignment page, a button
+        <em>Enable Assignment Forum</em>, that will instantly create a topic
+        with assignment content in group forums. Next time somebody will
+        visit the same page, will be able to get to assignment forum by
+        using <em>Visit Assignment Forum</em> button.
+    </p>
+<hr />
+<h2 id="schedules">Schedules</h2>
+<img src="/assets/img/screens/schedules.png" alt="Schedules Screen" />
+<p>
+    Schedules are a way of creating timetables for students, or events like
+    exam/test announcements, class hour changes etc.
+</p>
+<hr />
+<h2 id="calendar">Calendar</h2>
+<img src="/assets/img/screens/calendar.png" alt="Calendar Screen" />
+<p>
+    Calendar is the most dynamic part of the Courseware. The calendar will
+    reflect all the assignment and schedules with their start dates, due dates
+    and end dates. Calendar can be used for day/week/month views.
+    There's also an <acronym title="vCalendar File">ICS</acronym> export option
+    that can integrate calendar contents with your email client or
+    Google Calendar.
+</p>
+<hr />
+<h2 id="bibliography">Bibliography</h2>
+<p>
+    Bibliography should help teachers add book/author refferences to courses
+    and assignments. It integrates tightly with both.
+</p>
+<img src="/assets/img/screens/bibs.png" alt="Bibliography Screen" />
+<p>
+    There are several types of bibliography you can add manually or by using
+    specific webservices like <a href="http://isbndb.com/">ISBNdb</a> and
+    <a href="http://worldcat.org/">WorldCat</a>.
+    Also you can add webpages, as refferences. The last two methods are available
+    on course and assignment page just by clicking
+    <em>Bibliography &rarr; Quick Add Book/Webpage</em>
+    buttons, the manual method for bibliography is available only by visiting
+    <em>Courseware Bibliography Tab</em>.
+</p>
+<img src="/assets/img/screens/quick_bib.png" alt="Quick Add Bibliography Screen" />
+<p>
+    Bibliography content is shared globally inside BuddyPress, so any other
+    teacher will be able to use existing/added entry with his courses/assignments.
+    Adding an entry to existing course/assignment allows you to edit it later,
+    this way making it relevant for you content.
+    You can also update a global entry, using the same page
+    <em>Courseware Bibliography Tab</em>.
+</p>
+<p>
+    Bibliography can also be imported by using a BibTeX file. To do that,
+    use the <em>Import Bibliography</em> button and paste your BibTeX content.
+</p>
+<hr />
+<h2 id="streams">Activity streams</h2>
+<p>
+    BuddyPress Courseware is tightly integrated with group activity, so that
+    the courseware content will generate a specific stream. Later you can
+    subscribe to group's feed to be up to date with all the activities.
+</p>
+<img src="/assets/img/screens/activity_streams.png" alt="Activity Streams Screen" />
+<p>
+    Here's the list of activity streams Courseware creates:
+</p>
+<ul>
+    <li>New Forum Topics</li>
+    <li>New Courses</li>
+    <li>New Assignments</li>
+    <li>New Schedules</li>
+    <li>New Responses</li>
+</ul>
+<p>
+    All should be visible on the group homepage.
+</p>
+<hr />
+<h2 id="support">Support and Feedback responses</h2>
+<p>
+    The project development is done on 
+    <a href="http://github.com/Courseware/buddypress">github</a>.
+    There you can create tickets and request features, or read the code.
+    The <tt>stable</tt> branch will be synced with WordPress Plugins
+    <abbr title="Subversion">SVN</abbr>:
+    <a href="http://svn.wp-plugins.org/buddypress-courseware">
+        svn.wp-plugins.org/buddypress-courseware</a>.
+</p>
+<p>
+    Project has a BuddyPress Group at:
+    <a href="http://buddypress.org/community/groups/buddypress-courseware/">
+        buddypress.org/community/groups/buddypress-courseware</a>.
+    <br />
+    Or, you can <a href="http://wordpress.org/tags/buddypress-courseware?forum_id=10">
+        use WordPress.org Forums</a>.
+</p>
+</div>
+
+
+      </section>
+      <footer>
+      <p>
+        <small>Most of the content is under
+<a href="http://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA 3.0</a>
+license.
+</small>
+        <br>
+        <small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small>.
+      </p>
+      </footer>
+    </div>
+    <a href="https://github.com/Courseware/buddypress"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png" alt="Fork me on GitHub"></a>
+    <script src="/assets/js/scale.fix.js"></script>
+    <script type="text/javascript">
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-28875212-1']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+       var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+       ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+       })();
+     </script>
+  </body>
+</html>
