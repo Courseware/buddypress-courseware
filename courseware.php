@@ -1,14 +1,14 @@
 <?php
 /*
-Plugin Name: BuddyPress ScholarPress Courseware
-Plugin URI: http://scholarpress.github.com/buddypress-courseware/
+Plugin Name: BuddyPress Courseware
+Plugin URI: http://buddypress.coursewa.re/
 Description: A LMS for BuddyPress.
 Author: Stas Sușcov
 Version: 0.9.6
 License: GNU/GPL 2
 Requires at least: WordPress 3.2, BuddyPress 1.5
 Tested up to: WordPress 3.3 / BuddyPress 1.6
-Author URI: https://github.com/scholarpress/buddypress-courseware/contributors
+Author URI: https://github.com/Courseware/buddypress-courseware/contributors
 */
 
 define( 'BPSP_VERSION', '0.9.6' );
@@ -92,10 +92,10 @@ add_action( 'bp_init', 'bpsp_init', 6 );
  */
 function bpsp_check() {
     $messages = array();
-    
+
     if ( defined( 'BP_VERSION' ) ) {
         foreach( array( 'groups', 'activity', 'xprofile', 'forums', 'messages' ) as $c )
-            if( !bp_is_active( $c ) ) 
+            if( !bp_is_active( $c ) )
                 $messages[] = sprintf(
                     __( 'BuddyPress Courseware dependency error: <a href="%1$s">%2$s has to be activated</a>!', 'bpsp' ),
                     admin_url( 'admin.php?page=bp-general-settings' ),
@@ -107,7 +107,7 @@ function bpsp_check() {
             admin_url( 'plugins.php' )
         );
     }
-    
+
     if( !empty( $messages ) ) {
         echo '<div id="message" class="error fade">';
             foreach ( $messages as $m )
@@ -115,7 +115,7 @@ function bpsp_check() {
         echo '</div>';
         return false;
     }
-    
+
     return true;
 }
 
