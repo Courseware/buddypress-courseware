@@ -1,4 +1,4 @@
-=== BuddyPress ScholarPress Courseware ===
+=== BuddyPress Courseware ===
 Contributors: sushkov, jeremyboggs, boonebgorges, johnjamesjacoby, chexee
 Tags: buddypress, lms, courseware, education, teaching, quizzes, tests, gradebook, courses, lectures, assignments
 Requires at least: WordPress 3.2, BuddyPress 1.5
@@ -60,7 +60,7 @@ make sure you updated your Courseware role in the Profile tab.
 
 == Frequently Asked Questions ==
 
-Before asking questions, please check the [BuddyPress Courseware Handbook](http://scholarpress.github.com/buddypress-courseware/handbook.html).
+Before asking questions, please check the [BuddyPress Courseware Handbook](http://buddypress.coursewa.re/handbook.html).
 
 == Changelog ==
 
@@ -74,11 +74,11 @@ Before asking questions, please check the [BuddyPress Courseware Handbook](http:
 * Add jquery-ui datetimepicker. Fixed the regression.
 
 = 0.9.5 =
-* Removed pass-by-reference calls. Props @mercime closes [#69](https://github.com/scholarpress/buddypress-courseware/issues/69).
-* Fixed the js issue on schedule pages. Closes [#71](https://github.com/scholarpress/buddypress-courseware/issues/71).
+* Removed pass-by-reference calls. Props @mercime closes [#69](https://github.com/Courseware/buddypress-courseware/issues/69).
+* Fixed the js issue on schedule pages. Closes [#71](https://github.com/Courseware/buddypress-courseware/issues/71).
 * Public comments are now visible in assignment pages.
 * Append the private message wit the grade notification.
-* Skip notifications when grade is not updated. Closes [#72](https://github.com/scholarpress/buddypress-courseware/issues/72).
+* Skip notifications when grade is not updated. Closes [#72](https://github.com/Courseware/buddypress-courseware/issues/72).
 * Cleaned-up the schedule forms.
 * Updated to latest jquery.formbuilder, minified version.
 * Fixed jquery ui sortable regression.
@@ -88,16 +88,16 @@ Before asking questions, please check the [BuddyPress Courseware Handbook](http:
 = 0.9.4 =
 * WordPress 3.3 BuddyPress 1.5(six-ish) compatibility
 * Fixed dashboard date/time issue
-* Fixed a some warnings, code cleanups 
+* Fixed a some warnings, code cleanups
 * Switched to `wp_editor()`
 * Pot file updated, translations welcome
-* Group course pre-creation [#61](https://github.com/scholarpress/buddypress-courseware/issues/issue/61).Props @imjjss
+* Group course pre-creation [#61](https://github.com/Courseware/buddypress-courseware/issues/issue/61).Props @imjjss
 * Search now checks through lectures too
 * X-mas release! Happy past birthday to the WordPress core guys and galz!
 
 = 0.9.3 =
 * Another maintenance release
-* Fixed `::is_response()` regression. Closes [#56](https://github.com/scholarpress/buddypress-courseware/issues/issue/56). Props @enkerli
+* Fixed `::is_response()` regression. Closes [#56](https://github.com/Courseware/buddypress-courseware/issues/issue/56). Props @enkerli
 * New assignment screen now alerts if no lectures are available
 
 = 0.9.2 =
@@ -110,7 +110,7 @@ Before asking questions, please check the [BuddyPress Courseware Handbook](http:
 * Cleanups in post types and taxonomies
 * Fixed another typo
 * Fixed soem typos, improved formbuilder loading
-* Fixed a typo not showing member take quiz button. Closes [#55](https://github.com/scholarpress/buddypress-courseware/issues/issue/55)
+* Fixed a typo not showing member take quiz button. Closes [#55](https://github.com/Courseware/buddypress-courseware/issues/issue/55)
 
 = 0.9 =
 * Major codebase changes!!!
@@ -125,25 +125,25 @@ Before asking questions, please check the [BuddyPress Courseware Handbook](http:
 * Breadcrumbs
 * Proper MS support
 * French localisation from [Albert Bruc](http://www.ab-ae.fr/)
-* [Full changelog](https://github.com/scholarpress/buddypress-courseware/issues?state=closed)
+* [Full changelog](https://github.com/Courseware/buddypress-courseware/issues?state=closed)
 
 = 0.1.6 =
-* Updated wording, @props mrjarbenne. Closes [#27](https://github.com/scholarpress/buddypress-courseware/issues/issue/27)
-* Importer should work now with php5.1. Closes [#31](https://github.com/scholarpress/buddypress-courseware/issues/issue/31)
-* Close image now loads on response screens. Closes [#35](https://github.com/scholarpress/buddypress-courseware/issues/issue/35)
-* Courseware is now compatible with MS admin menu, @props [djpaul](http://buddypress.org/community/members/djpaul). Closes [#36](https://github.com/scholarpress/buddypress-courseware/issues/issue/36)
-* Fixed the user search according to wp 3.1 changes. Closes [#37](https://github.com/scholarpress/buddypress-courseware/issues/issue/37)
+* Updated wording, @props mrjarbenne. Closes [#27](https://github.com/Courseware/buddypress-courseware/issues/issue/27)
+* Importer should work now with php5.1. Closes [#31](https://github.com/Courseware/buddypress-courseware/issues/issue/31)
+* Close image now loads on response screens. Closes [#35](https://github.com/Courseware/buddypress-courseware/issues/issue/35)
+* Courseware is now compatible with MS admin menu, @props [djpaul](http://buddypress.org/community/members/djpaul). Closes [#36](https://github.com/Courseware/buddypress-courseware/issues/issue/36)
+* Fixed the user search according to wp 3.1 changes. Closes [#37](https://github.com/Courseware/buddypress-courseware/issues/issue/37)
 
 = 0.1.5 =
 * Fixed the issue with aliens can post responses.
-* Added options to make responses private. Closes [#18](https://github.com/scholarpress/buddypress-courseware/issues/issue/18).
-* Removed `due_date` field as required from assignments. Closes [#23](https://github.com/scholarpress/buddypress-courseware/issues/issue/23).
+* Added options to make responses private. Closes [#18](https://github.com/Courseware/buddypress-courseware/issues/issue/18).
+* Removed `due_date` field as required from assignments. Closes [#23](https://github.com/Courseware/buddypress-courseware/issues/issue/23).
 * Fixed screen permissions for assignments,courses and schedule.
 * Added datatables to schedule delete screen.
-* Fixed the Teacher persmission for course editor screen. Closes [#26](https://github.com/scholarpress/buddypress-courseware/issues/issue/26)
-* Added error handling for assignments, fixed the late profile sync issue that closes [#25](https://github.com/scholarpress/buddypress-courseware/issues/issue/25)
+* Fixed the Teacher persmission for course editor screen. Closes [#26](https://github.com/Courseware/buddypress-courseware/issues/issue/26)
+* Added error handling for assignments, fixed the late profile sync issue that closes [#25](https://github.com/Courseware/buddypress-courseware/issues/issue/25)
 * Added datatables for schedule listing.
-* Added titles for schedules. Closes [#16](https://github.com/scholarpress/buddypress-courseware/issues/issue/16)
+* Added titles for schedules. Closes [#16](https://github.com/Courseware/buddypress-courseware/issues/issue/16)
 * Fixed assignment `due_date` typo.
 * Updated jquery.timepicker to 0.7
 * Updated jquery.fullcalendar to 1.4.8
@@ -151,7 +151,7 @@ Before asking questions, please check the [BuddyPress Courseware Handbook](http:
 
 = 0.1.4 =
 * Added Italian translation, thanks to [Luca Camellini](http://buddypress.org/community/members/luccame/)
-* Fixed the issue with STYLESHEETPATH | stylesheet_directory 
+* Fixed the issue with STYLESHEETPATH | stylesheet_directory
 * Updated the contextual help with plugins recommendations and handbook info, thanks to [Kyle](http://thecorkboard.org/)
 * Fixed the extended search functionality to work properly on no queries
 * Fixed the MS issue, where do_not_allow was fired by obsolete capability edit_file
@@ -178,4 +178,4 @@ Before asking questions, please check the [BuddyPress Courseware Handbook](http:
 
 == Screenshots ==
 
-Please visit the [project page](http://scholarpress.github.com/buddypress-courseware/) for media files.
+Please visit the [project page](http://buddypress.coursewa.re) for media files.
