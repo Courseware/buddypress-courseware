@@ -14,7 +14,7 @@ class BPSP_WordPress {
             bp_core_admin_hook(),
             array( __CLASS__, 'menus')
         );
-        
+
         // Ensure compatibility
         add_action('admin_notices', 'bpsp_check' );
         // Help Screen
@@ -23,7 +23,7 @@ class BPSP_WordPress {
         add_filter( 'plugin_row_meta', array( __CLASS__, 'support_link' ), 10, 2 );
         // Settings link
         add_action( 'plugin_action_links_' . BPSP_PLUGIN_FILE, array( __CLASS__, 'action_link' ), 10, 4 );
-        
+
         // Initialize our options
         add_option( 'bpsp_allow_only_admins' );
         add_option( 'bpsp_global_status' );
@@ -33,7 +33,7 @@ class BPSP_WordPress {
         add_option( 'bpsp_isbndb_key' );
         add_option( 'bpsp_load_css' );
     }
-    
+
     /**
      * menus()
      *
@@ -50,26 +50,26 @@ class BPSP_WordPress {
                 array( __CLASS__, "screen")
             );
     }
-    
+
     /**
      * screen_help()
-     * 
+     *
      * Handles the screen() help
      */
     function screen_help() {
         global $current_screen;
-        
+
         // If it's not Courseware Screen
         if( !stristr( $current_screen->id, 'courseware' ) )
             return;
-        
+
         $vars['name'] = 'contextual_help';
-        add_contextual_help( $current_screen, self::load_template( $vars ) );
+        get_current_screen()->add_help_tab( array( 'id'=> 'Help', 'title'=> 'Help', 'content' => self::load_template( $vars )) );
     }
-    
+
     /**
      * screen()
-     * 
+     *
      * Handles the wp-admin screen
      */
     function screen() {
@@ -77,10 +77,10 @@ class BPSP_WordPress {
         $vars = array();
         $vars['nonce'] = wp_nonce_field( $nonce_name, '_wpnonce', true, false );
         $is_nonce = false;
-        
+
         if( isset( $_POST['_wpnonce'] ) )
             check_admin_referer( $nonce_name );
-        
+
         // Courseware Global Status
         if( isset( $_POST['bpsp_global_status'] ) )
             if( update_option( 'bpsp_global_status', strtolower( $_POST['bpsp_global_status'] ) ) )
@@ -88,7 +88,7 @@ class BPSP_WordPress {
         if( !isset( $_POST['bpsp_global_status'] ) && isset( $_POST['bpsp_global_status_check'] ) )
             if( update_option( 'bpsp_global_status', '' ) )
                 $vars['flash'][] = __( 'Courseware option was updated.', 'bpsp' );
-        
+
         // Courseware Collaborative Settings
         if( isset( $_POST['bpsp_allow_only_admins'] ) )
             if( update_option( 'bpsp_allow_only_admins', strtolower( $_POST['bpsp_allow_only_admins'] ) ) )
@@ -96,7 +96,7 @@ class BPSP_WordPress {
         if( !isset( $_POST['bpsp_allow_only_admins'] ) && isset( $_POST['bpsp_allow_only_admins_check'] ) )
             if( update_option( 'bpsp_allow_only_admins', '' ) )
                 $vars['flash'][] = __( 'Courseware option was updated.', 'bpsp' );
-        
+
         // Courseware Private Responses
         if( isset( $_POST['bpsp_private_responses_check'] ) )
             if( update_option( 'bpsp_private_responses', strtolower( $_POST['bpsp_private_responses'] ) ) )
@@ -104,12 +104,12 @@ class BPSP_WordPress {
         if( isset( $_POST['bpsp_private_responses_check'] ) && !isset( $_POST['bpsp_private_responses'] ) )
             if( update_option( 'bpsp_private_responses', '' ) )
                 $vars['flash'][] = __( 'Courseware option was updated.', 'bpsp' );
-        
+
         // Courseware Default Gradebook Format
         if( isset( $_POST['bpsp_gradebook_format_check'] ) && isset( $_POST['bpsp_gradebook_format'] ) )
             if( update_option( 'bpsp_gradebook_format', strtolower( $_POST['bpsp_gradebook_format'] ) ) )
                 $vars['flash'][] = __( 'Courseware gradebook format option was updated.', 'bpsp' );
-        
+
         // Courseware Bibliography Webservices Integration
         if( isset( $_POST['worldcat_key'] ) && !empty( $_POST['worldcat_key'] ) )
             if( update_option( 'bpsp_worldcat_key', $_POST['worldcat_key'] ) )
@@ -117,7 +117,7 @@ class BPSP_WordPress {
         if( isset( $_POST['isbndb_key'] ) && !empty( $_POST['isbndb_key'] ) )
             if( update_option( 'bpsp_isbndb_key', $_POST['isbndb_key'] ) )
                 $vars['flash'][] = __( 'ISBNdb option was updated.', 'bpsp' );
-        
+
         // Courseware Custom CSS
         if( isset( $_POST['bpsp_load_css_check'] ) && isset( $_POST['bpsp_load_css'] ) )
             if( update_option( 'bpsp_load_css', strtolower( $_POST['bpsp_load_css'] ) ) )
@@ -125,7 +125,7 @@ class BPSP_WordPress {
         if( isset( $_POST['bpsp_load_css_check'] ) && !isset( $_POST['bpsp_load_css'] ) )
             if( update_option( 'bpsp_load_css', '' ) )
                 $vars['flash'][] = __( 'Courseware customization options updated.', 'bpsp' );
-        
+
         $vars['name'] = 'admin';
         $vars['echo'] = 'true';
         $vars['bpsp_private_responses'] = get_option( 'bpsp_private_responses' );
@@ -135,11 +135,11 @@ class BPSP_WordPress {
         $vars['worldcat_key'] = get_option( 'bpsp_worldcat_key' );
         $vars['isbndb_key'] = get_option( 'bpsp_isbndb_key' );
         $vars['bpsp_load_css'] = get_option( 'bpsp_load_css' );
-        
+
         //Load the template
         self::load_template( $vars );
     }
-    
+
     /**
      * action_link( $links )
      * Adds a new entry link under plugin description
@@ -154,7 +154,7 @@ class BPSP_WordPress {
         }
         return $links;
     }
-    
+
     /**
      * action_link( $links )
      * Adds a new action link to plugin entry
@@ -167,7 +167,7 @@ class BPSP_WordPress {
         array_unshift( $links, $action_link );
         return $links;
     }
-    
+
     /**
      * load_template( $vars )
      *
@@ -181,13 +181,13 @@ class BPSP_WordPress {
         extract( $vars );
         if( file_exists( BPSP_PLUGIN_DIR . '/wordpress/templates/' . $name . '.php' ) )
             include( BPSP_PLUGIN_DIR . '/wordpress/templates/' . $name . '.php' );
-        
+
         if( isset( $echo ) && $echo )
             echo ob_get_clean();
         else
             return ob_get_clean();
     }
-    
+
     /**
      * get_posts( $terms, $post_types, $s )
      *
@@ -205,7 +205,7 @@ class BPSP_WordPress {
         $term_ids = array();
         $post_ids = array();
         $posts = array();
-        
+
         // Get term ids
         // TODO: Here's something wrong, totally!!!
         foreach ( $terms as $term => $taxonomy ) {
