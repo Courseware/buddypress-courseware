@@ -55,7 +55,7 @@ Please follow the [standard installation procedure for WordPress plugins](http:/
 If you are updating from version 0.1.x please backup your database/files!
 Courseware 0.9 is not fully backwards compatible!!!
 
-Also after upgrade|isntall if you are experiencing publishing problems (content is not published),
+Also after upgrade|install if you are experiencing publishing problems (content is not published),
 make sure you updated your Courseware role in the Profile tab.
 
 == Frequently Asked Questions ==
@@ -109,7 +109,7 @@ Before asking questions, please check the [BuddyPress Courseware Handbook](http:
 * cleanups for every BPSP_C=<COMPONENT>::is_<COMPONENT>
 * Cleanups in post types and taxonomies
 * Fixed another typo
-* Fixed soem typos, improved formbuilder loading
+* Fixed some typos, improved formbuilder loading
 * Fixed a typo not showing member take quiz button. Closes [#55](https://github.com/Courseware/buddypress-courseware/issues/issue/55)
 
 = 0.9 =
