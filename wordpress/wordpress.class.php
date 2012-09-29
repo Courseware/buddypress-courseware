@@ -63,8 +63,12 @@ class BPSP_WordPress {
         if( !stristr( $current_screen->id, 'courseware' ) )
             return;
 
-        $vars['name'] = 'contextual_help';
-        get_current_screen()->add_help_tab( array( 'id'=> 'Help', 'title'=> 'Help', 'content' => self::load_template( $vars )) );
+        $content = self::load_template( array( 'name' => 'contextual_help' ) );
+        $current_screen->add_help_tab( array(
+            'id'=> 'default',
+            'title'=> __( 'Help', 'bpsp' ),
+            'content' => $content
+        ) );
     }
 
     /**

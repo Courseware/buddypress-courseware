@@ -1,12 +1,12 @@
 <p><strong><?php _e( 'BuddyPress Courseware Help', 'bpsp' ) ?></strong></p>
 <p>
-    <a href="http://scholarpress.github.com/buddypress-courseware/handbook.html">
+    <a href="http://buddypress.coursewa.re/handbook.html">
         <?php _e( 'Visit BuddyPress Courseware Handbook', 'bpsp' ) ?>
     </a>
 </p>
 <p><?php _e( 'If you find issues, please report them using one of the following pages:', 'bpsp' ) ?></p>
     <ul>
-        <li><a href="http://github.com/scholarpress/buddypress-courseware/issues">GitHub</a></li>
+        <li><a href="http://github.com/Courseware/buddypress-courseware/issues">GitHub</a></li>
         <li><a href="http://buddypress.org/community/groups/buddypress-courseware/forum">BuddyPress</a></li>
     </ul>
 <p><?php _e( 'Please, always read the BuddyPress Courseware Handbook and check for existing reports before reporting new issues!', 'bpsp' ) ?></p>
