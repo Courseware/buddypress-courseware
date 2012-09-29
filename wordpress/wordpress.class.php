@@ -40,15 +40,16 @@ class BPSP_WordPress {
      * Adds menus to admin area
      */
     function menus() {
-        if ( is_super_admin() )
-            add_submenu_page(
-                'bp-general-settings',
-                __( 'Courseware', 'bpsp' ),
-                __( 'Courseware', 'bpsp' ),
-                'manage_options',
-                'bp-courseware',
-                array( __CLASS__, "screen")
-            );
+        if ( !is_super_admin() )
+            return;
+
+        add_options_page(
+            __( 'Courseware Options', 'bpsp' ),
+            __( 'Courseware', 'bpsp' ),
+            'manage_options',
+            'bp-courseware',
+            array( __CLASS__, "screen")
+        );
     }
 
     /**
