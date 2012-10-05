@@ -13,10 +13,7 @@ class BPSP_Static {
             define( BPSP_VERSION, '' );
         
         // Scripts
-        // Custom jQuery UI components
-        wp_register_script( 'jquery-ui-datepicker', BPSP_WEB_URI . '/static/js/jquery-ui/jquery.ui.datepicker.js', array( 'jquery-ui-mouse' ), '1.8.12', true );
-        wp_register_script( 'jquery-ui-slider', BPSP_WEB_URI . '/static/js/jquery-ui/jquery.ui.slider.js', array( 'jquery-ui-mouse' ), '1.8.12', true );
-        
+
         // FullCalendar
         wp_register_script( 'fullcalendar', BPSP_WEB_URI . '/static/js/fullcalendar/fullcalendar.min.js', array( 'jquery-ui-droppable', 'jquery-ui-resizable' ), '1.4.7' );
         wp_localize_script( 'fullcalendar', 'fcLanguage', $this->fullcalendar_l10n() );
