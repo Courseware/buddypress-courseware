@@ -2,7 +2,7 @@
  * Javascript calls for bibliographies screens
  */
 // FlexSelect
-jQuery("select.[name$='bib[existing]']").flexselect();
+jQuery("select[name$='bib[existing]']").flexselect();
 
 // Toggle Bibs
 jQuery("#courseware-bibs-list").hide();
