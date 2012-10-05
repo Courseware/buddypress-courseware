@@ -64,6 +64,21 @@ Before asking questions, please check the [BuddyPress Courseware Handbook](http:
 
 == Changelog ==
 
+= 0.9.7 =
+* Fixed typo not adding teacher role response capabilities.
+* Updated jquery.fullcalendar.
+* Fixed typo in jquery-ui css dependencies/version.
+* Removed obsolete js dependencies. Now provided by WordPress core.
+* Fixed jquery selector typo.
+* Fix submenu, after removal of BuddyPress page.
+* Small fixes after merge. Updated links.
+* Fix use of deprecated function "add_contextual_help"
+* Fixed a deprecation warning.
+* Fix typos in readme.txt
+* Finish renaming of the project. Remove scholarpress links, names.
+* Fixed plugin directory banner.
+* Updated translation for pt_BR (credits to Dianakc).
+
 = 0.9.6 =
 * Added pt_BR translation, huge thanks to Ruan Barbosa.
 * Added banner image.
