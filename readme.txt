@@ -65,6 +65,8 @@ Before asking questions, please check the [BuddyPress Courseware Handbook](http:
 == Changelog ==
 
 = 0.9.7 =
+* Fixed form builder select option uniqness.
+* Fixed teachers dashboard count.
 * Fixed typo not adding teacher role response capabilities.
 * Updated jquery.fullcalendar.
 * Fixed typo in jquery-ui css dependencies/version.
