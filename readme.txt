@@ -2,8 +2,8 @@
 Contributors: sushkov, jeremyboggs, boonebgorges, johnjamesjacoby, chexee
 Tags: buddypress, lms, courseware, education, teaching, quizzes, tests, gradebook, courses, lectures, assignments
 Requires at least: WordPress 3.2, BuddyPress 1.5
-Tested up to: WordPress 3.3 / BuddyPress 1.6
-Stable tag: 0.9.6
+Tested up to: WordPress 3.5 / BuddyPress 1.6
+Stable tag: 0.9.7
 
 A Learning Management System for BuddyPress
 

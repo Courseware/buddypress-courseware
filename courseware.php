@@ -4,10 +4,10 @@ Plugin Name: BuddyPress Courseware
 Plugin URI: http://buddypress.coursewa.re/
 Description: A LMS for BuddyPress.
 Author: Stas Sușcov
-Version: 0.9.6
+Version: 0.9.7
 License: GNU/GPL 2
 Requires at least: WordPress 3.2, BuddyPress 1.5
-Tested up to: WordPress 3.3 / BuddyPress 1.6
+Tested up to: WordPress 3.5 / BuddyPress 1.6
 Author URI: https://github.com/Courseware/buddypress-courseware/contributors
 */
 
