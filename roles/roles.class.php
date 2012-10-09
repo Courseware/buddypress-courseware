@@ -265,10 +265,13 @@ class BPSP_Roles {
         $teachers = array();
         
         $group_admins = groups_get_group_admins( $group_id );
-        foreach ( $group_admins as $admin )
-            if( self::is_teacher( $admin->user_id ) )
-                $teachers[] = $admin->user_id;
-        
+        $group_members = groups_get_group_members( $group_id );
+        $group_members = array_merge( $group_admins, $group_members['members'] );
+
+        foreach ( $group_members as $member )
+            if( self::can_teach( $member->user_id ) )
+                $teachers[] = $member->user_id;
+
         return $teachers;
     }
     
