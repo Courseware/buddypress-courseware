@@ -245,7 +245,7 @@ class BPSP_Groups {
         if ( 'courseware' == $current_tab )
             $tab_content .= 'class="current"';
         
-        $tab_content .= '><a href="' . bp_get_group_admin_permalink() . 'courseware">';
+        $tab_content .= '><a href="' . bp_get_group_admin_permalink() . '/courseware">';
         $tab_content .= __( 'Courseware', 'bpsp' ) . '</a></li>';
         
         echo $tab_content;
