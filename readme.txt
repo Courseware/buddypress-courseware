@@ -30,6 +30,7 @@ Here's the features list:
   * Forum/bbPress integration
   * Gradebook
     * CSV Import
+  * Certification/Diploma using [BuddyPress Courseware Certificate](http://wordpress.org/extend/plugins/buddypress-courseware-certificate/)
 * Schedules
   * Calendar
     * Month, Week, Day view
@@ -41,6 +42,9 @@ Here's the features list:
 * Localizations
     * French by [Albert Bruc](http://www.ab-ae.fr/)
     * Italian by [Luca Camellini](http://buddypress.org/community/members/luccame/)
+    * Spanish by [@Design4eStudio](http://design4estudio.com/)
+    * German by [@chaoti](https://github.com/chaoti)
+    * Portuguese by @Dianakc
 
 [wpvideo AD4hdKWn]
 
