@@ -266,7 +266,7 @@ class BPSP_Roles {
         
         $group_admins = groups_get_group_admins( $group_id );
         $group_members = groups_get_group_members( $group_id );
-        $group_members = array_merge( $group_admins, $group_members['members'] );
+        $group_members = array_merge( $group_admins, (array)$group_members['members'] );
 
         foreach ( $group_members as $member )
             if( self::can_teach( $member->user_id ) )
