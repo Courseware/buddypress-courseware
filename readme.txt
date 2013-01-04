@@ -44,7 +44,7 @@ Here's the features list:
     * Italian by [Luca Camellini](http://buddypress.org/community/members/luccame/)
     * Spanish by [@Design4eStudio](http://design4estudio.com/)
     * German by [@chaoti](https://github.com/chaoti)
-    * Portuguese by @Dianakc
+    * Portuguese by [@Dianakc](http://dianakcury.com/)
 
 [wpvideo AD4hdKWn]
 
