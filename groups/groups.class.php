@@ -26,7 +26,7 @@ class BPSP_Groups {
      * Constructor. Loads filters and actions.
      */
     function BPSP_Groups() {
-        add_action( 'bp_groups_setup_nav', array( &$this, 'set_nav' ) );
+        add_action( 'bp_init', array( &$this, 'set_nav' ) );
         add_filter( 'groups_get_groups', array( &$this, 'extend_search' ), 10, 2 );
         add_action( 'groups_admin_tabs', array( &$this, 'group_admin_tab' ), 10, 2 );
         add_action( 'wp', array( &$this, 'group_admin_screen' ), 4 );
