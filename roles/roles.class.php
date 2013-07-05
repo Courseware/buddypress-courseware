@@ -206,7 +206,7 @@ class BPSP_Roles {
      */
     function field_group_id_from_name( $group_name ) {
         $group_id = null;
-        $groups = BP_XProfile_Group::get();
+        $groups = class_exists( 'BP_XProfile_Group' ) ? BP_XProfile_Group::get() : array();
         foreach( $groups as $g )
             if( $g->name == $group_name )
                 $group_id = $g->id;
