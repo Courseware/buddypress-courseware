@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Creates a mock version of BuddyPress to help
+ * Creates a mock version of BuddyPress to simulate BuddyPress objects/functions when BuddyPress is not activated
  */
 
 function mockbp_init() {
