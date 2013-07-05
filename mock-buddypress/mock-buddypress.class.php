@@ -27,6 +27,12 @@ function mockbp_init() {
 				return true;	// @todo may need to be smarter than this, but see
 			}
 		}
+
+		if ( ! function_exists( 'bp_core_admin_hook' ) ) {
+			function bp_core_admin_hook() {
+				return 'admin_menu';	// @todo assuming only single site activation for now
+			}
+		}
 	}
 }
 add_action( 'plugins_loaded', 'mockbp_init' );
