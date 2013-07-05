@@ -33,6 +33,7 @@ class BPSP_Courses {
         add_action( 'courseware_new_teacher_added', array( &$this, 'add_course_caps' ) );
         add_action( 'courseware_new_teacher_removed', array( &$this, 'remove_course_caps' ) );
         add_action( 'courseware_group_screen_handler', array( &$this, 'screen_handler' ) );
+        add_filter( 'the_content', array( &$this, 'standalone_screen_handler' ) );
         add_action( 'groups_created_group', array( &$this, 'init_course' ) );
         add_filter( 'courseware_group_nav_options', array( &$this, 'add_nav_options' ) );
    }
@@ -187,6 +188,55 @@ class BPSP_Courses {
             }
         }
     }
+
+	/**
+	 * standalone_screen_handler( $content )
+	 *
+	 * Standalone courses screens handler. Used when showing/editing courses apart from the BuddyPress interface.
+	 * Handles uris like course/ID?action=action&args=args
+	 */
+	function standalone_screen_handler( $content ) {
+		global $post, $bp;
+
+		if ( 'course' == get_post_type() ) {
+			$this->current_course = $post->ID;
+			$post->permalink = get_permalink( $post->ID );
+
+			if ( 'edit' == $_GET['action'] && true ) {	// @todo && true -> && currentusercan, or does edit_course_screen handle auth?	// @todo create /edit/ endpoint?
+				$template = 'edit_course';
+				$bp->groups->current_group->id = 0;		// @todo need setup default group to map courses to?
+
+				$vars = array_merge(
+					$this->edit_course_screen( array( 'current_uri' => '?action=edit' ) ),
+					array(
+						'current_uri'      => 'this-is-a-mock-value',
+						'course_edit_uri'  => '?action=edit',
+						'course_permalink' => '?action=edit',
+					)
+				);
+			} else {
+				$template = 'single_course';
+				$vars = array_merge(
+					$this->single_course_screen( array( 'current_uri' => '' ) ),	// @todo even need the current_uri?
+					array(
+						'current_uri' => 'this-is-a-mock-value',
+					)
+				);
+			}
+
+			$vars = array_merge( $vars, array(
+				'name'         => $template,
+				'echo'         => false,
+				'course'       => $post,
+				'nav_options'  => array( 'Home' => 'this-is-a-mock-value' ),
+				'group_id'     => 0,	// @todo setup a default group or something?
+			) );
+
+			$content = BPSP_Groups::load_template( $vars );
+		}
+
+		return $content;
+	}
     
     /**
      * is_course( $course_identifier )
@@ -360,7 +410,7 @@ class BPSP_Courses {
             if( true != $is_nonce )
                 $vars['message'] = __( 'Nonce Error while editing a course.', 'bpsp' );
             else 
-                if( isset( $updated_course['title'] ) &&
+                if( isset( $updated_course['title'] ) &&		// @todo title doesn't get updated in view until refresh, even though it's updated in db
                     isset( $updated_course['content'] ) &&
                     isset( $updated_course['group_id'] )
                 ) {
