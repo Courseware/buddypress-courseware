@@ -33,6 +33,12 @@ function mockbp_init() {
 				return 'admin_menu';	// @todo assuming only single site activation for now
 			}
 		}
+
+		if ( ! function_exists( 'bp_core_get_userlink' ) ) {
+			function bp_core_get_userlink() {
+				return '';	// @todo maybe look website field from wp user profile
+			}
+		}
 	}
 }
 add_action( 'plugins_loaded', 'mockbp_init' );
