@@ -205,7 +205,7 @@ class BPSP_Courses {
 			$this->current_course = $post->ID;
 			$post->permalink = get_permalink( $post->ID );
 
-			if ( 'edit' == $_GET['action'] && true ) {	// @todo && true -> && currentusercan, or does edit_course_screen handle auth?	// @todo create /edit/ endpoint?
+			if ( isset( $_GET['action'] ) && 'edit' == $_GET['action'] && true ) {	// @todo && true -> && currentusercan, or does edit_course_screen handle auth?	// @todo create /edit/ endpoint?
 				$template = 'edit_course';
 				$bp->groups->current_group->id = 0;		// @todo need setup default group to map courses to?
 
