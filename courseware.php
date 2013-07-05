@@ -97,28 +97,30 @@ add_action( 'bp_init', 'bpsp_init', 6 );
 function bpsp_check() {
     $messages = array();
 
-    if ( defined( 'BP_VERSION' ) ) {
-        foreach( array( 'groups', 'activity', 'xprofile', 'forums', 'messages' ) as $c )
-            if( !bp_is_active( $c ) )
-                $messages[] = sprintf(
-                    __( 'BuddyPress Courseware dependency error: <a href="%1$s">%2$s has to be activated</a>!', 'bpsp' ),
-                    admin_url( 'admin.php?page=bp-general-settings' ),
-                    $c
-                );
-    } else {
-        $messages[] = sprintf(
-            __( 'BuddyPress Courseware dependency error: Please <a href="%1$s">install BuddyPress</a>!', 'bpsp' ),
-            admin_url( 'plugins.php' )
-        );
-    }
+	if ( apply_filters( 'bpsp_require_buddypress', true ) ) {
+		if ( defined( 'BP_VERSION' ) ) {
+			foreach( array( 'groups', 'activity', 'xprofile', 'forums', 'messages' ) as $c )
+				if( !bp_is_active( $c ) )
+					$messages[] = sprintf(
+						__( 'BuddyPress Courseware dependency error: <a href="%1$s">%2$s has to be activated</a>!', 'bpsp' ),
+						admin_url( 'admin.php?page=bp-general-settings' ),
+						$c
+					);
+		} else {
+			$messages[] = sprintf(
+				__( 'BuddyPress Courseware dependency error: Please <a href="%1$s">install BuddyPress</a>!', 'bpsp' ),
+				admin_url( 'plugins.php' )
+			);
+		}
+	}	// @todo else make sure that bbpress is enabled?
 
-    if( !empty( $messages ) ) {
-        echo '<div id="message" class="error fade">';
-            foreach ( $messages as $m )
-                echo "<p>{$m}</p>";
-        echo '</div>';
-        return false;
-    }
+	if( !empty( $messages ) ) {
+		echo '<div id="message" class="error fade">';
+			foreach ( $messages as $m )
+				echo "<p>{$m}</p>";
+		echo '</div>';
+		return false;
+	}
 
     return true;
 }
