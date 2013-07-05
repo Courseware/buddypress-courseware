@@ -9,7 +9,7 @@ function mockbp_init() {
 	require_once( ABSPATH . '/wp-admin/includes/plugin.php' );
 
 	if ( ! is_plugin_active( 'buddypress/bp-loader.php' ) ) {
-		$bp->groups = $bp = new stdClass();
+		$bp->groups->current_group = $bp->groups = $bp = new stdClass();
 
 		// Setup global objects/variables that BPSP expects to exist, and assign mock values
 		$bp->current_component = 'mock';
