@@ -19,6 +19,7 @@ define( 'BPSP_PLUGIN_FILE', basename( BPSP_PLUGIN_DIR ) . '/' . basename( __FILE
 
 /* Load the components */
 require_once BPSP_PLUGIN_DIR . '/wordpress/wordpress.class.php';
+require_once BPSP_PLUGIN_DIR . '/mock-buddypress/mock-buddypress.class.php';
 require_once BPSP_PLUGIN_DIR . '/roles/roles.class.php';
 require_once BPSP_PLUGIN_DIR . '/courses/courses.class.php';
 /*require_once BPSP_PLUGIN_DIR . '/lectures/lectures.class.php';
