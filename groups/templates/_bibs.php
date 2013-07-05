@@ -1,5 +1,5 @@
 <div id="courseware-bibs">
-    <?php if( $has_bib_caps ): ?>
+    <?php if( isset( $has_bib_caps ) && $has_bib_caps ): ?>
     <div id="courseware-bibs-form">
         <form action="" method="post" class="standard-form" >
             <?php if( isset( $hide_existing ) && !$hide_existing ): ?>
@@ -57,7 +57,7 @@
     </div>
     <?php endif; ?>
     
-    <?php if( count( $bibs ) > 0 ): ?>
+    <?php if( isset( $bibs ) && count( $bibs ) > 0 ): ?>
     <div id="courseware-bibs-list" style="clear: both;">
         <h4 class="bibs"><span class="icon"></span><?php _e( 'Bibliography listing', 'bpsp'); ?></h4>
         <table class="datatables">
