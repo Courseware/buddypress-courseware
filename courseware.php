@@ -138,4 +138,3 @@ register_activation_hook( BPSP_PLUGIN_FILE, 'bpsp_activation' );
 	// maybe some classes like activity will only be loaded if bp is active b/c they're completely tied to it
 
 ?>
-
