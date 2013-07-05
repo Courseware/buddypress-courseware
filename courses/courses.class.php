@@ -202,6 +202,8 @@ class BPSP_Courses {
 		global $post, $bp;
 
 		if ( 'course' == get_post_type() ) {
+			remove_filter( 'the_content', array( &$this, 'standalone_screen_handler' ) );	// avoid an infinite loop
+
 			$this->current_course = $post->ID;
 			$post->permalink = get_permalink( $post->ID );
 
@@ -236,6 +238,7 @@ class BPSP_Courses {
 			) );
 
 			$content = BPSP_Groups::load_template( $vars );
+			add_filter( 'the_content', array( &$this, 'standalone_screen_handler' ) );	// re-register the callback
 		}
 
 		return $content;
