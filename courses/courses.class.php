@@ -250,9 +250,12 @@ class BPSP_Courses {
      * @return Course object if course exists and null if not.
      */
     function is_course( $course_identifier = null ) {
-        global $bp;
-        $courseware_uri = bp_get_group_permalink( $bp->groups->current_group ) . 'courseware/' ;
-        
+        global $bp, $post;
+
+		if ( is_single() && 'course' == get_post_type() ) {
+			return $post;
+		}
+
         if( is_object( $course_identifier ) && $course_identifier->post_type == "course" )
             if( $course_identifier->group[0]->name == $bp->groups->current_group->id )
                 return $course_identifier;
@@ -276,6 +279,7 @@ class BPSP_Courses {
         $course = get_posts( $course_query );
         
         if( !empty( $course[0] ) ) {
+            $courseware_uri = bp_get_group_permalink( $bp->groups->current_group ) . 'courseware/' ;
             $course[0]->permalink = $courseware_uri . 'course/' . $course[0]->post_name;
             return $course[0];
         } else
