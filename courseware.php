@@ -153,6 +153,7 @@ if ( ! bpsp_activating_buddypress() ) {
 }
 
 function bpsp_activating_buddypress() {
+	global $pagenow;
 	$activating_buddypress = false;
 
 	if ( 'plugins.php' == $pagenow && isset( $_GET['action'], $_GET['plugin'] ) && 'activate' == $_GET['action'] && 'buddypress/bp-loader.php' == $_GET['plugin'] ) {
