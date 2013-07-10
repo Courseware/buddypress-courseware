@@ -209,8 +209,10 @@ class BPSP_Courses {
 
 			if ( isset( $_GET['action'] ) && 'edit' == $_GET['action'] && true ) {	// @todo && true -> && currentusercan, or does edit_course_screen handle auth?	// @todo create /edit/ endpoint?
 				$template = 'edit_course';
+				if ( ! isset( $bp->groups->current_group ) || ! is_object( $bp->groups->current_group ) )
+					$bp->groups->current_group = new stdClass();
 				$bp->groups->current_group->id = 0;		// @todo need setup default group to map courses to?
-
+	
 				$vars = array_merge(
 					$this->edit_course_screen( array( 'current_uri' => '?action=edit' ) ),
 					array(
