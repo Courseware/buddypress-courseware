@@ -146,7 +146,7 @@ if ( ! bpsp_activating_buddypress() ) {
 	function bpsp_deactivation() {
 		flush_rewrite_rules();
 	}
-	register_deactivation_hook( BPSP_PLUGIN_FILE, 'bpsp_activation' );
+	register_deactivation_hook( BPSP_PLUGIN_FILE, 'bpsp_deactivation' );
 
 	// @todo uncomment other modules one by one to get them working. test from start by deacrtivaitn/reactivating plugin
 		// maybe some classes like activity will only be loaded if bp is active b/c they're completely tied to it
