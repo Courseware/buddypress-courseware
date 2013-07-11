@@ -39,6 +39,12 @@ function mockbp_init() {
 				return '';	// @todo maybe look website field from wp user profile
 			}
 		}
+
+		if ( ! function_exists( 'bp_get_group_permalink' ) ) {
+			function bp_get_group_permalink() {
+				return '';
+			}
+		}
 	}
 }
 add_action( 'plugins_loaded', 'mockbp_init' );
