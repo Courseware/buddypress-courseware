@@ -207,7 +207,7 @@ class BPSP_Courses {
 			$this->current_course = $post->ID;
 			$post->permalink = get_permalink( $post->ID );
 
-			if ( isset( $_GET['action'] ) && 'edit' == $_GET['action'] && true ) {	// @todo && true -> && currentusercan, or does edit_course_screen handle auth?	// @todo create /edit/ endpoint?
+			if ( isset( $_GET['action'] ) && 'edit' == $_GET['action'] ) {	// @todo create /edit/ endpoint?
 				$template = 'edit_course';
 				if ( ! isset( $bp->groups->current_group ) || ! is_object( $bp->groups->current_group ) )
 					$bp->groups->current_group = new stdClass();
@@ -235,7 +235,7 @@ class BPSP_Courses {
 				'name'         => $template,
 				'echo'         => false,
 				'course'       => $post,
-				'nav_options'  => array( 'Home' => 'this-is-a-mock-value' ),
+				'nav_options'  => array( 'Home' => 'this-is-a-mock-value' ),	// @todo set to cpt archive page, or to page w/ [courses] shortcode?
 				'group_id'     => 0,	// @todo setup a default group or something?
 			) );
 
