@@ -226,7 +226,7 @@ class BPSP_Courses {
 				'nav_options'      => array( 'Home' => 'this-is-a-mock-value' ),	// @todo set to cpt archive page, or to page w/ [courses] shortcode?
 				'group_id'         => 0,	// @todo setup a default group or something?
 				'current_uri'      => 'this-is-a-mock-value',
-				'course_permalink' => '?action=edit',
+				'course_permalink' => $post->permalink,
 				'course_edit_uri'  => '?action=edit',
 			) );
 
