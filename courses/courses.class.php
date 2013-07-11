@@ -208,35 +208,26 @@ class BPSP_Courses {
 			$post->permalink = get_permalink( $post->ID );
 
 			if ( isset( $_GET['action'] ) && 'edit' == $_GET['action'] ) {	// @todo create /edit/ endpoint?
-				$template = 'edit_course';
 				if ( ! isset( $bp->groups->current_group ) || ! is_object( $bp->groups->current_group ) )
 					$bp->groups->current_group = new stdClass();
 				$bp->groups->current_group->id = 0;		// @todo need setup default group to map courses to?
-	
-				$vars = array_merge(
-					$this->edit_course_screen( array( 'current_uri' => '?action=edit' ) ),
-					array(
-						'current_uri'      => 'this-is-a-mock-value',
-						'course_edit_uri'  => '?action=edit',
-						'course_permalink' => '?action=edit',
-					)
-				);
+
+				$template = 'edit_course';
+				$vars = $this->edit_course_screen( array( 'current_uri' => '?action=edit' ) );
 			} else {
 				$template = 'single_course';
-				$vars = array_merge(
-					$this->single_course_screen( array( 'current_uri' => '' ) ),	// @todo even need the current_uri?
-					array(
-						'current_uri' => 'this-is-a-mock-value',
-					)
-				);
+				$vars = $this->single_course_screen( array( 'current_uri' => '' ) );	// @todo even need the current_uri?
 			}
 
 			$vars = array_merge( $vars, array(
-				'name'         => $template,
-				'echo'         => false,
-				'course'       => $post,
-				'nav_options'  => array( 'Home' => 'this-is-a-mock-value' ),	// @todo set to cpt archive page, or to page w/ [courses] shortcode?
-				'group_id'     => 0,	// @todo setup a default group or something?
+				'name'             => $template,
+				'echo'             => false,
+				'course'           => $post,
+				'nav_options'      => array( 'Home' => 'this-is-a-mock-value' ),	// @todo set to cpt archive page, or to page w/ [courses] shortcode?
+				'group_id'         => 0,	// @todo setup a default group or something?
+				'current_uri'      => 'this-is-a-mock-value',
+				'course_permalink' => '?action=edit',
+				'course_edit_uri'  => '?action=edit',
 			) );
 
 			$content = BPSP_Groups::load_template( $vars );
