@@ -207,13 +207,14 @@ class BPSP_Courses {
 			$this->current_course = $post->ID;
 			$post->permalink = get_permalink( $post->ID );
 
+			if ( ! isset( $bp->groups->current_group ) || ! is_object( $bp->groups->current_group ) )
+				$bp->groups->current_group = new stdClass();
+			$bp->groups->current_group->id = 0;		// @todo need setup default group to map courses to?
+			
 			if ( isset( $_GET['action'] ) && 'edit' == $_GET['action'] ) {	// @todo create /edit/ endpoint?
-				if ( ! isset( $bp->groups->current_group ) || ! is_object( $bp->groups->current_group ) )
-					$bp->groups->current_group = new stdClass();
-				$bp->groups->current_group->id = 0;		// @todo need setup default group to map courses to?
-
 				$template = 'edit_course';
 				$vars = $this->edit_course_screen( array( 'current_uri' => '?action=edit' ) );
+				$post = $vars['course'];
 			} else {
 				$template = 'single_course';
 				$vars = $this->single_course_screen( array( 'current_uri' => '' ) );	// @todo even need the current_uri?
