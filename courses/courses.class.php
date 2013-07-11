@@ -250,10 +250,6 @@ class BPSP_Courses {
     function is_course( $course_identifier = null ) {
         global $bp, $post;
 
-		if ( is_single() && 'course' == get_post_type() ) {
-			return $post;
-		}
-
         if( is_object( $course_identifier ) && $course_identifier->post_type == "course" )
             if( $course_identifier->group[0]->name == $bp->groups->current_group->id )
                 return $course_identifier;
@@ -415,7 +411,7 @@ class BPSP_Courses {
             if( true != $is_nonce )
                 $vars['message'] = __( 'Nonce Error while editing a course.', 'bpsp' );
             else 
-                if( isset( $updated_course['title'] ) &&		// @todo title doesn't get updated in view until refresh, even though it's updated in db
+                if( isset( $updated_course['title'] ) &&
                     isset( $updated_course['content'] ) &&
                     isset( $updated_course['group_id'] )
                 ) {
