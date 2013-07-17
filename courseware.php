@@ -27,19 +27,18 @@ if ( ! bpsp_activating_buddypress() ) {
 	require_once BPSP_PLUGIN_DIR . '/mock-buddypress/mock-buddypress.class.php';
 	require_once BPSP_PLUGIN_DIR . '/roles/roles.class.php';
 	require_once BPSP_PLUGIN_DIR . '/courses/courses.class.php';
-	/*require_once BPSP_PLUGIN_DIR . '/lectures/lectures.class.php';
+	require_once BPSP_PLUGIN_DIR . '/lectures/lectures.class.php';
 	require_once BPSP_PLUGIN_DIR . '/assignments/assignments.class.php';
 	require_once BPSP_PLUGIN_DIR . '/responses/responses.class.php';
 	require_once BPSP_PLUGIN_DIR . '/gradebook/gradebook.class.php';
 	require_once BPSP_PLUGIN_DIR . '/bibliography/bibliography.class.php';
 	require_once BPSP_PLUGIN_DIR . '/bibliography/webapis.class.php';
-	require_once BPSP_PLUGIN_DIR . '/schedules/schedules.class.php';*/
+	require_once BPSP_PLUGIN_DIR . '/schedules/schedules.class.php';
 	require_once BPSP_PLUGIN_DIR . '/groups/groups.class.php';
-	/*require_once BPSP_PLUGIN_DIR . '/dashboards/dashboards.class.php';
+	require_once BPSP_PLUGIN_DIR . '/dashboards/dashboards.class.php';
 	require_once BPSP_PLUGIN_DIR . '/static/static.class.php';
 	require_once BPSP_PLUGIN_DIR . '/activity/activity.class.php';
 	require_once BPSP_PLUGIN_DIR . '/notifications/notifications.class.php';
-	*/
 
 	/**
 	 * i18n
@@ -54,14 +53,12 @@ if ( ! bpsp_activating_buddypress() ) {
 	 */
 	function bpsp_registration() {
 		BPSP_Courses::register_post_types();
-		/*
 		BPSP_Lectures::register_post_types();
 		BPSP_Assignments::register_post_types();
 		BPSP_Responses::register_post_types();
 		BPSP_Gradebook::register_post_types();
 		BPSP_Bibliography::register_post_types();
 		BPSP_Schedules::register_post_types();
-		*/
 	}
 	add_action( 'init', 'bpsp_registration' );
 
@@ -79,7 +76,7 @@ if ( ! bpsp_activating_buddypress() ) {
 		new BPSP_Roles();
 		new BPSP_Groups();
 		new BPSP_Courses();
-		/*new BPSP_Lectures();
+		new BPSP_Lectures();
 		new BPSP_Assignments();
 		new BPSP_Responses();
 		new BPSP_Gradebook();
@@ -89,7 +86,8 @@ if ( ! bpsp_activating_buddypress() ) {
 		new BPSP_Static();
 		new BPSP_Activity();
 		new BPSP_Notifications();
-		*/
+
+		// @todo maybe some classes like activity will only be loaded if bp is active b/c they're completely tied to it
 	}
 	add_action( 'init', 'bpsp_init', 6 );
 
@@ -147,9 +145,6 @@ if ( ! bpsp_activating_buddypress() ) {
 		flush_rewrite_rules();
 	}
 	register_deactivation_hook( BPSP_PLUGIN_FILE, 'bpsp_deactivation' );
-
-	// @todo uncomment other modules one by one to get them working. test from start by deacrtivaitn/reactivating plugin
-		// maybe some classes like activity will only be loaded if bp is active b/c they're completely tied to it
 }
 
 function bpsp_activating_buddypress() {
