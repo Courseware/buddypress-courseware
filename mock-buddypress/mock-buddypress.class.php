@@ -45,6 +45,20 @@ function mockbp_init() {
 				return '';
 			}
 		}
+
+		if ( ! function_exists( 'xprofile_insert_field_group' ) ) {
+			function xprofile_insert_field_group() {
+				return 1;
+			}
+		}
+
+		if ( ! class_exists( 'BP_XProfile_Group' ) ) {
+			class BP_XProfile_Group {
+				static function get() {
+					return array();
+				}
+			}
+		}
 	}
 }
 add_action( 'plugins_loaded', 'mockbp_init' );

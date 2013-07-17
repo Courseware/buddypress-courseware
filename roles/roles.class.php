@@ -123,10 +123,6 @@ class BPSP_Roles {
         if( BPSP_Roles::field_group_id_from_name( __( 'Courseware', 'bpsp' ) ) )
             return false;
 
-		if ( ! function_exists( 'xprofile_insert_field_group' ) ) {
-			return false;
-		}
-
 		$bpsp_group_id = xprofile_insert_field_group(
 			array(
 				name        => __( 'Courseware', 'bpsp' ),
@@ -206,7 +202,7 @@ class BPSP_Roles {
      */
     function field_group_id_from_name( $group_name ) {
         $group_id = null;
-        $groups = class_exists( 'BP_XProfile_Group' ) ? BP_XProfile_Group::get() : array();
+        $groups = BP_XProfile_Group::get();
         foreach( $groups as $g )
             if( $g->name == $group_name )
                 $group_id = $g->id;
