@@ -248,7 +248,7 @@ class BPSP_Courses {
      * @return Course object if course exists and null if not.
      */
     function is_course( $course_identifier = null ) {
-        global $bp, $post;
+        global $bp;
 
         if( is_object( $course_identifier ) && $course_identifier->post_type == "course" )
             if( $course_identifier->group[0]->name == $bp->groups->current_group->id )
