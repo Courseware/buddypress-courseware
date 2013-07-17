@@ -122,14 +122,14 @@ class BPSP_Roles {
         
         if( BPSP_Roles::field_group_id_from_name( __( 'Courseware', 'bpsp' ) ) )
             return false;
-
-		$bpsp_group_id = xprofile_insert_field_group(
-			array(
-				name        => __( 'Courseware', 'bpsp' ),
-				description => __( 'Students and Teachers fields. Do not delete as long as you use BuddyPress ScholarPress Courseware!', 'bpsp' ),
-				can_delete  => false
-			)
-		);
+        
+        $bpsp_group_id = xprofile_insert_field_group(
+            array(
+                name        => __( 'Courseware', 'bpsp' ),
+                description => __( 'Students and Teachers fields. Do not delete as long as you use BuddyPress ScholarPress Courseware!', 'bpsp' ),
+                can_delete  => false
+            )
+        );
         if( !$bpsp_group_id )
             wp_die( __( 'BuddyPress Courseware error when saving xProfile group.', 'bpsp' ) );
         
