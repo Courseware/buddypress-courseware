@@ -49,13 +49,13 @@ class BPSP_Lectures {
             'singular_label'        => __( 'Lecture', 'bpsp' ),
             'description'           => __( 'BuddyPress ScholarPress Courseware Lectures', 'bpsp' ),
             'public'                => BPSP_DEBUG,
-            'publicly_queryable'    => false,
+            'publicly_queryable'    => true,
             'exclude_from_search'   => true,
             'show_ui'               => BPSP_DEBUG,
             'capability_type'       => 'lecture',
             'hierarchical'          => true,
-            'rewrite'               => false,
-            'query_var'             => false,
+            'rewrite'               => array( 'slug' => 'lecture', 'with_front' => false ),
+            'query_var'             => 'bpsp_lecture',
             'supports'              => array( 'title', 'editor', 'author', 'page-attributes' ),
             'taxonomies'            => array( 'group_id' )
         );
@@ -604,7 +604,7 @@ class BPSP_Lectures {
     function get_permalink( $permalink, $lecture ) {
         global $bp;
         
-        if( is_object( $lecture ) && $lecture->post_type == 'lecture' ) {
+        if( is_object( $lecture ) && $lecture->post_type == 'lecture' && is_plugin_active( 'buddypress/bp-loader.php' ) ) {
             $courseware_uri = bp_get_group_permalink( $bp->groups->current_group ) . 'courseware/lecture/' ;
             return $courseware_uri . $lecture->post_name;
         } else
