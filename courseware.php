@@ -23,6 +23,7 @@ if ( ! bpsp_activating_buddypress() ) {
 	define( 'BPSP_PLUGIN_FILE', basename( BPSP_PLUGIN_DIR ) . '/' . basename( __FILE__ ) );
 
 	/* Load the components */
+	require_once ABSPATH         . '/wp-admin/includes/plugin.php';		// To get is_plugin_active() for BuddyPress detection
 	require_once BPSP_PLUGIN_DIR . '/wordpress/wordpress.class.php';
 	require_once BPSP_PLUGIN_DIR . '/mock-buddypress/mock-buddypress.class.php';
 	require_once BPSP_PLUGIN_DIR . '/roles/roles.class.php';

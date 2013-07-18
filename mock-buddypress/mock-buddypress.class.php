@@ -6,7 +6,6 @@
 
 function mockbp_init() {
 	global $bp;
-	require_once( ABSPATH . '/wp-admin/includes/plugin.php' );
 
 	if ( ! is_plugin_active( 'buddypress/bp-loader.php' ) ) {
 		$bp->groups->current_group = $bp->groups = $bp = new stdClass();
