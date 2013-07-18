@@ -75,7 +75,7 @@ class BPSP_Static {
         wp_register_style( 'formbuilder', BPSP_WEB_URI . '/static/css/formbuilder/jquery.formbuilder.css', null, '0.3-beta' );
         
         // Hooks
-        add_action( 'bp_head', array( &$this, 'load_courseware_css' ) );
+        add_action( 'wp_enqueue_scripts', array( &$this, 'load_courseware_css' ) );
         add_action( 'courseware_editor', array( &$this, 'courseware_editor_enqueues' ) );
         add_action( 'courseware_list_schedules_screen', array( &$this, 'list_schedules_enqueues' ) );
         add_action( 'courseware_list_assignments_screen', array( &$this, 'list_assignments_enqueues' ) );
