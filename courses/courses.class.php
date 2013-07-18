@@ -209,7 +209,8 @@ class BPSP_Courses {
 
 			if ( ! isset( $bp->groups->current_group ) || ! is_object( $bp->groups->current_group ) )
 				$bp->groups->current_group = new stdClass();
-			$bp->groups->current_group->id = 0;		// @todo need setup default group to map courses to?
+			$bp->groups->current_group->id = wp_get_object_terms( $post->ID, 'group_id' );		// @todo need setup default group to map courses to? or automatically match group id w/ course id?
+			$bp->groups->current_group->id = $bp->groups->current_group->id[0]->slug;
 			$bp->groups->current_group->slug = 'mock';
 
 			if ( isset( $_GET['action'] ) && 'edit' == $_GET['action'] ) {	// @todo create /edit/ endpoint?
