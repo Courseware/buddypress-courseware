@@ -19,8 +19,8 @@ function mockbp_init() {
 		$current_user->id = $current_user->ID;
 		$bp->loggedin_user =  $current_user;
 
-		// create stubs for bp functions using if function_exists
-			// have to do insite mockbp init function, b/c bpsp loads before bp does
+
+		// Create stubs for BuddyPress functions
 		if ( ! function_exists( 'bp_group_is_admin' ) ) {
 			function bp_group_is_admin() {
 				return true;	// @todo may need to be smarter than this, but see
@@ -51,6 +51,63 @@ function mockbp_init() {
 			}
 		}
 
+		if ( ! function_exists( 'bp_get_group_id' ) ) {
+			function bp_get_group_id() {
+				return 1;	// @todo group id of current course?
+			}
+		}
+
+		if ( ! function_exists( 'groups_get_group_admins' ) ) {
+			function groups_get_group_admins( $group_id ) {
+				$admin = new stdClass();
+				$admin->user_id = 1;
+				return array( $admin );	// @todo user id of course teacher? no, probably just all users. maybe call group_members to keep it DRY
+			}
+		}
+
+		if ( ! function_exists( 'groups_get_group_members' ) ) {
+			function groups_get_group_members( $group_id ) {
+				$member = new stdClass();
+				$member->user_id = 2;
+
+				$members = array();
+				$members['members'][] = $member;
+
+				return $members;	// @todo user ids of course students? no, probably just all users.
+			}
+		}
+
+		if ( ! function_exists( 'groups_get_groupmeta' ) ) {
+			function groups_get_groupmeta( $group_id, $meta_key ) {
+				return 'true';	// @todo maybe need to be smarter
+			}
+		}
+
+		if ( ! function_exists( 'bp_group_is_forum_enabled' ) ) {
+			function bp_group_is_forum_enabled( $group = false ) {
+				return true;	// @todo smarter?
+			}
+		}
+
+		if ( ! function_exists( 'xprofile_get_field_data' ) ) {
+			function xprofile_get_field_data( $field, $user_id = 0, $multi_format = 'array' ) {
+				if ( 1 == $user_id ) {
+					return __( 'Teacher', 'bpsp' );
+				} else {
+					return __( 'Student', 'bpsp' );
+				}
+
+				// @todo needs to be smarter
+			}
+		}
+
+		if ( ! function_exists( 'bp_group_forum_permalink' ) ) {
+			function bp_group_forum_permalink( $group = false ) {
+				return '';	// @todo
+			}
+		}
+
+		// Create stubs for BuddyPress classes
 		if ( ! class_exists( 'BP_XProfile_Group' ) ) {
 			class BP_XProfile_Group {
 				static function get() {
