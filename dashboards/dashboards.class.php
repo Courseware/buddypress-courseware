@@ -11,6 +11,7 @@ class BPSP_Dashboards {
      */
     function BPSP_Dashboards() {
         add_action( 'courseware_group_screen_handler', array( &$this, 'screen_handler' ) );
+		add_shortcode( 'courseware_dashboard', array( &$this, 'shortcode_courseware_dashboard' ) );
     }
     
     /**
@@ -109,7 +110,39 @@ class BPSP_Dashboards {
         $vars['trail'] = array(
             ( $vars['is_teacher'] ) ? __( 'Welcome Teacher', 'bpsp' ) : __( 'Welcome Student', 'bpsp' ) => ''
         );
+
         return $vars;
     }
+
+	/*
+	 *
+	 */
+	function shortcode_courseware_dashboard( $attributes ) {
+		global $bp;
+
+		$course = false;
+		if ( isset( $_GET['course_id'] ) ) {
+			$course = BPSP_Courses::is_course( (int) $_GET['course_id'] );
+		}
+
+		// @todo not pulling in # of lectures, assignments, etc
+
+		if ( $course ) {
+			$bp->groups->current_group->creator_id = 1;	// @todo set to current user? no, to author of course post?
+			$vars = array_merge(
+				$this->group_dashboard( array() ),
+				array(
+					'nav_options' => array( __( 'Home', 'bpsp' ) => '' ),
+					'group_course' => $course,
+
+					// @todo update link urls
+				)
+			);
+
+			BPSP_Groups::load_template( $vars );
+		} else {
+			echo '<p>Invalid course ID</p>';
+		}
+	}
 }
 ?>
