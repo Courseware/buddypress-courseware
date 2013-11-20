@@ -10,21 +10,23 @@ tagline: Social LMS
 face: https://secure.gravatar.com/avatar/73dac6784c6ff5bb07614eed34226e32?s=70
 face_alt: BuddyPress Logo
 intro: |
-  <a href="http://buddypress.org/">BuddyPress</a> 
+  <a href="http://buddypress.org/">BuddyPress</a>
   is an open source social network project.
   <br>
   <a href="http://wordpress.org/extend/plugins/buddypress-courseware/">
   BuddyPress Courseware</a> is a learning management system
   built to make teaching social again.
+  <br>
+  Also check out <a href="http://open.coursewa.re">
+  The Courseware Project</a> we've open sourced in Nov 2013.
   <hr>
   <div class="book">
     <img src="https://www.packtpub.com/sites/default/files/imagecache/productview/8208OS_1.jpg" alt="WordPress for Education cover" class="aligncenter">
     <a href="http://www.packtpub.com/wordpress-interactive-engaging-elearning-education-websites/book">Buy the book from Packt Pub.</a>
   </div>
-  BuddyPress Courseware is maintained by <a href="http://coursewa.re">
-  Coursewa.re</a> after being part of
+  BuddyPress Courseware now is unmaintained, 2 years after the
   <a href="http://google-melange.appspot.com/">
-  Google Summer of Code</a> programme in 2010 and 2011 (accepted and mentored 
+  Google Summer of Code</a> programme in 2010 and 2011 (accepted and mentored
   by <a href="http://wordpress.org/">WordPress</a>
   and <a href="http://scholarpress.net/">ScholarPress</a> mentors).
 
