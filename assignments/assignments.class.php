@@ -193,10 +193,11 @@ class BPSP_Assignments {
         $courseware_uri = bp_get_group_permalink( $bp->groups->current_group ) . 'courseware/' ;
         
         if( is_object( $assignment_identifier ) && $assignment_identifier->post_type == "assignment" ) {
-            if( $assignment_identifier->group[0]->name == $bp->groups->current_group->id )
+            if( $assignment_identifier->group[0]->name == $bp->groups->current_group->id ) {
                 return $assignment_identifier;
-		} else {
-		  return null;
+			} else {
+			  return null;
+			}
 		}
         
         if( !$assignment_identifier && get_class( (object)$this->current_assignment ) == __CLASS__ ) {
@@ -267,7 +268,7 @@ class BPSP_Assignments {
         if( !empty( $term_id ) ) {
             $assignment_ids = get_objects_in_term( $term_id->term_id, 'group_id' );
 		}
-        
+
         if( !empty( $assignment_ids ) ) {
             arsort( $assignment_ids ); // Get latest entries first
 		} else {
@@ -371,7 +372,7 @@ class BPSP_Assignments {
 			}
         }
         
-        $vars['posted_data'] = $_POST['assignment'];
+        $vars['posted_data'] = isset( $_POST['assignment'] ) ? $_POST['assignment'] : null;
         $vars['lectures'] = BPSP_Lectures::has_lectures( $bp->groups->current_group->id );
         $vars['name'] = 'new_assignment';
         $vars['group_id'] = $bp->groups->current_group->id;

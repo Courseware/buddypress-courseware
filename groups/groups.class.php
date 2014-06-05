@@ -13,12 +13,12 @@ class BPSP_Groups {
     /**
      * Holds the navigation options for component
      */
-    var $nav_options = array();
+    static $nav_options = array();
     
     /**
      * Holds the current navigation option for component
      */
-    var $current_nav_option = null;
+    static $current_nav_option = null;
     
     /**
      * BPSP_Groups()
@@ -38,7 +38,9 @@ class BPSP_Groups {
      */
     function activate_component() {
         global $bp;
-        $bp->courseware = stdClass();
+        if ( !isset( $bp->courseware ) || !is_object($bp->courseware)) {
+        	$bp->courseware = stdClass();
+        }
         $bp->courseware->id = 'courseware';
         $bp->courseware->slug = 'courseware';
         $bp->active_components[$bp->courseware->slug] = $bp->courseware->id;
@@ -121,7 +123,7 @@ class BPSP_Groups {
             'item_css_id' => 'courseware-group'
         ) );
         
-        $this->nav_options[__( 'Home', 'bpsp' )] = $group_permalink . $bp->courseware->slug;
+        self::$nav_options[__( 'Home', 'bpsp' )] = $group_permalink . $bp->courseware->slug;
         
         do_action( 'courseware_group_set_nav' );
     }
@@ -164,10 +166,10 @@ class BPSP_Groups {
         }
         
         if ( $bp->current_action == $bp->courseware->slug ) {
-            $this->current_nav_option =  $this->nav_options[__( 'Home', 'bpsp' )];
+            self::$current_nav_option =  self::$nav_options[__( 'Home', 'bpsp' )];
             
             if( reset( $bp->action_variables ) ) {
-                $this->current_nav_option .= '/' . reset( $bp->action_variables );
+                self::$current_nav_option .= '/' . reset( $bp->action_variables );
             }
             
             add_action( 'bp_before_group_body', array( $this, 'nav_options' ) );
@@ -184,11 +186,11 @@ class BPSP_Groups {
      * Courseware action to manage group navigation options
      */
     function nav_options() {
-        $this->nav_options = apply_filters( 'courseware_group_nav_options', $this->nav_options );
+        self::$nav_options = apply_filters( 'courseware_group_nav_options', self::$nav_options );
         $this->load_template( array(
             'name' => '_nav',
-            'nav_options' => $this->nav_options,
-            'current_option' => $this->current_nav_option
+            'nav_options' => self::$nav_options,
+            'current_option' => self::$current_nav_option
         ));
     }
     
@@ -205,9 +207,9 @@ class BPSP_Groups {
         if( empty( $vars ) || !isset( $vars['name'] ) ) {
             $vars = array(
                 'name' => 'home',
-                'nav_options' => $this->nav_options,
-                'current_uri' => $this->nav_options[__( 'Home', 'bpsp' )],
-                'current_option' => $this->current_nav_option,
+                'nav_options' => self::$nav_options,
+                'current_uri' => self::$nav_options[__( 'Home', 'bpsp' )],
+                'current_option' => self::$current_nav_option,
                 'echo' => true,
             );
         }
@@ -311,7 +313,7 @@ class BPSP_Groups {
         if ( 'courseware' == $current_tab )
             $tab_content .= 'class="current"';
         
-        $tab_content .= '><a href="' . bp_get_group_admin_permalink() . '/courseware">';
+        $tab_content .= '><a href="' . bp_get_group_admin_permalink() . 'courseware/">';
         $tab_content .= __( 'Courseware', 'bpsp' ) . '</a></li>';
         
         echo $tab_content;

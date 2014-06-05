@@ -64,7 +64,7 @@ class BPSP_Notifications {
             $content = $data['teacher']->user_nicename;
             $content.= __( " graded your assignment: ", 'bpsp' );
             $content.= "\n";
-            $content.= '<a href="' . $data['assignment']->permalink . '">' . attribute_escape( $data['assignment']->post_title ) . '</a>';
+            $content.= '<a href="' . $data['assignment']->permalink . '">' . esc_attr( $data['assignment']->post_title ) . '</a>';
             $content.= "\n";
             $content.= __( "Follow the link above to see the grade.\n", 'bpsp' );
             if ( !empty( $data['grade']['prv_comment'] ) )
@@ -96,7 +96,7 @@ class BPSP_Notifications {
             $content = bp_core_get_user_displayname( $data['response']->post_author );
             $content.= __( " added a response to: ", 'bpsp' );
             $content.= "\n";
-            $content.= '<a href="' . $data['assignment']->permalink . '">' . attribute_escape( $data['assignment']->post_title ) . '</a>';
+            $content.= '<a href="' . $data['assignment']->permalink . '">' . esc_attr( $data['assignment']->post_title ) . '</a>';
             $content.= "\n";
             $content.= __( "Follow the link above to see it.", 'bpsp' );
         }

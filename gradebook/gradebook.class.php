@@ -371,7 +371,12 @@ class BPSP_Gradebook {
             return $vars;
         }
         
-        $students = BP_Groups_Member::get_all_for_group( $bp->groups->current_group->id );
+        // BP_Groups_Member::get_all_for_group( $bp->groups->current_group->id );
+        $students = groups_get_group_members( array( 
+        	'group_id' => $bp->groups->current_group->id,
+        	'per_page' => 1000, // unlikely to be this many
+        	'exclude_admins_mods' => true,
+        ) );
         
         if( isset( $_POST['_wpnonce'] ) ) {
             $is_nonce = wp_verify_nonce( $_POST['_wpnonce'], $nonce_name );

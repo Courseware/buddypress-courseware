@@ -22,7 +22,7 @@ class BPSP_Lectures {
     /**
      * Current lecture id
      */
-    var $current_lecture = null;
+    static $current_lecture = null;
     
     /**
      * __constructor()
@@ -131,7 +131,7 @@ class BPSP_Lectures {
             $current_lecture = BPSP_Lectures::is_lecture( $action_vars[1] );
             
             if( isset ( $action_vars[1] ) && null != $current_lecture ) {
-                $this->current_lecture = $current_lecture;
+                self::$current_lecture = $current_lecture;
 			} else {
                 wp_redirect( wp_redirect( get_option( 'siteurl' ) ) );
             }
@@ -170,8 +170,13 @@ class BPSP_Lectures {
 			}
 		}
         
-        if( !$lecture_identifier && get_class( (object)$this->current_lecture ) == __CLASS__ ) {
-            return $this->current_lecture;
+        if(	
+        	!$lecture_identifier &&
+        	isset( self::$current_lecture ) && 
+        	!is_null( self::$current_lecture ) && 
+        	get_class( (object) self::$current_lecture ) == __CLASS__ 
+        ) {
+            return self::$current_lecture;
 		}
         
         $lecture_query = array(
@@ -278,11 +283,11 @@ class BPSP_Lectures {
                     if( $new_lecture_id ) {
                         wp_set_post_terms( $new_lecture_id, $new_lecture['group_id'], 'group_id' );
                         wp_set_post_terms( $new_lecture_id, $course->ID, 'course_id' );
-                        $this->current_lecture = $this->is_lecture( $new_lecture_id );
+                        self::$current_lecture = $this->is_lecture( $new_lecture_id );
                         
                         $vars['message'] = __( 'New lecture was added.', 'bpsp' );
-                        do_action( 'courseware_lecture_added', $this->current_lecture );
-                        do_action( 'courseware_lecture_activity', $this->current_lecture, 'add' );
+                        do_action( 'courseware_lecture_added', self::$current_lecture );
+                        do_action( 'courseware_lecture_activity', self::$current_lecture, 'add' );
                         return $this->single_lecture_screen( $vars );
                     } else {
                         $vars['error'] = __( 'New lecture could not be added.', 'bpsp' );
@@ -364,7 +369,7 @@ class BPSP_Lectures {
             $is_nonce = wp_verify_nonce( $_GET['_wpnonce'], 'bookmark' );
 		}
         
-        $lecture = $this->is_lecture( $this->current_lecture );
+        $lecture = $this->is_lecture( self::$current_lecture );
         
         if( $is_nonce ) {
             update_user_meta( get_current_user_id(), 'bookmark_' . bp_get_group_id(), $lecture->ID );
@@ -381,18 +386,18 @@ class BPSP_Lectures {
 		}
 
         $vars['name'] = 'single_lecture';
-        $vars['lecture_permalink'] = $this->current_lecture->permalink;
-        $vars['lecture_edit_uri'] = $this->current_lecture->permalink . '/edit';
-        $vars['lecture_bookmark_uri'] = add_query_arg( '_wpnonce', wp_create_nonce( 'bookmark' ), $this->current_lecture->permalink );
+        $vars['lecture_permalink'] = self::$current_lecture->permalink;
+        $vars['lecture_edit_uri'] = self::$current_lecture->permalink . '/edit';
+        $vars['lecture_bookmark_uri'] = add_query_arg( '_wpnonce', wp_create_nonce( 'bookmark' ), self::$current_lecture->permalink );
         $vars['bookmarked'] = get_user_meta( get_current_user_id(), 'bookmark_' . bp_get_group_id(), true );
         $vars['lecture'] = $lecture;
         $vars['next'] = $this->next_lecture( $lecture );
         $vars['prev'] = $this->prev_lecture( $lecture );
         
         $vars['trail'] = array(
-            $this->current_lecture->course->post_title =>
-            $this->current_lecture->course->permalink,
-            $this->current_lecture->post_title => $this->current_lecture->permalink,
+            self::$current_lecture->course->post_title =>
+            self::$current_lecture->course->permalink,
+            self::$current_lecture->post_title => self::$current_lecture->permalink,
         );
         return apply_filters( 'courseware_lecture', $vars );
     }
@@ -408,7 +413,7 @@ class BPSP_Lectures {
      */
     function delete_lecture_screen( $vars ) {
         global $bp;
-        $lecture = $this->is_lecture( $this->current_lecture );
+        $lecture = $this->is_lecture( self::$current_lecture );
         $nonce_name = 'delete_lecture';
         $is_nonce = false;
         
@@ -444,9 +449,9 @@ class BPSP_Lectures {
     function edit_lecture_screen( $vars ) {
         global $bp;
         $nonce_name = 'edit_lecture';
-        $updated_lecture_id = $this->current_lecture;
+        $updated_lecture_id = self::$current_lecture;
         
-        $old_lecture = $this->is_lecture( $this->current_lecture );
+        $old_lecture = $this->is_lecture( self::$current_lecture );
         
         if( !$this->has_lecture_caps( $bp->loggedin_user->id ) &&
             $bp->loggedin_user->id != $old_lecture->post_author &&
@@ -494,14 +499,14 @@ class BPSP_Lectures {
         $vars['user_id'] = $bp->loggedin_user->id;
         $vars['lecture'] = $this->is_lecture( $updated_lecture_id );
         $vars['lectures'] = $this->has_lectures( $bp->groups->current_group->id );
-        $vars['lecture_edit_uri'] = $vars['current_uri'] . '/lecture/' . $this->current_lecture->post_name . '/edit/';
-        $vars['lecture_delete_uri'] = $vars['current_uri'] . '/lecture/' . $this->current_lecture->post_name . '/delete/';
-        $vars['lecture_permalink'] = $vars['current_uri'] . '/lecture/' . $this->current_lecture->post_name;
+        $vars['lecture_edit_uri'] = $vars['current_uri'] . '/lecture/' . self::$current_lecture->post_name . '/edit/';
+        $vars['lecture_delete_uri'] = $vars['current_uri'] . '/lecture/' . self::$current_lecture->post_name . '/delete/';
+        $vars['lecture_permalink'] = $vars['current_uri'] . '/lecture/' . self::$current_lecture->post_name;
         $vars['nonce'] = wp_nonce_field( $nonce_name, '_wpnonce', true, false );
         $vars['delete_nonce'] = add_query_arg( '_wpnonce', wp_create_nonce( 'delete_lecture' ), $vars['lecture_delete_uri'] );
         $vars['trail'] = array(
-            $this->current_lecture->course->post_title => $this->current_lecture->course->permalink,
-            __( 'Editing Lecture: ', 'bpsp' ) . $this->current_lecture->post_title => $this->current_lecture->permalink,
+            self::$current_lecture->course->post_title => self::$current_lecture->course->permalink,
+            __( 'Editing Lecture: ', 'bpsp' ) . self::$current_lecture->post_title => self::$current_lecture->permalink,
         );
         return $vars;
     }

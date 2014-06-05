@@ -208,7 +208,7 @@ class BPSP_Roles {
         $teachers = array();
         
         $group_admins = groups_get_group_admins( $group_id );
-        $group_members = groups_get_group_members( $group_id );
+        $group_members = groups_get_group_members( array( 'group_id' => $group_id ) );
         $group_members = array_merge( $group_admins, (array)$group_members['members'] );
 
         foreach ( $group_members as $member )

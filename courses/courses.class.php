@@ -232,8 +232,13 @@ class BPSP_Courses {
             }
         }
         
-        if( !$course_identifier && get_class( (object)$this->current_course ) == __CLASS__ ) {
-            return $this->current_course;
+        if( 
+        	!$course_identifier && 
+        	isset( self::$current_course ) && 
+        	!is_null( self::$current_course ) && 
+        	get_class( (object) self::$current_course ) == __CLASS__ 
+        ) {
+            return self::current_course;
         }
         
         $course_query = array(
