@@ -164,7 +164,9 @@ class BPSP_Bibliography {
             return;
 		}
         
-        return get_post_meta( $post_id, 'bibliography' );
+        $x = get_post_meta( $post_id, 'bibliography' );
+        //print_r( $x ); die();
+        return $x;
     }
     
     /**
@@ -463,6 +465,8 @@ class BPSP_Bibliography {
      * @return Array $vars modified
      */
     function edit_bib_screen( $vars ) {
+    	global $bp;
+    	
         $nonce_name = 'edit_bib';
         $nonce_delete_name = 'delete_bib';
         $nonce_edit_name = $nonce_name;
@@ -560,37 +564,42 @@ class BPSP_Bibliography {
             return $vars;
         }
         
-        $is_nonce = wp_verify_nonce( $_POST['_wpnonce'], $nonce_name );
-        if( !$is_nonce && isset( $_POST['bib'] ) ) {
-            $vars['die'] = __( 'BuddyPress Courseware Nonce Error while adding bibliography.', 'bpsp' );
-            return $vars;
-        }
+        // if submitting...
+        if ( 'POST' === strtoupper( $_SERVER['REQUEST_METHOD'] ) ) {
         
-        if( isset( $_POST['bib'] ) && $_POST['bib']['type'] ) {
-            $data = array_filter( $_POST['bib'] );
-            if( count( $data ) < 2 ) {
-                $data = null; // force failure
+			$is_nonce = wp_verify_nonce( $_POST['_wpnonce'], $nonce_name );
+			if( !$is_nonce && isset( $_POST['bib'] ) ) {
+				$vars['die'] = __( 'BuddyPress Courseware Nonce Error while adding bibliography.', 'bpsp' );
+				return $vars;
 			}
+		
+			if( isset( $_POST['bib'] ) && isset( $_POST['bib']['type'] ) ) {
+				$data = array_filter( $_POST['bib'] );
+				if( count( $data ) < 2 ) {
+					$data = null; // force failure
+				}
 			
-            if( $this->add_bib( $data ) ) {
-                $vars['message'] = __( 'Entry added.', 'bpsp' );
-			} else {
-                $vars['error'] = __( 'Entry could not be added', 'bpsp' );
+				if( $this->add_bib( $data ) ) {
+					$vars['message'] = __( 'Entry added.', 'bpsp' );
+				} else {
+					$vars['error'] = __( 'Entry could not be added', 'bpsp' );
+				}
+			} elseif ( !empty( $_POST['bib']['www']['title'] ) && !empty( $_POST['bib']['www']['url'] ) ) {
+				// Add a new www entry       
+				if( $this->add_www( $_POST['bib']['www'] ) ) {
+					$vars['message'] = __( 'Entry added', 'bpsp' );
+				} else {
+					$vars['error'] = __( 'Entry could not be added', 'bpsp' );
+				}
+			} elseif( !empty( $_POST['bib']['book'] ) ) {
+			  //Add a new book
+				if( $this->add_book( $_POST['bib']['book'] ) ) {
+					$vars['message'] = __( 'Book added', 'bpsp' );
+				} else {
+					$vars['error'] = __( 'Book could not be added', 'bpsp' );
+				}
 			}
-        } elseif ( !empty( $_POST['bib']['www']['title'] ) && !empty( $_POST['bib']['www']['url'] ) ) {
-			// Add a new www entry       
-            if( $this->add_www( $_POST['bib']['www'], $post_id ) ) {
-                $vars['message'] = __( 'Entry added', 'bpsp' );
-			} else {
-                $vars['error'] = __( 'Entry could not be added', 'bpsp' );
-			}
-		} elseif( !empty( $_POST['bib']['book'] ) ) {
-		  //Add a new book
-            if( $this->add_book( $_POST['bib']['book'], $post_id ) ) {
-                $vars['message'] = __( 'Book added', 'bpsp' );
-			} else {
-                $vars['error'] = __( 'Book could not be added', 'bpsp' );
-			}
+		
 		}
         
         $vars['name'] = 'new_bibliography';
@@ -623,6 +632,8 @@ class BPSP_Bibliography {
      * @return Array $vars of modified variables
      */
     function import_bibs_screen( $vars ) {
+    	global $bp;
+    	
         if( !class_exists( 'BibTeX_Parser') ) {
             include_once 'bibtex-parser.class.php';
 		}
@@ -635,62 +646,63 @@ class BPSP_Bibliography {
         
         if( isset( $_POST['bib'] ) ) {
             $to_parse = $_POST['bib']['source'];
-		}
-        
-        $parsed = new BibTeX_Parser( null, $to_parse );
-        
-        for( $i = 0; $i <= $parsed->count; $i++ ) {
-            preg_match( '/@(.*?){/', $parsed->items['raw'][$i], $entry_type );
+
+			$parsed = new BibTeX_Parser( null, $to_parse );
+		
+			for( $i = 0; $i <= $parsed->count; $i++ ) {
+				preg_match( '/@(.*?){/', $parsed->items['raw'][$i], $entry_type );
 			
-            if( isset( $entry_type[1] ) ) {
-                $entry_type = $entry_type[1];
-			}
-            
-            if($entry_type == 'book') {
-                $type = 'monograph';
-            } elseif($entry_type == 'phdthesis' || $entry_type == 'mastersthesis') {
-                $type = 'unpublished';
-            } elseif($entry_type == 'inbook' || $entry_type == 'incollection') {
-                $type = 'volumechapter';
-            } else {
-                $type = $entry_type;
-            }
-            
-            $author = explode( ' ', $parsed->items['author'][$i], 2 );
-            if ($author[1]) {
-                $author_last = $author[1];
-                $author_first = $author[0];
-            } else {
-                $author_last = $author[0];
-                $author_first = "";
-            }
-            
-            $url = str_replace( '\url', '', $parsed->items['url'][$i] );
-            
-            $new_bib = array(
-                'author_lname'  => $author_last,
-                'author_fname'  => $author_first,
-                'title'         => $parsed->items['title'][$i],
-                'jtitle'        => $parsed->items['journal'][$i],
-                'vol'           => $parsed->items['volume'][$i],
-                'pub'           => $parsed->items['publisher'][$i],
-                'pubdate'       => $parsed->items['year'][$i],
-                'url'           => $url,
-                'pages'         => $parsed->items['pages'][$i],
-                'desc'          => $parsed->items['abstract'][$i],
-                'type'          => $type
-            );
-            
-            if( $this->add_bib( $new_bib ) ) {
-                $vars['message'] =
-						$parsed->count + 1 . ' ' .
-						__( 'entries were imported.', 'bpsp' );
-			} else {
-                $vars['message'] =
-						$parsed->count + 1 . ' ' .
-						__( 'entries were not imported (caused by duplication or misformat).', 'bpsp' );
-			}
-        }
+				if( isset( $entry_type[1] ) ) {
+					$entry_type = $entry_type[1];
+				}
+			
+				if($entry_type == 'book') {
+					$type = 'monograph';
+				} elseif($entry_type == 'phdthesis' || $entry_type == 'mastersthesis') {
+					$type = 'unpublished';
+				} elseif($entry_type == 'inbook' || $entry_type == 'incollection') {
+					$type = 'volumechapter';
+				} else {
+					$type = $entry_type;
+				}
+			
+				$author = explode( ' ', $parsed->items['author'][$i], 2 );
+				if ($author[1]) {
+					$author_last = $author[1];
+					$author_first = $author[0];
+				} else {
+					$author_last = $author[0];
+					$author_first = "";
+				}
+			
+				$url = str_replace( '\url', '', $parsed->items['url'][$i] );
+			
+				$new_bib = array(
+					'author_lname'  => $author_last,
+					'author_fname'  => $author_first,
+					'title'         => $parsed->items['title'][$i],
+					'jtitle'        => $parsed->items['journal'][$i],
+					'vol'           => $parsed->items['volume'][$i],
+					'pub'           => $parsed->items['publisher'][$i],
+					'pubdate'       => $parsed->items['year'][$i],
+					'url'           => $url,
+					'pages'         => $parsed->items['pages'][$i],
+					'desc'          => $parsed->items['abstract'][$i],
+					'type'          => $type
+				);
+			
+				if( $this->add_bib( $new_bib ) ) {
+					$vars['message'] =
+							$parsed->count + 1 . ' ' .
+							__( 'entries were imported.', 'bpsp' );
+				} else {
+					$vars['message'] =
+							$parsed->count + 1 . ' ' .
+							__( 'entries were not imported (caused by duplication or misformat).', 'bpsp' );
+				}
+			} // end loop
+			
+		}
         
         $vars['name'] = 'import_bibliographies';
         $vars['trail'] = array(
@@ -712,12 +724,11 @@ class BPSP_Bibliography {
         $nonce_edit_name = 'edit_bib';
         
         // Are we dealing with courses or assignments?
+        $post_id = null;
         if( isset( $vars['assignment'] ) ) {
             $post_id = $vars['assignment']->ID;
 		} elseif( isset( $vars['course'] ) ) {
             $post_id = $vars['course']->ID;
-		} else {
-            $post_id = null;
 		}
             
         if( $post_id ) {
