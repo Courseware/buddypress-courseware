@@ -25,53 +25,83 @@ class BPSP_Groups {
      *
      * Constructor. Loads filters and actions.
      */
-    function BPSP_Groups() {
-        add_action( 'bp_init', array( &$this, 'set_nav' ) );
-        add_filter( 'groups_get_groups', array( &$this, 'extend_search' ), 10, 2 );
-        add_action( 'groups_admin_tabs', array( &$this, 'group_admin_tab' ), 10, 2 );
-        add_action( 'wp', array( &$this, 'group_admin_screen' ), 4 );
-        add_filter( 'media_upload_form_url', array( __CLASS__, 'media_library_tab' ) );
+    public function __construct() {
+		$this->setup_variables();
+		$this->setup_actions();
+		$this->setup_filters();
     }
     
     /**
      * activate_component()
      *
-     * Activates Courseware as a BuddyPress component for groups
+     * Mimics the activation of Courseware as a BuddyPress component for groups
      */
     function activate_component() {
         global $bp;
+        $bp->courseware = stdClass();
         $bp->courseware->id = 'courseware';
         $bp->courseware->slug = 'courseware';
         $bp->active_components[$bp->courseware->slug] = $bp->courseware->id;
     }
     
-    /**
-     * courseware_status( $group_id = null )
-     *
-     * Checks if courseware is enabled for current group
-     * @param Int $group_id, the id of the group, default is null and global $bp will be used
-     * @return Bool, true on success, and false on failure.
-     */
-    function courseware_status( $group_id = null ) {
-        global $bp;
-        if( !$group_id && $bp->groups->current_group )
-            $group_id = $bp->groups->current_group->id;
-        
-        $global_status = get_option( 'bpsp_global_status' );
-        $group_status = groups_get_groupmeta( $group_id, 'courseware' );
-        
-        if( 'true' == $group_status || !empty( $global_status ) )
-            return true;
-        else
-            return false;
-    }
-    
+	/**
+	 * Setup the courses group variables
+	 * 
+	 * @since 0.9.7
+	 */
+	private function setup_variables() {
+		
+		// Component name
+		$this->name          = __( 'Course', 'bpsp' );
+		$this->nav_item_name = __( 'Course', 'bpsp' );
+		
+		// Component slugs
+		$this->slug          = 'course';
+		
+		// Course component is visible
+		$this->visibility    = 'public';
+		
+		// Set position
+		$this->create_step_position = 15;
+		$this->nav_item_postion     = 10;
+		
+		// Allow create step and show in nav
+		$this->enable_create_step = true;
+		$this->enable_nav_item    = true;
+		$this->enable_edit_item   = true;
+		
+		// Template to load and action to hook display on to
+		$this->template_file = 'groups/single/plugins';
+		$this->display_hook  = 'bp_template_content';
+	}
+	
+	/**
+	 * Setup the courses group actions
+	 * 
+	 * @since bp-courseware 0.9.7
+	 */
+	private function setup_actions() {
+		add_action( 'bp_init', array( $this, 'setup_nav' ) ); // no more since BuddyPress 1.7
+		add_action( 'groups_admin_tabs', array( $this, 'group_admin_tab' ), 10, 2 );
+		add_action( 'wp', array( $this, 'group_admin_screen' ), 4 );
+	}
+	
+	/**
+	 * Setup the courses group filters
+	 * 
+	 * @since bp-courseware 0.9.7
+	 */
+	private function setup_filters() {
+		add_filter( 'groups_get_groups', array( $this, 'extended_search'), 10, 2 );
+		add_filter( 'media_upload_form_url', array( $this, 'media_library_tab' ) );
+	}
+
     /**
      * set_nav()
      *
      * Sets up the component navigation
      */
-    function set_nav() {
+    function setup_nav() {
         global $bp;
 
         if( !$bp->groups->current_group || !$this->courseware_status( $bp->groups->current_group->id ) ) {
@@ -94,6 +124,29 @@ class BPSP_Groups {
         $this->nav_options[__( 'Home', 'bpsp' )] = $group_permalink . $bp->courseware->slug;
         
         do_action( 'courseware_group_set_nav' );
+    }
+    
+    /**
+     * courseware_status( $group_id = null )
+     *
+     * Checks if courseware is enabled for current group
+     * @param Int $group_id, the id of the group, default is null and global $bp will be used
+     * @return Bool, true on success, and false on failure.
+     */
+    public static function courseware_status( $group_id = null ) {
+        global $bp;
+        if( !$group_id && $bp->groups->current_group ) {
+            $group_id = $bp->groups->current_group->id;
+        }
+        
+        $global_status = get_option( 'bpsp_global_status' );
+        $group_status = groups_get_groupmeta( $group_id, 'courseware' );
+        
+        if( 'true' == $group_status || !empty( $global_status ) ) {
+            return true;
+        } else {
+            return false;
+        }
     }
     
     /**

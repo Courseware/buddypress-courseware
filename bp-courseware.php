@@ -22,6 +22,8 @@ if ( !defined( 'ABSPATH' ) ) exit;
  * Either BPSP will call a function that's undefined (because the mock isn't setup), or BuddyPress will try to redeclare a mocked function.
  */
 if ( ! bpsp_activating_buddypress() ) {
+	
+	// define constants
 	define( 'BPSP_VERSION', '0.9.8' );
 	define( 'BPSP_DEBUG', (bool) WP_DEBUG ); // This will allow you to see post types in wp-admin
 	define( 'BPSP_PLUGIN_DIR', dirname( __FILE__ ) );
@@ -46,6 +48,9 @@ if ( ! bpsp_activating_buddypress() ) {
 	require_once BPSP_PLUGIN_DIR . '/static/static.class.php';
 	require_once BPSP_PLUGIN_DIR . '/activity/activity.class.php';
 	require_once BPSP_PLUGIN_DIR . '/notifications/notifications.class.php';
+	
+	// decide how to init plugin in loader file
+	require_once( BPSP_PLUGIN_DIR . '/bp-courseware-loader.php' );
 
 	/**
 	 * i18n
@@ -54,49 +59,6 @@ if ( ! bpsp_activating_buddypress() ) {
 		load_plugin_textdomain( 'bpsp', false, basename( BPSP_PLUGIN_DIR ) . '/languages' );
 	}
 	add_action( 'init', 'bpsp_textdomain' );
-
-	/**
-	 * Register post types and taxonomies
-	 */
-	function bpsp_registration() {
-		BPSP_Courses::register_post_types();
-		BPSP_Lectures::register_post_types();
-		BPSP_Assignments::register_post_types();
-		BPSP_Responses::register_post_types();
-		BPSP_Gradebook::register_post_types();
-		BPSP_Bibliography::register_post_types();
-		BPSP_Schedules::register_post_types();
-	}
-	add_action( 'init', 'bpsp_registration' );
-
-	/**
-	 * On plugins load
-	 */
-	function bpsp_on_plugins_load() {
-		BPSP_Groups::activate_component();
-	}
-	add_action( 'plugins_loaded', 'bpsp_on_plugins_load', 5 );
-
-	/* Initiate the componenets */
-	function bpsp_init() {
-		new BPSP_WordPress();
-		new BPSP_Roles();
-		new BPSP_Groups();
-		new BPSP_Courses();
-		new BPSP_Lectures();
-		new BPSP_Assignments();
-		new BPSP_Responses();
-		new BPSP_Gradebook();
-		new BPSP_Bibliography();
-		new BPSP_Schedules();
-		new BPSP_Dashboards();
-		new BPSP_Static();
-		new BPSP_Activity();
-		new BPSP_Notifications();
-
-		// @todo maybe some classes like activity will only be loaded if bp is active b/c they're completely tied to it
-	}
-	add_action( 'init', 'bpsp_init', 6 );
 
 	/**
 	 * bpsp_check()
