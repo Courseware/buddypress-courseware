@@ -8,9 +8,10 @@ class BPSP_Static {
      *
      * Constructor, registers enqueues.
      */
-    function BPSP_Static() {
-        if( !defined( BPSP_VERSION ) )
-            define( BPSP_VERSION, '' );
+    function __construct() {
+        if( !defined( BPSP_VERSION ) ) {
+            define( BPSP_VERSION, get_bloginfo( 'version' ) );
+        }
         
         // Scripts
 
@@ -116,8 +117,9 @@ class BPSP_Static {
         $to_load = get_option( 'bpsp_load_css' );
         $css_name = '/courseware.css';
         
-        if( empty( $to_load ) )
+        if( empty( $to_load ) ) {
             return;
+        }
         
         if( file_exists( STYLESHEETPATH . $css_name ) ) {
             $web_uri = get_bloginfo( 'stylesheet_directory' );    
@@ -361,14 +363,17 @@ class BPSP_Static {
         $image_uri = null;
         $html_template = '<img src="%s" alt="%s" class="%s"/>';
         
-        if( file_exists( $images_folder . $name ) )
+        if( file_exists( $images_folder . $name ) ) {
             $image_uri = $images_web_folder . $name;
+        }
         
-        if( $html )
+        if( $html ) {
             $image_uri = sprintf( $html_template, $image_uri, $name, $name );
+        }
         
-        if( $echo )
+        if( $echo ) {
             echo $image_uri;
+        }
         
         return $image_uri;
     }
@@ -384,18 +389,19 @@ class BPSP_Static {
     function gmaps_link( $string, $echo = true ) {
         $string = urlencode( esc_html( $string ) );
         
-        if( empty( $string ) )
+        if( empty( $string ) ) {
             return;
+        }
         
         $link_template =
             '<a href="http://maps.google.com/maps?q=%s">' .
             self::get_image( 'map_go.png', false ) .
             '</a>';
         
-        if( $echo )
+        if( $echo ) {
             return printf( $link_template, $string );
-        else
+        } else {
             sprintf( $link_template, $string );
+        }
     }
 }
-?>

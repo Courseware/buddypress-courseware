@@ -4,16 +4,13 @@
  */
 class BPSP_WordPress {
     /**
-     * BPSP_WordPress()
+     * __construct()
      *
      * Constructor, loads all the required hooks
      */
-    function BPSP_WordPress() {
+    function __construct() {
         // Add our screen to BuddyPress menu
-        add_action(
-            bp_core_admin_hook(),
-            array( __CLASS__, 'menus')
-        );
+        add_action( bp_core_admin_hook(), array( __CLASS__, 'menus') );
 
         // Ensure compatibility
         add_action('admin_notices', 'bpsp_check' );
@@ -53,6 +50,102 @@ class BPSP_WordPress {
     }
 
     /**
+     * screen()
+     *
+     * Handles the wp-admin screen
+     */
+    function screen() {
+        $nonce_name = 'courseware_options';
+        $vars = array();
+        $vars['nonce'] = wp_nonce_field( $nonce_name, '_wpnonce', true, false );
+        // $is_nonce = false;
+
+        if( isset( $_POST['_wpnonce'] ) ) {
+            check_admin_referer( $nonce_name );
+		}
+
+        // Courseware Global Status
+        if( isset( $_POST['bpsp_global_status'] ) ) {
+            if( update_option( 'bpsp_global_status', strtolower( $_POST['bpsp_global_status'] ) ) ) {
+                $vars['flash'][] = __( 'Courseware option was updated.', 'bpsp' );
+			}
+		}
+        if( !isset( $_POST['bpsp_global_status'] ) && isset( $_POST['bpsp_global_status_check'] ) ) {
+            if( update_option( 'bpsp_global_status', '' ) ) {
+                $vars['flash'][] = __( 'Courseware option was updated.', 'bpsp' );
+			}
+		}
+
+        // Courseware Collaborative Settings
+        if( isset( $_POST['bpsp_allow_only_admins'] ) ) {
+            if( update_option( 'bpsp_allow_only_admins', strtolower( $_POST['bpsp_allow_only_admins'] ) ) ) {
+                $vars['flash'][] = __( 'Courseware option was updated.', 'bpsp' );
+			}
+		}
+        if( !isset( $_POST['bpsp_allow_only_admins'] ) && isset( $_POST['bpsp_allow_only_admins_check'] ) ) {
+            if( update_option( 'bpsp_allow_only_admins', '' ) ) {
+                $vars['flash'][] = __( 'Courseware option was updated.', 'bpsp' );
+			}
+		}
+
+        // Courseware Private Responses
+        if( isset( $_POST['bpsp_private_responses_check'] ) ) {
+            if( update_option( 'bpsp_private_responses', strtolower( $_POST['bpsp_private_responses'] ) ) ) {
+                $vars['flash'][] = __( 'Courseware option was updated.', 'bpsp' );
+			}
+		}
+        if( isset( $_POST['bpsp_private_responses_check'] ) && !isset( $_POST['bpsp_private_responses'] ) ) {
+            if( update_option( 'bpsp_private_responses', '' ) ) {
+                $vars['flash'][] = __( 'Courseware option was updated.', 'bpsp' );
+			}
+		}
+
+        // Courseware Default Gradebook Format
+        if( isset( $_POST['bpsp_gradebook_format_check'] ) && isset( $_POST['bpsp_gradebook_format'] ) ) {
+            if( update_option( 'bpsp_gradebook_format', strtolower( $_POST['bpsp_gradebook_format'] ) ) ) {
+                $vars['flash'][] = __( 'Courseware gradebook format option was updated.', 'bpsp' );
+			}
+		}
+
+        // Courseware Bibliography Webservices Integration
+        if( isset( $_POST['worldcat_key'] ) && !empty( $_POST['worldcat_key'] ) ) {
+            if( update_option( 'bpsp_worldcat_key', $_POST['worldcat_key'] ) ) {
+                $vars['flash'][] = __( 'WorldCat option was updated.', 'bpsp' );
+			}
+		}
+        if( isset( $_POST['isbndb_key'] ) && !empty( $_POST['isbndb_key'] ) ) {
+            if( update_option( 'bpsp_isbndb_key', $_POST['isbndb_key'] ) ) {
+                $vars['flash'][] = __( 'ISBNdb option was updated.', 'bpsp' );
+			}
+		}
+
+        // Courseware Custom CSS
+        if( isset( $_POST['bpsp_load_css_check'] ) && isset( $_POST['bpsp_load_css'] ) ) {
+            if( update_option( 'bpsp_load_css', strtolower( $_POST['bpsp_load_css'] ) ) ) {
+                $vars['flash'][] = __( 'Courseware customization options updated.', 'bpsp' );
+			}
+		}
+        if( isset( $_POST['bpsp_load_css_check'] ) && !isset( $_POST['bpsp_load_css'] ) ) {
+            if( update_option( 'bpsp_load_css', '' ) ) {
+                $vars['flash'][] = __( 'Courseware customization options updated.', 'bpsp' );
+			}
+		}
+
+        $vars['name'] = 'admin';
+        $vars['echo'] = 'true';
+        $vars['bpsp_private_responses'] = get_option( 'bpsp_private_responses' );
+        $vars['bpsp_gradebook_format'] = get_option( 'bpsp_gradebook_format' );
+        $vars['bpsp_allow_only_admins'] = get_option( 'bpsp_allow_only_admins' );
+        $vars['bpsp_global_status'] = get_option( 'bpsp_global_status' );
+        $vars['worldcat_key'] = get_option( 'bpsp_worldcat_key' );
+        $vars['isbndb_key'] = get_option( 'bpsp_isbndb_key' );
+        $vars['bpsp_load_css'] = get_option( 'bpsp_load_css' );
+
+        //Load the template
+        self::load_template( $vars );
+    }
+
+    /**
      * screen_help()
      *
      * Handles the screen() help
@@ -73,80 +166,7 @@ class BPSP_WordPress {
     }
 
     /**
-     * screen()
-     *
-     * Handles the wp-admin screen
-     */
-    function screen() {
-        $nonce_name = 'courseware_options';
-        $vars = array();
-        $vars['nonce'] = wp_nonce_field( $nonce_name, '_wpnonce', true, false );
-        $is_nonce = false;
-
-        if( isset( $_POST['_wpnonce'] ) )
-            check_admin_referer( $nonce_name );
-
-        // Courseware Global Status
-        if( isset( $_POST['bpsp_global_status'] ) )
-            if( update_option( 'bpsp_global_status', strtolower( $_POST['bpsp_global_status'] ) ) )
-                $vars['flash'][] = __( 'Courseware option was updated.', 'bpsp' );
-        if( !isset( $_POST['bpsp_global_status'] ) && isset( $_POST['bpsp_global_status_check'] ) )
-            if( update_option( 'bpsp_global_status', '' ) )
-                $vars['flash'][] = __( 'Courseware option was updated.', 'bpsp' );
-
-        // Courseware Collaborative Settings
-        if( isset( $_POST['bpsp_allow_only_admins'] ) )
-            if( update_option( 'bpsp_allow_only_admins', strtolower( $_POST['bpsp_allow_only_admins'] ) ) )
-                $vars['flash'][] = __( 'Courseware option was updated.', 'bpsp' );
-        if( !isset( $_POST['bpsp_allow_only_admins'] ) && isset( $_POST['bpsp_allow_only_admins_check'] ) )
-            if( update_option( 'bpsp_allow_only_admins', '' ) )
-                $vars['flash'][] = __( 'Courseware option was updated.', 'bpsp' );
-
-        // Courseware Private Responses
-        if( isset( $_POST['bpsp_private_responses_check'] ) )
-            if( update_option( 'bpsp_private_responses', strtolower( $_POST['bpsp_private_responses'] ) ) )
-                $vars['flash'][] = __( 'Courseware option was updated.', 'bpsp' );
-        if( isset( $_POST['bpsp_private_responses_check'] ) && !isset( $_POST['bpsp_private_responses'] ) )
-            if( update_option( 'bpsp_private_responses', '' ) )
-                $vars['flash'][] = __( 'Courseware option was updated.', 'bpsp' );
-
-        // Courseware Default Gradebook Format
-        if( isset( $_POST['bpsp_gradebook_format_check'] ) && isset( $_POST['bpsp_gradebook_format'] ) )
-            if( update_option( 'bpsp_gradebook_format', strtolower( $_POST['bpsp_gradebook_format'] ) ) )
-                $vars['flash'][] = __( 'Courseware gradebook format option was updated.', 'bpsp' );
-
-        // Courseware Bibliography Webservices Integration
-        if( isset( $_POST['worldcat_key'] ) && !empty( $_POST['worldcat_key'] ) )
-            if( update_option( 'bpsp_worldcat_key', $_POST['worldcat_key'] ) )
-                $vars['flash'][] = __( 'WorldCat option was updated.', 'bpsp' );
-        if( isset( $_POST['isbndb_key'] ) && !empty( $_POST['isbndb_key'] ) )
-            if( update_option( 'bpsp_isbndb_key', $_POST['isbndb_key'] ) )
-                $vars['flash'][] = __( 'ISBNdb option was updated.', 'bpsp' );
-
-        // Courseware Custom CSS
-        if( isset( $_POST['bpsp_load_css_check'] ) && isset( $_POST['bpsp_load_css'] ) )
-            if( update_option( 'bpsp_load_css', strtolower( $_POST['bpsp_load_css'] ) ) )
-                $vars['flash'][] = __( 'Courseware customization options updated.', 'bpsp' );
-        if( isset( $_POST['bpsp_load_css_check'] ) && !isset( $_POST['bpsp_load_css'] ) )
-            if( update_option( 'bpsp_load_css', '' ) )
-                $vars['flash'][] = __( 'Courseware customization options updated.', 'bpsp' );
-
-        $vars['name'] = 'admin';
-        $vars['echo'] = 'true';
-        $vars['bpsp_private_responses'] = get_option( 'bpsp_private_responses' );
-        $vars['bpsp_gradebook_format'] = get_option( 'bpsp_gradebook_format' );
-        $vars['bpsp_allow_only_admins'] = get_option( 'bpsp_allow_only_admins' );
-        $vars['bpsp_global_status'] = get_option( 'bpsp_global_status' );
-        $vars['worldcat_key'] = get_option( 'bpsp_worldcat_key' );
-        $vars['isbndb_key'] = get_option( 'bpsp_isbndb_key' );
-        $vars['bpsp_load_css'] = get_option( 'bpsp_load_css' );
-
-        //Load the template
-        self::load_template( $vars );
-    }
-
-    /**
-     * action_link( $links )
+     * support_link( $links )
      * Adds a new entry link under plugin description
      *
      * @param Mixed $links, initial links
@@ -240,4 +260,3 @@ class BPSP_WordPress {
             return null;
     }
 }
-?>

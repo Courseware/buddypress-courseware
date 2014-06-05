@@ -17,7 +17,7 @@ class BibTeX_Parser
      * @param String $file if filename is used
      * @param String $data if input is a string
      */
-    function BibTeX_Parser( $file = null, $data = null ) {
+    function __construct( $file = null, $data = null ) {
         $this->items = array(
             'note' => array(),
             'abstract' => array(),
@@ -42,10 +42,11 @@ class BibTeX_Parser
             'lineend' => array()
         );
         
-        if( $file )
+        if( $file ) {
             $this->filename = $file;
-        elseif( $data )
+		} elseif( $data ) {
             $this->inputdata = $data;
+		}
         
         // Oh, what the heck!
         $this->parse();
@@ -62,13 +63,16 @@ class BibTeX_Parser
         $this->count = -1;
         $lineindex = 0;
         $fieldcount = -1;
-        if( $this->filename )
+		
+        if( $this->filename ) {
             $lines = file($this->filename);
-        else
+		} else {
             $lines = preg_split( '/\n/', $this->inputdata );
+		}
     
-        if (!$lines)
+        if (!$lines) {
             return;
+		}
     
         foreach($lines as $line) {
             $lineindex++;
@@ -81,20 +85,24 @@ class BibTeX_Parser
             $segtest=strtolower($seg);
     
             // some funny comment string
-            if (strpos($segtest,'@string')!==false)
+            if (strpos($segtest,'@string')!==false) {
                 continue;
+			}
     
             // pybliographer comments
-            if (strpos($segtest,'@comment')!==false)
+            if (strpos($segtest,'@comment')!==false) {
                 continue;
+			}
     
             // normal TeX style comment
-            if (strpos($seg,'%%')!==false)
+            if (strpos($seg,'%%')!==false) {
                 continue;
+			}
     
             /* ok when there is nothing to see, skip it! */
-            if (!strlen($seg))
+            if (!strlen($seg)) {
                 continue;
+			}
     
             if ("@" == $seg[0]) {
                 $this->count++;
@@ -105,8 +113,9 @@ class BibTeX_Parser
                 $this->types[$this->count]=trim(substr($seg, 1,$pe-1));
                 $fieldcount=-1;
                 $this->items['linebegin'][$this->count] = $lineindex;
-            } // #of item increase
-            elseif ($ps!==false ) { // one field begins
+            } elseif ($ps!==false ) {
+				// #of item increase
+				// one field begins
                 $this->items['raw'][$this->count] .= $line . "\r\n";
                 $ps=strpos($seg,'=');
                 $fieldcount++;
@@ -123,19 +132,21 @@ class BibTeX_Parser
                 }
                 $pe=strpos($seg,'},');
                 
-                if ($pe===false)
+                if ($pe===false) {
                     $value[$fieldcount]=strstr($seg,'=');
-                else
+				} else {
                     $value[$fieldcount]=substr($seg,$ps,$pe);
+				}
             } else {
                 $this->items['raw'][$this->count] .= $line . "\r\n";
                 $pe=strpos($seg,'},');
                 
                 if ($fieldcount > -1) {
-                    if ($pe===false)
+                    if ($pe===false) {
                         $value[$fieldcount].=' '.strstr($seg,' ');
-                    else
+					} else {
                         $value[$fieldcount] .=' '.substr($seg,$ps,$pe);
+					}
                 }
             }
             
@@ -155,4 +166,3 @@ class BibTeX_Parser
         }
     }
 }
-?>

@@ -25,11 +25,11 @@ class BPSP_Lectures {
     var $current_lecture = null;
     
     /**
-     * BPSP_Lectures()
+     * __constructor()
      *
      * Constructor. Loads the hooks and actions.
      */
-    function BPSP_Lectures() {
+    function __construct() {
         add_action( 'courseware_new_teacher_added', array( &$this, 'add_caps' ) );
         add_action( 'courseware_new_teacher_removed', array( &$this, 'remove_caps' ) );
         add_action( 'courseware_group_screen_handler', array( &$this, 'screen_handler' ) );
@@ -37,50 +37,6 @@ class BPSP_Lectures {
         add_filter( 'post_type_link', array( __CLASS__, 'get_permalink' ), 10, 2 );
         add_filter( 'page_css_class', array( __CLASS__, 'css_class' ), 10, 2 );
    }
-   
-   /**
-     * register_post_types()
-     *
-     * Static function to register the lecture post type, taxonomies and capabilities.
-     */
-    function register_post_types() {
-        $lecture_post_def = array(
-            'label'                 => __( 'Lecture', 'bpsp' ),
-            'singular_label'        => __( 'Lecture', 'bpsp' ),
-            'description'           => __( 'BuddyPress ScholarPress Courseware Lectures', 'bpsp' ),
-            'public'                => BPSP_DEBUG,
-            'publicly_queryable'    => true,
-            'exclude_from_search'   => true,
-            'show_ui'               => BPSP_DEBUG,
-            'capability_type'       => 'lecture',
-            'hierarchical'          => true,
-            'rewrite'               => array( 'slug' => 'lecture', 'with_front' => false ),
-            'query_var'             => 'bpsp_lecture',
-            'supports'              => array( 'title', 'editor', 'author', 'page-attributes' ),
-            'taxonomies'            => array( 'group_id' )
-        );
-        if( !register_post_type( 'lecture', $lecture_post_def ) )
-            wp_die( __( 'BuddyPress Courseware error while registering lecture post type.', 'bpsp' ) );
-        
-        $course_rel_def = array(
-            'public'        => BPSP_DEBUG,
-            'show_ui'       => BPSP_DEBUG,
-            'hierarchical'  => false,
-            'label'         => __( 'Course ID', 'bpsp'),
-            'query_var'     => 'course_id',
-            'rewrite'       => false,
-            'capabilities'  => array(
-                'manage_terms'  => 'manage_course_id',
-                'edit_terms'    => 'manage_course_id',
-                'delete_terms'  => 'manage_course_id',
-                'assign_terms'  => 'edit_courses'
-                )
-        );
-        register_taxonomy( 'course_id', array( 'lecture' ), $course_rel_def );
-        
-        if( !get_taxonomy( 'course_id' ) )
-            wp_die( __( 'BuddyPress Courseware error while registering course taxonomy.', 'bpsp' ) );
-    }
     
     /**
      * add_caps( $user_id )
@@ -91,14 +47,18 @@ class BPSP_Lectures {
      */
     function add_caps( $user_id ) {
         $user = new WP_User( $user_id );
-        foreach( $this->caps as $c )
-            if ( !$user->has_cap( $c ) )
+        foreach( $this->caps as $c ) {
+            if ( !$user->has_cap( $c ) ) {
                 $user->add_cap( $c );
+			}
+		}
         
         //Treat super admins
-        if( is_super_admin( $user_id ) )
-            if ( !$user->has_cap( 'edit_others_lectures' ) )
+        if( is_super_admin( $user_id ) ) {
+            if ( !$user->has_cap( 'edit_others_lectures' ) ) {
                 $user->add_cap( 'edit_others_lectures' );
+			}
+		}
     }
     
     /**
@@ -110,13 +70,16 @@ class BPSP_Lectures {
      */
     function remove_caps( $user_id ) {
         //Treat super admins
-        if( is_super_admin( $user_id) )
+        if( is_super_admin( $user_id) ) {
             return;
+		}
         
         $user = new WP_User( $user_id );
-        foreach( $this->caps as $c )
-            if ( $user->has_cap( $c ) )
+        foreach( $this->caps as $c ) {
+            if ( $user->has_cap( $c ) ) {
                 $user->remove_cap( $c );
+			}
+		}
     }
     
     /**
@@ -136,13 +99,17 @@ class BPSP_Lectures {
         }
         
         $user = new WP_User( $user_id );
-        foreach( $this->caps as $c )
-            if ( !$user->has_cap( $c ) )
+        foreach( $this->caps as $c ) {
+            if ( !$user->has_cap( $c ) ) {
                 $is_ok = false;
+			}
+		}
         
-        if( !get_option( 'bpsp_allow_only_admins' ) )
-            if( !bp_group_is_admin() )
+        if( !get_option( 'bpsp_allow_only_admins' ) ) {
+            if( !bp_group_is_admin() ) {
                 $is_ok = false;
+			}
+		}
         
         return $is_ok;
     }
@@ -163,9 +130,9 @@ class BPSP_Lectures {
         elseif( reset( $action_vars ) == 'lecture' ) {
             $current_lecture = BPSP_Lectures::is_lecture( $action_vars[1] );
             
-            if( isset ( $action_vars[1] ) && null != $current_lecture )
+            if( isset ( $action_vars[1] ) && null != $current_lecture ) {
                 $this->current_lecture = $current_lecture;
-            else {
+			} else {
                 wp_redirect( wp_redirect( get_option( 'siteurl' ) ) );
             }
             
@@ -178,6 +145,7 @@ class BPSP_Lectures {
                 do_action( 'courseware_lecture_screen' );
                 add_filter( 'courseware_group_template', array( &$this, 'single_lecture_screen' ) );
             }
+			
             do_action( 'courseware_lecture_screen_handler', $action_vars );
         }
     }
@@ -194,14 +162,17 @@ class BPSP_Lectures {
         global $bp;
         $courseware_uri = bp_get_group_permalink( $bp->groups->current_group ) . 'courseware/' ;
         
-        if( is_object( $lecture_identifier ) && $lecture_identifier->post_type == "lecture" )
-            if( $lecture_identifier->group[0]->name == $bp->groups->current_group->id )
+        if( is_object( $lecture_identifier ) && $lecture_identifier->post_type == "lecture" ) {
+            if( $lecture_identifier->group[0]->name == $bp->groups->current_group->id ) {
                 return $lecture_identifier;
-            else
+			} else {
                 return null;
+			}
+		}
         
-        if( !$lecture_identifier && get_class( (object)$this->current_lecture ) == __CLASS__ )
+        if( !$lecture_identifier && get_class( (object)$this->current_lecture ) == __CLASS__ ) {
             return $this->current_lecture;
+		}
         
         $lecture_query = array(
             'post_type' => 'lecture',
@@ -209,10 +180,11 @@ class BPSP_Lectures {
         );
         
         if ( $lecture_identifier != null ) {
-            if( is_numeric( $lecture_identifier ) )
+            if( is_numeric( $lecture_identifier ) ) {
                 $lecture_query['p'] = $lecture_identifier;
-            else
+			} else {
                 $lecture_query['name'] = $lecture_identifier;
+			}
         }
         $lecture = get_posts( $lecture_query );
         
@@ -222,8 +194,9 @@ class BPSP_Lectures {
             $lecture[0]->course = !empty( $lecture_course ) ? BPSP_Courses::is_course( reset( $lecture_course )->name ) : null;
             $lecture[0]->permalink = $courseware_uri . 'lecture/' . $lecture[0]->post_name;
             return $lecture[0];
-        } else
+        } else {
             return null;
+		}
     }
     
     /**
@@ -234,25 +207,29 @@ class BPSP_Lectures {
      * @param Int $group_id of the group to be checked
      * @return Mixed Lecture objects if lectures exist and null if not.
      */
-    function has_lectures( $group_id = null ) {
+    public static function has_lectures( $group_id = null ) {
         global $bp;
         $lecture_ids = null;
         $lectures = array();
         
-        if( empty( $group_id ) )
+        if( empty( $group_id ) ) {
             $group_id = $bp->groups->current_group->id;
+		}
         
         $term_id = get_term_by( 'slug', $group_id, 'group_id' );
-        if( !empty( $term_id ) )
+        if( !empty( $term_id ) ) {
             $lecture_ids = get_objects_in_term( $term_id->term_id, 'group_id' );
+		}
         
-        if( !empty( $lecture_ids ) )
+        if( !empty( $lecture_ids ) ) {
             arsort( $lecture_ids ); // Get latest entries first
-        else
+		} else {
             return null;
+		}
         
-        foreach ( $lecture_ids as $aid )
+        foreach ( $lecture_ids as $aid ) {
             $lectures[] = self::is_lecture( $aid );
+		}
         
         return array_filter( $lectures );
     }
@@ -280,14 +257,15 @@ class BPSP_Lectures {
         if( isset( $_POST['lecture'] ) && $_POST['lecture']['object'] == 'group' && isset( $_POST['_wpnonce'] ) ) {
             $new_lecture = $_POST['lecture'];
             $is_nonce = wp_verify_nonce( $_POST['_wpnonce'], $nonce_name );
-            if( true != $is_nonce ) 
+            
+			if( true != $is_nonce ) {
                 $vars['error'] = __( 'Nonce Error while adding a lecture.', 'bpsp' );
-            else
+			} else {
                 if( isset( $new_lecture['title'] ) &&
                     isset( $new_lecture['content'] ) &&
                     isset( $new_lecture['group_id'] )
-                ) {
-                    $new_lecture['title'] = strip_tags( $new_lecture['title'] );
+				  ) {
+					$new_lecture['title'] = strip_tags( $new_lecture['title'] );
                     $new_lecture_id =  wp_insert_post( array(
                         'post_author'   => $bp->loggedin_user->id,
                         'post_title'    => $new_lecture['title'],
@@ -306,10 +284,13 @@ class BPSP_Lectures {
                         do_action( 'courseware_lecture_added', $this->current_lecture );
                         do_action( 'courseware_lecture_activity', $this->current_lecture, 'add' );
                         return $this->single_lecture_screen( $vars );
-                    } else
+                    } else {
                         $vars['error'] = __( 'New lecture could not be added.', 'bpsp' );
-                } else
+					}
+                } else {
                     $vars['error'] = __( 'Please fill in all the fields.', 'bpsp' );
+				}
+			}
         }
         
         $vars['posted_data'] = isset( $_POST['lecture'] ) ? $_POST['lecture'] : false;
@@ -336,7 +317,7 @@ class BPSP_Lectures {
      * @return Array $vars a set of variable passed to this screen template
      */
     function blank_lecture_screen( $vars ) {
-        global $bp;
+        // global $bp;
         return $vars;
     }
     
@@ -379,21 +360,26 @@ class BPSP_Lectures {
         global $bp;
         $is_nonce = false;
         
-        if( isset( $_GET['_wpnonce'] ) )
+        if( isset( $_GET['_wpnonce'] ) ) {
             $is_nonce = wp_verify_nonce( $_GET['_wpnonce'], 'bookmark' );
+		}
         
         $lecture = $this->is_lecture( $this->current_lecture );
         
-        if( $is_nonce )
+        if( $is_nonce ) {
             update_user_meta( get_current_user_id(), 'bookmark_' . bp_get_group_id(), $lecture->ID );
+		}
         
-        if(  $this->has_lecture_caps( $bp->loggedin_user->id ) || is_super_admin() )
+        if(  $this->has_lecture_caps( $bp->loggedin_user->id ) || is_super_admin() ) {
             $vars['show_edit'] = true;
-        else
+		} else {
             $vars['show_edit'] = null;
+		}
         
-        if( !$lecture )
+        if( !$lecture ) {
             $vars['die'] = __( 'BuddyPress Courseware Error! Cheatin\' Uh?', 'bpsp' );
+		}
+
         $vars['name'] = 'single_lecture';
         $vars['lecture_permalink'] = $this->current_lecture->permalink;
         $vars['lecture_edit_uri'] = $this->current_lecture->permalink . '/edit';
@@ -426,8 +412,9 @@ class BPSP_Lectures {
         $nonce_name = 'delete_lecture';
         $is_nonce = false;
         
-        if( isset( $_GET['_wpnonce'] ) )
+        if( isset( $_GET['_wpnonce'] ) ) {
             $is_nonce = wp_verify_nonce( $_GET['_wpnonce'], $nonce_name );
+		}
         
         if( true != $is_nonce ) {
             $vars['die'] = __( 'Nonce Error while deleting the lecture.', 'bpsp' );
@@ -523,8 +510,10 @@ class BPSP_Lectures {
      * Comparer for post objects, to be used as `usort` callback
      */
     function cmp_menu_order( $a, $b ) {
-        if( $a->menu_order == $b->menu_order )
+        if( $a->menu_order == $b->menu_order ) {
             return 0;
+		}
+		
         return ( $a->menu_order > $b->menu_order ) ? +1 : -1;
     }
     
@@ -541,26 +530,33 @@ class BPSP_Lectures {
         
         // Get lectures
         $lectures = BPSP_Lectures::has_lectures( $bp->groups->current_group->id );
-        if( empty( $lectures ) )
+        if( empty( $lectures ) ) {
             return null;
+		}
         
         // Try to sort them by menu_order
         usort( $lectures, array( 'BPSP_Lectures', 'cmp_menu_order' ) );
+		
         // Use WordPress's hierarchical algorithm
         $hierarchy = get_page_hierarchy( $lectures, 0 );
+		
         // Find current position in hierarchy
         if( reset( $hierarchy ) != $lecture->post_name ) {
-            while( next( $hierarchy ) )
-                if( current( $hierarchy ) == $lecture->post_name )
+            while( next( $hierarchy ) ) {
+                if( current( $hierarchy ) == $lecture->post_name ) {
                     break;
+				}
+			}
             $next = next( $hierarchy );
-        } else
+        } else {
             $next = next( $hierarchy );
+		}
         
-        if( $next )
+        if( $next ) {
             return BPSP_Lectures::is_lecture( $next );
-        else
+		} else {
             return null;
+		}
     }
     
     /**
@@ -574,23 +570,28 @@ class BPSP_Lectures {
         global $bp;
         // Get lectures
         $lectures = BPSP_Lectures::has_lectures( $bp->groups->current_group->id );
-        if( empty( $lectures ) )
+        
+		if( empty( $lectures ) ) {
             return null;
+		}
         
         // Try to sort them by menu_order
         usort( $lectures, array( 'BPSP_Lectures', 'cmp_menu_order' ) );
         // Use WordPress's hierarchical algorithm
         $hierarchy = get_page_hierarchy( $lectures, 0 );
         // Find current position in hierarchy
-        while( next( $hierarchy ) )
-            if( current( $hierarchy ) == $lecture->post_name )
+        while( next( $hierarchy ) ) {
+            if( current( $hierarchy ) == $lecture->post_name ) {
                 break;
+			}
+		}
         
         $prev = prev( $hierarchy );
-        if( $prev )
+        if( $prev ) {
             return BPSP_Lectures::is_lecture( $prev );
-        else
+		} else {
             return null;
+		}
     }
     
     /**
@@ -607,8 +608,9 @@ class BPSP_Lectures {
         if( is_object( $lecture ) && $lecture->post_type == 'lecture' && is_plugin_active( 'buddypress/bp-loader.php' ) ) {
             $courseware_uri = bp_get_group_permalink( $bp->groups->current_group ) . 'courseware/lecture/' ;
             return $courseware_uri . $lecture->post_name;
-        } else
+        } else {
             return $permalink;
+		}
     }
     
     /**
@@ -625,8 +627,9 @@ class BPSP_Lectures {
         if( is_object( $lecture ) && $lecture->post_type == 'lecture' ) {
             $css_classes[] = $lecture->menu_order . "-order";
             return $css_classes;
-        } else
+        } else {
             return $css_classes;
+		}
     }
     
     /**
@@ -638,5 +641,50 @@ class BPSP_Lectures {
         do_action( 'courseware_editor' );
         wp_enqueue_style( 'datetimepicker' );
     }
+   
+   /**
+     * register_post_types()
+     *
+     * Static function to register the lecture post type, taxonomies and capabilities.
+     */
+    public static function register_post_types() {
+        $lecture_post_def = array(
+            'label'                 => __( 'Lecture', 'bpsp' ),
+            'singular_label'        => __( 'Lecture', 'bpsp' ),
+            'description'           => __( 'BuddyPress Courseware Lectures', 'bpsp' ),
+            'public'                => BPSP_DEBUG,
+            'publicly_queryable'    => false,
+            'exclude_from_search'   => true,
+            'show_ui'               => BPSP_DEBUG,
+            'capability_type'       => 'lecture',
+            'hierarchical'          => true,
+            'rewrite'               => false,
+            'query_var'             => false,
+            'supports'              => array( 'title', 'editor', 'author', 'page-attributes' ),
+            'taxonomies'            => array( 'group_id' )
+        );
+        if( !register_post_type( 'lecture', $lecture_post_def ) ) {
+            wp_die( __( 'BuddyPress Courseware error while registering lecture post type.', 'bpsp' ) );
+		}
+        
+        $course_rel_def = array(
+            'public'        => BPSP_DEBUG,
+            'show_ui'       => BPSP_DEBUG,
+            'hierarchical'  => false,
+            'label'         => __( 'Course ID', 'bpsp'),
+            'query_var'     => 'course_id',
+            'rewrite'       => false,
+            'capabilities'  => array(
+                'manage_terms'  => 'manage_course_id',
+                'edit_terms'    => 'manage_course_id',
+                'delete_terms'  => 'manage_course_id',
+                'assign_terms'  => 'edit_courses'
+                )
+        );
+        register_taxonomy( 'course_id', array( 'lecture' ), $course_rel_def );
+        
+        if( !get_taxonomy( 'course_id' ) ) {
+            wp_die( __( 'BuddyPress Courseware error while registering course taxonomy.', 'bpsp' ) );
+		}
+    }
 }
-?>

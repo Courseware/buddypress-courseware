@@ -5,11 +5,11 @@
 class BPSP_Activity {
     
     /**
-     * BPSP_Activity()
+     * __construct()
      *
      * Constructor, adds hooks to existing actions
      */
-    function BPSP_Activity() {
+    function __construct() {
         add_action( 'courseware_assignment_activity', array( &$this, 'activity_for_assignment' ) );
         add_action( 'courseware_lecture_activity', array( &$this, 'activity_for_lecture' ) );
         add_action( 'courseware_response_added', array( &$this, 'activity_for_response' ) );
@@ -114,8 +114,9 @@ class BPSP_Activity {
     function activity_for_response( $response_data, $type = "add" ){
         global $bp;
         
-        if( !isset( $response_data['public'] ) || !$response_data['public'] )
+        if( !isset( $response_data['public'] ) || !$response_data['public'] ) {
             return;
+        }
         
         $response = $response_data['response'];
         
@@ -166,4 +167,3 @@ class BPSP_Activity {
         );
     }
 }
-?>

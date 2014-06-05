@@ -5,11 +5,11 @@
 class BPSP_Notifications {
     
     /**
-     * BPSP_Activity()
+     * __construct()
      *
      * Constructor, adds hooks to existing actions
      */
-    function BPSP_Notifications() {
+    function __construct() {
         add_action( 'courseware_grade_added', array( &$this, 'send_message' ) );
         add_action( 'courseware_grade_updated', array( &$this, 'send_message' ) );
         add_action( 'courseware_response_added', array( &$this, 'send_message' ) );
@@ -55,8 +55,11 @@ class BPSP_Notifications {
      */
     function gradebook_update_message( $data, $body = false, $subject = false ) {
         $content = null;
-        if( $subject )
+        
+        if( $subject ) {
             $content = __( 'Your assignment was graded.', 'bpsp' );
+        }
+        
         if( $body ) {
             $content = $data['teacher']->user_nicename;
             $content.= __( " graded your assignment: ", 'bpsp' );
@@ -68,6 +71,7 @@ class BPSP_Notifications {
                 $content.= __( "Teacher also left a message for you: \n", 'bpsp' ) . 
                     '<blockquote>' . $data['grade']['prv_comment'] . "</blockquote>.\n";
         }
+        
         return $content;
     }
     
@@ -83,8 +87,11 @@ class BPSP_Notifications {
      */
     function response_added_message( $data, $body = false, $subject = false ) {
         $content = null;
-        if( $subject )
+        
+        if( $subject ) {
             $content = __( 'Student replied to your assignment.', 'bpsp' );
+        }
+        
         if( $body ) {
             $content = bp_core_get_user_displayname( $data['response']->post_author );
             $content.= __( " added a response to: ", 'bpsp' );
@@ -93,7 +100,7 @@ class BPSP_Notifications {
             $content.= "\n";
             $content.= __( "Follow the link above to see it.", 'bpsp' );
         }
+        
         return $content;
     }
 }
-?>

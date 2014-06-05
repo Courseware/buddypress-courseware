@@ -74,8 +74,9 @@ class BPSP_Groups {
     function set_nav() {
         global $bp;
 
-        if( !$bp->groups->current_group || !$this->courseware_status( $bp->groups->current_group->id ) )
+        if( !$bp->groups->current_group || !$this->courseware_status( $bp->groups->current_group->id ) ) {
             return;
+        }
         
         $group_permalink = bp_get_group_permalink( $bp->groups->current_group );
         
@@ -97,20 +98,24 @@ class BPSP_Groups {
     
     /**
      * screen_handler()
+	 * 
+	 * @todo needs rewritten, it's not compatible with BuddyPress > 1.6
      *
      * Courseware action for handling the screens on group pages
      */
     function screen_handler() {
         global $bp;
 
-        if( !$this->courseware_status( $bp->groups->current_group->id ) )
+        if( !$this->courseware_status( $bp->groups->current_group->id ) ) {
             return;
+        }
         
         if ( $bp->current_action == $bp->courseware->slug ) {
             $this->current_nav_option =  $this->nav_options[__( 'Home', 'bpsp' )];
             
-            if( reset( $bp->action_variables ) )
+            if( reset( $bp->action_variables ) ) {
                 $this->current_nav_option .= '/' . reset( $bp->action_variables );
+            }
             
             add_action( 'bp_before_group_body', array( &$this, 'nav_options' ) );
             do_action( 'courseware_group_screen_handler', $bp->action_variables );
@@ -142,9 +147,9 @@ class BPSP_Groups {
      * @param Array $vars of options
      * @return template $content if $vars['echo'] == false
      */
-    function load_template( $vars = '' ) {
+    public static function load_template( $vars = '' ) {
         $content = '';
-        if( empty( $vars ) || !isset( $vars['name'] ) )
+        if( empty( $vars ) || !isset( $vars['name'] ) ) {
             $vars = array(
                 'name' => 'home',
                 'nav_options' => $this->nav_options,
@@ -152,22 +157,26 @@ class BPSP_Groups {
                 'current_option' => $this->current_nav_option,
                 'echo' => true,
             );
+        }
     
-        if( !isset( $vars['echo'] ) )
+        if( !isset( $vars['echo'] ) ) {
             $vars['echo'] = true;
+        }
         
         $templates_path = BPSP_PLUGIN_DIR . '/groups/templates/';
         $vars['templates_path'] = $templates_path;
         
         // Load helpers
-        foreach ( glob( $templates_path . "helpers/*.php" ) as $helper )
+        foreach ( glob( $templates_path . "helpers/*.php" ) as $helper ) {
             include_once $helper;
+        }
         
         //Exclude internal templates like navigation, starts with an underscore
-        if(  substr( $vars['name'], 0, 1) != '_' )
+        if(  substr( $vars['name'], 0, 1) != '_' ) {
             $vars = apply_filters( 'courseware_group_template', $vars );
-        else
+        } else {
             $vars = apply_filters( 'courseware_template_vars', $vars );
+        }
         
         if( file_exists( $templates_path . $vars['name']. '.php' ) ) {
             ob_start();
@@ -176,8 +185,9 @@ class BPSP_Groups {
                 $error = $die;
                 include( $templates_path . '_message.php' ); // Template for errors
             } else {
-                if ( isset( $trail ) )
+                if ( isset( $trail ) ) {
                     include_once $templates_path . '_trail.php'; // Template for crumbs
+                }
                 include( $templates_path . '_message.php' ); // Template for messages
                 include( $templates_path . $name . '.php' );
             }
@@ -185,10 +195,11 @@ class BPSP_Groups {
             $content = ob_get_clean();
         }
         
-        if( $vars['echo'] )
+        if( $vars['echo'] ) {
             echo $content;
-        else
+        } else {
             return $content;
+        }
     }
     
     /**
@@ -198,8 +209,9 @@ class BPSP_Groups {
      */
     function extend_search( $groups, $params ) {
         // Don't bother searching if nothing queried
-        if( empty( $params['search_terms'] ) )
+        if( empty( $params['search_terms'] ) ) {
             return $groups;
+        }
         
         // A hack to make WordPress believe the taxonomy is registered
         if( !taxonomy_exists( 'group_id' ) ) {
@@ -230,6 +242,7 @@ class BPSP_Groups {
                 }
             }
         }
+        
         return $groups;
     }
     
@@ -239,7 +252,7 @@ class BPSP_Groups {
      * Hooks into groups_admin_tabs, and adds the courseware options tab
      */
     function group_admin_tab( $current_tab, $group_slug ) {
-        global $bp;
+        // global $bp;
         
         $tab_content = '<li ';
         if ( 'courseware' == $current_tab )
@@ -280,15 +293,17 @@ class BPSP_Groups {
             if( isset( $_POST['group_courseware_status'] ) && !empty( $_POST['group_courseware_status'] ) ) {
                 $post_value = sanitize_key( $_POST['group_courseware_status'] );
             
-                if( groups_update_groupmeta( $bp->groups->current_group->id, 'courseware', $post_value ) )
+                if( groups_update_groupmeta( $bp->groups->current_group->id, 'courseware', $post_value ) ) {
                     $vars['message'] = __( 'Group Courseware settings were successfully updated.', 'bpsp' );
+                }
             }
             
             if( isset( $_POST['responses_courseware_status'] ) && !empty( $_POST['responses_courseware_status'] ) ) {
                 $post_value = sanitize_key( $_POST['responses_courseware_status'] );
             
-                if( groups_update_groupmeta( $bp->groups->current_group->id, 'courseware_responses', $post_value ) )
+                if( groups_update_groupmeta( $bp->groups->current_group->id, 'courseware_responses', $post_value ) ) {
                     $vars['message'] = __( 'Group Courseware responses settings were successfully updated.', 'bpsp' );
+                }
             }
         }
         
@@ -305,9 +320,10 @@ class BPSP_Groups {
      */
     function restrict_uploads( $wp_the_query ) {
         // Check if current user is admin or sort of
-        if ( !current_user_can( 'manage_options' ) )
+        if ( !current_user_can( 'manage_options' ) ) {
             // If not, he will only see his own attachments
             $wp_the_query->query_vars['author'] = get_current_user_id();
+        }
     }
     
     /**
@@ -317,15 +333,16 @@ class BPSP_Groups {
      */
     function media_library_tab( $action_url ) {
         // Check if private uploads are disabled
-        if ( defined( 'COURSEWARE_PRIVATE_UPLOADS' ) && !COURSEWARE_PRIVATE_UPLOADS ) 
+        if ( defined( 'COURSEWARE_PRIVATE_UPLOADS' ) && !COURSEWARE_PRIVATE_UPLOADS ) {
           return;
+        }
 
         // Check if the user is on the current tab
-        if ( $_REQUEST['tab'] == 'library' )
+        if ( $_REQUEST['tab'] == 'library' ) {
             // Do some checks before displaying attachments
             add_action( 'pre_get_posts', array( __CLASS__, 'restrict_uploads' ) );
+        }
         
         return $action_url;
     }
 }
-?>

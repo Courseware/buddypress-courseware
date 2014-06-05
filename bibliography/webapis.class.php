@@ -36,12 +36,14 @@ class BPSP_Bibliography_WebApis {
      *  - 'isbndb' => 'for isbndb'
      *  ...
      */
-    function BPSP_Bibliography_WebApis( $keys ) {
-        if( isset( $keys['worldcat'] ) )
+    function __construct( $keys ) {
+        if( isset( $keys['worldcat'] ) ) {
             $this->worldcat_key = $keys['worldcat'];
+		}
         
-        if( isset( $keys['isbndb'] ) )
+        if( isset( $keys['isbndb'] ) ) {
             $this->isbndb_key = $keys['isbndb'];
+		}
         
         $this->worldcat_uri = 'http://www.worldcat.org/webservices/catalog/search/worldcat/';
         $this->isbndb_uri = 'http://isbndb.com/api/';
@@ -58,42 +60,45 @@ class BPSP_Bibliography_WebApis {
      * @return Mixed and array with ( 'title', 'author', 'summary', 'content' )
      */
     function worldcat_opensearch( $query, $start = 1 ) {
-	if( $this->worldcat_key )
-            $key = $this->worldcat_key;
-        else
-            return;
-        
-        // citation format
-        $cformat = $this->cformat;
-        // results to return
-        $count = $this->count;
-        // format to query
-        $format = 'atom';
-	// response array
-	$r = null;
-        
-	// construct worldcat opensearch request
-	$url = $this->worldcat_uri;
-	$url .= "opensearch?q=";
-	$url .= urlencode($query);
-	$url .= "&format=".$format;
-	$url .= "&start=".$start;
-	$url .= "&count=".$count;
-	$url .= "&cformat=".$cformat;
-	$url .= "&wskey=".$key;
-	
-	$response = fetch_feed( $url );
-        if( empty( $response->errors ) )
-            $results = $response->get_items();
-	
-	if ( !empty( $results ) ) {
+		if( $this->worldcat_key ) {
+				$key = $this->worldcat_key;
+		} else {
+				return;
+		}
+
+		// citation format
+		$cformat = $this->cformat;
+		// results to return
+		$count = $this->count;
+		// format to query
+		$format = 'atom';
+		// response array
+		$r = null;
+
+		// construct worldcat opensearch request
+		$url = $this->worldcat_uri;
+		$url .= "opensearch?q=";
+		$url .= urlencode($query);
+		$url .= "&format=".$format;
+		$url .= "&start=".$start;
+		$url .= "&count=".$count;
+		$url .= "&cformat=".$cformat;
+		$url .= "&wskey=".$key;
+
+		$response = fetch_feed( $url );
+		if( empty( $response->errors ) ) {
+				$results = $response->get_items();
+		}
+
+		if ( !empty( $results ) ) {
             foreach ($results as $item) {
                 $author = $item->get_author();
                 
                 $isbn_tag = $item->get_item_tags(SIMPLEPIE_NAMESPACE_DC_11, 'identifier');
                 $isbn = explode( ':', $isbn_tag[0]['data'] );
-                if( isset( $isbn[2] ) )
+                if( isset( $isbn[2] ) ) {
                    $isbn = $isbn[2];
+				}
                 
                 $entry = array(
                     "author"    => $author->name,
@@ -104,7 +109,7 @@ class BPSP_Bibliography_WebApis {
                 );
                 
                 $r[] = $entry;
-	    }
+			}
         }
         
         return $r;
@@ -119,8 +124,9 @@ class BPSP_Bibliography_WebApis {
      * @return String the generated URL
      */
     function get_book_cover( $isbn, $size = 'S' ) {
-        if( empty( $isbn ) )
+        if( empty( $isbn ) ) {
             return BPSP_Static::get_image( "blank_book.png", false, false );
+		}
         
         $openlibrary_uri = 'http://covers.openlibrary.org/b/isbn/%s-%s.jpg';
         return sprintf( $openlibrary_uri, $isbn, $size );
@@ -133,8 +139,9 @@ class BPSP_Bibliography_WebApis {
      * @return String the generated URL
      */
     function get_www_cover() {
-        if( empty( $isbn ) )
+        if( empty( $isbn ) ) {
             return BPSP_Static::get_image( "web.png", false, false );
+		}
     }
     
     /**
@@ -148,22 +155,23 @@ class BPSP_Bibliography_WebApis {
      * @return Mixed and array with ( 'title', 'author', 'summary', 'content' )
      */
     function isbndb_query( $isbn, $start = 1 ) {
-	if( $this->isbndb_key )
-            $key = $this->isbndb_key;
-        else
-            return;
+		if( $this->isbndb_key ) {
+			$key = $this->isbndb_key;
+		} else {
+			return;
+		}
         
         // Strip '-'
         $isbn = str_replace( '-', '', $isbn );
         
         // results array
-	$entry = null;
-        
-	// construct isbndb api request
-	$url = $this->isbndb_uri;
-	$url .= "books.xml?index1=isbn&value1=";
-	$url .= urlencode($isbn);
-	$url .= "&access_key=".$key;
+		$entry = null;
+
+		// construct isbndb api request
+		$url = $this->isbndb_uri;
+		$url .= "books.xml?index1=isbn&value1=";
+		$url .= urlencode($isbn);
+		$url .= "&access_key=".$key;
 	
         // load xml
         $xml = @file_get_contents( $url );
@@ -176,16 +184,18 @@ class BPSP_Bibliography_WebApis {
         }
         
         foreach( $tags as $t ) {
-            if( strtolower( $t['tag'] ) == 'titlelong' )
+            if( strtolower( $t['tag'] ) == 'titlelong' ) {
                 $entry['title'] = $t['value'];
-            if( strtolower( $t['tag'] ) == 'authorstext' )
+			}
+            if( strtolower( $t['tag'] ) == 'authorstext' ) {
                 $entry['author'] = $t['value'];
-            if( strtolower( $t['tag'] ) == 'publishertext' )
+			}
+            if( strtolower( $t['tag'] ) == 'publishertext' ) {
                 $entry['pub'] = $t['value'];
+			}
         }
         $entry['isbn'] = $isbn;
         
         return array( $entry );
     }
 }
-?>

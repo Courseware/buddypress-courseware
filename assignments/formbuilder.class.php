@@ -28,7 +28,7 @@ class FormBuilder {
      * FormBuilder()
      * Constructor, just creates an instance
      */
-    function FormBuilder(){
+    function __construct(){
     }
     
     /**
@@ -39,9 +39,13 @@ class FormBuilder {
      */
     function load_serialized( $data ) {
         $this->serialized = $data;
-        if( !empty( $data ) )
+		
+        if( !empty( $data ) ) {
             parse_str( $data, $this->unserialized );
+		}
+		
         $this->unserialized = reset( $this->unserialized );
+		
         // Sanitization
         foreach ( $this->unserialized as $k => $q ) {
             if ( !is_array( $q['values'] ) ) {
@@ -100,12 +104,15 @@ class FormBuilder {
     function render( $data = null ) {
         $html = array();
         
-        if( !$data )
+        if( !$data ) {
             $data = $this->get_data();
+		}
         
-        if( $data )
-            foreach( $data as $field )
+        if( $data ) {
+            foreach( $data as $field ) {
                 $html[] = $this->load_field( $field );
+			}
+		}
         
         return $html;
     }
@@ -121,8 +128,7 @@ class FormBuilder {
         if ( !is_array( $field['values'] ) ) {
             $field['values'] = reset( preg_split( "/\?(?!.*\?)/", $field['values'] ) );
             $field['rendered_title'] = apply_filters( 'the_content', $field['values'] );
-        }
-        else {
+        } else {
             $field['rendered_title'] = apply_filters( 'the_content', $field['title'] );
             foreach ( $field['values'] as $i => $a )
                 $field['values'][$i]['rendered_value'] = apply_filters( 'the_content', $a['value'] );
@@ -147,6 +153,7 @@ class FormBuilder {
                     break;
             }
         }
+		
         return false;
     }
     

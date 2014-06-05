@@ -38,11 +38,11 @@ class BPSP_Assignments {
     var $frmb = null;
     
     /**
-     * BPSP_Assignments()
+     * __construct()
      *
      * Constructor. Loads the hooks and actions.
      */
-    function BPSP_Assignments() {
+    function __construct() {
         // Initialize our form builder
         $this->frmb = new FormBuilder();
         
@@ -53,31 +53,6 @@ class BPSP_Assignments {
    }
     
     /**
-     * register_post_types()
-     *
-     * Static function to register the assignments post types, taxonomies and capabilities.
-     */
-    function register_post_types() {
-        $assignment_post_def = array(
-            'label'                 => __( 'Assignments', 'bpsp' ),
-            'singular_label'        => __( 'Assignment', 'bpsp' ),
-            'description'           => __( 'BuddyPress ScholarPress Courseware Assignments', 'bpsp' ),
-            'public'                => BPSP_DEBUG,
-            'publicly_queryable'    => false,
-            'exclude_from_search'   => true,
-            'show_ui'               => BPSP_DEBUG,
-            'capability_type'       => 'assignment',
-            'hierarchical'          => false,
-            'rewrite'               => false,
-            'query_var'             => false,
-            'supports'              => array( 'title', 'editor', 'author', 'custom-fields' ),
-            'taxonomies'            => array( 'course_id', 'group_id')
-        );
-        if( !register_post_type( 'assignment', $assignment_post_def ) )
-            wp_die( __( 'BuddyPress Courseware error while registering assignment post type.', 'bpsp' ) );
-    }
-    
-    /**
      * add_assignment_caps( $user_id )
      *
      * Adds assignment capabilities to new $user_id
@@ -86,14 +61,19 @@ class BPSP_Assignments {
      */
     function add_assignment_caps( $user_id ) {
         $user = new WP_User( $user_id );
-        foreach( $this->caps as $c )
-            if ( !$user->has_cap( $c ) )
+		
+        foreach( $this->caps as $c ) {
+            if ( !$user->has_cap( $c ) ) {
                 $user->add_cap( $c );
+			}
+		}
         
         //Treat super admins
-        if( is_super_admin( $user_id ) )
-            if ( !$user->has_cap( 'edit_others_assignments' ) )
+        if( is_super_admin( $user_id ) ) {
+            if ( !$user->has_cap( 'edit_others_assignments' ) ) {
                 $user->add_cap( 'edit_others_assignments' );
+			}
+		}
     }
     
     /**
@@ -105,13 +85,16 @@ class BPSP_Assignments {
      */
     function remove_assignment_caps( $user_id ) {
         //Treat super admins
-        if( is_super_admin( $user_id) )
+        if( is_super_admin( $user_id) ) {
             return;
+		}
         
         $user = new WP_User( $user_id );
-        foreach( $this->caps as $c )
-            if ( $user->has_cap( $c ) )
+        foreach( $this->caps as $c ) {
+            if ( $user->has_cap( $c ) ) {
                 $user->remove_cap( $c );
+			}
+		}
     }
     
     /**
@@ -131,13 +114,17 @@ class BPSP_Assignments {
         }
         
         $user = new WP_User( $user_id );
-        foreach( $this->caps as $c )
-            if ( !$user->has_cap( $c ) )
+        foreach( $this->caps as $c ) {
+            if ( !$user->has_cap( $c ) ) {
                 $is_ok = false;
+			}
+		}
         
-        if( !get_option( 'bpsp_allow_only_admins' ) )
-            if( !bp_group_is_admin() )
+        if( !get_option( 'bpsp_allow_only_admins' ) ) {
+            if( !bp_group_is_admin() ) {
                 $is_ok = false;
+			}
+		}
         
         return $is_ok;
     }
@@ -157,41 +144,37 @@ class BPSP_Assignments {
             do_action( 'courseware_list_assignments_screen' );
             do_action( 'courseware_new_assignment_screen' );
             add_filter( 'courseware_group_template', array( &$this, 'new_assignment_screen' ) );
-        }
-        elseif( reset( $action_vars ) == 'assignment' ) {
-            $current_assignment = BPSP_Assignments::is_assignment( $action_vars[1] );
+        } elseif ( reset( $action_vars ) == 'assignment' ) {
+            $current_assignment = $this->is_assignment( $action_vars[1] );
             
             if( isset ( $action_vars[1] ) && null != $current_assignment ) {
                 $this->current_assignment = $current_assignment;
-            }
-            else {
+            } else {
                 wp_redirect( wp_redirect( get_option( 'siteurl' ) ) );
             }
             
             if( isset ( $action_vars[2] ) && 'edit' == $action_vars[2] ) {
                 // Try to serve the form data
-                if( isset( $_GET['get_form_data'] ) )
+                if( isset( $_GET['get_form_data'] ) ) {
                     $this->get_form_data();
+				}
+				
                 add_action( 'bp_head', array( &$this, 'load_editor' ) );
                 do_action( 'courseware_edit_assignment_screen' );
                 add_filter( 'courseware_group_template', array( &$this, 'edit_assignment_screen' ) );
-            }
-            elseif( isset ( $action_vars[2] ) && 'delete' == $action_vars[2] ) {
+            } elseif( isset ( $action_vars[2] ) && 'delete' == $action_vars[2] ) {
                 add_filter( 'courseware_group_template', array( &$this, 'delete_assignment_screen' ) );
-            }
-            elseif( isset ( $action_vars[2] ) && 'enable_forum' == $action_vars[2] ) {
+            } elseif( isset ( $action_vars[2] ) && 'enable_forum' == $action_vars[2] ) {
                 do_action( 'courseware_bibliography_screen' );
                 add_filter( 'courseware_group_template', array( &$this, 'enable_forum_assignment_screen' ) );
-            }
-            else {
+            } else {
                 do_action( 'courseware_bibliography_screen' );
                 do_action( 'courseware_assignment_screen' );
                 add_filter( 'courseware_group_template', array( &$this, 'single_assignment_screen' ) );
             }
             
             do_action( 'courseware_assignment_screen_handler', $action_vars );
-        }
-        elseif ( reset( $action_vars ) == 'assignments' ) {
+        } elseif ( reset( $action_vars ) == 'assignments' ) {
             do_action( 'courseware_list_assignments_screen' );
             add_filter( 'courseware_group_template', array( &$this, 'list_assignments_screen' ) );
         }
@@ -205,18 +188,20 @@ class BPSP_Assignments {
      * @param $assignment_identifier ID or Name of the assignment to be checked
      * @return Assignment object if assignment exists and null if not.
      */
-    function is_assignment( $assignment_identifier = null ) {
+    public static function is_assignment( $assignment_identifier = null ) {
         global $bp, $post;
         $courseware_uri = bp_get_group_permalink( $bp->groups->current_group ) . 'courseware/' ;
         
-        if( is_object( $assignment_identifier ) && $assignment_identifier->post_type == "assignment" )
+        if( is_object( $assignment_identifier ) && $assignment_identifier->post_type == "assignment" ) {
             if( $assignment_identifier->group[0]->name == $bp->groups->current_group->id )
                 return $assignment_identifier;
-            else
-                return null;
+		} else {
+		  return null;
+		}
         
-        if( !$assignment_identifier && get_class( (object)$this->current_assignment ) == __CLASS__ )
+        if( !$assignment_identifier && get_class( (object)$this->current_assignment ) == __CLASS__ ) {
             return $this->current_assignment;
+		}
         
         $assignment_query = array(
             'post_type' => 'assignment',
@@ -224,10 +209,11 @@ class BPSP_Assignments {
         );
         
         if ( $assignment_identifier != null ) {
-            if( is_numeric( $assignment_identifier ) )
+            if( is_numeric( $assignment_identifier ) ) {
                 $assignment_query['p'] = $assignment_identifier;
-            else
+			} else {
                 $assignment_query['name'] = $assignment_identifier;
+			}
         }
         $assignment = get_posts( $assignment_query );
         
@@ -245,17 +231,19 @@ class BPSP_Assignments {
             $assignment[0]->permalink = $courseware_uri . 'assignment/' . $assignment[0]->post_name;
             // If Assignment has form, render it first
             if( !empty( $assignment[0]->form_data ) ) {
-                if( !isset( $this ) || !isset( $this->frmb ) )
+                if( !isset( $this ) || !isset( $this->frmb ) ) {
                     $frmb = new FormBuilder();
-                else
+				} else {
                     $frmb = $this->frmb;
+				}
                 
                 $frmb->set_data( $assignment[0]->form_data );
                 $assignment[0]->form = $frmb->render();
             }
             return $assignment[0];
-        } else
+        } else {
             return null;
+		}
     }
     
     /**
@@ -266,25 +254,29 @@ class BPSP_Assignments {
      * @param Int $group_id of the group to be checked
      * @return Mixed Assignment objects if assignments exist and null if not.
      */
-    function has_assignments( $group_id = null ) {
+    public static function has_assignments( $group_id = null ) {
         global $bp;
         $assignment_ids = null;
         $assignments = array();
         
-        if( empty( $group_id ) )
+        if( empty( $group_id ) ) {
             $group_id = $bp->groups->current_group->id;
+		}
         
         $term_id = get_term_by( 'slug', $group_id, 'group_id' );
-        if( !empty( $term_id ) )
+        if( !empty( $term_id ) ) {
             $assignment_ids = get_objects_in_term( $term_id->term_id, 'group_id' );
+		}
         
-        if( !empty( $assignment_ids ) )
+        if( !empty( $assignment_ids ) ) {
             arsort( $assignment_ids ); // Get latest entries first
-        else
+		} else {
             return null;
+		}
         
-        foreach ( $assignment_ids as $aid )
+        foreach ( $assignment_ids as $aid ) {
             $assignments[] = self::is_assignment( $aid );
+		}
         
         return array_filter( $assignments );
     }
@@ -327,17 +319,17 @@ class BPSP_Assignments {
             $_POST['assignment']['object'] == 'group' &&
             BPSP_Lectures::is_lecture( $_POST['assignment']['lecture_id'] ) &&
             isset( $_POST['_wpnonce'] )
-        ) {
+		  ) {
             $new_assignment = $_POST['assignment'];
             $is_nonce = wp_verify_nonce( $_POST['_wpnonce'], $nonce_name );
-            if( true != $is_nonce ) 
+            if( true != $is_nonce ) {
                 $vars['error'] = __( 'Nonce Error while adding an assignment.', 'bpsp' );
-            else
+		    } else {
                 if( isset( $new_assignment['title'] ) &&
                     isset( $new_assignment['content'] ) &&
                     isset( $new_assignment['group_id'] ) &&
                     is_numeric( $new_assignment['course_id'] )
-                ) {
+				  ) {
                     $new_assignment['title'] = strip_tags( $new_assignment['title'] );
                     $new_assignment_id =  wp_insert_post( array(
                         'post_author'   => $bp->loggedin_user->id,
@@ -350,25 +342,33 @@ class BPSP_Assignments {
                         wp_set_post_terms( $new_assignment_id, $new_assignment['group_id'], 'group_id' );
                         wp_set_post_terms( $new_assignment_id, $new_assignment['course_id'], 'course_id' );
                         
-                        if( isset( $new_assignment['lecture_id'] ) )
+                        if( isset( $new_assignment['lecture_id'] ) ) {
                             add_post_meta( $new_assignment_id, 'lecture_id', $new_assignment['lecture_id'] );
+						}
                         
-                        if( strtotime( $new_assignment['due_date'] ) )
+                        if( strtotime( $new_assignment['due_date'] ) ) {
                             add_post_meta( $new_assignment_id, 'due_date', $new_assignment['due_date'] );
+						}
+						
                         // Save the formbuilder
                         if( $new_assignment['form'] ) {
                             $this->frmb->load_serialized( $new_assignment['form'] );
-                            if( $this->frmb->get_data() )
+                            if( $this->frmb->get_data() ) {
                                 add_post_meta( $new_assignment_id, 'form_data', $this->frmb->get_data() );
+							}
                         }
+						
                         $vars['message'] = __( 'New assignment was added.', 'bpsp' );
                         do_action( 'courseware_assignment_added', $this->is_assignment( $new_assignment_id ) );
                         do_action( 'courseware_assignment_activity', $this->is_assignment( $new_assignment_id ), 'add' );
                         return $this->list_assignments_screen( $vars );
-                    } else
+                    } else {
                         $vars['error'] = __( 'New assignment could not be added.', 'bpsp' );
-                } else
+					}
+                } else {
                     $vars['error'] = __( 'Please fill in all the fields.', 'bpsp' );
+				}
+			}
         }
         
         $vars['posted_data'] = $_POST['assignment'];
@@ -382,9 +382,10 @@ class BPSP_Assignments {
             __( 'New Assignment' ) => '',
         );
         
-        if ( count( $vars['lectures'] ) == 0 && empty( $vars['error'] ) )
+        if ( count( $vars['lectures'] ) == 0 && empty( $vars['error'] ) ) {
             $vars['error'] = __( 'No lectures were created. ', 'bpsp') .
                 __( 'It is recommended to create lectures first and link assignments to those.', 'bpsp' );
+		}
         
         return $vars;
     }
@@ -407,6 +408,7 @@ class BPSP_Assignments {
         $vars['trail'] = array(
             __( 'Available Assignments', 'bpsp' ) => '',
         );
+		
         return $vars;
     }
     
@@ -425,13 +427,15 @@ class BPSP_Assignments {
         
         $assignment = $this->is_assignment( $this->current_assignment );
         
-        if(  $this->has_assignment_caps( $bp->loggedin_user->id ) || is_super_admin() )
+        if(  $this->has_assignment_caps( $bp->loggedin_user->id ) || is_super_admin() ) {
             $vars['show_edit'] = true;
-        else
+		} else {
             $vars['show_edit'] = null;
+		}
         
-        if( !$assignment )
+        if( !$assignment ) {
             $vars['die'] = __( 'BuddyPress Courseware Error! Cheatin\' Uh?', 'bpsp' );
+		}
         $vars['name'] = 'single_assignment';
         $vars['assignment_permalink'] = $vars['current_uri'] . '/assignment/' . $this->current_assignment->post_name;
         $vars['assignment_edit_uri'] = $vars['current_uri'] . '/assignment/' . $this->current_assignment->post_name . '/edit';
@@ -439,8 +443,9 @@ class BPSP_Assignments {
         $vars['assignment'] = $assignment;
         
         //TODO: find why the forum_link is not showing up instantly
-        if( empty( $assignment->forum_link ) && isset( $vars['forum_link'] ) )
+        if( empty( $assignment->forum_link ) && isset( $vars['forum_link'] ) ) {
             $assignment->forum_link = $vars['forum_link'];
+		}
         
         // Check if forums are available and show the option
         if( bp_group_is_forum_enabled() ) {
@@ -471,8 +476,9 @@ class BPSP_Assignments {
         $e_forum_nonce = 'assignment_enable_forum';
         $is_nonce = false;
         
-        if( isset( $_POST['_wpnonce'] ) )
+        if( isset( $_POST['_wpnonce'] ) ) {
             $is_nonce = wp_verify_nonce( $_POST['_wpnonce'], $e_forum_nonce );
+		}
         
         // Nonce will take care of dublicates
         if( $is_nonce && bp_group_is_forum_enabled() ) {
@@ -500,14 +506,16 @@ class BPSP_Assignments {
             if( $topic ) {
                 $topic_permalink = bp_get_group_permalink( $bp->groups->current_group ) . 'forum/topic/' . $topic->topic_slug;
                 
-                if( update_post_meta( $assignment->ID, 'topic_link', $topic_permalink ) )
+                if( update_post_meta( $assignment->ID, 'topic_link', $topic_permalink ) ) {
                     $vars['message'] = __( 'Assignment forum created.', 'bpsp' );
+				}
                 
                 // Force saving the new permalink to $vars, since it doesn't show up
                 $vars['forum_link'] = $topic_permalink;
             }
-        } else
+        } else {
             $vars['error'] = __( 'Forum was not created.', 'bpsp' );
+		}
         
         return $this->single_assignment_screen( $vars );
     }
@@ -527,8 +535,9 @@ class BPSP_Assignments {
         $nonce_name = 'delete_assignment';
         $is_nonce = false;
         
-        if( isset( $_GET['_wpnonce'] ) )
+        if( isset( $_GET['_wpnonce'] ) ) {
             $is_nonce = wp_verify_nonce( $_GET['_wpnonce'], $nonce_name );
+		}
         
         if( true != $is_nonce ) {
             $vars['die'] = __( 'Nonce Error while deleting the assignment.', 'bpsp' );
@@ -543,6 +552,7 @@ class BPSP_Assignments {
         }
         
         $vars['message'] = __( 'Assignment deleted successfully.', 'bpsp' );
+		
         return $this->list_assignments_screen( $vars );
     }
     
@@ -564,7 +574,7 @@ class BPSP_Assignments {
         
         if( ( !$this->has_assignment_caps( $bp->loggedin_user->id ) && !is_super_admin() ) ||
             ( $bp->loggedin_user->id != $old_assignment->post_author )
-        ) {
+		  ) {
             $vars['die'] = __( 'BuddyPress Courseware Error while forbidden user tried to update the assignment.', 'bpsp' );
             return $vars;
         }
@@ -574,12 +584,12 @@ class BPSP_Assignments {
             $_POST['assignment']['object'] == 'group' &&
             BPSP_Lectures::is_lecture( $_POST['assignment']['lecture_id'] ) &&
             isset( $_POST['_wpnonce'] )
-        ) {
+		  ) {
             $updated_assignment = $_POST['assignment'];
             $is_nonce = wp_verify_nonce( $_POST['_wpnonce'], $nonce_name );
-            if( true != $is_nonce )
+            if( true != $is_nonce ) {
                 $vars['error'] = __( 'Nonce Error while editing the assignment.', 'bpsp' );
-            else 
+			} else {
                 if( isset( $updated_assignment['title'] ) &&
                     isset( $updated_assignment['content'] ) &&
                     isset( $updated_assignment['course_id'] ) &&
@@ -592,29 +602,38 @@ class BPSP_Assignments {
                         'post_content'  => $updated_assignment['content'],
                     ));
                     
-                    if( is_object( $updated_assignment_id ) && isset( $updated_assignment_id->ID ) )
+                    if( is_object( $updated_assignment_id ) && isset( $updated_assignment_id->ID ) ) {
                         $updated_assignment_id = $updated_assignment_id->ID;
+					}
                     
                     if( $updated_assignment_id ) {
                         wp_set_post_terms( $updated_assignment_id, $updated_assignment['course_id'], 'course_id' );
                         if( strtotime( $updated_assignment['due_date'] ) )
                             update_post_meta( $updated_assignment_id, 'due_date', $updated_assignment['due_date'], $old_assignment->due_date );
                         
-                        if( isset( $updated_assignment['lecture_id'] ) )
+                        if( isset( $updated_assignment['lecture_id'] ) ) {
                             update_post_meta( $updated_assignment_id, 'lecture_id', $updated_assignment['lecture_id'] );
+						}
                         
                         // Save the formbuilder
                         if( isset( $updated_assignment['form'] ) && !empty( $updated_assignment['form'] ) ) {
                             $this->frmb->load_serialized( $updated_assignment['form'] );
-                            if( $this->frmb->get_data() )
-                                update_post_meta( $updated_assignment_id, 'form_data', $this->frmb->get_data(), $old_assignment->form_data );
+                            if( $this->frmb->get_data() ) {
+                                update_post_meta(
+										$updated_assignment_id,
+										'form_data',
+										$this->frmb->get_data(),
+										$old_assignment->form_data
+										);
+							}
                         }
                         $vars['message'] = __( 'Assignment was updated.', 'bpsp' );
                         do_action( 'courseware_assignment_activity', $this->is_assignment( $updated_assignment_id ), 'update' );
-                    }
-                    else
+                    } else {
                         $vars['error'] = __( 'Assignment could not be updated.', 'bpsp' );
+					}
                 }
+			}
         }
         
         $vars['name'] = 'edit_assignment';
@@ -674,5 +693,29 @@ class BPSP_Assignments {
         wp_enqueue_script( 'assignments' );
         wp_enqueue_style( 'datetimepicker' );
     }
+    
+    /**
+     * register_post_types()
+     *
+     * Static function to register the assignments post types, taxonomies and capabilities.
+     */
+    public static function register_post_types() {
+        $assignment_post_def = array(
+            'label'                 => __( 'Assignments', 'bpsp' ),
+            'singular_label'        => __( 'Assignment', 'bpsp' ),
+            'description'           => __( 'BuddyPress ScholarPress Courseware Assignments', 'bpsp' ),
+            'public'                => BPSP_DEBUG,
+            'publicly_queryable'    => false,
+            'exclude_from_search'   => true,
+            'show_ui'               => BPSP_DEBUG,
+            'capability_type'       => 'assignment',
+            'hierarchical'          => false,
+            'rewrite'               => false,
+            'query_var'             => false,
+            'supports'              => array( 'title', 'editor', 'author', 'custom-fields' ),
+            'taxonomies'            => array( 'course_id', 'group_id')
+        );
+        if( !register_post_type( 'assignment', $assignment_post_def ) )
+            wp_die( __( 'BuddyPress Courseware error while registering assignment post type.', 'bpsp' ) );
+    }
 }
-?>
