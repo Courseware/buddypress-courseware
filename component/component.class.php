@@ -1,6 +1,6 @@
 <?php
 
-if ( !\defined( 'ABSPATH' ) ) { exit; }
+if ( !defined( 'ABSPATH' ) ) { exit; }
 
 class BPSP_Courseware_Component extends BP_Component {
     function __construct() {
