@@ -4,19 +4,25 @@ Plugin Name: BuddyPress Courseware
 Plugin URI: http://buddypress.coursewa.re/
 Description: A LMS for BuddyPress.
 Author: Stas Sușcov
-Version: 0.9.7
+Version: 0.9.8
 License: GNU/GPL 2
 Requires at least: WordPress 3.2, BuddyPress 1.5
 Tested up to: WordPress 3.5 / BuddyPress 1.6
 Author URI: https://github.com/Courseware/buddypress-courseware/contributors
+
+Additional contributions:
+Ian Dunn, Mădălin Ignișca, Stéphane Boisvert, Christian Wach
 */
+
+// Exit if accessed directly
+if ( !defined( 'ABSPATH' ) ) exit;
 
 /*
  * Avoid loading the plugin when BuddyPress is being activated, because there's no way to avoid fatal errors.
  * Either BPSP will call a function that's undefined (because the mock isn't setup), or BuddyPress will try to redeclare a mocked function.
  */
 if ( ! bpsp_activating_buddypress() ) {
-	define( 'BPSP_VERSION', '0.9.6' );
+	define( 'BPSP_VERSION', '0.9.8' );
 	define( 'BPSP_DEBUG', (bool) WP_DEBUG ); // This will allow you to see post types in wp-admin
 	define( 'BPSP_PLUGIN_DIR', dirname( __FILE__ ) );
 	define( 'BPSP_WEB_URI', WP_PLUGIN_URL . '/' . basename( BPSP_PLUGIN_DIR ) );
@@ -159,4 +165,3 @@ function bpsp_activating_buddypress() {
 	return $activating_buddypress;
 }
 
-?>
