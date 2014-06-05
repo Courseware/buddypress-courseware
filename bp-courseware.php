@@ -71,31 +71,50 @@ if ( ! bpsp_activating_buddypress() ) {
 		$messages = array();
 
 		if ( apply_filters( 'bpsp_require_buddypress', true ) ) {
-			if ( defined( 'BP_VERSION' ) ) {
-				foreach( array( 'groups', 'activity', 'xprofile', 'forums', 'messages' ) as $c )
-					if( !bp_is_active( $c ) )
+			if ( function_exists( 'bp_get_version' ) ) {
+				// @todo make sure that bbpress is enabled? or ignore?
+				//foreach( array( 'groups', 'activity', 'xprofile', 'forums', 'messages' ) as $c )
+				foreach( array( 'groups', 'activity', 'xprofile', 'messages' ) as $c ) {
+					if( !bp_is_active( $c ) ) {
 						$messages[] = sprintf(
 							__( 'BuddyPress Courseware dependency error: <a href="%1$s">%2$s has to be activated</a>!', 'bpsp' ),
 							admin_url( 'admin.php?page=bp-general-settings' ),
 							$c
 						);
+					}
+				}
 			} else {
 				$messages[] = sprintf(
 					__( 'BuddyPress Courseware dependency error: Please <a href="%1$s">install BuddyPress</a>!', 'bpsp' ),
 					admin_url( 'plugins.php' )
 				);
 			}
-		}	// @todo else make sure that bbpress is enabled?
+		}
 
 		if( !empty( $messages ) ) {
 			echo '<div id="message" class="error fade">';
-				foreach ( $messages as $m )
-					echo "<p>{$m}</p>";
+			foreach ( $messages as $m ) {
+				echo "<p>{$m}</p>";
+			}
 			echo '</div>';
 			return false;
 		}
 
 		return true;
+
+	}
+
+	/**
+	 * Register post types and taxonomies when BP not present
+	 */
+	function bpsp_registration() {
+		BPSP_Courses::register_post_types();
+		BPSP_Lectures::register_post_types();
+		BPSP_Assignments::register_post_types();
+		BPSP_Responses::register_post_types();
+		BPSP_Gradebook::register_post_types();
+		BPSP_Bibliography::register_post_types();
+		BPSP_Schedules::register_post_types();
 	}
 
 	/* Activate the components */
@@ -104,8 +123,10 @@ if ( ! bpsp_activating_buddypress() ) {
 			exit(1);
 		BPSP_Roles::register_profile_fields();
 
-		bpsp_registration();
-		flush_rewrite_rules();
+		if ( ! is_plugin_active( 'buddypress/bp-loader.php' ) ) {
+			bpsp_registration();
+			flush_rewrite_rules();
+		}
 	}
 	register_activation_hook( BPSP_PLUGIN_FILE, 'bpsp_activation' );
 

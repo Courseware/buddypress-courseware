@@ -15,7 +15,6 @@ class BPSP_Courseware_Component extends BP_Component {
         $bp->active_components[$this->id] = '1';
 
 		add_action( 'init', array( $this, 'bpsp_registration' ) );
-
 		add_action( 'bp_init', array( $this, 'bpsp_init' ), 6 );
     }
 	

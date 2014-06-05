@@ -19,7 +19,6 @@ add_action( 'bp_include', 'bp_courseware_init' );
  */
 function bpsp_courseware_load_core_component() {
     global $bp;
-
 	require_once BPSP_PLUGIN_DIR . '/component/component.class.php';
 	$bp->courseware = new BPSP_Courseware_Component();
 }
@@ -55,19 +54,8 @@ if ( ! is_plugin_active( 'buddypress/bp-loader.php' ) ) {
 		// @todo maybe some classes like activity will only be loaded if bp is active b/c they're completely tied to it
 	}
 	add_action( 'init', 'bpsp_init', 6 );
-
-	/**
-	 * Register post types and taxonomies
-	 */
-	function bpsp_registration() {
-		BPSP_Courses::register_post_types();
-		BPSP_Lectures::register_post_types();
-		BPSP_Assignments::register_post_types();
-		BPSP_Responses::register_post_types();
-		BPSP_Gradebook::register_post_types();
-		BPSP_Bibliography::register_post_types();
-		BPSP_Schedules::register_post_types();
-	}
+	
+	// register post types
 	add_action( 'init', 'bpsp_registration' );
 
 }
