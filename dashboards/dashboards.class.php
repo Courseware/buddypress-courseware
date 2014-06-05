@@ -10,8 +10,8 @@ class BPSP_Dashboards {
      * Constructor, loads the hooks
      */
     function __construct() {
-        add_action( 'courseware_group_screen_handler', array( &$this, 'screen_handler' ) );
-		add_shortcode( 'courseware_dashboard', array( &$this, 'shortcode_courseware_dashboard' ) );
+        add_action( 'courseware_group_screen_handler', array( $this, 'screen_handler' ) );
+		add_shortcode( 'courseware_dashboard', array( $this, 'shortcode_courseware_dashboard' ) );
     }
     
     /**
@@ -23,7 +23,7 @@ class BPSP_Dashboards {
     function screen_handler( $action_vars ) {
         if( !isset( $action_vars[0] ) || $action_vars[0] == 'home' ) {
             do_action( 'courseware_group_dashboard' );
-            add_filter( 'courseware_group_template', array( &$this, 'group_dashboard' ) );
+            add_filter( 'courseware_group_template', array( $this, 'group_dashboard' ) );
         }
     }
     

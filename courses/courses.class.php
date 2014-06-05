@@ -34,13 +34,13 @@ class BPSP_Courses {
      * Constructor. Loads the hooks and actions.
      */
     function __construct() {
-        add_action( 'bp_after_group_header', array( &$this, 'course_group_header' ) );
-        add_action( 'courseware_new_teacher_added', array( &$this, 'add_course_caps' ) );
-        add_action( 'courseware_new_teacher_removed', array( &$this, 'remove_course_caps' ) );
-        add_action( 'courseware_group_screen_handler', array( &$this, 'screen_handler' ) );
-        add_filter( 'the_content', array( &$this, 'standalone_screen_handler' ) );
-        add_action( 'groups_created_group', array( &$this, 'init_course' ) );
-        add_filter( 'courseware_group_nav_options', array( &$this, 'add_nav_options' ) );
+        add_action( 'bp_after_group_header', array( $this, 'course_group_header' ) );
+        add_action( 'courseware_new_teacher_added', array( $this, 'add_course_caps' ) );
+        add_action( 'courseware_new_teacher_removed', array( $this, 'remove_course_caps' ) );
+        add_action( 'courseware_group_screen_handler', array( $this, 'screen_handler' ) );
+        add_filter( 'the_content', array( $this, 'standalone_screen_handler' ) );
+        add_action( 'groups_created_group', array( $this, 'init_course' ) );
+        add_filter( 'courseware_group_nav_options', array( $this, 'add_nav_options' ) );
     }
     
     /**
@@ -153,13 +153,13 @@ class BPSP_Courses {
             
             if( isset ( $action_vars[1] ) && 'edit' == $action_vars[1] ) {
                 // Hide excerpt from group header
-                remove_action( 'bp_after_group_header', array( &$this, 'course_group_header' ) );
-                add_action( 'bp_head', array( &$this, 'load_editor' ) );
-                add_filter( 'courseware_group_template', array( &$this, 'edit_course_screen' ) );
+                remove_action( 'bp_after_group_header', array( $this, 'course_group_header' ) );
+                add_action( 'bp_head', array( $this, 'load_editor' ) );
+                add_filter( 'courseware_group_template', array( $this, 'edit_course_screen' ) );
             } else {
                 do_action( 'courseware_lectures_screen' );
                 do_action( 'courseware_bibliography_screen' );
-                add_filter( 'courseware_group_template', array( &$this, 'single_course_screen' ) );
+                add_filter( 'courseware_group_template', array( $this, 'single_course_screen' ) );
             }
         }
     }
@@ -174,7 +174,7 @@ class BPSP_Courses {
 		global $post, $bp;
 
 		if ( 'course' == get_post_type() ) {
-			remove_filter( 'the_content', array( &$this, 'standalone_screen_handler' ) );	// avoid an infinite loop
+			remove_filter( 'the_content', array( $this, 'standalone_screen_handler' ) );	// avoid an infinite loop
 
 			$this->current_course = $post->ID;
 			$post->permalink = get_permalink( $post->ID );
@@ -206,7 +206,7 @@ class BPSP_Courses {
 			) );
 
 			$content = BPSP_Groups::load_template( $vars );
-			add_filter( 'the_content', array( &$this, 'standalone_screen_handler' ) );	// re-register the callback
+			add_filter( 'the_content', array( $this, 'standalone_screen_handler' ) );	// re-register the callback
 		}
 
 		return $content;

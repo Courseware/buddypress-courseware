@@ -38,11 +38,11 @@ class BPSP_Bibliography {
      * Constructor. Loads all the hooks.
      */
     function __construct() {
-        add_action( 'courseware_new_teacher_added', array( &$this, 'add_bib_caps' ) );
-        add_action( 'courseware_new_teacher_removed', array( &$this, 'remove_bib_caps' ) );
-        add_filter( 'courseware_course', array( &$this, 'bibs_screen' ) );
-        add_filter( 'courseware_assignment', array( &$this, 'bibs_screen' ) );
-        add_action( 'courseware_group_screen_handler', array( &$this, 'screen_handler' ) );
+        add_action( 'courseware_new_teacher_added', array( $this, 'add_bib_caps' ) );
+        add_action( 'courseware_new_teacher_removed', array( $this, 'remove_bib_caps' ) );
+        add_filter( 'courseware_course', array( $this, 'bibs_screen' ) );
+        add_filter( 'courseware_assignment', array( $this, 'bibs_screen' ) );
+        add_action( 'courseware_group_screen_handler', array( $this, 'screen_handler' ) );
         // Load api keys
         $this->worldcat_key = get_option( 'bpsp_worldcat_key' );
         $this->isbndb_key = get_option( 'bpsp_isbndb_key' );
@@ -380,16 +380,16 @@ class BPSP_Bibliography {
         if( isset ( $action_vars[0] ) && 'new_bibliography' == $action_vars[0] ) {
             do_action( 'courseware_bibliography_screen' );
             do_action( 'courseware_new_bibliography_screen' );
-            add_filter( 'courseware_group_template', array( &$this, 'new_bib_screen' ) );
+            add_filter( 'courseware_group_template', array( $this, 'new_bib_screen' ) );
         } elseif( isset ( $action_vars[0] ) && 'import_bibliographies' == $action_vars[0] ) {
-            add_filter( 'courseware_group_template', array( &$this, 'import_bibs_screen' ) );
+            add_filter( 'courseware_group_template', array( $this, 'import_bibs_screen' ) );
         } elseif ( isset ( $action_vars[0] ) && 'edit_bibliography' == $action_vars[0] ) {
             do_action( 'courseware_edit_bibliography_screen' );
-            add_filter( 'courseware_group_template', array( &$this, 'edit_bib_screen' ) );
+            add_filter( 'courseware_group_template', array( $this, 'edit_bib_screen' ) );
         } elseif( isset ( $action_vars[0] ) && 'delete_bibliography' == $action_vars[0] ) {
             do_action( 'courseware_bibliography_screen' );
             do_action( 'courseware_new_bibliography_screen' );
-            add_filter( 'courseware_group_template', array( &$this, 'delete_bib_screen' ) );
+            add_filter( 'courseware_group_template', array( $this, 'delete_bib_screen' ) );
         }
     }
     

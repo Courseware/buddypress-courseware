@@ -46,10 +46,10 @@ class BPSP_Assignments {
         // Initialize our form builder
         $this->frmb = new FormBuilder();
         
-        add_action( 'courseware_new_teacher_added', array( &$this, 'add_assignment_caps' ) );
-        add_action( 'courseware_new_teacher_removed', array( &$this, 'remove_assignment_caps' ) );
-        add_action( 'courseware_group_screen_handler', array( &$this, 'screen_handler' ) );
-        add_filter( 'courseware_group_nav_options', array( &$this, 'add_nav_options' ) );
+        add_action( 'courseware_new_teacher_added', array( $this, 'add_assignment_caps' ) );
+        add_action( 'courseware_new_teacher_removed', array( $this, 'remove_assignment_caps' ) );
+        add_action( 'courseware_group_screen_handler', array( $this, 'screen_handler' ) );
+        add_filter( 'courseware_group_nav_options', array( $this, 'add_nav_options' ) );
    }
     
     /**
@@ -140,10 +140,10 @@ class BPSP_Assignments {
         if( reset( $action_vars ) == 'new_assignment' ) {
             $this->current_course = BPSP_Courses::is_course();
             //Load editor
-            add_action( 'bp_head', array( &$this, 'load_editor' ) );
+            add_action( 'bp_head', array( $this, 'load_editor' ) );
             do_action( 'courseware_list_assignments_screen' );
             do_action( 'courseware_new_assignment_screen' );
-            add_filter( 'courseware_group_template', array( &$this, 'new_assignment_screen' ) );
+            add_filter( 'courseware_group_template', array( $this, 'new_assignment_screen' ) );
         } elseif ( reset( $action_vars ) == 'assignment' ) {
             $current_assignment = $this->is_assignment( $action_vars[1] );
             
@@ -159,24 +159,24 @@ class BPSP_Assignments {
                     $this->get_form_data();
 				}
 				
-                add_action( 'bp_head', array( &$this, 'load_editor' ) );
+                add_action( 'bp_head', array( $this, 'load_editor' ) );
                 do_action( 'courseware_edit_assignment_screen' );
-                add_filter( 'courseware_group_template', array( &$this, 'edit_assignment_screen' ) );
+                add_filter( 'courseware_group_template', array( $this, 'edit_assignment_screen' ) );
             } elseif( isset ( $action_vars[2] ) && 'delete' == $action_vars[2] ) {
-                add_filter( 'courseware_group_template', array( &$this, 'delete_assignment_screen' ) );
+                add_filter( 'courseware_group_template', array( $this, 'delete_assignment_screen' ) );
             } elseif( isset ( $action_vars[2] ) && 'enable_forum' == $action_vars[2] ) {
                 do_action( 'courseware_bibliography_screen' );
-                add_filter( 'courseware_group_template', array( &$this, 'enable_forum_assignment_screen' ) );
+                add_filter( 'courseware_group_template', array( $this, 'enable_forum_assignment_screen' ) );
             } else {
                 do_action( 'courseware_bibliography_screen' );
                 do_action( 'courseware_assignment_screen' );
-                add_filter( 'courseware_group_template', array( &$this, 'single_assignment_screen' ) );
+                add_filter( 'courseware_group_template', array( $this, 'single_assignment_screen' ) );
             }
             
             do_action( 'courseware_assignment_screen_handler', $action_vars );
         } elseif ( reset( $action_vars ) == 'assignments' ) {
             do_action( 'courseware_list_assignments_screen' );
-            add_filter( 'courseware_group_template', array( &$this, 'list_assignments_screen' ) );
+            add_filter( 'courseware_group_template', array( $this, 'list_assignments_screen' ) );
         }
     }
     

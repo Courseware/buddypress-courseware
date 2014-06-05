@@ -29,11 +29,11 @@ class BPSP_Gradebook {
      * Constructor. Loads the hooks and actions.
      */
     function __construct() {
-        add_action( 'courseware_new_teacher_added', array( &$this, 'add_grade_caps' ) );
-        add_action( 'courseware_new_teacher_removed', array( &$this, 'remove_grade_caps' ) );
-        add_action( 'courseware_group_screen_handler', array( &$this, 'screen_handler' ) );
-        add_action( 'courseware_assignment', array( &$this, 'student_screen' ) );
-        add_action( 'courseware_response_added', array( &$this, 'save_quiz_coverage' ) );
+        add_action( 'courseware_new_teacher_added', array( $this, 'add_grade_caps' ) );
+        add_action( 'courseware_new_teacher_removed', array( $this, 'remove_grade_caps' ) );
+        add_action( 'courseware_group_screen_handler', array( $this, 'screen_handler' ) );
+        add_action( 'courseware_assignment', array( $this, 'student_screen' ) );
+        add_action( 'courseware_response_added', array( $this, 'save_quiz_coverage' ) );
 	}
     
     /**
@@ -137,19 +137,19 @@ class BPSP_Gradebook {
 				'gradebook' == $action_vars[2] &&
 				'clear' == $action_vars[3]
 			) {
-                add_filter( 'courseware_group_template', array( &$this, 'clear_gradebook_screen' ) );
+                add_filter( 'courseware_group_template', array( $this, 'clear_gradebook_screen' ) );
 			} elseif(
 				count( $action_vars ) > 3 &&
 				'gradebook' == $action_vars[2] &&
 				'import' == $action_vars[3]
 			) {
-                add_filter( 'courseware_group_template', array( &$this, 'import_gradebook_screen' ) );
+                add_filter( 'courseware_group_template', array( $this, 'import_gradebook_screen' ) );
 			} elseif(
 				isset ( $action_vars[2] ) &&
 				'gradebook' == $action_vars[2]
 			) {
                 do_action( 'courseware_gradebook_screen' );
-                add_filter( 'courseware_group_template', array( &$this, 'gradebook_screen' ) );
+                add_filter( 'courseware_group_template', array( $this, 'gradebook_screen' ) );
             }
         }
     }

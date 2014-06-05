@@ -10,9 +10,9 @@ class BPSP_Notifications {
      * Constructor, adds hooks to existing actions
      */
     function __construct() {
-        add_action( 'courseware_grade_added', array( &$this, 'send_message' ) );
-        add_action( 'courseware_grade_updated', array( &$this, 'send_message' ) );
-        add_action( 'courseware_response_added', array( &$this, 'send_message' ) );
+        add_action( 'courseware_grade_added', array( $this, 'send_message' ) );
+        add_action( 'courseware_grade_updated', array( $this, 'send_message' ) );
+        add_action( 'courseware_response_added', array( $this, 'send_message' ) );
     }
     
     /**

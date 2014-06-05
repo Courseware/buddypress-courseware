@@ -43,10 +43,10 @@ class BPSP_Responses {
      * Constructor. Loads the hooks and actions.
      */
     function __construct() {
-        add_action( 'courseware_new_teacher_added', array( &$this, 'add_response_caps' ) );
-        add_action( 'courseware_new_teacher_removed', array( &$this, 'remove_response_caps' ) );
-        add_action( 'courseware_assignment_screen_handler', array( &$this, 'screen_handler' ) );
-        add_filter( 'courseware_assignment', array( &$this, 'populate_responses' ) );
+        add_action( 'courseware_new_teacher_added', array( $this, 'add_response_caps' ) );
+        add_action( 'courseware_new_teacher_removed', array( $this, 'remove_response_caps' ) );
+        add_action( 'courseware_assignment_screen_handler', array( $this, 'screen_handler' ) );
+        add_filter( 'courseware_assignment', array( $this, 'populate_responses' ) );
    }
     
     /**
@@ -229,8 +229,8 @@ class BPSP_Responses {
         if( isset ( $action_vars[2] ) && $action_vars[2] == 'add_response' ) {
             do_action( 'courseware_add_response' );
             //Load editor
-            add_action( 'bp_head', array( &$this, 'load_editor' ) );
-            add_filter( 'courseware_group_template', array( &$this, 'new_response_screen' ) );
+            add_action( 'bp_head', array( $this, 'load_editor' ) );
+            add_filter( 'courseware_group_template', array( $this, 'new_response_screen' ) );
         } elseif ( isset ( $action_vars[2] ) && $action_vars[2] == 'response' ) {
             $current_response = $this->is_response( $action_vars[3] );
 			
@@ -241,10 +241,10 @@ class BPSP_Responses {
 			}
             
             if( isset ( $action_vars[4] ) && 'delete' == $action_vars[4] ) {
-                add_filter( 'courseware_group_template', array( &$this, 'delete_response_screen' ) );
+                add_filter( 'courseware_group_template', array( $this, 'delete_response_screen' ) );
 			} else {
                 do_action( 'courseware_single_response' );
-                add_filter( 'courseware_group_template', array( &$this, 'single_response_screen' ) );
+                add_filter( 'courseware_group_template', array( $this, 'single_response_screen' ) );
             }
         }
     }

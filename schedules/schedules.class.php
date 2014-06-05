@@ -34,10 +34,10 @@ class BPSP_Schedules {
      * Constructor. Loads the hooks and actions.
      */
     function __construct() {
-        add_action( 'courseware_new_teacher_added', array( &$this, 'add_schedule_caps' ) );
-        add_action( 'courseware_new_teacher_removed', array( &$this, 'remove_schedule_caps' ) );
-        add_action( 'courseware_group_screen_handler', array( &$this, 'screen_handler' ) );
-        add_filter( 'courseware_group_nav_options', array( &$this, 'add_nav_options' ) );
+        add_action( 'courseware_new_teacher_added', array( $this, 'add_schedule_caps' ) );
+        add_action( 'courseware_new_teacher_removed', array( $this, 'remove_schedule_caps' ) );
+        add_action( 'courseware_group_screen_handler', array( $this, 'screen_handler' ) );
+        add_filter( 'courseware_group_nav_options', array( $this, 'add_nav_options' ) );
    }
     
     /**
@@ -127,7 +127,7 @@ class BPSP_Schedules {
             $this->current_course = BPSP_Courses::is_course();
             
             do_action( 'courseware_new_schedule_screen' );
-            add_filter( 'courseware_group_template', array( &$this, 'new_schedule_screen' ) );
+            add_filter( 'courseware_group_template', array( $this, 'new_schedule_screen' ) );
         } elseif ( reset( $action_vars ) == 'schedule' ) {
             if( isset ( $action_vars[1] ) && null != $this->is_schedule( $action_vars[1] ) ) {
                 $this->current_schedule = $action_vars[1];
@@ -137,12 +137,12 @@ class BPSP_Schedules {
             
             if( isset ( $action_vars[2] ) && 'edit' == $action_vars[2] ) {
                 do_action( 'courseware_edit_schedule_screen' );
-                add_filter( 'courseware_group_template', array( &$this, 'edit_schedule_screen' ) );
+                add_filter( 'courseware_group_template', array( $this, 'edit_schedule_screen' ) );
             } elseif( isset ( $action_vars[2] ) && 'delete' == $action_vars[2] ) {
                 do_action( 'courseware_delete_schedule_screen' );
-                add_filter( 'courseware_group_template', array( &$this, 'delete_schedule_screen' ) );
+                add_filter( 'courseware_group_template', array( $this, 'delete_schedule_screen' ) );
             } else {
-                add_filter( 'courseware_group_template', array( &$this, 'single_schedule_screen' ) );
+                add_filter( 'courseware_group_template', array( $this, 'single_schedule_screen' ) );
 			}
         } elseif ( reset( $action_vars ) == 'schedules' ) {
             // Output json
@@ -156,7 +156,7 @@ class BPSP_Schedules {
 			}
             
             do_action( 'courseware_list_schedules_screen' );
-            add_filter( 'courseware_group_template', array( &$this, 'list_schedules_screen' ) );
+            add_filter( 'courseware_group_template', array( $this, 'list_schedules_screen' ) );
         }
     }
     

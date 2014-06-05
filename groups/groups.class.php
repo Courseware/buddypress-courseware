@@ -115,7 +115,7 @@ class BPSP_Groups {
             'slug' => $bp->courseware->slug,
             'parent_url' => $group_permalink, 
             'parent_slug' => $bp->groups->current_group->slug, 
-            'screen_function' => array( &$this, 'screen_handler' ),
+            'screen_function' => array( $this, 'screen_handler' ),
             'position' => 35, 
             'user_has_access' => $bp->groups->current_group->user_has_access,
             'item_css_id' => 'courseware-group'
@@ -170,9 +170,9 @@ class BPSP_Groups {
                 $this->current_nav_option .= '/' . reset( $bp->action_variables );
             }
             
-            add_action( 'bp_before_group_body', array( &$this, 'nav_options' ) );
+            add_action( 'bp_before_group_body', array( $this, 'nav_options' ) );
             do_action( 'courseware_group_screen_handler', $bp->action_variables );
-            add_action( 'bp_template_content', array( &$this, 'load_template' ) );
+            add_action( 'bp_template_content', array( $this, 'load_template' ) );
         }
         groups_update_last_activity( $bp->groups->current_group->id );
         bp_core_load_template( apply_filters( 'bp_core_template_plugin' , 'groups/single/plugins' ) );
@@ -327,7 +327,7 @@ class BPSP_Groups {
         
         if ( $bp->current_component == $bp->groups->id && 'courseware' == reset($bp->action_variables) ) {
             if ( $bp->is_item_admin || $bp->is_item_mod  ) {
-                add_action( 'bp_before_group_admin_content', array( &$this, 'group_admin_content' ) );
+                add_action( 'bp_before_group_admin_content', array( $this, 'group_admin_content' ) );
                 bp_core_load_template( apply_filters( 'groups_template_group_admin', 'groups/single/home' ) );
             }
         }

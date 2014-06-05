@@ -30,10 +30,10 @@ class BPSP_Lectures {
      * Constructor. Loads the hooks and actions.
      */
     function __construct() {
-        add_action( 'courseware_new_teacher_added', array( &$this, 'add_caps' ) );
-        add_action( 'courseware_new_teacher_removed', array( &$this, 'remove_caps' ) );
-        add_action( 'courseware_group_screen_handler', array( &$this, 'screen_handler' ) );
-        add_filter( 'courseware_course', array( &$this, 'lectures_screen' ) );
+        add_action( 'courseware_new_teacher_added', array( $this, 'add_caps' ) );
+        add_action( 'courseware_new_teacher_removed', array( $this, 'remove_caps' ) );
+        add_action( 'courseware_group_screen_handler', array( $this, 'screen_handler' ) );
+        add_filter( 'courseware_course', array( $this, 'lectures_screen' ) );
         add_filter( 'post_type_link', array( __CLASS__, 'get_permalink' ), 10, 2 );
         add_filter( 'page_css_class', array( __CLASS__, 'css_class' ), 10, 2 );
    }
@@ -124,8 +124,8 @@ class BPSP_Lectures {
         
         if( reset( $action_vars ) == 'new_lecture' ) {
             //Load editor
-            add_action( 'bp_head', array( &$this, 'load_editor' ) );
-            add_filter( 'courseware_group_template', array( &$this, 'new_lecture_screen' ) );
+            add_action( 'bp_head', array( $this, 'load_editor' ) );
+            add_filter( 'courseware_group_template', array( $this, 'new_lecture_screen' ) );
         }
         elseif( reset( $action_vars ) == 'lecture' ) {
             $current_lecture = BPSP_Lectures::is_lecture( $action_vars[1] );
@@ -137,13 +137,13 @@ class BPSP_Lectures {
             }
             
             if( isset ( $action_vars[2] ) && 'edit' == $action_vars[2] ) {
-                add_action( 'bp_head', array( &$this, 'load_editor' ) );
-                add_filter( 'courseware_group_template', array( &$this, 'edit_lecture_screen' ) );
+                add_action( 'bp_head', array( $this, 'load_editor' ) );
+                add_filter( 'courseware_group_template', array( $this, 'edit_lecture_screen' ) );
             } elseif( isset ( $action_vars[2] ) && 'delete' == $action_vars[2] ) {
-                add_filter( 'courseware_group_template', array( &$this, 'delete_lecture_screen' ) );
+                add_filter( 'courseware_group_template', array( $this, 'delete_lecture_screen' ) );
             } else {
                 do_action( 'courseware_lecture_screen' );
-                add_filter( 'courseware_group_template', array( &$this, 'single_lecture_screen' ) );
+                add_filter( 'courseware_group_template', array( $this, 'single_lecture_screen' ) );
             }
 			
             do_action( 'courseware_lecture_screen_handler', $action_vars );

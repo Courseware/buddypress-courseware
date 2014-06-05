@@ -10,13 +10,13 @@ class BPSP_Activity {
      * Constructor, adds hooks to existing actions
      */
     function __construct() {
-        add_action( 'courseware_assignment_activity', array( &$this, 'activity_for_assignment' ) );
-        add_action( 'courseware_lecture_activity', array( &$this, 'activity_for_lecture' ) );
-        add_action( 'courseware_response_added', array( &$this, 'activity_for_response' ) );
-        add_action( 'courseware_schedule_activity', array( &$this, 'activity_for_schedule' ) );
-        add_action( 'bp_register_activity_actions', array( &$this, 'register_activity_types' ) );
-        add_action( 'bp_group_activity_filter_options', array( &$this, 'register_filter_options' ) );
-        add_action( 'bp_member_activity_filter_options', array( &$this, 'register_filter_options' ) );
+        add_action( 'courseware_assignment_activity', array( $this, 'activity_for_assignment' ) );
+        add_action( 'courseware_lecture_activity', array( $this, 'activity_for_lecture' ) );
+        add_action( 'courseware_response_added', array( $this, 'activity_for_response' ) );
+        add_action( 'courseware_schedule_activity', array( $this, 'activity_for_schedule' ) );
+        add_action( 'bp_register_activity_actions', array( $this, 'register_activity_types' ) );
+        add_action( 'bp_group_activity_filter_options', array( $this, 'register_filter_options' ) );
+        add_action( 'bp_member_activity_filter_options', array( $this, 'register_filter_options' ) );
     }
     
     /**

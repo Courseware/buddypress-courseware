@@ -76,22 +76,22 @@ class BPSP_Static {
         wp_register_style( 'formbuilder', BPSP_WEB_URI . '/static/css/formbuilder/jquery.formbuilder.css', null, '0.3-beta' );
         
         // Hooks
-        add_action( 'wp_enqueue_scripts', array( &$this, 'load_courseware_css' ) );
-        add_action( 'courseware_editor', array( &$this, 'courseware_editor_enqueues' ) );
-        add_action( 'courseware_list_schedules_screen', array( &$this, 'list_schedules_enqueues' ) );
-        add_action( 'courseware_list_assignments_screen', array( &$this, 'list_assignments_enqueues' ) );
-        add_action( 'courseware_assignment_screen', array( &$this, 'assignment_enqueues' ) );
-        add_action( 'courseware_bibliography_screen', array( &$this, 'bibs_enqueues' ) );
-        add_action( 'courseware_new_bibliography_screen', array( &$this, 'new_bib_enqueues' ) );
-        add_action( 'courseware_edit_bibliography_screen', array( &$this, 'edit_bib_enqueues' ) );
-        add_action( 'courseware_new_schedule_screen', array( &$this, 'schedules_enqueues' ) );
-        add_action( 'courseware_edit_schedule_screen', array( &$this, 'schedules_enqueues' ));
-        add_action( 'courseware_delete_schedule_screen', array( &$this, 'delete_schedule_enqueues' ) );
-        add_action( 'courseware_gradebook_screen', array( &$this, 'gradebook_enqueues' ) );
-        add_action( 'courseware_group_dashboard', array( &$this, 'group_dashboard_enqueues' ) );
-        add_action( 'courseware_lectures_screen', array( &$this, 'lectures_enqueues' ) );
-        add_action( 'courseware_new_assignment_screen', array( &$this, 'new_assignment_enqueues' ) );
-        add_action( 'courseware_edit_assignment_screen', array( &$this, 'edit_assignment_enqueues' ) );
+        add_action( 'wp_enqueue_scripts', array( $this, 'load_courseware_css' ) );
+        add_action( 'courseware_editor', array( $this, 'courseware_editor_enqueues' ) );
+        add_action( 'courseware_list_schedules_screen', array( $this, 'list_schedules_enqueues' ) );
+        add_action( 'courseware_list_assignments_screen', array( $this, 'list_assignments_enqueues' ) );
+        add_action( 'courseware_assignment_screen', array( $this, 'assignment_enqueues' ) );
+        add_action( 'courseware_bibliography_screen', array( $this, 'bibs_enqueues' ) );
+        add_action( 'courseware_new_bibliography_screen', array( $this, 'new_bib_enqueues' ) );
+        add_action( 'courseware_edit_bibliography_screen', array( $this, 'edit_bib_enqueues' ) );
+        add_action( 'courseware_new_schedule_screen', array( $this, 'schedules_enqueues' ) );
+        add_action( 'courseware_edit_schedule_screen', array( $this, 'schedules_enqueues' ));
+        add_action( 'courseware_delete_schedule_screen', array( $this, 'delete_schedule_enqueues' ) );
+        add_action( 'courseware_gradebook_screen', array( $this, 'gradebook_enqueues' ) );
+        add_action( 'courseware_group_dashboard', array( $this, 'group_dashboard_enqueues' ) );
+        add_action( 'courseware_lectures_screen', array( $this, 'lectures_enqueues' ) );
+        add_action( 'courseware_new_assignment_screen', array( $this, 'new_assignment_enqueues' ) );
+        add_action( 'courseware_edit_assignment_screen', array( $this, 'edit_assignment_enqueues' ) );
     }
     
     /**
