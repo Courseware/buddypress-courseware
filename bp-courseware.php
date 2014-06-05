@@ -104,8 +104,26 @@ if ( ! bpsp_activating_buddypress() ) {
 
 	}
 
+	// Init the componenents
+	function bpsp_init() {
+		new BPSP_WordPress();
+		new BPSP_Roles();
+		new BPSP_Groups();
+		new BPSP_Courses();
+		new BPSP_Lectures();
+		new BPSP_Assignments();
+		new BPSP_Responses();
+		new BPSP_Gradebook();
+		new BPSP_Bibliography();
+		new BPSP_Schedules();
+		new BPSP_Dashboards();
+		new BPSP_Static();
+		new BPSP_Activity();
+		new BPSP_Notifications();
+	}
+
 	/**
-	 * Register post types and taxonomies when BP not present
+	 * Register post types and taxonomies
 	 */
 	function bpsp_registration() {
 		BPSP_Courses::register_post_types();
@@ -123,10 +141,8 @@ if ( ! bpsp_activating_buddypress() ) {
 			exit(1);
 		BPSP_Roles::register_profile_fields();
 
-		if ( ! is_plugin_active( 'buddypress/bp-loader.php' ) ) {
-			bpsp_registration();
-			flush_rewrite_rules();
-		}
+		bpsp_registration();
+		flush_rewrite_rules();
 	}
 	register_activation_hook( BPSP_PLUGIN_FILE, 'bpsp_activation' );
 

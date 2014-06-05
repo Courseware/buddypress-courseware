@@ -7,9 +7,11 @@ if ( !defined( 'ABSPATH' ) ) exit;
  * Only load the component if BuddyPress is loaded and initialized.
  */
 function bp_courseware_init() {
-	// Because our loader file uses BP_Component, it requires BP 1.5 or greater.
+	// Because we use BP_Component, we require BP 1.5 or greater.
 	if ( version_compare( BP_VERSION, '1.5', '>=' ) ) {
 		add_action( 'bp_loaded', 'bpsp_courseware_load_core_component' );
+		add_action( 'bp_init', 'bpsp_init', 6 );
+		add_action( 'init', 'bpsp_registration' );
 	}
 }
 add_action( 'bp_include', 'bp_courseware_init' );
@@ -34,25 +36,7 @@ if ( ! is_plugin_active( 'buddypress/bp-loader.php' ) ) {
 	}
 	add_action( 'plugins_loaded', 'bpsp_on_plugins_load', 5 );
 
-	/* Initiate the componenets */
-	function bpsp_init() {
-		new BPSP_WordPress();
-		new BPSP_Roles();
-		new BPSP_Groups();
-		new BPSP_Courses();
-		new BPSP_Lectures();
-		new BPSP_Assignments();
-		new BPSP_Responses();
-		new BPSP_Gradebook();
-		new BPSP_Bibliography();
-		new BPSP_Schedules();
-		new BPSP_Dashboards();
-		new BPSP_Static();
-		new BPSP_Activity();
-		new BPSP_Notifications();
-
-		// @todo maybe some classes like activity will only be loaded if bp is active b/c they're completely tied to it
-	}
+	// init componenents
 	add_action( 'init', 'bpsp_init', 6 );
 	
 	// register post types

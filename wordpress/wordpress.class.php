@@ -10,7 +10,8 @@ class BPSP_WordPress {
      */
     function __construct() {
         // Add our screen to BuddyPress menu
-        add_action( bp_core_admin_hook(), array( __CLASS__, 'menus') );
+        add_action( 'network_admin_menu', array( __CLASS__, 'network_menu') );
+        add_action( 'admin_menu', array( __CLASS__, 'single_menu') );
 
         // Ensure compatibility
         add_action('admin_notices', 'bpsp_check' );
@@ -32,11 +33,33 @@ class BPSP_WordPress {
     }
 
     /**
-     * menus()
+     * network_menu()
      *
-     * Adds menus to admin area
+     * Adds menu to network admin area
      */
-    function menus() {
+    function network_menu() {
+        if ( !is_super_admin() )
+            return;
+
+		add_submenu_page( 
+			'settings.php', 
+            __( 'Courseware Options', 'bpsp' ),
+            __( 'Courseware', 'bpsp' ),
+            'manage_options',
+            'bp-courseware',
+            array( __CLASS__, "screen")
+		);
+    }
+
+    /**
+     * single_menu()
+     *
+     * Adds menu to admin area
+     */
+    function single_menu() {
+        if ( is_multisite() )
+            return;
+            
         if ( !is_super_admin() )
             return;
 
