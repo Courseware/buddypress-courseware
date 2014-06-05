@@ -164,9 +164,7 @@ class BPSP_Bibliography {
             return;
 		}
         
-        $x = get_post_meta( $post_id, 'bibliography' );
-        //print_r( $x ); die();
-        return $x;
+        return get_post_meta( $post_id, 'bibliography' );
     }
     
     /**
