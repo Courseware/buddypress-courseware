@@ -256,11 +256,11 @@ class BPSP_Groups {
     }
     
     /**
-     * extend_search( $groups, $params )
+     * extended_search( $groups, $params )
      *
      * Hooks into groups_get_groups filter and extends search to include Courseware used post types
      */
-    function extend_search( $groups, $params ) {
+    function extended_search( $groups, $params ) {
         // Don't bother searching if nothing queried
         if( empty( $params['search_terms'] ) ) {
             return $groups;
