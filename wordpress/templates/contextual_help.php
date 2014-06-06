@@ -1,3 +1,4 @@
+<!-- wordpress/templates/contextual_help.php -->
 <p><strong><?php _e( 'BuddyPress Courseware Help', 'bpsp' ) ?></strong></p>
 <p>
     <a href="http://buddypress.coursewa.re/handbook.html">
