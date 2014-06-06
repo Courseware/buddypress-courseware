@@ -619,4 +619,3 @@ class BPSP_Gradebook {
             wp_die( __( 'BuddyPress Courseware error while registering assignment taxonomy.', 'bpsp' ) );
     }
 }
-?>
