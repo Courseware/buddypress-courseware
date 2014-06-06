@@ -63,4 +63,4 @@ function bpsp_date( $date ) {
 function bpsp_get_date( $date ) {
     return mysql2date( get_option('date_format') . ", " . get_option('time_format'), $date );
 }
-?>
+

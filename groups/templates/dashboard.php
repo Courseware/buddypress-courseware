@@ -1,3 +1,4 @@
+<!-- groups/templates/dashboard.php -->
 <div id="group-dashboard">
     <h4 class="meta padded general"><span class="icon"></span><?php _e( 'At a glance', 'bpsp' ); ?></h4>
     <div class="grid courseware-content">

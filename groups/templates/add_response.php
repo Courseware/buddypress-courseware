@@ -1,3 +1,4 @@
+<!-- groups/templates/add_response.php -->
 <?php setup_postdata( $parent_assignment ); ?>
 <div id="assignment-response-form">
     <form action="" method="post" class="standard-form" id="new-response-form">

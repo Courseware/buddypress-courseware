@@ -1,3 +1,4 @@
+<!-- groups/templates/single_schedule.php -->
 <?php setup_postdata( $schedule ); ?>
 <div id="courseware-schedule">
     <div class="schedule-meta courseware-sidebar">

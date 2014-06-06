@@ -1,3 +1,4 @@
+<!-- groups/templates/_nav.php -->
 <div class="item-list-tabs no-ajax" id="subnav">
 <?php if( !empty( $nav_options ) ):?>
     <ul>

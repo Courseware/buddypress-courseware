@@ -1,3 +1,4 @@
+<!-- groups/templates/gradebook.php -->
 <?php if( !isset( $students ) || empty( $students ) ) : ?>
     <div id="message" class="info">
         <p><?php _e( 'There are no students in this class yet.', 'bpsp' ); ?></p>

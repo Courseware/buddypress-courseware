@@ -1,3 +1,4 @@
+<!-- groups/templates/edit_bibliography.php -->
 <div id="courseware-edit-bibliography" >
     <form action="<?php echo $bibs_form_uri; ?>" method="post" class="standard-form" >
     <div class="courseware-sidebar">

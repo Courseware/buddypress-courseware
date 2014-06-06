@@ -1,8 +1,9 @@
+<!-- groups/templates/_bibs.php -->
 <div id="courseware-bibs">
     <?php if( isset( $has_bib_caps ) && $has_bib_caps ): ?>
     <div id="courseware-bibs-form">
         <form action="" method="post" class="standard-form" >
-            <?php if( isset( $hide_existing ) && !$hide_existing ): ?>
+            <?php if( isset( $hide_existing ) && $hide_existing ): ?>
             <div class="add existing">
                 <h4 class="bibs"><span class="icon"></span><?php _e( 'Add an existing bibliography', 'bpsp'); ?></h4>
                 <select name="bib[existing]" class="long">

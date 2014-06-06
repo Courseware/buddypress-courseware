@@ -1,3 +1,4 @@
+<!-- groups/templates/_no_course_group_header.php -->
 <div id="message" class="info">
     <p>
         <?php _e( 'You can manage this group Courseware.', 'bpsp' ); ?>

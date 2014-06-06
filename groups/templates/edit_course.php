@@ -1,3 +1,4 @@
+<!-- groups/templates/edit_course.php -->
 <form action="<?php echo $course_edit_uri; ?>" method="post" class="standard-form" id="update-course-form">
     <div id="update-course-content">
         <div id="update-course-content-title">

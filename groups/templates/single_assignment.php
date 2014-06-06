@@ -1,3 +1,4 @@
+<!-- groups/templates/single_assignment.php -->
 <?php setup_postdata( $assignment ); ?>
 <div id="courseware-assignment">
     <div id="assignment-meta" class="courseware-sidebar">

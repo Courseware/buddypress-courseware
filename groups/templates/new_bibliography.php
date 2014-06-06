@@ -1,3 +1,4 @@
+<!-- groups/templates/new_bibliography.php -->
 <div id="courseware-new-bibliography" > 
     <form action="" method="post" class="standard-form add-bib" >
         <div class="courseware-sidebar">

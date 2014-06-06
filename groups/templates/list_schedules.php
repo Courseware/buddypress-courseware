@@ -1,3 +1,4 @@
+<!-- groups/templates/list_schedules.php -->
 <div id="courseware-schedules-list">
     <?php if( !empty( $schedules ) || !empty( $assignments ) ): ?>
     <div class="courseware-fullcalendar">

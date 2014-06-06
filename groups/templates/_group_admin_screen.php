@@ -1,3 +1,4 @@
+<!-- groups/templates/_group_admin_screen.php -->
 <h4><?php _e( 'Courseware Status', 'bpsp' ); ?></h4>
 <div class="info">
     <p>

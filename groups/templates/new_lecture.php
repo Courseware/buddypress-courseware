@@ -1,3 +1,4 @@
+<!-- groups/templates/new_lecture.php -->
 <form action="" method="post" class="standard-form" id="new-lecture-form">
     <div id="new-lecture-meta" class="courseware-sidebar">
         <h4 class="meta lectures"><span class="icon"></span><?php _e( 'Lecture parent &amp; Order', 'bpsp' ); ?></h4>

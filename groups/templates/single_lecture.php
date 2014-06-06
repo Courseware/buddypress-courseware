@@ -1,3 +1,4 @@
+<!-- groups/templates/single_lecture.php -->
 <?php setup_postdata( $lecture ); ?>
 <div id="courseware-lecture">
     <div id="course-meta" class="courseware-sidebar">
