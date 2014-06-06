@@ -3,6 +3,8 @@
  */
 jQuery('#courseware-responses-list').hide();
 
-jQuery('#responses').bind('click', function(){
-    jQuery('#courseware-responses-list').slideToggle();
+jQuery('#responses').on('click', function() {
+	jQuery('#courseware-responses-list').slideToggle();
+	event.preventDefault();
+	return false;
 });
