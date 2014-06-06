@@ -5,6 +5,8 @@
 jQuery('#courseware-gradebook .import-gradebook-form').hide();
 jQuery('#courseware-gradebook a').bind( 'click', function(){
     jQuery('#courseware-gradebook .import-gradebook-form').slideToggle();
+	event.preventDefault();
+	return false;
 });
 
 // Didn't find another way to 'localize' this
