@@ -38,11 +38,17 @@ class BPSP_Groups {
      *
      * Activates Courseware as a BuddyPress component for groups
      */
-    function activate_component() {
+    static function activate_component() {
         global $bp;
-        $bp->courseware->id = 'courseware';
+
+        if ( ! isset( $bp->courseware ) ) {
+            $bp->courseware = new StdClass;
+        }
+
+        $bp->courseware->id   = 'courseware';
         $bp->courseware->slug = 'courseware';
-        $bp->active_components[$bp->courseware->slug] = $bp->courseware->id;
+
+        $bp->active_components[ $bp->courseware->slug ] = $bp->courseware->id;
     }
     
     /**

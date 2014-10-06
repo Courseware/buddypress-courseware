@@ -53,7 +53,7 @@ class BPSP_Bibliography {
      *
      * Static function to register the bibliography post types and capabilities.
      */
-    function register_post_types() {
+    static function register_post_types() {
         $bib_post_def = array(
             'label'                 => __( 'Bibliography', 'bpsp' ),
             'singular_label'        => __( 'Bibliography', 'bpsp' ),

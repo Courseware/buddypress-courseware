@@ -54,7 +54,7 @@ class BPSP_Responses {
      *
      * Static function to register the responses post types, taxonomies and capabilities.
      */
-    function register_post_types() {
+    static function register_post_types() {
         $response_post_def = array(
             'label'                 => __( 'Responses', 'bpsp' ),
             'singular_label'        => __( 'Response', 'bpsp' ),
