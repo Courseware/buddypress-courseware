@@ -42,7 +42,7 @@ class BPSP_Courses {
      *
      * Static function to register the courses post types, taxonomies and capabilities.
      */
-    function register_post_types() {
+    static function register_post_types() {
         $course_post_def = array(
             'label'                 => __( 'Courses', 'bpsp' ),
             'singular_label'        => __( 'Course', 'bpsp' ),

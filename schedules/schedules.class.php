@@ -45,7 +45,7 @@ class BPSP_Schedules {
      *
      * Static function to register the schedules post types, taxonomies and capabilities.
      */
-    function register_post_types() {
+    static function register_post_types() {
         $schedule_post_def = array(
             'label'                 => __( 'Schedules', 'bpsp' ),
             'singular_label'        => __( 'Schedule', 'bpsp' ),

@@ -39,7 +39,7 @@ class BPSP_WordPress {
      *
      * Adds menus to admin area
      */
-    function menus() {
+    static function menus() {
         if ( !is_super_admin() )
             return;
 
@@ -57,7 +57,7 @@ class BPSP_WordPress {
      *
      * Handles the screen() help
      */
-    function screen_help() {
+    static function screen_help() {
         global $current_screen;
 
         // If it's not Courseware Screen

@@ -43,7 +43,7 @@ class BPSP_Lectures {
      *
      * Static function to register the lecture post type, taxonomies and capabilities.
      */
-    function register_post_types() {
+    static function register_post_types() {
         $lecture_post_def = array(
             'label'                 => __( 'Lecture', 'bpsp' ),
             'singular_label'        => __( 'Lecture', 'bpsp' ),
@@ -601,14 +601,14 @@ class BPSP_Lectures {
      * @param Mixed $lecture, WordPress post object
      * @return String, the new courseware permalink
      */
-    function get_permalink( $permalink, $lecture ) {
+    static function get_permalink( $permalink, $lecture ) {
         global $bp;
         
         if( is_object( $lecture ) && $lecture->post_type == 'lecture' ) {
             $courseware_uri = bp_get_group_permalink( $bp->groups->current_group ) . 'courseware/lecture/' ;
             return $courseware_uri . $lecture->post_name;
-        } else
-            return $permalink;
+        }
+        return $permalink;
     }
     
     /**

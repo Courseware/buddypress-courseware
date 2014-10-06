@@ -41,7 +41,7 @@ class BPSP_Gradebook {
      *
      * Static function to register the assignments post types, taxonomies and capabilities.
      */
-    function register_post_types() {
+    static function register_post_types() {
         $grade_post_def = array(
             'label'                 => __( 'Gradebooks', 'bpsp' ),
             'singular_label'        => __( 'Gradebook', 'bpsp' ),

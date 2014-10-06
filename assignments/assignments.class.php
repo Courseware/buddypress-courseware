@@ -57,7 +57,7 @@ class BPSP_Assignments {
      *
      * Static function to register the assignments post types, taxonomies and capabilities.
      */
-    function register_post_types() {
+    static function register_post_types() {
         $assignment_post_def = array(
             'label'                 => __( 'Assignments', 'bpsp' ),
             'singular_label'        => __( 'Assignment', 'bpsp' ),
