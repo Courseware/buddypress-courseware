@@ -34,7 +34,7 @@ class BPSP_Lectures {
         add_action( 'courseware_new_teacher_removed', array( $this, 'remove_caps' ) );
         add_action( 'courseware_group_screen_handler', array( $this, 'screen_handler' ) );
         add_filter( 'courseware_course', array( $this, 'lectures_screen' ) );
-        add_filter( 'post_type_link', array( __CLASS__, 'get_permalink' ), 10, 2 );
+        add_filter( 'post_type_link', array( $this, 'get_permalink' ), 10, 2 );
         add_filter( 'page_css_class', array( __CLASS__, 'css_class' ), 10, 2 );
    }
     
@@ -610,12 +610,12 @@ class BPSP_Lectures {
     function get_permalink( $permalink, $lecture ) {
         global $bp;
         
-        if( is_object( $lecture ) && $lecture->post_type == 'lecture' && is_plugin_active( 'buddypress/bp-loader.php' ) ) {
+        if ( is_object( $lecture ) && $lecture->post_type == 'lecture' && is_plugin_active( 'buddypress/bp-loader.php' ) && ! empty( $bp->groups->current_group ) ) {
             $courseware_uri = bp_get_group_permalink( $bp->groups->current_group ) . 'courseware/lecture/' ;
             return $courseware_uri . $lecture->post_name;
-        } else {
-            return $permalink;
-		}
+        }
+
+        return $permalink;
     }
     
     /**
