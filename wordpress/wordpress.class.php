@@ -56,7 +56,7 @@ class BPSP_WordPress {
      *
      * Adds menu to admin area
      */
-    static function single_menu() {
+    function single_menu() {
         if ( is_multisite() )
             return;
             
