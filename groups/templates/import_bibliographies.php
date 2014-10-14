@@ -1,3 +1,4 @@
+<!-- groups/templates/import_bibliographies.php -->
 <div id="courseware-import-bibliography" >
     <div id="courseware-import-bibliography-meta" class="courseware-sidebar">
         <h4 class="meta"><?php _e( 'Import Your Bibliography', 'bpsp' );  ?></h4>

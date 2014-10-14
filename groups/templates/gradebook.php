@@ -1,3 +1,4 @@
+<!-- groups/templates/gradebook.php -->
 <?php if( !isset( $students ) || empty( $students ) ) : ?>
     <div id="message" class="info">
         <p><?php _e( 'There are no students in this class yet.', 'bpsp' ); ?></p>
@@ -72,7 +73,7 @@ test,10,numeric,\"Private comment text\",\"Public comment text\"", 'bpsp' ); ?><
                     <td class="grade_value">
                         <input type="text"
                             name="grade[<?php echo $student->user_id ?>][value]"
-                            value="<?php echo $grades[$student->user_id]['value'] ? $grades[$student->user_id]['value'] : '' ?>" />
+                            value="<?php echo isset( $grades[$student->user_id]['value'] ) ? $grades[$student->user_id]['value'] : '' ?>" />
                     </td>
                     <td class="grade_format">
                         <select name="grade[<?php echo $student->user_id ?>][format]">
@@ -89,12 +90,12 @@ test,10,numeric,\"Private comment text\",\"Public comment text\"", 'bpsp' ); ?><
                     </td>
                     <td class="private_comment">
                         <textarea name="grade[<?php echo $student->user_id ?>][prv_comment]"><?php
-                            echo $grades[$student->user_id]['prv_comment'] ? $grades[$student->user_id]['prv_comment'] : '' ;
+                            echo isset( $grades[$student->user_id]['prv_comment'] ) ? $grades[$student->user_id]['prv_comment'] : '' ;
                         ?></textarea>
                     </td>
                     <td class="public_comment">
                         <textarea name="grade[<?php echo $student->user_id ?>][pub_comment]"><?php
-                            echo $grades[$student->user_id]['pub_comment'] ? $grades[$student->user_id]['pub_comment'] : '' ;
+                            echo isset( $grades[$student->user_id]['pub_comment'] ) ? $grades[$student->user_id]['pub_comment'] : '' ;
                         ?></textarea>
                     </td>
                 </tr>

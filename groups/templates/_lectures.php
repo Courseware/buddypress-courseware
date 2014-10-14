@@ -1,3 +1,4 @@
+<!-- groups/templates/_lectures.php -->
 <?php if ( !empty( $lectures ) ): ?>
     <div id="lectures-tree">
         <h4 class="lectures">

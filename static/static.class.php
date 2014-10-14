@@ -8,9 +8,10 @@ class BPSP_Static {
      *
      * Constructor, registers enqueues.
      */
-    function BPSP_Static() {
-        if( !defined( BPSP_VERSION ) )
-            define( BPSP_VERSION, '' );
+    function __construct() {
+        if( !defined( BPSP_VERSION ) ) {
+            define( BPSP_VERSION, get_bloginfo( 'version' ) );
+        }
         
         // Scripts
 
@@ -75,22 +76,22 @@ class BPSP_Static {
         wp_register_style( 'formbuilder', BPSP_WEB_URI . '/static/css/formbuilder/jquery.formbuilder.css', null, '0.3-beta' );
         
         // Hooks
-        add_action( 'bp_head', array( &$this, 'load_courseware_css' ) );
-        add_action( 'courseware_editor', array( &$this, 'courseware_editor_enqueues' ) );
-        add_action( 'courseware_list_schedules_screen', array( &$this, 'list_schedules_enqueues' ) );
-        add_action( 'courseware_list_assignments_screen', array( &$this, 'list_assignments_enqueues' ) );
-        add_action( 'courseware_assignment_screen', array( &$this, 'assignment_enqueues' ) );
-        add_action( 'courseware_bibliography_screen', array( &$this, 'bibs_enqueues' ) );
-        add_action( 'courseware_new_bibliography_screen', array( &$this, 'new_bib_enqueues' ) );
-        add_action( 'courseware_edit_bibliography_screen', array( &$this, 'edit_bib_enqueues' ) );
-        add_action( 'courseware_new_schedule_screen', array( &$this, 'schedules_enqueues' ) );
-        add_action( 'courseware_edit_schedule_screen', array( &$this, 'schedules_enqueues' ));
-        add_action( 'courseware_delete_schedule_screen', array( &$this, 'delete_schedule_enqueues' ) );
-        add_action( 'courseware_gradebook_screen', array( &$this, 'gradebook_enqueues' ) );
-        add_action( 'courseware_group_dashboard', array( &$this, 'group_dashboard_enqueues' ) );
-        add_action( 'courseware_lectures_screen', array( &$this, 'lectures_enqueues' ) );
-        add_action( 'courseware_new_assignment_screen', array( &$this, 'new_assignment_enqueues' ) );
-        add_action( 'courseware_edit_assignment_screen', array( &$this, 'edit_assignment_enqueues' ) );
+        add_action( 'wp_enqueue_scripts', array( $this, 'load_courseware_css' ) );
+        add_action( 'courseware_editor', array( $this, 'courseware_editor_enqueues' ) );
+        add_action( 'courseware_list_schedules_screen', array( $this, 'list_schedules_enqueues' ) );
+        add_action( 'courseware_list_assignments_screen', array( $this, 'list_assignments_enqueues' ) );
+        add_action( 'courseware_assignment_screen', array( $this, 'assignment_enqueues' ) );
+        add_action( 'courseware_bibliography_screen', array( $this, 'bibs_enqueues' ) );
+        add_action( 'courseware_new_bibliography_screen', array( $this, 'new_bib_enqueues' ) );
+        add_action( 'courseware_edit_bibliography_screen', array( $this, 'edit_bib_enqueues' ) );
+        add_action( 'courseware_new_schedule_screen', array( $this, 'schedules_enqueues' ) );
+        add_action( 'courseware_edit_schedule_screen', array( $this, 'schedules_enqueues' ));
+        add_action( 'courseware_delete_schedule_screen', array( $this, 'delete_schedule_enqueues' ) );
+        add_action( 'courseware_gradebook_screen', array( $this, 'gradebook_enqueues' ) );
+        add_action( 'courseware_group_dashboard', array( $this, 'group_dashboard_enqueues' ) );
+        add_action( 'courseware_lectures_screen', array( $this, 'lectures_enqueues' ) );
+        add_action( 'courseware_new_assignment_screen', array( $this, 'new_assignment_enqueues' ) );
+        add_action( 'courseware_edit_assignment_screen', array( $this, 'edit_assignment_enqueues' ) );
     }
     
     /**
@@ -116,8 +117,9 @@ class BPSP_Static {
         $to_load = get_option( 'bpsp_load_css' );
         $css_name = '/courseware.css';
         
-        if( empty( $to_load ) )
+        if( empty( $to_load ) ) {
             return;
+        }
         
         if( file_exists( STYLESHEETPATH . $css_name ) ) {
             $web_uri = get_bloginfo( 'stylesheet_directory' );    
@@ -361,14 +363,17 @@ class BPSP_Static {
         $image_uri = null;
         $html_template = '<img src="%s" alt="%s" class="%s"/>';
         
-        if( file_exists( $images_folder . $name ) )
+        if( file_exists( $images_folder . $name ) ) {
             $image_uri = $images_web_folder . $name;
+        }
         
-        if( $html )
+        if( $html ) {
             $image_uri = sprintf( $html_template, $image_uri, $name, $name );
+        }
         
-        if( $echo )
+        if( $echo ) {
             echo $image_uri;
+        }
         
         return $image_uri;
     }
@@ -384,18 +389,19 @@ class BPSP_Static {
     function gmaps_link( $string, $echo = true ) {
         $string = urlencode( esc_html( $string ) );
         
-        if( empty( $string ) )
+        if( empty( $string ) ) {
             return;
+        }
         
         $link_template =
             '<a href="http://maps.google.com/maps?q=%s">' .
             self::get_image( 'map_go.png', false ) .
             '</a>';
         
-        if( $echo )
+        if( $echo ) {
             return printf( $link_template, $string );
-        else
+        } else {
             sprintf( $link_template, $string );
+        }
     }
 }
-?>

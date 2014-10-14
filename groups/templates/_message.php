@@ -1,3 +1,4 @@
+<!-- groups/templates/_message.php -->
 <?php if( !empty( $error ) ): ?>
 <div id="message" class="error">
     <p><?php echo $error; ?></p>

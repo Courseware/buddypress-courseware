@@ -1,3 +1,4 @@
+<!-- wordpress/templates/admin.php -->
 <?php if( !empty( $flash ) ) : ?>
     <div id="message" class="updated fade">
         <?php foreach( $flash as $f ): ?>

@@ -1,3 +1,4 @@
+<!-- groups/templates/edit_assignment.php -->
 <form action="<?php echo $assignment_edit_uri; ?>" method="post" class="standard-form" id="edit-assignment-form">
     <div id="edit-assignment-meta" class="courseware-sidebar">
         <h4 class="meta assignments"><span class="icon"></span><?php _e( 'Lecture &amp; Due Date', 'bpsp' ); ?></h4>

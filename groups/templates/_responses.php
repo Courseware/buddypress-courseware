@@ -1,3 +1,4 @@
+<!-- groups/templates/_responses.php -->
 <?php if( empty( $responses ) ) return; ?>
 <div id="courseware-responses-list">
     <h4 class="meta responses"><span class="icon"></span><?php _e( 'List of responses', 'bpsp' ); ?></h4>

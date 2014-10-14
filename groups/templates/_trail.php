@@ -1,3 +1,4 @@
+<!-- groups/templates/_trail.php -->
 <div id="courseware-trail" class="<?php echo $name ?>" >
     <ul>
         <li>

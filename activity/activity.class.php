@@ -5,18 +5,18 @@
 class BPSP_Activity {
     
     /**
-     * BPSP_Activity()
+     * __construct()
      *
      * Constructor, adds hooks to existing actions
      */
-    function BPSP_Activity() {
-        add_action( 'courseware_assignment_activity', array( &$this, 'activity_for_assignment' ) );
-        add_action( 'courseware_lecture_activity', array( &$this, 'activity_for_lecture' ) );
-        add_action( 'courseware_response_added', array( &$this, 'activity_for_response' ) );
-        add_action( 'courseware_schedule_activity', array( &$this, 'activity_for_schedule' ) );
-        add_action( 'bp_register_activity_actions', array( &$this, 'register_activity_types' ) );
-        add_action( 'bp_group_activity_filter_options', array( &$this, 'register_filter_options' ) );
-        add_action( 'bp_member_activity_filter_options', array( &$this, 'register_filter_options' ) );
+    function __construct() {
+        add_action( 'courseware_assignment_activity', array( $this, 'activity_for_assignment' ) );
+        add_action( 'courseware_lecture_activity', array( $this, 'activity_for_lecture' ) );
+        add_action( 'courseware_response_added', array( $this, 'activity_for_response' ) );
+        add_action( 'courseware_schedule_activity', array( $this, 'activity_for_schedule' ) );
+        add_action( 'bp_register_activity_actions', array( $this, 'register_activity_types' ) );
+        add_action( 'bp_group_activity_filter_options', array( $this, 'register_filter_options' ) );
+        add_action( 'bp_member_activity_filter_options', array( $this, 'register_filter_options' ) );
     }
     
     /**
@@ -57,8 +57,8 @@ class BPSP_Activity {
         $activity_action = sprintf(
             __( '%s changed the assignment %s in %s Courseware:', 'bpsp' ),
             bp_core_get_userlink( $bp->loggedin_user->id ),
-            '<a href="' . bp_get_group_permalink( $bp->groups->current_group ) . 'courseware/assignment/' . $assignment->post_name .'/">' . attribute_escape( $assignment->post_title ) . '</a>',
-            '<a href="' . bp_get_group_permalink( $bp->groups->current_group ) . '">' . attribute_escape( $bp->groups->current_group->name ) . '</a>'
+            '<a href="' . bp_get_group_permalink( $bp->groups->current_group ) . 'courseware/assignment/' . $assignment->post_name .'/">' . esc_attr( $assignment->post_title ) . '</a>',
+            '<a href="' . bp_get_group_permalink( $bp->groups->current_group ) . '">' . esc_attr( $bp->groups->current_group->name ) . '</a>'
         );
         $activity_content = bp_create_excerpt( $assignment->post_content );
         $primary_link = bp_get_group_permalink( $bp->groups->current_group ) . 'courseware/assignment/' . $assignment->post_name . '/';
@@ -87,8 +87,8 @@ class BPSP_Activity {
         $activity_action = sprintf(
             __( '%s changed the lecture %s in %s Courseware:', 'bpsp' ),
             bp_core_get_userlink( $bp->loggedin_user->id ),
-            '<a href="' . $lecture->permalink .'/">' . attribute_escape( $lecture->post_title ) . '</a>',
-            '<a href="' . bp_get_group_permalink( $bp->groups->current_group ) . '">' . attribute_escape( $bp->groups->current_group->name ) . '</a>'
+            '<a href="' . $lecture->permalink .'/">' . esc_attr( $lecture->post_title ) . '</a>',
+            '<a href="' . bp_get_group_permalink( $bp->groups->current_group ) . '">' . esc_attr( $bp->groups->current_group->name ) . '</a>'
         );
         $activity_content = bp_create_excerpt( $lecture->post_content );
         $primary_link = $lecture->permalink;
@@ -114,16 +114,17 @@ class BPSP_Activity {
     function activity_for_response( $response_data, $type = "add" ){
         global $bp;
         
-        if( !isset( $response_data['public'] ) || !$response_data['public'] )
+        if( !isset( $response_data['public'] ) || !$response_data['public'] ) {
             return;
+        }
         
         $response = $response_data['response'];
         
         $activity_action = sprintf(
             __( '%s added a response %s to %s Courseware Assignment:', 'bpsp' ),
             bp_core_get_userlink( $bp->loggedin_user->id ),
-            '<a href="' . $response_data['assignment_permalink'] . '/response/' . $response->post_name .'/">' . attribute_escape( $response->post_title ) . '</a>',
-            '<a href="' . bp_get_group_permalink( $bp->groups->current_group ) . '">' . attribute_escape( $bp->groups->current_group->name ) . '</a>'
+            '<a href="' . $response_data['assignment_permalink'] . '/response/' . $response->post_name .'/">' . esc_attr( $response->post_title ) . '</a>',
+            '<a href="' . bp_get_group_permalink( $bp->groups->current_group ) . '">' . esc_attr( $bp->groups->current_group->name ) . '</a>'
         );
         $activity_content = bp_create_excerpt( $response->post_content );
         $primary_link = $response_data['assignment_permalink'] . '/response/' . $response->post_name . '/';
@@ -152,7 +153,7 @@ class BPSP_Activity {
         $activity_action = sprintf(
             __( '%s updated %s Courseware schedule.', 'bpsp' ),
             bp_core_get_userlink( $bp->loggedin_user->id ),
-            '<a href="' . bp_get_group_permalink( $bp->groups->current_group ) . '">' . attribute_escape( $bp->groups->current_group->name ) . '</a>'
+            '<a href="' . bp_get_group_permalink( $bp->groups->current_group ) . '">' . esc_attr( $bp->groups->current_group->name ) . '</a>'
         );
         $primary_link = bp_get_group_permalink( $bp->groups->current_group ) . 'courseware/schedules/';
         
@@ -166,4 +167,3 @@ class BPSP_Activity {
         );
     }
 }
-?>

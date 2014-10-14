@@ -14,4 +14,4 @@ function courseware_editor( $content, $target, $settings = array() ) {
     );
     wp_editor( $content, $target, $settings );
 }
-?>
+

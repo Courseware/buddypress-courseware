@@ -1,3 +1,4 @@
+<!-- groups/templates/new_schedule.php -->
 <form action="" method="post" class="standard-form schedule-form" id="new-schedule-form" >
     <div id="new-schedule-meta" class="courseware-sidebar">
         <h4 class="meta schedules"><span class="icon"></span><?php _e( 'Schedule Meta', 'bpsp' ); ?></h4>

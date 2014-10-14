@@ -1,3 +1,4 @@
+<!-- groups/templates/new_assignment.php -->
 <form action="" method="post" class="standard-form" id="new-assignment-form">
     <div id="new-assignment-meta" class="courseware-sidebar">
         <h4 class="meta assignments"><span class="icon"></span><?php _e( 'Lecture &amp; Due Date', 'bpsp' ); ?></h4>

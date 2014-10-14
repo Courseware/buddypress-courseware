@@ -38,40 +38,16 @@ class BPSP_Responses {
     var $current_response = null;
     
     /**
-     * BPSP_Responses()
+     * __construct()
      *
      * Constructor. Loads the hooks and actions.
      */
-    function BPSP_Responses() {
-        add_action( 'courseware_new_teacher_added', array( &$this, 'add_response_caps' ) );
-        add_action( 'courseware_new_teacher_removed', array( &$this, 'remove_response_caps' ) );
-        add_action( 'courseware_assignment_screen_handler', array( &$this, 'screen_handler' ) );
-        add_filter( 'courseware_assignment', array( &$this, 'populate_responses' ) );
+    function __construct() {
+        add_action( 'courseware_new_teacher_added', array( $this, 'add_response_caps' ) );
+        add_action( 'courseware_new_teacher_removed', array( $this, 'remove_response_caps' ) );
+        add_action( 'courseware_assignment_screen_handler', array( $this, 'screen_handler' ) );
+        add_filter( 'courseware_assignment', array( $this, 'populate_responses' ) );
    }
-    
-    /**
-     * register_post_types()
-     *
-     * Static function to register the responses post types, taxonomies and capabilities.
-     */
-    function register_post_types() {
-        $response_post_def = array(
-            'label'                 => __( 'Responses', 'bpsp' ),
-            'singular_label'        => __( 'Response', 'bpsp' ),
-            'description'           => __( 'BuddyPress ScholarPress Courseware Responses', 'bpsp' ),
-            'public'                => BPSP_DEBUG,
-            'publicly_queryable'    => false,
-            'exclude_from_search'   => true,
-            'show_ui'               => BPSP_DEBUG,
-            'capability_type'       => 'response',
-            'hierarchical'          => false,
-            'rewrite'               => false,
-            'query_var'             => false,
-            'supports'              => array( 'title', 'editor', 'author' )
-        );
-        if( !register_post_type( 'response', $response_post_def ) )
-            wp_die( __( 'BuddyPress Courseware error while registering response post type.', 'bpsp' ) );
-    }
     
     /**
      * add_response_caps( $user_id )
@@ -84,27 +60,35 @@ class BPSP_Responses {
         global $bp;
         $is_teacher = false;
         
-        if( __( 'Teacher', 'bpsp') == xprofile_get_field_data( __( 'Role', 'bpsp' ), $user_id ) )
+        if( __( 'Teacher', 'bpsp') == xprofile_get_field_data( __( 'Role', 'bpsp' ), $user_id ) ) {
             $is_teacher = true;
-        elseif ( is_super_admin( $user_id ) )
+		} elseif ( is_super_admin( $user_id ) ) {
             $is_teacher = true;
+		}
         
         $user = new WP_User( $user_id );
         // Treat teachers with default set of caps
-        if( $is_teacher )
-            foreach( $this->caps as $c )
-                if ( !$user->has_cap( $c ) )
+        if( $is_teacher ) {
+            foreach( $this->caps as $c ) {
+                if ( !$user->has_cap( $c ) ) {
                     $user->add_cap( $c );
-        // Treat ordinary users as students that will get caps for adding responses
-        else
-            foreach( $this->students_caps as $c )
-                    if ( !$user->has_cap( $c ) )
+				}
+			}
+		} else {
+			// Treat ordinary users as students that will get caps for adding responses
+            foreach( $this->students_caps as $c ) {
+                    if ( !$user->has_cap( $c ) ) {
                         $user->add_cap( $c );
+					}
+			}
+		}
         
         //Treat super admins
-        if( is_super_admin( $user_id ) )
-            if ( !$user->has_cap( 'edit_others_responses' ) )
+        if( is_super_admin( $user_id ) ) {
+            if ( !$user->has_cap( 'edit_others_responses' ) ) {
                 $user->add_cap( 'edit_others_responses' );
+			}
+		}
     }
     
     /**
@@ -116,13 +100,16 @@ class BPSP_Responses {
      */
     function remove_response_caps( $user_id ) {
         //Treat super admins
-        if( is_super_admin( $user_id) )
+        if( is_super_admin( $user_id) ) {
             return;
+		}
         
         $user = new WP_User( $user_id );
-        foreach( $this->caps as $c )
-            if ( $user->has_cap( $c ) )
+        foreach( $this->caps as $c ) {
+            if ( $user->has_cap( $c ) ) {
                 $user->remove_cap( $c );
+			}
+		}
     }
     
     /**
@@ -147,13 +134,17 @@ class BPSP_Responses {
         }
         
         $user = new WP_User( $user_id );
-        foreach( $this->caps as $c )
-            if ( !$user->has_cap( $c ) )
+        foreach( $this->caps as $c ) {
+            if ( !$user->has_cap( $c ) ) {
                 $is_ok = false;
+			}
+		}
         
-        if( !get_option( 'bpsp_allow_only_admins' ) )
-            if( !bp_group_is_admin() )
+        if( !get_option( 'bpsp_allow_only_admins' ) ) {
+            if( !bp_group_is_admin() ) {
                 $is_ok = false;
+			}
+		}
         
         return $is_ok;
     }
@@ -169,22 +160,27 @@ class BPSP_Responses {
     function has_student_caps( $user_id = null ) {
         global $bp;
         
-        if( !$user_id )
+        if( !$user_id ) {
             $user_id = $bp->loggedin_user->id;
+		}
         
         $user_role = xprofile_get_field_data( __( 'Role'), $user_id );
         // Go away teacher
-        if( __( 'Student', 'bpsp' ) != $user_role && !empty( $user_role ) )
+        if( __( 'Student', 'bpsp' ) != $user_role && !empty( $user_role ) ) {
             return false;
+		}
         
         // Treat super admins
-        if( is_super_admin( $user_id ) )
+        if( is_super_admin( $user_id ) ) {
             $this->add_response_caps( $user_id );
+		}
         
         $user = new WP_User( $user_id );
-        foreach( $this->students_caps as $c )
-            if ( !$user->has_cap( $c ) )
+        foreach( $this->students_caps as $c ) {
+            if ( !$user->has_cap( $c ) ) {
                 $user->add_cap( $c );
+			}
+		}
         
         return true;
     }
@@ -205,11 +201,13 @@ class BPSP_Responses {
         $global_status = get_option( 'bpsp_private_responses' );
         $group_status = groups_get_groupmeta( $bp->groups->current_group->id, 'courseware_responses' );
         
-        if( 'true' == $group_status )
+        if( 'true' == $group_status ) {
             return true;
+		}
 
-        if( $global_status != '' )
+        if( $global_status != '' ) {
             return true;
+		}
         
         return false;
     }
@@ -224,27 +222,29 @@ class BPSP_Responses {
         $this->current_assignment = BPSP_Assignments::is_assignment( $action_vars[1] );
         
         // Check if we got a valid parent assignment
-        if( !$this->current_assignment )
+        if( !$this->current_assignment ) {
             wp_redirect( wp_redirect( get_option( 'siteurl' ) ) );
+		}
         
         if( isset ( $action_vars[2] ) && $action_vars[2] == 'add_response' ) {
             do_action( 'courseware_add_response' );
             //Load editor
-            add_action( 'bp_head', array( &$this, 'load_editor' ) );
-            add_filter( 'courseware_group_template', array( &$this, 'new_response_screen' ) );
-        }
-        elseif ( isset ( $action_vars[2] ) && $action_vars[2] == 'response' ) {
+            add_action( 'bp_head', array( $this, 'load_editor' ) );
+            add_filter( 'courseware_group_template', array( $this, 'new_response_screen' ) );
+        } elseif ( isset ( $action_vars[2] ) && $action_vars[2] == 'response' ) {
             $current_response = $this->is_response( $action_vars[3] );
-            if( isset ( $action_vars[3] ) && !empty( $current_response ) )
+			
+            if( isset ( $action_vars[3] ) && !empty( $current_response ) ) {
                 $this->current_response = $current_response;
-            else
+			} else {
                 wp_redirect( wp_redirect( get_option( 'siteurl' ) ) );
+			}
             
-            if( isset ( $action_vars[4] ) && 'delete' == $action_vars[4] )
-                add_filter( 'courseware_group_template', array( &$this, 'delete_response_screen' ) );
-            else {
+            if( isset ( $action_vars[4] ) && 'delete' == $action_vars[4] ) {
+                add_filter( 'courseware_group_template', array( $this, 'delete_response_screen' ) );
+			} else {
                 do_action( 'courseware_single_response' );
-                add_filter( 'courseware_group_template', array( &$this, 'single_response_screen' ) );
+                add_filter( 'courseware_group_template', array( $this, 'single_response_screen' ) );
             }
         }
     }
@@ -259,11 +259,13 @@ class BPSP_Responses {
      */
     function is_response( $response_identifier = null ) {
         
-        if( is_object( $response_identifier ) && $response_identifier->post_type == "response" )
+        if( is_object( $response_identifier ) && $response_identifier->post_type == "response" ) {
             return $response_identifier;
+		}
         
-        if( !$response_identifier && get_class( (object)$this->current_response ) == __CLASS__ )
+        if( !$response_identifier && get_class( (object)$this->current_response ) == __CLASS__ ) {
             return $this->current_response;
+		}
         
         $response_query = array(
             'post_status' => 'publish',
@@ -272,20 +274,23 @@ class BPSP_Responses {
         );
         
         if ( $response_identifier != null ) {
-            if( is_numeric( $response_identifier ) )
+            if( is_numeric( $response_identifier ) ) {
                 $response_query['p'] = $response_identifier;
-            else
+			} else {
                 $response_query['name'] = $response_identifier;
+			}
         }
         $response = get_posts( $response_query );
         
-        if( !empty( $response ) )
+        if( !empty( $response ) ) {
             $response = reset( $response );
-        else
+		} else {
             return null;
+		}
         
-        if( isset( $this->current_assignment->form ) )
+        if( isset( $this->current_assignment->form ) ) {
             $response->form_values = get_post_meta( $response->ID, 'form_values', true );
+		}
         
         $response->form = isset( $this->current_assignment->form ) ? $this->current_assignment->form : false;
         
@@ -305,15 +310,18 @@ class BPSP_Responses {
         $has_responded = false;
         $responses = null;
         
-        if( empty( $assignment_id ) )
+        if( empty( $assignment_id ) ) {
             $assignment_id = $this->current_assignment->ID;
+		}
         
-        if( empty( $author_id ) )
+        if( empty( $author_id ) ) {
             $author_id = $bp->loggedin_user->id;
+		}
         
         $response_authors = get_post_meta( $assignment_id, 'responded_author');
-        if( in_array( $author_id, $response_authors ) )
+        if( in_array( $author_id, $response_authors ) ) {
             $has_responded = true;
+		}
         
         if( $has_responded ) {
             $responses = get_posts(
@@ -332,6 +340,7 @@ class BPSP_Responses {
                 return $response;
             }
         }
+		
         return false;
     }
     
@@ -359,18 +368,21 @@ class BPSP_Responses {
                 $results[ $q ] = array();
                 // Find the name of the form
                 $name = md5( $q );
+				
                 // Correct answers should be counted
-                if( !empty( $a ) )
+                if( !empty( $a ) ) {
                     $results['total']++;
+				}
+				
                 // Find the user answer and compare
                 if( isset( $answers[ $name ] ) && !empty( $answers[ $name ] ) ) {
                     // Save the wrong answers
                     if( trim( strtolower( $a ) ) != strtolower( $answers[ $name ] ) ) {
                         $results[ $q ][] = esc_html( $answers[ $name ] );
                         $results[ $q ][] = $a;
-                    }
-                    else
+                    } else {
                         $results['correct']++;
+					}
                 } else {
                     // Save the wrong answer even if no answer was given
                     if( !isset( $answers[ $name ] ) || empty( $answers[ $name ] ) ) {
@@ -386,8 +398,9 @@ class BPSP_Responses {
                 if( $question['cssClass'] == 'checkbox' ) {
                     foreach( $question['values'] as $a ) {
                         // Correct answers should be counted
-                        if( $a['baseline'] != 'undefined' )
+                        if( $a['baseline'] != 'undefined' ) {
                             $results['total']++;
+						}
                         
                         $cb_name = md5( $q . $a['value'] );
                         if( isset( $answers[ $cb_name ] ) ) {
@@ -395,9 +408,9 @@ class BPSP_Responses {
                             if( $a['baseline'] == 'undefined' ) {
                                 $results[ $q ][] = esc_html( $a['value'] );
                                 $results[ $q ][] = esc_html( $a['value'] ) . ' ' . __( '(wrong)', 'bpsp' );
-                            }
-                            else
+                            } else {
                                 $results['correct']++;
+							}
                         } else {
                             // Save the wrong answer even if no answer was given
                             if( $a['baseline'] != 'undefined' ) {
@@ -409,8 +422,10 @@ class BPSP_Responses {
                 } else { // Radios | Select
                     foreach( $question['values'] as $a ) {
                         // Correct answers should be counted
-                        if( $a['baseline'] != 'undefined' )
+                        if( $a['baseline'] != 'undefined' ) {
                             $results['total']++;
+						}
+						
                         // Check if the answer exists
                         $r_a = false;
                         if( isset( $answers[ $name ] ) )
@@ -421,20 +436,23 @@ class BPSP_Responses {
                             if( trim( strtolower( $a['value'] ) ) != trim( strtolower( $r_a ) ) ) {
                                 $results[ $q ][] = isset( $r_a ) ? $r_a : __( '(No answer)', 'bpsp' );
                                 $results[ $q ][] = esc_html( $a['value'] );
-                            } else 
+                            } else {
                                 $results['correct']++;
+							}
                         } elseif ( $a['baseline'] != 'undefined' ) { // Select
                             if ( md5( $q . $a['value'] ) != $r_a ) {
                                 $results[ $q ][] = __( '(Correct answer below)', 'bpsp' );
                                 $results[ $q ][] = esc_html( $a['value'] );
-                            } else 
+                            } else {
                                 $results['correct']++;
+							}
                         }
                     }
                 }
             }
         }
         $results = array_filter( $results );
+		
         return apply_filters( 'courseware_quiz_results', $results, $answers, $this->current_assignment );
     }
     
@@ -452,15 +470,18 @@ class BPSP_Responses {
         $nonce_name = 'add_response';
         $form_results = null;
         
-        if( !$this->has_student_caps( $bp->loggedin_user->id ) && !is_super_admin() ||
-           !bp_group_is_member( $bp->groups->current_group )
-        ) {
+        if(
+			!$this->has_student_caps( $bp->loggedin_user->id ) && !is_super_admin() ||
+			!bp_group_is_member( $bp->groups->current_group )
+		) {
             $vars['die'] = __( 'BuddyPress Courseware Error while forbidden user tried to add a new response.', 'bpsp' );
+			
             return $vars;
         }
         
         // Save new response
-        if( isset( $_POST['response'] ) &&
+        if(
+        	isset( $_POST['response'] ) &&
             $this->current_assignment->ID == $_POST['response']['parent_id'] &&
             isset( $_POST['_wpnonce'] )
         ) {
@@ -468,8 +489,10 @@ class BPSP_Responses {
             $new_response_quiz = !empty( $_POST['frmb'] ) ? $_POST['frmb'] : null;
             $is_nonce = wp_verify_nonce( $_POST['_wpnonce'], $nonce_name );
             $response = $this->has_response();
-            if( true != $is_nonce ) 
+			
+            if( true != $is_nonce ) {
                 $vars['error'] = __( 'Nonce Error while adding a response.', 'bpsp' );
+			}
             
             if( !empty( $response ) ) {
                 $vars['response'] = $response;
@@ -484,7 +507,11 @@ class BPSP_Responses {
                     $new_response['content'] .= ( isset( $form_results['correct'] ) ? $form_results['correct'] : 0 )
                         . '/' . $form_results['total'];
                 }
-                if( isset( $new_response['title'] ) && isset( $new_response['content'] ) ) {
+				
+                if(
+					isset( $new_response['title'] ) &&
+					isset( $new_response['content'] )
+				) {
                     $new_response['title'] = strip_tags( $new_response['title'] );
                     $new_response_id =  wp_insert_post( array(
                         'post_author'   => $bp->loggedin_user->id,
@@ -494,6 +521,7 @@ class BPSP_Responses {
                         'post_type'     => 'response',
                         'post_parent'   => $this->current_assignment->ID
                     ));
+					
                     if( $new_response_id ) {
                         // Save author id in assignment post_meta so we don't have to query it all over
                         add_post_meta( $this->current_assignment->ID, 'responded_author', $bp->loggedin_user->id );
@@ -508,8 +536,9 @@ class BPSP_Responses {
                         
                         $vars['message'] = __( 'New response was added.', 'bpsp' );
                         return $vars;
-                    } else
+                    } else {
                         $vars['error'] = __( 'New response could not be added (fill the title/content).', 'bpsp' );
+					}
                 }
             }
         }
@@ -523,6 +552,7 @@ class BPSP_Responses {
             $this->current_assignment->post_title => $this->current_assignment->permalink,
             __( 'New Response', 'bpsp' ) => ''
         );
+		
         return $vars;
     }
     
@@ -538,13 +568,14 @@ class BPSP_Responses {
     function populate_responses( $vars ) {
         global $bp;
         
-        if( $this->has_student_caps() && bp_group_is_member( $bp->groups->current_group ) )
+        if( $this->has_student_caps() && bp_group_is_member( $bp->groups->current_group ) ) {
             $vars['response_add_uri'] = $vars['assignment_permalink'] . '/add_response';
+		}
         
         $vars['response'] = $this->has_response();
         $vars['response_permalink'] = $vars['assignment_permalink'] . '/response/';
         
-        if( !$this->group_responses_status() || $this->has_response_caps() )
+        if( !$this->group_responses_status() || $this->has_response_caps() ) {
             $vars['responses'] = get_posts(
                 array(
                     'numberposts'   => '-1',
@@ -553,6 +584,7 @@ class BPSP_Responses {
                     'post_parent' => $this->current_assignment->ID,
                 )
             );
+		}
         
         return $vars;
     }
@@ -571,14 +603,17 @@ class BPSP_Responses {
         $nonce_delete_name = 'response_delete';
         $response = null;
         
-        if( !empty( $this->current_response ) )
+        if( !empty( $this->current_response ) ) {
             $response = $this->current_response;
-        else
+		} else {
             $response = $this->has_response();
+		}
         
-        if( $this->group_responses_status() && !$this->has_response_caps() &&
-           ( $bp->loggedin_user->id != $response->post_author )
-        ) {
+        if(
+			$this->group_responses_status() &&
+			!$this->has_response_caps() &&
+			$bp->loggedin_user->id != $response->post_author
+		) {
             $vars['die'] = __( 'BuddyPress Courseware Error while forbidden user tried to access a private response.', 'bpsp' );
             return $vars;
         }
@@ -611,16 +646,18 @@ class BPSP_Responses {
      * @return Array $vars a set of variable passed to this screen template
      */
     function delete_response_screen( $vars ) {
-        if( is_object( $this->current_response ) )
+        if( is_object( $this->current_response ) ) {
             $response = $this->current_response;
-        else
+		} else {
             $response = $this->is_response( $this->current_response );
+		}
         
         $nonce_name = 'response_delete';
         $is_nonce = false;
         
-        if( isset( $_GET['_wpnonce'] ) )
+        if( isset( $_GET['_wpnonce'] ) ) {
             $is_nonce = wp_verify_nonce( $_GET['_wpnonce'], $nonce_name );
+		}
         
         if( true != $is_nonce ) {
             $vars['die'] = __( 'Nonce Error while deleting the response.', 'bpsp' );
@@ -630,15 +667,19 @@ class BPSP_Responses {
         if( $this->has_response_caps() || is_super_admin() ) {
             wp_delete_post( $response->ID );
             delete_post_meta( $this->current_assignment->ID, 'responded_author', $response->post_author );
-            if( isset( $vars['assignment'] ) )
+            
+            if( isset( $vars['assignment'] ) ) {
                 $vars = $this->populate_responses( $vars );
+			}
         } else {
             $vars['die'] = __( 'BuddyPress Courseware Error while forbidden user tried to delete the response.', 'bpsp' );
+			
             return $vars;
         }
         
         $vars['name'] = 'single_assignment';
         $vars['message'] = __( 'Response deleted successfully.', 'bpsp' );
+		
         return $vars;
     }
     
@@ -652,5 +693,28 @@ class BPSP_Responses {
         wp_enqueue_script( 'assignments' );
         wp_enqueue_style( 'datetimepicker' );
     }
+    
+    /**
+     * register_post_types()
+     *
+     * Static function to register the responses post types, taxonomies and capabilities.
+     */
+    public static function register_post_types() {
+        $response_post_def = array(
+            'label'                 => __( 'Responses', 'bpsp' ),
+            'singular_label'        => __( 'Response', 'bpsp' ),
+            'description'           => __( 'BuddyPress ScholarPress Courseware Responses', 'bpsp' ),
+            'public'                => BPSP_DEBUG,
+            'publicly_queryable'    => false,
+            'exclude_from_search'   => true,
+            'show_ui'               => BPSP_DEBUG,
+            'capability_type'       => 'response',
+            'hierarchical'          => false,
+            'rewrite'               => false,
+            'query_var'             => false,
+            'supports'              => array( 'title', 'editor', 'author' )
+        );
+        if( !register_post_type( 'response', $response_post_def ) )
+            wp_die( __( 'BuddyPress Courseware error while registering response post type.', 'bpsp' ) );
+    }
 }
-?>

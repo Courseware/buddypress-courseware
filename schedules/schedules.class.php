@@ -33,37 +33,12 @@ class BPSP_Schedules {
      *
      * Constructor. Loads the hooks and actions.
      */
-    function BPSP_Schedules() {
-        add_action( 'courseware_new_teacher_added', array( &$this, 'add_schedule_caps' ) );
-        add_action( 'courseware_new_teacher_removed', array( &$this, 'remove_schedule_caps' ) );
-        add_action( 'courseware_group_screen_handler', array( &$this, 'screen_handler' ) );
-        add_filter( 'courseware_group_nav_options', array( &$this, 'add_nav_options' ) );
+    function __construct() {
+        add_action( 'courseware_new_teacher_added', array( $this, 'add_schedule_caps' ) );
+        add_action( 'courseware_new_teacher_removed', array( $this, 'remove_schedule_caps' ) );
+        add_action( 'courseware_group_screen_handler', array( $this, 'screen_handler' ) );
+        add_filter( 'courseware_group_nav_options', array( $this, 'add_nav_options' ) );
    }
-    
-    /**
-     * register_post_types()
-     *
-     * Static function to register the schedules post types, taxonomies and capabilities.
-     */
-    function register_post_types() {
-        $schedule_post_def = array(
-            'label'                 => __( 'Schedules', 'bpsp' ),
-            'singular_label'        => __( 'Schedule', 'bpsp' ),
-            'description'           => __( 'BuddyPress ScholarPress Courseware Schedules', 'bpsp' ),
-            'public'                => BPSP_DEBUG,
-            'publicly_queryable'    => false,
-            'exclude_from_search'   => true,
-            'show_ui'               => BPSP_DEBUG,
-            'capability_type'       => 'schedule',
-            'hierarchical'          => false,
-            'rewrite'               => false,
-            'query_var'             => false,
-            'supports'              => array( 'title', 'editor', 'excerpt', 'author', 'custom-fields' ),
-            'taxonomies'            => array( 'group_id', 'course_id' )
-        );
-        if( !register_post_type( 'schedule', $schedule_post_def ) )
-            wp_die( __( 'BuddyPress Courseware error while registering schedule post type.', 'bpsp' ) );
-    }
     
     /**
      * add_schedule_caps( $user_id )
@@ -74,14 +49,18 @@ class BPSP_Schedules {
      */
     function add_schedule_caps( $user_id ) {
         $user = new WP_User( $user_id );
-        foreach( $this->caps as $c )
-            if ( !$user->has_cap( $c ) )
+        foreach( $this->caps as $c ) {
+            if ( !$user->has_cap( $c ) ) {
                 $user->add_cap( $c );
+			}
+		}
         
         //Treat super admins
-        if( is_super_admin( $user_id ) )
-            if ( !$user->has_cap( 'edit_others_schedules' ) )
+        if( is_super_admin( $user_id ) ) {
+            if ( !$user->has_cap( 'edit_others_schedules' ) ) {
                 $user->add_cap( 'edit_others_schedules' );
+			}
+		}
     }
     
     /**
@@ -93,13 +72,16 @@ class BPSP_Schedules {
      */
     function remove_schedule_caps( $user_id ) {
         //Treat super admins
-        if( is_super_admin( $user_id) )
+        if( is_super_admin( $user_id) ) {
             return;
+		}
         
         $user = new WP_User( $user_id );
-        foreach( $this->caps as $c )
-            if ( $user->has_cap( $c ) )
+        foreach( $this->caps as $c ) {
+            if ( $user->has_cap( $c ) ) {
                 $user->remove_cap( $c );
+			}
+		}
     }
     
     /**
@@ -119,13 +101,17 @@ class BPSP_Schedules {
         }
         
         $user = new WP_User( $user_id );
-        foreach( $this->caps as $c )
-            if ( !$user->has_cap( $c ) )
+        foreach( $this->caps as $c ) {
+            if ( !$user->has_cap( $c ) ) {
                 $is_ok = false;
+			}
+		}
         
-        if( !get_option( 'bpsp_allow_only_admins' ) )
-            if( !bp_group_is_admin() )
+        if( !get_option( 'bpsp_allow_only_admins' ) ) {
+            if( !bp_group_is_admin() ) {
                 $is_ok = false;
+			}
+		}
         
         return $is_ok;
     }
@@ -141,38 +127,36 @@ class BPSP_Schedules {
             $this->current_course = BPSP_Courses::is_course();
             
             do_action( 'courseware_new_schedule_screen' );
-            add_filter( 'courseware_group_template', array( &$this, 'new_schedule_screen' ) );
-        }
-        
-        elseif ( reset( $action_vars ) == 'schedule' ) {
-            if( isset ( $action_vars[1] ) && null != $this->is_schedule( $action_vars[1] ) )
+            add_filter( 'courseware_group_template', array( $this, 'new_schedule_screen' ) );
+        } elseif ( reset( $action_vars ) == 'schedule' ) {
+            if( isset ( $action_vars[1] ) && null != $this->is_schedule( $action_vars[1] ) ) {
                 $this->current_schedule = $action_vars[1];
-            else {
+			} else {
                 wp_redirect( wp_redirect( get_option( 'siteurl' ) ) );
             }
             
             if( isset ( $action_vars[2] ) && 'edit' == $action_vars[2] ) {
                 do_action( 'courseware_edit_schedule_screen' );
-                add_filter( 'courseware_group_template', array( &$this, 'edit_schedule_screen' ) );
-            }
-            elseif( isset ( $action_vars[2] ) && 'delete' == $action_vars[2] ) {
+                add_filter( 'courseware_group_template', array( $this, 'edit_schedule_screen' ) );
+            } elseif( isset ( $action_vars[2] ) && 'delete' == $action_vars[2] ) {
                 do_action( 'courseware_delete_schedule_screen' );
-                add_filter( 'courseware_group_template', array( &$this, 'delete_schedule_screen' ) );
-            }
-            else
-                add_filter( 'courseware_group_template', array( &$this, 'single_schedule_screen' ) );
-        }
-        elseif ( reset( $action_vars ) == 'schedules' ) {
+                add_filter( 'courseware_group_template', array( $this, 'delete_schedule_screen' ) );
+            } else {
+                add_filter( 'courseware_group_template', array( $this, 'single_schedule_screen' ) );
+			}
+        } elseif ( reset( $action_vars ) == 'schedules' ) {
             // Output json
-            if( isset( $_GET['json'] ) )
+            if( isset( $_GET['json'] ) ) {
                 return $this->toJSON();
+			}
             
             // Output iCal
-            if( isset( $_GET['ical'] ) )
+            if( isset( $_GET['ical'] ) ) {
                 return $this->toICS();
+			}
             
             do_action( 'courseware_list_schedules_screen' );
-            add_filter( 'courseware_group_template', array( &$this, 'list_schedules_screen' ) );
+            add_filter( 'courseware_group_template', array( $this, 'list_schedules_screen' ) );
         }
     }
     
@@ -188,14 +172,17 @@ class BPSP_Schedules {
         global $bp;
         $courseware_uri = bp_get_group_permalink( $bp->groups->current_group ) . 'courseware/' ;
         
-        if( is_object( $schedule_identifier ) && $schedule_identifier->post_type == "assignment" )
-            if( $schedule_identifier->group[0]->name == $bp->groups->current_group->id )
+        if( is_object( $schedule_identifier ) && $schedule_identifier->post_type == "assignment" ) {
+            if( $schedule_identifier->group[0]->name == $bp->groups->current_group->id ) {
                 return $schedule_identifier;
-            else
+			} else {
                 return null;
+			}
+		}
         
-        if( !$schedule_identifier && get_class( (object)$this->current_schedule ) == __CLASS__ )
+        if( !$schedule_identifier && get_class( (object)$this->current_schedule ) == __CLASS__ ) {
             return $this->current_schedule;
+		}
         
         $schedule_query = array(
             'post_type' => 'schedule',
@@ -203,17 +190,19 @@ class BPSP_Schedules {
         );
         
         if ( $schedule_identifier != null ) {
-            if( is_numeric( $schedule_identifier ) )
+            if( is_numeric( $schedule_identifier ) ) {
                 $schedule_query['p'] = $schedule_identifier;
-            else
+			} else {
                 $schedule_query['name'] = $schedule_identifier;
+			}
         }
         $schedule = get_posts( $schedule_query );
         
-        if( !empty( $schedule[0] ) )
+        if( !empty( $schedule[0] ) ) {
             $schedule = $schedule[0];
-        else
+		} else {
             return null;
+		}
         
         $schedule->start_date = get_post_meta( $schedule->ID, 'start_date', true );
         $schedule->end_date = get_post_meta( $schedule->ID, 'end_date', true );
@@ -222,8 +211,9 @@ class BPSP_Schedules {
         $schedule->lecture = $schedule_lecture ? BPSP_Lectures::is_lecture( $schedule_lecture ) : null;
         $schedule->permalink = $courseware_uri . 'schedule/' . $schedule->post_name;
         $course_id = wp_get_object_terms( $schedule->ID, 'course_id' );
-        if( !empty( $course_id ) )
+        if( !empty( $course_id ) ) {
             $schedule->course = BPSP_Courses::is_course( $course_id[0]->name );
+		}
         
         return $schedule;
     }
@@ -236,25 +226,29 @@ class BPSP_Schedules {
      * @param Int $group_id of the group to be checked
      * @return Mixed Schedule objects if schedules exist and null if not.
      */
-    function has_schedules( $group_id = null ) {
+    public static function has_schedules( $group_id = null ) {
         global $bp;
         $schedule_ids = null;
         $schedules = array();
         
-        if( empty( $group_id ) )
+        if( empty( $group_id ) ) {
             $group_id = $bp->groups->current_group->id;
+		}
         
         $term_id = get_term_by( 'slug', $group_id, 'group_id' );
-        if( !empty( $term_id ) )
+        if( !empty( $term_id ) ) {
             $schedule_ids = get_objects_in_term( $term_id->term_id, 'group_id' );
+		}
         
-        if( !empty( $schedule_ids ) )
+        if( !empty( $schedule_ids ) ) {
             arsort( $schedule_ids ); // Get latest entries first
-        else
+		} else {
             return null;
+		}
         
-        foreach ( $schedule_ids as $sid )
+        foreach ( $schedule_ids as $sid ) {
             $schedules[] = self::is_schedule( $sid );
+		}
         
         return array_filter( $schedules );
     }
@@ -268,9 +262,10 @@ class BPSP_Schedules {
      * @return Array containing new nav options
      */
     function add_nav_options( $options ) {
-        global $bp;
+        // global $bp;
         
         $options[__( 'Schedule', 'bpsp' )] = $options[__( 'Home', 'bpsp' )] . '/schedules';
+		
         return $options;
     }
     
@@ -291,31 +286,39 @@ class BPSP_Schedules {
         $date_format = "Y-m-d H:i:s";
         
         // timestamps are valid
-        if( $starttime_t == 0 || $endtime_t == 0 )
+        if( $starttime_t == 0 || $endtime_t == 0 ) {
             return false;
+		}
+		
         // timestamp creates a period
-        if( $endtime_t < $starttime_t )
+        if( $endtime_t < $starttime_t ) {
             return false;
+		}
+		
         // generate periods
         if( is_array( $repetition ) ) {
-            if( !in_array( $repetition['interval'], array( 'day', 'week', 'month' )) ||
-                !is_numeric( $repetition['count'])
-            )
+            if(
+				!in_array( $repetition['interval'], array( 'day', 'week', 'month' )) ||
+				!is_numeric( $repetition['count'])
+			) {
                 return false;
-            else
+			} else {
                 $interval = $repetition['interval'];
+			}
             
-            for( $i = 1; $i <= $repetition['count']; $i++ )
+            for( $i = 1; $i <= $repetition['count']; $i++ ) {
                 $periods[] = array(
                     'start_date' => date( $date_format, strtotime( "+$i $interval", $starttime_t )),
                     'end_date' => date( $date_format, strtotime( "+$i $interval", $endtime_t )),
                 );
+			}
         }
         
-        if( !empty( $periods ) )
+        if( !empty( $periods ) ) {
             return $periods;
-        else
+		} else {
             return true;
+		}
     }
     
     /**
@@ -338,35 +341,42 @@ class BPSP_Schedules {
         
         // Save new schedule
         if( isset( $_POST['schedule'] ) && $_POST['schedule']['object'] == 'group' && isset( $_POST['_wpnonce'] ) ) {
-            if( empty( $_POST['schedule']['title'] ) || empty( $_POST['schedule']['desc'] ) || empty( $_POST['schedule']['start_date'] ) ) {
+            if(
+				empty( $_POST['schedule']['title'] ) ||
+				empty( $_POST['schedule']['desc'] ) ||
+				empty( $_POST['schedule']['start_date'] )
+			) {
                 $vars['error'] = __( 'New schedule could not be added. Missing description/title and/or start date.', 'bpsp' );
                 $vars['schedule']->title = $_POST['schedule']['title'];
                 $vars['schedule']->desc = $_POST['schedule']['desc'];
                 $_POST = null;
+				
                 return $this->new_schedule_screen( $vars );
             }
             
             $new_schedule = $_POST['schedule'];
             
-            if( !empty( $new_schedule['repetition'] ) && !empty( $new_schedule['repetition_times'] ) )
+            if( !empty( $new_schedule['repetition'] ) && !empty( $new_schedule['repetition_times'] ) ) {
                 $repeats = array(
                     'interval' => $new_schedule['repetition'],
                     'count' => $new_schedule['repetition_times']
                 );
-            else
+			} else {
                 $repeats = null;
+			}
                 
             $valid_dates = $this->datecheck( $new_schedule['start_date'], $new_schedule['end_date'], $repeats );
             $is_nonce = wp_verify_nonce( $_POST['_wpnonce'], $nonce_name );
             if( true != $is_nonce ) {
                 $vars['die'] = __( 'Nonce Error while adding a schedule.', 'bpsp' );
+				
                 return $vars;
-            }
-            else
-                if( !empty( $new_schedule['desc'] ) ||
-                    !empty( $new_schedule['group_id'] ) ||
-                    !$valid_dates
-                ) {
+            } else {
+                if(
+					!empty( $new_schedule['desc'] ) ||
+					!empty( $new_schedule['group_id'] ) ||
+					!$valid_dates
+				) {
                     // create a template
                     $first_schedule = array(
                         'post_author'   => $bp->loggedin_user->id,
@@ -380,11 +390,13 @@ class BPSP_Schedules {
                         'cw_location'   => sanitize_text_field( $new_schedule['location'] ),
                     );
                     
-                    if( BPSP_Courses::is_course( $new_schedule['course_id'] ) )
+                    if( BPSP_Courses::is_course( $new_schedule['course_id'] ) ) {
                         $first_schedule['cw_course_id'] = $new_schedule['course_id'];
+					}
                     
-                    if( BPSP_Lectures::is_lecture( $new_schedule['lecture_id'] ) )
+                    if( BPSP_Lectures::is_lecture( $new_schedule['lecture_id'] ) ) {
                         $first_schedule['cw_lecture_id'] = $new_schedule['lecture_id'];
+					}
                     
                     // store first schedule
                     $new_schedules[] = array_filter( $first_schedule );
@@ -417,8 +429,10 @@ class BPSP_Schedules {
                     $vars['message'] = __( 'New schedule was added.', 'bpsp' );
                     do_action( 'courseware_schedule_activity', $counted_schedules );
                     return $this->list_schedules_screen( $vars );
-                } else
+                } else {
                     $vars['error'] = __( 'New schedule could not be added.', 'bpsp' );
+				}
+			}
         }
         
         $vars['name'] = 'new_schedule';
@@ -430,6 +444,7 @@ class BPSP_Schedules {
         $vars['trail'] = array(
             __( 'New Schedule', 'bpsp' ) => ''
         );
+		
         return $vars;
     }
     
@@ -446,13 +461,15 @@ class BPSP_Schedules {
         $vars['schedules'] = $this->has_schedules();
         $vars['assignments'] = BPSP_Assignments::has_assignments();
         
-        if( empty( $vars['schedules'] ) && empty( $vars['assignments'] ) )
+        if( empty( $vars['schedules'] ) && empty( $vars['assignments'] ) ) {
             $vars['message'] = __( 'No schedules exist.', 'bpsp' );
+		}
         
         $vars['name'] = 'list_schedules';
         $vars['trail'] = array(
             __( 'Available Schedules', 'bpsp' ) => ''
         );
+		
         return $vars;
     }
     
@@ -469,10 +486,11 @@ class BPSP_Schedules {
         global $bp;
         $schedule = $this->is_schedule( $this->current_schedule );
         
-        if( $this->has_schedule_caps( $bp->loggedin_user->id ) || is_super_admin() )
+        if( $this->has_schedule_caps( $bp->loggedin_user->id ) || is_super_admin() ) {
             $vars['show_edit'] = true;
-        else
+		} else {
             $vars['show_edit'] = null;
+		}
         
         $vars['name'] = 'single_schedule';
         $vars['schedule_edit_uri'] = $schedule->permalink . '/edit';
@@ -481,6 +499,7 @@ class BPSP_Schedules {
             $schedule->lecture->post_title => $schedule->lecture->permalink,
             $schedule->post_title => $schedule->permalink
         );
+		
         return $vars;
     }
     
@@ -499,8 +518,9 @@ class BPSP_Schedules {
         $nonce_name = 'delete_schedule';
         $is_nonce = false;
         
-        if( isset( $_GET['_wpnonce'] ) )
+        if( isset( $_GET['_wpnonce'] ) ) {
             $is_nonce = wp_verify_nonce( $_GET['_wpnonce'], $nonce_name );
+		}
         
         if( true != $is_nonce ) {
             $vars['error'] = __( 'BuddyPress Courseware Nonce Error while deleting a schedule.', 'bpsp' );
@@ -511,10 +531,12 @@ class BPSP_Schedules {
             wp_delete_post( $schedule->ID );
         } else {
             $vars['die'] = __( 'BuddyPress Courseware Error while forbidden user tried to delete a schedule.', 'bpsp' );
+			
             return $vars;
         }
         
         $vars['message'] = __( 'Schedule deleted successfully.', 'bpsp' );
+		
         return $this->list_schedules_screen( $vars );
     }
     
@@ -533,10 +555,13 @@ class BPSP_Schedules {
         $old_schedule = $this->is_schedule( $this->current_schedule );
         $old_schedule->terms = wp_get_object_terms($old_schedule->ID, 'group_id' );
         
-        if( !$this->has_schedule_caps( $bp->loggedin_user->id ) || !is_super_admin() &&
-            $bp->groups->current_group->id != $old_schedule->terms[0]->name
-        ) {
+        if(
+			!$this->has_schedule_caps( $bp->loggedin_user->id ) ||
+			!is_super_admin() &&
+			$bp->groups->current_group->id != $old_schedule->terms[0]->name
+		) {
             $vars['die'] = __( 'BuddyPress Courseware Error while forbidden user tried to update the schedule.', 'bpsp' );
+			
             return $vars;
         }
         
@@ -550,15 +575,16 @@ class BPSP_Schedules {
             
             $updated_schedule = $_POST['schedule'];
             
-            if( isset( $updated_schedule['end_date'] ) && !empty( $updated_schedule['end_date'] ) )
+            if( isset( $updated_schedule['end_date'] ) && !empty( $updated_schedule['end_date'] ) ) {
                 $valid_dates = $this->datecheck( $updated_schedule['start_date'], $updated_schedule['end_date'] );
-            else
+			} else {
                 $valid_dates = true;
+			}
             
             $is_nonce = wp_verify_nonce( $_POST['_wpnonce'], $nonce_name );
-            if( true != $is_nonce )
+            if( true != $is_nonce ) {
                 $vars['error'] = __( 'Nonce Error while editing a schedule.', 'bpsp' );
-            else 
+			} else {
                 if( !empty( $updated_schedule['group_id'] ) && $valid_dates ) {
                     $updated_schedule_id =  wp_update_post( array(
                         'ID'            => $old_schedule->ID,
@@ -567,27 +593,36 @@ class BPSP_Schedules {
                     ));
                     
                     if( $updated_schedule_id ) {
-                        if( !empty( $updated_schedule['course_id'] ) && BPSP_Courses::is_course( $updated_schedule['course_id'] ) )
+                        if(
+							!empty( $updated_schedule['course_id'] ) &&
+							BPSP_Courses::is_course( $updated_schedule['course_id'] )
+						) {
                             wp_set_post_terms( $updated_schedule_id, $updated_schedule['course_id'], 'course_id' );
-                        elseif( empty( $updated_schedule['course_id'] ) )
+						} elseif( empty( $updated_schedule['course_id'] ) ) {
                             wp_set_post_terms( $updated_schedule_id, '', 'course_id' );
+						}
                         
                         update_post_meta( $updated_schedule_id, 'start_date', $updated_schedule['start_date'], $old_schedule->start_date );
                         update_post_meta( $updated_schedule_id, 'end_date', $updated_schedule['end_date'], $old_schedule->end_date );
                         
-                        if( isset( $updated_schedule['lecture_id'] ) )
+                        if( isset( $updated_schedule['lecture_id'] ) ) {
                             update_post_meta( $updated_schedule_id, 'lecture_id', $updated_schedule['lecture_id'] );
+						}
                         
-                        if( !empty( $updated_schedule['location'] ) )
-                            if( $old_schedule->location )
+                        if( !empty( $updated_schedule['location'] ) ) {
+                            if( $old_schedule->location ) {
                                 update_post_meta( $updated_schedule_id, 'location', $updated_schedule['location'], $old_schedule->location );
-                            else
+							} else {
                                 add_post_meta( $updated_schedule_id, 'location', $updated_schedule['location'] );
+							}
+						}
+						
                         $vars['message'] = __( 'Schedule was updated.', 'bpsp' );
-                    }
-                    else
+                    } else {
                         $vars['error'] = __( 'Schedule could not be updated.', 'bpsp' );
+					}
                 }
+			}
         }
         
         $vars['name'] = 'edit_schedule';
@@ -607,6 +642,7 @@ class BPSP_Schedules {
             $vars['schedule']->lecture->post_title => $vars['schedule']->lecture->permalink,
             __( 'Editing Schedule: ', 'bpsp' ) . $vars['schedule']->post_title => $vars['schedule']->permalink
         );
+		
         return $vars;
     }
     
@@ -623,7 +659,7 @@ class BPSP_Schedules {
         $entries = array_merge( $assignments, $schedules );
         foreach ( $entries as $e ) {
             setup_postdata( $e );
-            if( $e->post_type == "schedule" )
+            if( $e->post_type == "schedule" ) {
                 $entry = array(
                     "id" => get_the_ID(),
                     "title" => get_the_title( $e->ID ),
@@ -631,7 +667,7 @@ class BPSP_Schedules {
                     "end" => date( 'c', strtotime( $e->end_date ) ),
                     "url" => $e->permalink,
                 );
-            elseif( $e->post_type == "assignment" )
+			} elseif( $e->post_type == "assignment" ) {
                 $entry = array(
                     "id" => get_the_ID(),
                     "title" => get_the_title( $e->ID ),
@@ -639,9 +675,11 @@ class BPSP_Schedules {
                     "end" => date( 'c', strtotime( $e->due_date ) ),
                     "url" => $e->permalink,
                 );
+			}
             
-            if( !empty( $entry['end'] ) )
+            if( !empty( $entry['end'] ) ) {
                 $entry['allDay'] = false;
+			}
             
             $unjsoned[] = $entry;
         }
@@ -675,10 +713,12 @@ class BPSP_Schedules {
             
             $e = new vevent();
             
-            if( $entry->post_type == "schedule" )
+            if( $entry->post_type == "schedule" ) {
                 $date = getdate( strtotime( $entry->start_date ) );
-            elseif( $entry->post_type == "assignment" )
+			} elseif( $entry->post_type == "assignment" ) {
                 $date = getdate( strtotime( $entry->post_date ) );
+			}
+			
             $dtstart['year'] = $date['year'];
             $dtstart['month'] = $date['mon'];
             $dtstart['day'] = $date['mday'];
@@ -689,11 +729,13 @@ class BPSP_Schedules {
             
             $e->setProperty( 'description', get_the_content() . "\n\n" . $entry->permalink );
             
-            if( !empty( $entry->location ) )
+            if( !empty( $entry->location ) ) {
                 $e->setProperty( 'location', $entry->location );
+			}
             
-            if( $entry->post_type == "assignment" )
+            if( $entry->post_type == "assignment" ) {
                 $entry->end_date = $entry->due_date; // make assignments compatible with schedule parser
+			}
             
             if( !empty( $entry->end_date ) ) {
                 $date = getdate( strtotime( $entry->end_date ) );
@@ -704,8 +746,9 @@ class BPSP_Schedules {
                 $dtend['min'] = $date['minutes'];
                 $dtend['sec'] = $date['seconds'];
                 $e->setProperty( 'dtend', $dtend );
-            } else
+            } else {
                 $e->setProperty( 'duration', 0, 1, 0 ); // Assume it's an one day event
+			}
             
             $e->setProperty( 'summary', get_the_title( $entry->ID ) );
             $e->setProperty( 'status', 'CONFIRMED' );
@@ -716,5 +759,30 @@ class BPSP_Schedules {
         header("HTTP/1.1 200 OK");
         die( $cal->returnCalendar() );
     }
+    
+    /**
+     * register_post_types()
+     *
+     * Static function to register the schedules post types, taxonomies and capabilities.
+     */
+    public static function register_post_types() {
+        $schedule_post_def = array(
+            'label'                 => __( 'Schedules', 'bpsp' ),
+            'singular_label'        => __( 'Schedule', 'bpsp' ),
+            'description'           => __( 'BuddyPress ScholarPress Courseware Schedules', 'bpsp' ),
+            'public'                => BPSP_DEBUG,
+            'publicly_queryable'    => false,
+            'exclude_from_search'   => true,
+            'show_ui'               => BPSP_DEBUG,
+            'capability_type'       => 'schedule',
+            'hierarchical'          => false,
+            'rewrite'               => false,
+            'query_var'             => false,
+            'supports'              => array( 'title', 'editor', 'excerpt', 'author', 'custom-fields' ),
+            'taxonomies'            => array( 'group_id', 'course_id' )
+        );
+        if( !register_post_type( 'schedule', $schedule_post_def ) ) {
+            wp_die( __( 'BuddyPress Courseware error while registering schedule post type.', 'bpsp' ) );
+		}
+    }
 }
-?>

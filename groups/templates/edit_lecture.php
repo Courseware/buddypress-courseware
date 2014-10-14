@@ -1,3 +1,4 @@
+<!-- groups/templates/edit_lecture.php -->
 <form action="<?php echo $lecture_edit_uri; ?>" method="post" class="standard-form" id="update-lecture-form">
     <div id="update-lecture-meta" class="courseware-sidebar">
         <h4 class="meta lectures"><span class="icon"></span><?php _e( 'Lecture parent &amp; Order', 'bpsp' ); ?></h4>

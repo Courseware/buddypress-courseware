@@ -9,25 +9,33 @@ jQuery("#courseware-bibs-list").hide();
 jQuery("#courseware-bibs-form .add").hide();
 jQuery("ul.courseware-meta li.add").hide();
 
-jQuery("ul.courseware-meta li.show-bibs a").bind('click', function(){
+jQuery("ul.courseware-meta li.show-bibs a").on( 'click', function() {
     jQuery("ul.courseware-meta li.add").slideToggle();
     jQuery("#courseware-bibs-form .add").hide();
     jQuery("#courseware-bibs-list").slideToggle();
+	event.preventDefault();
+	return false;
 })
 
-jQuery("ul.courseware-meta li.add.bib").bind('click', function(){
+jQuery("ul.courseware-meta li.add.bib").on( 'click', function() {
     jQuery("#courseware-bibs-form .add").hide();
     jQuery("#courseware-bibs-form .existing").slideToggle();
+	event.preventDefault();
+	return false;
 })
 
-jQuery("ul.courseware-meta li.add.book").bind('click', function(){
+jQuery("ul.courseware-meta li.add.book").on( 'click', function() {
     jQuery("#courseware-bibs-form .add").hide();
     jQuery("#courseware-bibs-form .book").slideToggle();
+	event.preventDefault();
+	return false;
 })
 
-jQuery("ul.courseware-meta li.add.www").bind('click', function(){
+jQuery("ul.courseware-meta li.add.www").on( 'click', function() {
     jQuery("#courseware-bibs-form .add").hide();
     jQuery("#courseware-bibs-form .www").slideToggle();
+	event.preventDefault();
+	return false;
 })
 
 // Didn't find another way to 'localize' this

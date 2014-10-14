@@ -1,3 +1,4 @@
+<!-- groups/templates/edit_schedule.php -->
 <form action="<?php echo $schedule_edit_uri; ?>" method="post" class="standard-form schedule-form" id="edit-schedule-form">
     <div id="schedule-meta" class="courseware-sidebar">
         <h4 class="meta schedules"><span class="icon"></span><?php _e( 'Schedule Meta', 'bpsp' ); ?></h4>

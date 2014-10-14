@@ -13,36 +13,119 @@ class BPSP_Groups {
     /**
      * Holds the navigation options for component
      */
-    var $nav_options = array();
+    static $nav_options = array();
     
     /**
      * Holds the current navigation option for component
      */
-    var $current_nav_option = null;
+    static $current_nav_option = null;
     
     /**
      * BPSP_Groups()
      *
      * Constructor. Loads filters and actions.
      */
-    function BPSP_Groups() {
-        add_action( 'bp_groups_setup_nav', array( &$this, 'set_nav' ) );
-        add_filter( 'groups_get_groups', array( &$this, 'extend_search' ), 10, 2 );
-        add_action( 'groups_admin_tabs', array( &$this, 'group_admin_tab' ), 10, 2 );
-        add_action( 'wp', array( &$this, 'group_admin_screen' ), 4 );
-        add_filter( 'media_upload_form_url', array( __CLASS__, 'media_library_tab' ) );
+    public function __construct() {
+		$this->setup_variables();
+		$this->setup_actions();
+		$this->setup_filters();
     }
     
     /**
      * activate_component()
      *
-     * Activates Courseware as a BuddyPress component for groups
+     * Mimics the activation of Courseware as a BuddyPress component for groups
      */
     function activate_component() {
         global $bp;
+        if ( !isset( $bp->courseware ) || !is_object($bp->courseware)) {
+        	$bp->courseware = stdClass();
+        }
         $bp->courseware->id = 'courseware';
         $bp->courseware->slug = 'courseware';
         $bp->active_components[$bp->courseware->slug] = $bp->courseware->id;
+    }
+    
+	/**
+	 * Setup the courses group variables
+	 * 
+	 * @since 0.9.7
+	 */
+	private function setup_variables() {
+		
+		// Component name
+		$this->name          = __( 'Course', 'bpsp' );
+		$this->nav_item_name = __( 'Course', 'bpsp' );
+		
+		// Component slugs
+		$this->slug          = 'course';
+		
+		// Course component is visible
+		$this->visibility    = 'public';
+		
+		// Set position
+		$this->create_step_position = 15;
+		$this->nav_item_postion     = 10;
+		
+		// Allow create step and show in nav
+		$this->enable_create_step = true;
+		$this->enable_nav_item    = true;
+		$this->enable_edit_item   = true;
+		
+		// Template to load and action to hook display on to
+		$this->template_file = 'groups/single/plugins';
+		$this->display_hook  = 'bp_template_content';
+	}
+	
+	/**
+	 * Setup the courses group actions
+	 * 
+	 * @since bp-courseware 0.9.7
+	 */
+	private function setup_actions() {
+		add_action( 'bp_init', array( $this, 'setup_nav' ) ); // no more since BuddyPress 1.7
+		add_action( 'groups_admin_tabs', array( $this, 'group_admin_tab' ), 10, 2 );
+		add_action( 'wp', array( $this, 'group_admin_screen' ), 4 );
+	}
+	
+	/**
+	 * Setup the courses group filters
+	 * 
+	 * @since bp-courseware 0.9.7
+	 */
+	private function setup_filters() {
+		add_filter( 'groups_get_groups', array( $this, 'extended_search'), 10, 2 );
+		add_filter( 'media_upload_form_url', array( $this, 'media_library_tab' ) );
+	}
+
+    /**
+     * set_nav()
+     *
+     * Sets up the component navigation
+     */
+    function setup_nav() {
+        global $bp;
+
+        if( !$bp->groups->current_group || !$this->courseware_status( $bp->groups->current_group->id ) ) {
+            return;
+        }
+        
+        $group_permalink = bp_get_group_permalink( $bp->groups->current_group );
+        
+        bp_core_new_subnav_item( array( 
+            'name' => __( 'Courseware', 'bpsp' ),
+            'slug' => $bp->courseware->slug,
+            'parent_url' => $group_permalink, 
+            'parent_slug' => $bp->groups->current_group->slug, 
+            'screen_function' => array( $this, 'screen_handler' ),
+            'position' => 35, 
+            'user_has_access' => $bp->groups->current_group->user_has_access,
+            'item_css_id' => 'courseware-group'
+        ) );
+        
+        self::$nav_options[__( 'Home', 'bpsp' )] = $group_permalink . $bp->courseware->slug;
+        
+        do_action( 'courseware_group_set_nav' );
     }
     
     /**
@@ -52,69 +135,46 @@ class BPSP_Groups {
      * @param Int $group_id, the id of the group, default is null and global $bp will be used
      * @return Bool, true on success, and false on failure.
      */
-    function courseware_status( $group_id = null ) {
+    public static function courseware_status( $group_id = null ) {
         global $bp;
-        if( !$group_id && $bp->groups->current_group )
+        if( !$group_id && $bp->groups->current_group ) {
             $group_id = $bp->groups->current_group->id;
+        }
         
         $global_status = get_option( 'bpsp_global_status' );
         $group_status = groups_get_groupmeta( $group_id, 'courseware' );
         
-        if( 'true' == $group_status || !empty( $global_status ) )
+        if( 'true' == $group_status || !empty( $global_status ) ) {
             return true;
-        else
+        } else {
             return false;
-    }
-    
-    /**
-     * set_nav()
-     *
-     * Sets up the component navigation
-     */
-    function set_nav() {
-        global $bp;
-
-        if( !$bp->groups->current_group || !$this->courseware_status( $bp->groups->current_group->id ) )
-            return;
-        
-        $group_permalink = bp_get_group_permalink( $bp->groups->current_group );
-        
-        bp_core_new_subnav_item( array( 
-            'name' => __( 'Courseware', 'bpsp' ),
-            'slug' => $bp->courseware->slug,
-            'parent_url' => $group_permalink, 
-            'parent_slug' => $bp->groups->current_group->slug, 
-            'screen_function' => array( &$this, 'screen_handler' ),
-            'position' => 35, 
-            'user_has_access' => $bp->groups->current_group->user_has_access,
-            'item_css_id' => 'courseware-group'
-        ) );
-        
-        $this->nav_options[__( 'Home', 'bpsp' )] = $group_permalink . $bp->courseware->slug;
-        
-        do_action( 'courseware_group_set_nav' );
+        }
     }
     
     /**
      * screen_handler()
+	 * 
+	 * @todo needs rewritten, it's not compatible with BuddyPress > 1.6
      *
      * Courseware action for handling the screens on group pages
      */
     function screen_handler() {
         global $bp;
 
-        if( !$this->courseware_status( $bp->groups->current_group->id ) )
+        if( !$this->courseware_status( $bp->groups->current_group->id ) ) {
             return;
+        }
         
         if ( $bp->current_action == $bp->courseware->slug ) {
-            $this->current_nav_option =  $this->nav_options[__( 'Home', 'bpsp' )];
+            self::$current_nav_option =  self::$nav_options[__( 'Home', 'bpsp' )];
             
-            if( reset( $bp->action_variables ) )
-                $this->current_nav_option .= '/' . reset( $bp->action_variables );
+            if( reset( $bp->action_variables ) ) {
+                self::$current_nav_option .= '/' . reset( $bp->action_variables );
+            }
             
-            add_action( 'bp_before_group_body', array( &$this, 'nav_options' ) );
+            add_action( 'bp_before_group_body', array( $this, 'nav_options' ) );
             do_action( 'courseware_group_screen_handler', $bp->action_variables );
-            add_action( 'bp_template_content', array( &$this, 'load_template' ) );
+            add_action( 'bp_template_content', array( $this, 'load_template' ) );
         }
         groups_update_last_activity( $bp->groups->current_group->id );
         bp_core_load_template( apply_filters( 'bp_core_template_plugin' , 'groups/single/plugins' ) );
@@ -126,11 +186,11 @@ class BPSP_Groups {
      * Courseware action to manage group navigation options
      */
     function nav_options() {
-        $this->nav_options = apply_filters( 'courseware_group_nav_options', $this->nav_options );
+        self::$nav_options = apply_filters( 'courseware_group_nav_options', self::$nav_options );
         $this->load_template( array(
             'name' => '_nav',
-            'nav_options' => $this->nav_options,
-            'current_option' => $this->current_nav_option
+            'nav_options' => self::$nav_options,
+            'current_option' => self::$current_nav_option
         ));
     }
     
@@ -142,32 +202,36 @@ class BPSP_Groups {
      * @param Array $vars of options
      * @return template $content if $vars['echo'] == false
      */
-    function load_template( $vars = '' ) {
+    public static function load_template( $vars = '' ) {
         $content = '';
-        if( empty( $vars ) || !isset( $vars['name'] ) )
+        if( empty( $vars ) || !isset( $vars['name'] ) ) {
             $vars = array(
                 'name' => 'home',
-                'nav_options' => $this->nav_options,
-                'current_uri' => $this->nav_options[__( 'Home', 'bpsp' )],
-                'current_option' => $this->current_nav_option,
+                'nav_options' => self::$nav_options,
+                'current_uri' => self::$nav_options[__( 'Home', 'bpsp' )],
+                'current_option' => self::$current_nav_option,
                 'echo' => true,
             );
+        }
     
-        if( !isset( $vars['echo'] ) )
+        if( !isset( $vars['echo'] ) ) {
             $vars['echo'] = true;
+        }
         
         $templates_path = BPSP_PLUGIN_DIR . '/groups/templates/';
         $vars['templates_path'] = $templates_path;
         
         // Load helpers
-        foreach ( glob( $templates_path . "helpers/*.php" ) as $helper )
+        foreach ( glob( $templates_path . "helpers/*.php" ) as $helper ) {
             include_once $helper;
+        }
         
         //Exclude internal templates like navigation, starts with an underscore
-        if(  substr( $vars['name'], 0, 1) != '_' )
+        if(  substr( $vars['name'], 0, 1) != '_' ) {
             $vars = apply_filters( 'courseware_group_template', $vars );
-        else
+        } else {
             $vars = apply_filters( 'courseware_template_vars', $vars );
+        }
         
         if( file_exists( $templates_path . $vars['name']. '.php' ) ) {
             ob_start();
@@ -176,8 +240,9 @@ class BPSP_Groups {
                 $error = $die;
                 include( $templates_path . '_message.php' ); // Template for errors
             } else {
-                if ( isset( $trail ) )
+                if ( isset( $trail ) ) {
                     include_once $templates_path . '_trail.php'; // Template for crumbs
+                }
                 include( $templates_path . '_message.php' ); // Template for messages
                 include( $templates_path . $name . '.php' );
             }
@@ -185,21 +250,23 @@ class BPSP_Groups {
             $content = ob_get_clean();
         }
         
-        if( $vars['echo'] )
+        if( $vars['echo'] ) {
             echo $content;
-        else
+        } else {
             return $content;
+        }
     }
     
     /**
-     * extend_search( $groups, $params )
+     * extended_search( $groups, $params )
      *
      * Hooks into groups_get_groups filter and extends search to include Courseware used post types
      */
-    function extend_search( $groups, $params ) {
+    function extended_search( $groups, $params ) {
         // Don't bother searching if nothing queried
-        if( empty( $params['search_terms'] ) )
+        if( empty( $params['search_terms'] ) ) {
             return $groups;
+        }
         
         // A hack to make WordPress believe the taxonomy is registered
         if( !taxonomy_exists( 'group_id' ) ) {
@@ -230,6 +297,7 @@ class BPSP_Groups {
                 }
             }
         }
+        
         return $groups;
     }
     
@@ -239,13 +307,13 @@ class BPSP_Groups {
      * Hooks into groups_admin_tabs, and adds the courseware options tab
      */
     function group_admin_tab( $current_tab, $group_slug ) {
-        global $bp;
+        // global $bp;
         
         $tab_content = '<li ';
         if ( 'courseware' == $current_tab )
             $tab_content .= 'class="current"';
         
-        $tab_content .= '><a href="' . bp_get_group_admin_permalink() . '/courseware">';
+        $tab_content .= '><a href="' . bp_get_group_admin_permalink() . 'courseware/">';
         $tab_content .= __( 'Courseware', 'bpsp' ) . '</a></li>';
         
         echo $tab_content;
@@ -261,7 +329,7 @@ class BPSP_Groups {
         
         if ( $bp->current_component == $bp->groups->id && 'courseware' == reset($bp->action_variables) ) {
             if ( $bp->is_item_admin || $bp->is_item_mod  ) {
-                add_action( 'bp_before_group_admin_content', array( &$this, 'group_admin_content' ) );
+                add_action( 'bp_before_group_admin_content', array( $this, 'group_admin_content' ) );
                 bp_core_load_template( apply_filters( 'groups_template_group_admin', 'groups/single/home' ) );
             }
         }
@@ -280,15 +348,17 @@ class BPSP_Groups {
             if( isset( $_POST['group_courseware_status'] ) && !empty( $_POST['group_courseware_status'] ) ) {
                 $post_value = sanitize_key( $_POST['group_courseware_status'] );
             
-                if( groups_update_groupmeta( $bp->groups->current_group->id, 'courseware', $post_value ) )
+                if( groups_update_groupmeta( $bp->groups->current_group->id, 'courseware', $post_value ) ) {
                     $vars['message'] = __( 'Group Courseware settings were successfully updated.', 'bpsp' );
+                }
             }
             
             if( isset( $_POST['responses_courseware_status'] ) && !empty( $_POST['responses_courseware_status'] ) ) {
                 $post_value = sanitize_key( $_POST['responses_courseware_status'] );
             
-                if( groups_update_groupmeta( $bp->groups->current_group->id, 'courseware_responses', $post_value ) )
+                if( groups_update_groupmeta( $bp->groups->current_group->id, 'courseware_responses', $post_value ) ) {
                     $vars['message'] = __( 'Group Courseware responses settings were successfully updated.', 'bpsp' );
+                }
             }
         }
         
@@ -305,9 +375,10 @@ class BPSP_Groups {
      */
     function restrict_uploads( $wp_the_query ) {
         // Check if current user is admin or sort of
-        if ( !current_user_can( 'manage_options' ) )
+        if ( !current_user_can( 'manage_options' ) ) {
             // If not, he will only see his own attachments
             $wp_the_query->query_vars['author'] = get_current_user_id();
+        }
     }
     
     /**
@@ -317,15 +388,16 @@ class BPSP_Groups {
      */
     function media_library_tab( $action_url ) {
         // Check if private uploads are disabled
-        if ( defined( 'COURSEWARE_PRIVATE_UPLOADS' ) && !COURSEWARE_PRIVATE_UPLOADS ) 
+        if ( defined( 'COURSEWARE_PRIVATE_UPLOADS' ) && !COURSEWARE_PRIVATE_UPLOADS ) {
           return;
+        }
 
         // Check if the user is on the current tab
-        if ( $_REQUEST['tab'] == 'library' )
+        if ( $_REQUEST['tab'] == 'library' ) {
             // Do some checks before displaying attachments
             add_action( 'pre_get_posts', array( __CLASS__, 'restrict_uploads' ) );
+        }
         
         return $action_url;
     }
 }
-?>

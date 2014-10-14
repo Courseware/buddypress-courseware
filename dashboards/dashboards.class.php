@@ -9,8 +9,9 @@ class BPSP_Dashboards {
      *
      * Constructor, loads the hooks
      */
-    function BPSP_Dashboards() {
-        add_action( 'courseware_group_screen_handler', array( &$this, 'screen_handler' ) );
+    function __construct() {
+        add_action( 'courseware_group_screen_handler', array( $this, 'screen_handler' ) );
+		add_shortcode( 'courseware_dashboard', array( $this, 'shortcode_courseware_dashboard' ) );
     }
     
     /**
@@ -22,14 +23,15 @@ class BPSP_Dashboards {
     function screen_handler( $action_vars ) {
         if( !isset( $action_vars[0] ) || $action_vars[0] == 'home' ) {
             do_action( 'courseware_group_dashboard' );
-            add_filter( 'courseware_group_template', array( &$this, 'group_dashboard' ) );
+            add_filter( 'courseware_group_template', array( $this, 'group_dashboard' ) );
         }
     }
     
     function get_group_courseware( $group_id = null ) {
         global $bp;
-        if( !$group_id )
+        if( !$group_id ) {
             $group_id = $bp->groups->current_group->id;
+        }
         
         $group_data['bibliography'] = array();
         $group_data['assignments_count'] = 0;
@@ -45,35 +47,39 @@ class BPSP_Dashboards {
         $group_data['lectures'] = BPSP_Lectures::has_lectures( $group_id );
         $posts = array_merge( $group_data['courses'], $group_data['assignments'] );
         
-        if( $posts )
-        foreach ( $posts as &$post ) {
-            // Get group bibs
-            $group_data['bibliography'] = array_merge( $group_data['bibliography'], BPSP_Bibliography::get_bibs( $post->ID ) );
-            // Get group responses
-            if( $post->post_type == 'assignment' ) {
-                // Forum threads
-                if( get_post_meta( $post->ID, 'topic_link', true ) != '' )
-                    $group_data['assignment_topics_count'] += 1;
-                // Responses
-                $post->responses = get_children( array(
-                    'post_parent' => $post->ID,
-                    'post_type' => 'response'
-                ) );
-                
-                foreach( $post->responses as $pr ) {
-                    if( $pr->post_author == get_current_user_id() )
-                        $group_data['own_responses_count']++;
-                    $group_data['responses_count'] ++;
+        if( $posts ){
+            foreach ( $posts as &$post ) {
+                // Get group bibs
+                $group_data['bibliography'] = array_merge( $group_data['bibliography'], BPSP_Bibliography::get_bibs( $post->ID ) );
+                // Get group responses
+                if( $post->post_type == 'assignment' ) {
+                    // Forum threads
+                    if( get_post_meta( $post->ID, 'topic_link', true ) != '' ) {
+                        $group_data['assignment_topics_count'] += 1;
+                    }
+                    // Responses
+                    $post->responses = get_children( array(
+                        'post_parent' => $post->ID,
+                        'post_type' => 'response'
+                    ) );
+                    
+                    foreach( $post->responses as $pr ) {
+                        if( $pr->post_author == get_current_user_id() ) {
+                            $group_data['own_responses_count']++;
+                        }
+                        $group_data['responses_count'] ++;
+                    }
+                    
+                    // Gradebook
+                    $group_data['user_grades'][] = BPSP_Gradebook::load_grade_by_user_id( $post->ID, $bp->loggedin_user->id );
                 }
-                
-                // Gradebook
-                $group_data['user_grades'][] = BPSP_Gradebook::load_grade_by_user_id( $post->ID, $bp->loggedin_user->id );
             }
         }
         
         $bookmark = get_user_meta( get_current_user_id(), 'bookmark_' . bp_get_group_id(), true );
-        if( $bookmark )
+        if( $bookmark ) {
             $group_data['user_bookmark'] = BPSP_Lectures::is_lecture( $bookmark );
+        }
         
         $group_data['assignments_count'] = count( $group_data['assignments'] );
         $group_data['bibliography_count'] = count( $group_data['bibliography'] );
@@ -109,7 +115,38 @@ class BPSP_Dashboards {
         $vars['trail'] = array(
             ( $vars['is_teacher'] ) ? __( 'Welcome Teacher', 'bpsp' ) : __( 'Welcome Student', 'bpsp' ) => ''
         );
+
         return $vars;
     }
+
+	/*
+	 *
+	 */
+	function shortcode_courseware_dashboard( $attributes ) {
+		global $bp;
+
+		$course = false;
+		if ( isset( $_GET['course_id'] ) ) {
+			$course = BPSP_Courses::is_course( (int) $_GET['course_id'] );
+		}
+
+		// @todo not pulling in # of lectures, assignments, etc
+
+		if ( $course ) {
+			$bp->groups->current_group->creator_id = 1;	// @todo set to current user? no, to author of course post?
+			$vars = array_merge(
+				$this->group_dashboard( array() ),
+				array(
+					'nav_options' => array( __( 'Home', 'bpsp' ) => '' ),
+					'group_course' => $course,
+
+					// @todo update link urls
+				)
+			);
+
+			BPSP_Groups::load_template( $vars );
+		} else {
+			echo '<p>Invalid course ID</p>';
+		}
+	}
 }
-?>
