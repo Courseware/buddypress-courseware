@@ -10,17 +10,17 @@ class BPSP_WordPress {
      */
     function __construct() {
         // Add our screen to BuddyPress menu
-        add_action( 'network_admin_menu', array( __CLASS__, 'network_menu') );
-        add_action( 'admin_menu', array( __CLASS__, 'single_menu') );
+        add_action( 'network_admin_menu', array( $this, 'network_menu') );
+        add_action( 'admin_menu', array( $this, 'single_menu') );
 
         // Ensure compatibility
         add_action('admin_notices', 'bpsp_check' );
         // Help Screen
-        add_action('admin_head', array( __CLASS__, 'screen_help') );
+        add_action('admin_head', array( $this, 'screen_help') );
         // Support link
-        add_filter( 'plugin_row_meta', array( __CLASS__, 'support_link' ), 10, 2 );
+        add_filter( 'plugin_row_meta', array( $this, 'support_link' ), 10, 2 );
         // Settings link
-        add_action( 'plugin_action_links_' . BPSP_PLUGIN_FILE, array( __CLASS__, 'action_link' ), 10, 4 );
+        add_action( 'plugin_action_links_' . BPSP_PLUGIN_FILE, array( $this, 'action_link' ), 10, 4 );
 
         // Initialize our options
         add_option( 'bpsp_allow_only_admins' );
@@ -56,7 +56,7 @@ class BPSP_WordPress {
      *
      * Adds menu to admin area
      */
-    function single_menu() {
+    static function single_menu() {
         if ( is_multisite() )
             return;
             
