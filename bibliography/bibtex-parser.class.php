@@ -113,6 +113,7 @@ class BibTeX_Parser
                 $this->types[$this->count]=trim(substr($seg, 1,$pe-1));
                 $fieldcount=-1;
                 $this->items['linebegin'][$this->count] = $lineindex;
+                $this->items['type'][$this->count] = $this->types[$this->count];
             } elseif ($ps!==false ) {
 				// #of item increase
 				// one field begins
